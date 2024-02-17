@@ -11,7 +11,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class EntityBloodComponent implements BloodComponent, ServerTickingComponent, AutoSyncedComponent {
-    private static final int BLOOD_GAIN_RATE = 0;
+    private static final int BLOOD_GAIN_RATE = 200;
     private final LivingEntity holder;
     private int maxBlood;
     private int currentBlood;
@@ -62,10 +62,13 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
     public boolean drainBlood() {
         if(!hasBlood())
             return false;
-        if(currentBlood > 1)
-            currentBlood--;
 
-        BLEntityComponents.BLOOD_COMPONENT.sync(holder);
+        bloodGainTimer = 0;
+        if(currentBlood > 1) {
+            currentBlood--;
+            BLEntityComponents.BLOOD_COMPONENT.sync(holder);
+            return true;
+        }
 
         holder.kill();
         return true;
@@ -90,6 +93,7 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
 
         if(bloodGainTimer >= BLOOD_GAIN_RATE) {
             currentBlood++;
+            bloodGainTimer = 0;
             BLEntityComponents.BLOOD_COMPONENT.sync(holder);
         }
     }

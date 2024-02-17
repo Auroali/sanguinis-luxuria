@@ -33,6 +33,7 @@ public class PlayerVampireComponent implements VampireComponent {
         if(!blood.hasBlood() || !blood.drainBlood())
             return;
 
+        System.out.println("added food");
         holder.getHungerManager().add(1, 0.25f);
     }
 
