@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "bloodlust",
+	"version": "${version}",
+	"name": "Bloodlust",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/bloodlust/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.auroali.bloodlust.Bloodlust"
+		],
+		"fabric-datagen": [
+			"com.auroali.bloodlust.BloodlustDataGenerator"
+		],
+		"cardinal-components": [
+			"com.auroali.bloodlust.components.BLEntityComponents"
+		]
+	},
+	"mixins": [
+		"bloodlust.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.7",
+		"minecraft": "~1.19.2",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	},
+	"custom": {
+		"cardinal-components": [
+			"bloodlust:blood"
+		]
+	}
+}
