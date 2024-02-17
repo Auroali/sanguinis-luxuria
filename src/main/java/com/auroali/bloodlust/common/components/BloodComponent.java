@@ -1,4 +1,4 @@
-package com.auroali.bloodlust.components;
+package com.auroali.bloodlust.common.components;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
 

@@ -1,12 +1,16 @@
-package com.auroali.bloodlust.components.impl;
+package com.auroali.bloodlust.common.components.impl;
 
-import com.auroali.bloodlust.components.BloodComponent;
-import com.auroali.bloodlust.registry.BLTags;
+import com.auroali.bloodlust.common.components.BLEntityComponents;
+import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.registry.BLTags;
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 
-public class EntityBloodComponent implements BloodComponent, ServerTickingComponent {
+public class EntityBloodComponent implements BloodComponent, ServerTickingComponent, AutoSyncedComponent {
     private static final int BLOOD_GAIN_RATE = 0;
     private final LivingEntity holder;
     private int maxBlood;
@@ -23,11 +27,15 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         if(!holder.getType().isIn(BLTags.Entity.HAS_BLOOD)) {
             maxBlood = 0;
             currentBlood = 0;
+            BLEntityComponents.BLOOD_COMPONENT.sync(holder);
+            return;
         }
         maxBlood = (int) Math.ceil(holder.getMaxHealth());
         if(currentBlood == -1)
             currentBlood = maxBlood;
         currentBlood = Math.min(currentBlood, maxBlood);
+
+        BLEntityComponents.BLOOD_COMPONENT.sync(holder);
     }
 
     @Override
@@ -57,6 +65,8 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         if(currentBlood > 1)
             currentBlood--;
 
+        BLEntityComponents.BLOOD_COMPONENT.sync(holder);
+
         holder.kill();
         return true;
     }
@@ -78,7 +88,21 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         if(getBlood() < getMaxBlood() && bloodGainTimer < BLOOD_GAIN_RATE)
             bloodGainTimer++;
 
-        if(bloodGainTimer >= BLOOD_GAIN_RATE)
+        if(bloodGainTimer >= BLOOD_GAIN_RATE) {
             currentBlood++;
+            BLEntityComponents.BLOOD_COMPONENT.sync(holder);
+        }
+    }
+
+    @Override
+    public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
+        buf.writeInt(getMaxBlood());
+        buf.writeInt(getBlood());
+    }
+
+    @Override
+    public void applySyncPacket(PacketByteBuf buf) {
+        maxBlood = buf.readInt();
+        currentBlood = buf.readInt();
     }
 }

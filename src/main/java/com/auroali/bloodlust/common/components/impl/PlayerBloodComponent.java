@@ -1,6 +1,6 @@
-package com.auroali.bloodlust.components.impl;
+package com.auroali.bloodlust.common.components.impl;
 
-import com.auroali.bloodlust.components.BloodComponent;
+import com.auroali.bloodlust.common.components.BloodComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 

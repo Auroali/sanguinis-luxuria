@@ -1,4 +1,4 @@
-package com.auroali.bloodlust.registry;
+package com.auroali.bloodlust.common.registry;
 
 import com.auroali.bloodlust.BLResources;
 import net.minecraft.entity.EntityType;

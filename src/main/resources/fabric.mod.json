@@ -18,11 +18,14 @@
 		"main": [
 			"com.auroali.bloodlust.Bloodlust"
 		],
+		"client": [
+			"com.auroali.bloodlust.BloodlustClient"
+		],
 		"fabric-datagen": [
 			"com.auroali.bloodlust.BloodlustDataGenerator"
 		],
 		"cardinal-components": [
-			"com.auroali.bloodlust.components.BLEntityComponents"
+			"com.auroali.bloodlust.common.components.BLEntityComponents"
 		]
 	},
 	"mixins": [
@@ -39,7 +42,8 @@
 	},
 	"custom": {
 		"cardinal-components": [
-			"bloodlust:blood"
+			"bloodlust:blood",
+			"bloodlust:vampire"
 		]
 	}
 }

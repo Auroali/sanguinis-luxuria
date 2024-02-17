@@ -1,7 +1,9 @@
 package com.auroali.bloodlust;
 
+import com.auroali.bloodlust.common.commands.BloodlustCommand;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,8 @@ public class Bloodlust implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+			dispatcher.register(BloodlustCommand.register());
+		});
 	}
 }
