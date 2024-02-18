@@ -4,16 +4,18 @@ import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.BloodlustClient;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.components.VampireComponent;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.hit.EntityHitResult;
 
 public class BLHud {
     public static void render(MatrixStack stack, float deltaTick) {
-        if(BloodlustClient.targetEntity == null)
+        if(!BloodlustClient.isLookingAtValidTarget())
             return;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -24,12 +26,14 @@ public class BLHud {
         );
 
         MinecraftClient client = MinecraftClient.getInstance();
+
         int width = client.getWindow().getScaledWidth();
         int height = client.getWindow().getScaledHeight();
 
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(BloodlustClient.targetEntity);
+        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(client.player);
+        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(((EntityHitResult)client.crosshairTarget).getEntity());
 
-        double percent = (double) BloodlustClient.suckBloodTimer / BloodlustClient.BLOOD_TIMER_LENGTH;
+        double percent = (double) vampire.getBloodDrainTimer() / VampireComponent.BLOOD_TIMER_LENGTH;
         double bloodPercent = (double) blood.getBlood() / blood.getMaxBlood();
 
         int currentBloodX2 = width / 2 - 10 + (int) (bloodPercent * 20);

@@ -27,17 +27,16 @@ public class Bloodlust implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(BloodlustCommand.register()));
 
 		ServerPlayNetworking.registerGlobalReceiver(BLResources.KEYBIND_CHANNEL, (server, player, handler, buf, responseSender) -> {
-			int entityId = buf.readInt();
+			boolean draining = buf.readBoolean();
 			server.execute(() -> {
-				Entity entity = player.world.getEntityById(entityId);
-				if(entity == null)
-					return;
-				if(!entity.getType().isIn(BLTags.Entities.HAS_BLOOD))
+				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+				if(!vampire.isVampire())
 					return;
 
-				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-				if(vampire.isVampire())
-					vampire.drainBloodFrom((LivingEntity) entity);
+				if(draining)
+					vampire.tryStartSuckingBlood();
+				else
+					vampire.stopSuckingBlood();
 			});
 		});
 
