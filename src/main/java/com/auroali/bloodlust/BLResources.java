@@ -12,6 +12,7 @@ public class BLResources {
     public static final Identifier MASK_ONE_ID = id("mask_1");
     public static final Identifier MASK_TWO_ID = id("mask_2");
     public static final Identifier MASK_THREE_ID = id("mask_3");
+    public static final Identifier BLOOD_DRAIN_SOUND = id("drain_blood");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

@@ -1,9 +1,6 @@
 package com.auroali.bloodlust;
 
-import com.auroali.bloodlust.datagen.BLEntityTagsProvider;
-import com.auroali.bloodlust.datagen.BLItemTagsProvider;
-import com.auroali.bloodlust.datagen.BLLangProvider;
-import com.auroali.bloodlust.datagen.BLModelProvider;
+import com.auroali.bloodlust.datagen.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -14,5 +11,6 @@ public class BloodlustDataGenerator implements DataGeneratorEntrypoint {
 		fabricDataGenerator.addProvider(new BLEntityTagsProvider(fabricDataGenerator));
 		fabricDataGenerator.addProvider(new BLItemTagsProvider(fabricDataGenerator));
 		fabricDataGenerator.addProvider(new BLModelProvider(fabricDataGenerator));
+		fabricDataGenerator.addProvider(new BLRecipeProvider(fabricDataGenerator));
 	}
 }

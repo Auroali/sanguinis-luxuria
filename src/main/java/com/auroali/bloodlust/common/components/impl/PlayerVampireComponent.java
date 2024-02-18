@@ -4,14 +4,19 @@ import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
+import com.auroali.bloodlust.common.registry.BLSounds;
 import com.auroali.bloodlust.common.registry.BLTags;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +53,7 @@ public class PlayerVampireComponent implements VampireComponent {
             return;
 
         System.out.println("added food");
-        holder.getHungerManager().add(1, 0.25f);
+        holder.getHungerManager().add(1, 0);
     }
 
     @Override
@@ -83,6 +88,17 @@ public class PlayerVampireComponent implements VampireComponent {
         }
 
         bloodDrainTimer++;
+        if(bloodDrainTimer % 4 == 0)
+            holder.world.playSound(
+                    null,
+                    holder.getX(),
+                    holder.getY(),
+                    holder.getZ(),
+                    BLSounds.DRAIN_BLOOD,
+                    SoundCategory.PLAYERS,
+                    0.5f,
+                    0.85f
+            );
         if(bloodDrainTimer >= BLOOD_TIMER_LENGTH) {
             drainBloodFrom(target);
             bloodDrainTimer = 0;

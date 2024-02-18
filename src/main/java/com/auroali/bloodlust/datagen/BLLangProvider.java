@@ -1,6 +1,7 @@
 package com.auroali.bloodlust.datagen;
 
 import com.auroali.bloodlust.common.registry.BLItems;
+import com.auroali.bloodlust.common.registry.BLSounds;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -17,5 +18,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItems.MASK_1, "Carved Mask");
         translationBuilder.add(BLItems.MASK_2, "Carved Mask");
         translationBuilder.add(BLItems.MASK_3, "Carved Mask");
+
+        translationBuilder.add("subtitles.bloodlust.drain_blood", "Vampire feeding");
     }
 }
