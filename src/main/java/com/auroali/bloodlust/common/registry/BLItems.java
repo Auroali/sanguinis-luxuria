@@ -3,7 +3,6 @@ package com.auroali.bloodlust.common.registry;
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.common.items.MaskItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
 

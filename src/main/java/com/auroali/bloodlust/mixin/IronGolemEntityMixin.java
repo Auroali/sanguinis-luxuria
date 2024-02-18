@@ -1,7 +1,6 @@
 package com.auroali.bloodlust.mixin;
 
 import com.auroali.bloodlust.VampireHelper;
-import com.auroali.bloodlust.common.components.BLEntityComponents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.mob.Angerable;

@@ -6,7 +6,6 @@ import com.auroali.bloodlust.datagen.BLLangProvider;
 import com.auroali.bloodlust.datagen.BLModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.util.registry.Registry;
 
 public class BloodlustDataGenerator implements DataGeneratorEntrypoint {
 	@Override

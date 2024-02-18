@@ -2,7 +2,6 @@ package com.auroali.bloodlust.mixin.client;
 
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.VampireHelper;
-import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
