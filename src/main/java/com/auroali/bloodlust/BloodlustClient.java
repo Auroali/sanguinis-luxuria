@@ -54,6 +54,12 @@ public class BloodlustClient implements ClientModInitializer {
     public void updateTarget() {
         MinecraftClient client = MinecraftClient.getInstance();
         EntityHitResult result = client.crosshairTarget instanceof EntityHitResult hit ? hit : null;
+        if(!BLEntityComponents.VAMPIRE_COMPONENT.get(client.player).isVampire()) {
+            targetEntity = null;
+            suckBloodTimer = 0;
+            return;
+        }
+
         if(result == null) {
             targetEntity = null;
             suckBloodTimer = 0;
@@ -79,7 +85,6 @@ public class BloodlustClient implements ClientModInitializer {
             return;
 
         suckBloodTimer++;
-        System.out.println(suckBloodTimer);
         if(suckBloodTimer < BLOOD_TIMER_LENGTH)
             return;
 
