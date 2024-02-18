@@ -6,9 +6,12 @@ import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.TypedActionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +24,7 @@ public class Bloodlust implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			dispatcher.register(BloodlustCommand.register());
-		});
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(BloodlustCommand.register()));
 
 		ServerPlayNetworking.registerGlobalReceiver(BLResources.KEYBIND_CHANNEL, (server, player, handler, buf, responseSender) -> {
 			int entityId = buf.readInt();
@@ -31,13 +32,22 @@ public class Bloodlust implements ModInitializer {
 				Entity entity = player.world.getEntityById(entityId);
 				if(entity == null)
 					return;
-				if(!entity.getType().isIn(BLTags.Entity.HAS_BLOOD))
+				if(!entity.getType().isIn(BLTags.Entities.HAS_BLOOD))
 					return;
 
 				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
 				if(vampire.isVampire())
 					vampire.drainBloodFrom((LivingEntity) entity);
 			});
+		});
+
+		UseItemCallback.EVENT.register((player, world, hand) -> {
+			VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+			ItemStack stack = player.getStackInHand(hand);
+			if(vampire.isVampire() && stack.isFood() && ! stack.isIn(BLTags.Items.VAMPIRE_FOOD))
+				return TypedActionResult.fail(stack);
+
+			return TypedActionResult.pass(stack);
 		});
 	}
 }

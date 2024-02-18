@@ -24,7 +24,7 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
     }
 
     public void initializeBloodValues() {
-        if(!holder.getType().isIn(BLTags.Entity.HAS_BLOOD)) {
+        if(!holder.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
             maxBlood = 0;
             currentBlood = 0;
             BLEntityComponents.BLOOD_COMPONENT.sync(holder);

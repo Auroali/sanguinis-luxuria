@@ -13,7 +13,7 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
 
     @Override
     protected void generateTags() {
-        getOrCreateTagBuilder(BLTags.Entity.HAS_BLOOD)
+        getOrCreateTagBuilder(BLTags.Entities.HAS_BLOOD)
                 .add(EntityType.SHEEP)
                 .add(EntityType.COW)
                 .add(EntityType.PLAYER)

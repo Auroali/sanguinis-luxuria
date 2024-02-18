@@ -64,7 +64,7 @@ public class BloodlustClient implements ClientModInitializer {
             suckBloodTimer = 0;
         }
 
-        if((((LivingEntity)result.getEntity()).isDead() || result.getEntity().isRemoved() || BLEntityComponents.BLOOD_COMPONENT.get(result.getEntity()).getBlood() == 0) || !result.getEntity().getType().isIn(BLTags.Entity.HAS_BLOOD)) {
+        if((((LivingEntity)result.getEntity()).isDead() || result.getEntity().isRemoved() || BLEntityComponents.BLOOD_COMPONENT.get(result.getEntity()).getBlood() == 0) || !result.getEntity().getType().isIn(BLTags.Entities.HAS_BLOOD)) {
             targetEntity = null;
             suckBloodTimer = 0;
             return;
@@ -84,10 +84,8 @@ public class BloodlustClient implements ClientModInitializer {
             return;
 
         PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(targetEntity.getId());
         ClientPlayNetworking.send(BLResources.KEYBIND_CHANNEL, buf);
         targetEntity = null;
         suckBloodTimer = 0;
-        System.out.println("sucked blood ! ! !");
     }
 }
