@@ -15,7 +15,6 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
 import org.lwjgl.glfw.GLFW;
 
 public class BloodlustClient implements ClientModInitializer {
