@@ -25,7 +25,7 @@ public class BloodlustClient implements ClientModInitializer {
     public static KeyBinding SUCK_BLOOD = new KeyBinding(
             "key.bloodlust.bite",
             InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_Y,
+            GLFW.GLFW_KEY_R,
             "category.bloodlust.bloodlust"
     );
 
