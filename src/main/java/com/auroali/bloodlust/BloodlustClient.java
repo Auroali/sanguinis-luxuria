@@ -84,6 +84,7 @@ public class BloodlustClient implements ClientModInitializer {
             return;
 
         PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeInt(targetEntity.getId());
         ClientPlayNetworking.send(BLResources.KEYBIND_CHANNEL, buf);
         targetEntity = null;
         suckBloodTimer = 0;

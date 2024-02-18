@@ -2,6 +2,9 @@
 	"required": true,
 	"package": "com.auroali.bloodlust.mixin",
 	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"client.InGameHudMixin"
+	],
 	"mixins": [
 	],
 	"injectors": {
