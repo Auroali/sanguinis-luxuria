@@ -3,7 +3,9 @@ package com.auroali.bloodlust;
 import com.auroali.bloodlust.client.BLHud;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLTags;
+import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -11,11 +13,13 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -42,22 +46,25 @@ public class BloodlustClient implements ClientModInitializer {
         SUCK_BLOOD = KeyBindingHelper.registerKeyBinding(SUCK_BLOOD);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if(SUCK_BLOOD.isPressed()) {
-                if(isLookingAtValidTarget()) {
+            if (SUCK_BLOOD.isPressed()) {
+                if (isLookingAtValidTarget()) {
                     sendBloodDrainPacket(true);
                     drainingBlood = true;
                 }
-            } else if(drainingBlood) {
+            } else if (drainingBlood) {
                 drainingBlood = false;
                 sendBloodDrainPacket(false);
             }
         });
 
+        TrinketRendererRegistry.registerRenderer(BLItems.MASK_1, BLItems.MASK_1);
+        TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
+        TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
     }
 
     public static boolean isLookingAtValidTarget() {
         MinecraftClient client = MinecraftClient.getInstance();
-        if(client.player == null || !BLEntityComponents.VAMPIRE_COMPONENT.get(client.player).isVampire())
+        if(!VampireHelper.isVampire(client.player))
             return false;
 
         HitResult result = client.crosshairTarget;

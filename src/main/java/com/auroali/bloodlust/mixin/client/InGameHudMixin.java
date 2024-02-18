@@ -1,6 +1,7 @@
 package com.auroali.bloodlust.mixin.client;
 
 import com.auroali.bloodlust.BLResources;
+import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -19,7 +20,7 @@ public class InGameHudMixin {
             shift = At.Shift.AFTER
     ))
     public void bloodlust$injectHungerIcons(MatrixStack matrices, CallbackInfo ci) {
-        if(BLEntityComponents.VAMPIRE_COMPONENT.get(MinecraftClient.getInstance().player).isVampire())
+        if(VampireHelper.isVampire(MinecraftClient.getInstance().player))
             RenderSystem.setShaderTexture(0, BLResources.ICONS);
     }
 
@@ -29,7 +30,7 @@ public class InGameHudMixin {
             shift = At.Shift.AFTER
     ))
     public void bloodlust$resetIcons(MatrixStack matrices, CallbackInfo ci) {
-        if(BLEntityComponents.VAMPIRE_COMPONENT.get(MinecraftClient.getInstance().player).isVampire())
+        if(VampireHelper.isVampire(MinecraftClient.getInstance().player))
             RenderSystem.setShaderTexture(0, InGameHud.GUI_ICONS_TEXTURE);
     }
 }

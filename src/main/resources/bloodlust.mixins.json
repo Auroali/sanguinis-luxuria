@@ -6,7 +6,8 @@
     "client.InGameHudMixin"
   ],
   "mixins": [
-    "IronGolemEntityMixin"
+    "IronGolemEntityMixin",
+    "VillagerHostilesSensorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

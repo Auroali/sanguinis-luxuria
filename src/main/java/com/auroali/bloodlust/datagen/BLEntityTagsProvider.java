@@ -7,8 +7,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.registry.Registry;
 
 public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
-    public BLEntityTagsProvider(FabricDataGenerator dataGenerator, Registry<EntityType<?>> registry) {
-        super(dataGenerator, registry);
+    public BLEntityTagsProvider(FabricDataGenerator dataGenerator) {
+        super(dataGenerator, Registry.ENTITY_TYPE);
     }
 
     @Override

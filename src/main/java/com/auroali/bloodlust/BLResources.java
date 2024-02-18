@@ -10,6 +10,13 @@ public class BLResources {
     public static final Identifier ICONS = id("textures/gui/icons.png");
     public static final Identifier VAMPIRE_FOOD_ID = id("vampire_edible");
 
+    // Predicates
+    public static final Identifier VARIANT_MODEL_PREDICATE = id("variant");
+
+    public static final Identifier MASK_ONE_ID = id("mask_1");
+    public static final Identifier MASK_TWO_ID = id("mask_2");
+    public static final Identifier MASK_THREE_ID = id("mask_3");
+
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
     }

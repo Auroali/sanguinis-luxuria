@@ -1,0 +1,6 @@
+{
+  "parent": "bloodlust:item/mask_base",
+  "textures": {
+    "layer0": "bloodlust:item/mask_2"
+  }
+}

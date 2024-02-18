@@ -26,6 +26,10 @@ repositories {
 			includeGroup "com.jamieswhiteshirt"
 		}
 	}
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
 }
 
 fabricApi {
@@ -48,6 +52,11 @@ dependencies {
 
 	modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}"
 	include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}"
+
+	modImplementation("dev.emi:trinkets:${project.trinkets_version}") {
+		// exclude modmenu because the version trinket's uses is broken in the dev env
+		exclude module: 'modmenu'
+	}
 	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 

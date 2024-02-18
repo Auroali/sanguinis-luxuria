@@ -1,5 +1,6 @@
 package com.auroali.bloodlust.mixin;
 
+import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -21,6 +22,6 @@ public abstract class IronGolemEntityMixin extends GolemEntity implements Angera
 
     @Inject(method = "initGoals", at = @At("HEAD"))
     public void bloodlust$makeIronGolemsAngryAtPlayers(CallbackInfo ci) {
-        targetSelector.add(3, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, e -> BLEntityComponents.VAMPIRE_COMPONENT.get(e).isVampire()));
+        targetSelector.add(3, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, e -> VampireHelper.isVampire(e) && !VampireHelper.isMasked(e)));
     }
 }

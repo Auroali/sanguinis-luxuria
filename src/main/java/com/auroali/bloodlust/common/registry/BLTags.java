@@ -4,6 +4,7 @@ import com.auroali.bloodlust.BLResources;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class BLTags {
@@ -13,5 +14,6 @@ public class BLTags {
 
     public static class Items {
         public static final TagKey<Item> VAMPIRE_FOOD = TagKey.of(Registry.ITEM_KEY, BLResources.VAMPIRE_FOOD_ID);
+        public static final TagKey<Item> FACE_TRINKETS = TagKey.of(Registry.ITEM_KEY, new Identifier("trinkets", "head/face"));
     }
 }

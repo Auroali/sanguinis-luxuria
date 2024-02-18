@@ -1,5 +1,6 @@
 package com.auroali.bloodlust.common.components.impl;
 
+import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
@@ -116,7 +117,7 @@ public class PlayerVampireComponent implements VampireComponent {
 
     @Override
     public void tryStartSuckingBlood() {
-        if(target == null)
+        if(canDrainBlood() && target == null)
             updateTarget();
 
     }
@@ -128,6 +129,10 @@ public class PlayerVampireComponent implements VampireComponent {
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
+    boolean canDrainBlood() {
+        return !VampireHelper.isMasked(holder);
+    }
+
     @Override
     public int getBloodDrainTimer() {
         return bloodDrainTimer;
@@ -135,7 +140,7 @@ public class PlayerVampireComponent implements VampireComponent {
 
     public void updateTarget() {
         HitResult result = getTarget();
-        if(result.getType() != HitResult.Type.ENTITY) {
+        if(!canDrainBlood() || result.getType() != HitResult.Type.ENTITY) {
             target = null;
             bloodDrainTimer = 0;
             return;

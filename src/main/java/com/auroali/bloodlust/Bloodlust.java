@@ -3,6 +3,7 @@ package com.auroali.bloodlust;
 import com.auroali.bloodlust.common.commands.BloodlustCommand;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.VampireComponent;
+import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -48,5 +49,7 @@ public class Bloodlust implements ModInitializer {
 
 			return TypedActionResult.pass(stack);
 		});
+
+		BLItems.register();
 	}
 }
