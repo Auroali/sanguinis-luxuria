@@ -6,6 +6,8 @@ import com.auroali.bloodlust.common.components.VampireComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 
 public class PlayerVampireComponent implements VampireComponent {
@@ -66,5 +68,15 @@ public class PlayerVampireComponent implements VampireComponent {
         }
 
         return false;
+    }
+
+    @Override
+    public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
+        buf.writeBoolean(isVampire);
+    }
+
+    @Override
+    public void applySyncPacket(PacketByteBuf buf) {
+        isVampire = buf.readBoolean();
     }
 }

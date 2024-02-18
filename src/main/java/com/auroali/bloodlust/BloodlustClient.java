@@ -10,9 +10,11 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.hit.EntityHitResult;
 import org.lwjgl.glfw.GLFW;
@@ -53,7 +55,11 @@ public class BloodlustClient implements ClientModInitializer {
 
     public void updateTarget() {
         MinecraftClient client = MinecraftClient.getInstance();
+        if(client.player == null)
+            return;
+
         EntityHitResult result = client.crosshairTarget instanceof EntityHitResult hit ? hit : null;
+
         if(!BLEntityComponents.VAMPIRE_COMPONENT.get(client.player).isVampire()) {
             targetEntity = null;
             suckBloodTimer = 0;
