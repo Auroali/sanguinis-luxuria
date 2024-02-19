@@ -18,7 +18,7 @@ public class VillagerHostilesSensorMixin {
 
     @Inject(method = "isCloseEnoughForDanger", at = @At("HEAD"), cancellable = true)
     public void bloodlust$injectVampireDangerRadius(LivingEntity villager, LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
-        if(!VampireHelper.isVampire(target) || VampireHelper.isMasked(target))
+        if(villager.isSleeping() || !VampireHelper.isVampire(target) || VampireHelper.isMasked(target))
             return;
 
         if(villager.squaredDistanceTo(target) < 8*8) {
