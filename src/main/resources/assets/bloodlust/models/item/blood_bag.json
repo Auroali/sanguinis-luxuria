@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodlust:item/blood_bag"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodlust:blood_storage_item_fill": 0.3
+      },
+      "model": "bloodlust:item/blood_bag_1"
+    },
+    {
+      "predicate": {
+        "bloodlust:blood_storage_item_fill": 0.6
+      },
+      "model": "bloodlust:item/blood_bag_2"
+    },
+    {
+      "predicate": {
+        "bloodlust:blood_storage_item_fill": 0.9
+      },
+      "model": "bloodlust:item/blood_bag_3"
+    }
+  ]
+}

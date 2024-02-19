@@ -10,6 +10,8 @@ import net.minecraft.util.registry.Registry;
 public class BLTags {
     public static class Entities {
         public static final TagKey<EntityType<?>> HAS_BLOOD = TagKey.of(Registry.ENTITY_TYPE_KEY, BLResources.HAS_BLOOD_ID);
+        public static final TagKey<EntityType<?>> GOOD_BLOOD = TagKey.of(Registry.ENTITY_TYPE_KEY, BLResources.GOOD_BLOOD_ID);
+        public static final TagKey<EntityType<?>> TOXIC_BLOOD = TagKey.of(Registry.ENTITY_TYPE_KEY, BLResources.TOXIC_BLOOD_ID);
     }
 
     public static class Items {

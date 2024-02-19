@@ -59,6 +59,15 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
     }
 
     @Override
+    public int addBlood(int amount) {
+        // ultrakill??????
+        int newBlood = Math.min(maxBlood, amount + currentBlood);
+        int bloodAdded = newBlood - currentBlood;
+        currentBlood = newBlood;
+        return bloodAdded;
+    }
+
+    @Override
     public boolean drainBlood() {
         if(!hasBlood())
             return false;

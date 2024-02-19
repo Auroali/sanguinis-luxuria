@@ -39,6 +39,27 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.HOGLIN)
                 .add(EntityType.GOAT)
                 .add(EntityType.POLAR_BEAR)
-                .add(EntityType.RAVAGER);
+                .add(EntityType.RAVAGER)
+                .add(EntityType.ZOMBIE)
+                .add(EntityType.HUSK)
+                .add(EntityType.DROWNED)
+                .add(EntityType.ZOGLIN)
+                .add(EntityType.ZOMBIFIED_PIGLIN);
+
+        getOrCreateTagBuilder(BLTags.Entities.GOOD_BLOOD)
+                .add(EntityType.VILLAGER)
+                .add(EntityType.PILLAGER)
+                .add(EntityType.VINDICATOR)
+                .add(EntityType.EVOKER)
+                .add(EntityType.WITCH)
+                .add(EntityType.WANDERING_TRADER)
+                .add(EntityType.PLAYER);
+
+        getOrCreateTagBuilder(BLTags.Entities.TOXIC_BLOOD)
+                .add(EntityType.ZOMBIE)
+                .add(EntityType.HUSK)
+                .add(EntityType.DROWNED)
+                .add(EntityType.ZOGLIN)
+                .add(EntityType.ZOMBIFIED_PIGLIN);
     }
 }

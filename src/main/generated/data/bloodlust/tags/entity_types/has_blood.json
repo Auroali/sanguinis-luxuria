@@ -26,6 +26,11 @@
     "minecraft:hoglin",
     "minecraft:goat",
     "minecraft:polar_bear",
-    "minecraft:ravager"
+    "minecraft:ravager",
+    "minecraft:zombie",
+    "minecraft:husk",
+    "minecraft:drowned",
+    "minecraft:zoglin",
+    "minecraft:zombified_piglin"
   ]
 }

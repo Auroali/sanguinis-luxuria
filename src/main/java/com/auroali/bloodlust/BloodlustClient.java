@@ -1,6 +1,7 @@
 package com.auroali.bloodlust;
 
 import com.auroali.bloodlust.client.BLHud;
+import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLTags;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
@@ -11,6 +12,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
@@ -33,6 +35,12 @@ public class BloodlustClient implements ClientModInitializer {
     public void onInitializeClient() {
         registerBindings();
 
+        TrinketRendererRegistry.registerRenderer(BLItems.MASK_1, BLItems.MASK_1);
+        TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
+        TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
+
+        ModelPredicateProviderRegistry.register(BLItems.BLOOD_BAG, BLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, BLItems.BLOOD_BAG::modelPredicate);
+
         HudRenderCallback.EVENT.register(BLHud::render);
     }
 
@@ -41,7 +49,7 @@ public class BloodlustClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (SUCK_BLOOD.isPressed()) {
-                if (isLookingAtValidTarget()) {
+                if (isLookingAtValidTarget() || BloodStorageItem.isHoldingBloodFillableItem(client.player)) {
                     sendBloodDrainPacket(true);
                     drainingBlood = true;
                 }
@@ -50,11 +58,6 @@ public class BloodlustClient implements ClientModInitializer {
                 sendBloodDrainPacket(false);
             }
         });
-
-        TrinketRendererRegistry.registerRenderer(BLItems.MASK_1, BLItems.MASK_1);
-        TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
-        TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
-
     }
 
     public static boolean isLookingAtValidTarget() {

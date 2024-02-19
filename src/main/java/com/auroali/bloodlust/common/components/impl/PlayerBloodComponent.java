@@ -28,6 +28,15 @@ public class PlayerBloodComponent implements BloodComponent {
     }
 
     @Override
+    public int addBlood(int amount) {
+        // ultrakill??????
+        int newBlood = Math.min(getMaxBlood(), amount + getBlood());
+        int bloodAdded = newBlood - getBlood();
+        holder.getHungerManager().setFoodLevel(newBlood);
+        return bloodAdded;
+    }
+
+    @Override
     public boolean drainBlood() {
         int currentBlood = getBlood();
         if(currentBlood > 0) {

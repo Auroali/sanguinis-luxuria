@@ -4,7 +4,6 @@ import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.registry.BLTags;
 import net.minecraft.client.MinecraftClient;
 import squeek.appleskin.api.AppleSkinApi;
-import squeek.appleskin.api.event.FoodValuesEvent;
 import squeek.appleskin.api.event.HUDOverlayEvent;
 
 public class AppleskinCompat implements AppleSkinApi {

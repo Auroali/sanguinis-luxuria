@@ -9,11 +9,9 @@ import dev.isxander.yacl.api.Option;
 import dev.isxander.yacl.api.OptionGroup;
 import dev.isxander.yacl.api.YetAnotherConfigLib;
 import dev.isxander.yacl.gui.controllers.string.number.FloatFieldController;
-import dev.isxander.yacl.gui.controllers.string.number.NumberFieldController;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
-import org.spongepowered.include.com.google.gson.JsonElement;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +26,8 @@ public class BLConfig {
             .setPrettyPrinting()
             .create();
 
-    public float vampireDamageMultiplier = 2;
+    public float vampireDamageMultiplier = 2.5f;
+    public float vampireExhaustionMultiplier = 0.25f;
 
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
@@ -39,7 +38,13 @@ public class BLConfig {
                                 .option(Option.createBuilder(Float.class)
                                         .name(Text.translatable("bloodlust.config.option.vampire_damage_multiplier"))
                                         .tooltip(Text.translatable("bloodlust.config.option.vampire_damage_multiplier.desc"))
-                                        .binding(2.f, () -> this.vampireDamageMultiplier, f -> this.vampireDamageMultiplier = f)
+                                        .binding(2.5f, () -> this.vampireDamageMultiplier, f -> this.vampireDamageMultiplier = f)
+                                        .controller(FloatFieldController::new)
+                                        .build()
+                                ).option(Option.createBuilder(Float.class)
+                                        .name(Text.translatable("bloodlust.config.option.vampire_exhaustion_multiplier"))
+                                        .tooltip(Text.translatable("bloodlust.config.option.vampire_exhaustion_multiplier.desc"))
+                                        .binding(0.25f, () -> this.vampireExhaustionMultiplier, f -> this.vampireExhaustionMultiplier = f)
                                         .controller(FloatFieldController::new)
                                         .build()
                                 ).build()
@@ -53,6 +58,7 @@ public class BLConfig {
     public void save() {
         JsonObject root = new JsonObject();
         root.addProperty("vampireDamageMultiplier", vampireDamageMultiplier);
+        root.addProperty("vampireExhaustionMultiplier", vampireExhaustionMultiplier);
 
         try {
             Files.writeString(CONFIG_FILE, GSON.toJson(root));
@@ -64,6 +70,7 @@ public class BLConfig {
     public void load() {
         if (!Files.exists(CONFIG_FILE)) {
             save();
+            return;
         }
         JsonObject root;
         try {
@@ -73,7 +80,18 @@ public class BLConfig {
             return;
         }
 
-        vampireDamageMultiplier = root.get("vampireDamageMultiplier").getAsFloat();
+        boolean isMissingEntry = false;
+
+        if(root.has("vampireDamageMultiplier"))
+            vampireDamageMultiplier = root.get("vampireDamageMultiplier").getAsFloat();
+        else isMissingEntry = true;
+
+        if(root.has("vampireExhaustionMultiplier"))
+            vampireExhaustionMultiplier = root.get("vampireExhaustionMultiplier").getAsFloat();
+        else isMissingEntry = true;
+
+        if(isMissingEntry)
+            save();
     }
 
 }

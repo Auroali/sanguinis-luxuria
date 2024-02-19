@@ -4,23 +4,20 @@ import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
+import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.registry.BLSounds;
 import com.auroali.bloodlust.common.registry.BLTags;
-import com.auroali.bloodlust.config.BLConfig;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -142,9 +139,20 @@ public class PlayerVampireComponent implements VampireComponent {
 
     @Override
     public void tryStartSuckingBlood() {
-        if(canDrainBlood() && target == null)
+        if(canDrainBlood() && target == null) {
             updateTarget();
+            if(target == null)
+                tryToFillStorage();
+        }
+    }
 
+    public void tryToFillStorage() {
+        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(holder);
+        if(blood.getBlood() == 0)
+            return;
+
+        if(BloodStorageItem.tryAddBloodToItemInHand(holder, 1))
+            blood.drainBlood();
     }
 
     @Override

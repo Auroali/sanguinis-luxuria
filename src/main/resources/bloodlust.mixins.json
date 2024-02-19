@@ -6,6 +6,7 @@
     "client.InGameHudMixin"
   ],
   "mixins": [
+    "HungerManagerMixin",
     "IronGolemEntityMixin",
     "LivingEntityMixin",
     "VillagerEntityMixin",
