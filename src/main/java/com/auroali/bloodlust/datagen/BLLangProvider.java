@@ -20,5 +20,10 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItems.MASK_3, "Carved Mask");
 
         translationBuilder.add("subtitles.bloodlust.drain_blood", "Vampire feeding");
+
+        translationBuilder.add("bloodlust.config.title", "Bloodlust");
+        translationBuilder.add("bloodlust.config.category.gameplay", "Gameplay");
+        translationBuilder.add("bloodlust.config.option.vampire_damage_multiplier", "Damage Multiplier");
+        translationBuilder.add("bloodlust.config.option.vampire_damage_multiplier.desc", "How much damage is multiplied for vampires from damage types they are weak to, such as fire.");
     }
 }

@@ -11,7 +11,7 @@
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/bloodlust/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -26,6 +26,9 @@
 		],
 		"cardinal-components": [
 			"com.auroali.bloodlust.common.components.BLEntityComponents"
+		],
+		"modmenu": [
+			"com.auroali.bloodlust.compat.ModMenuCompat"
 		]
 	},
 	"mixins": [
@@ -38,7 +41,8 @@
 		"fabric-api": "*",
 		"trinkets": ">=3.4",
 		"reach-entity-attributes": ">=2.3.0",
-		"cardinal-components-entity": "~5.0.2"
+		"cardinal-components-entity": "~5.0.2",
+		"yet-another-config-lib": ">=2"
 	},
 	"suggests": {
 		"another-mod": "*"

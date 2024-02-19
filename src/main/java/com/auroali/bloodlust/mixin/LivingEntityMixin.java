@@ -1,5 +1,6 @@
 package com.auroali.bloodlust.mixin;
 
+import com.auroali.bloodlust.config.BLConfig;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
@@ -23,7 +24,7 @@ public class LivingEntityMixin {
     ))
     public float bloodlust$actuallyIncreaseDamage(float amount, @Share("source") LocalRef<DamageSource> source) {
         if(source.get().isFire())
-            return amount * 2;
+            return amount * BLConfig.INSTANCE.vampireDamageMultiplier;
         return amount;
     }
 }

@@ -54,6 +54,7 @@ public class BloodlustClient implements ClientModInitializer {
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_1, BLItems.MASK_1);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
+
     }
 
     public static boolean isLookingAtValidTarget() {

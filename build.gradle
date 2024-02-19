@@ -30,6 +30,10 @@ repositories {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
 	}
+	maven {
+        name 'Xander Maven'
+        url 'https://maven.isxander.dev/releases'
+    }
 }
 
 fabricApi {
@@ -57,6 +61,11 @@ dependencies {
 		// exclude modmenu because the version trinket's uses is broken in the dev env
 		exclude module: 'modmenu'
 	}
+
+	modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+
 	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 

@@ -6,6 +6,7 @@ import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLSounds;
 import com.auroali.bloodlust.common.registry.BLTags;
+import com.auroali.bloodlust.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -25,6 +26,8 @@ public class Bloodlust implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		BLConfig.INSTANCE.load();
+
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(BloodlustCommand.register()));
 
 		ServerPlayNetworking.registerGlobalReceiver(BLResources.KEYBIND_CHANNEL, (server, player, handler, buf, responseSender) -> {
