@@ -11,7 +11,10 @@ public class BLItems {
     public static final MaskItem MASK_1 = new MaskItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1));
     public static final MaskItem MASK_2 = new MaskItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1));
     public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1));
-    public static final BloodStorageItem BLOOD_BAG = new BloodStorageItem(new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1), 40);
+    public static final BloodStorageItem BLOOD_BAG = new BloodStorageItem(
+            new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1),
+            20
+    );
 
     public static void register() {
         Registry.register(Registry.ITEM, BLResources.MASK_ONE_ID, MASK_1);

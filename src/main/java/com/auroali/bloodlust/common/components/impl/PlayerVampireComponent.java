@@ -10,6 +10,8 @@ import com.auroali.bloodlust.common.registry.BLTags;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -54,12 +56,26 @@ public class PlayerVampireComponent implements VampireComponent {
         if(!blood.hasBlood() || !blood.drainBlood())
             return;
 
-        holder.getHungerManager().add(1, 0);
+        if(entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+            holder.getHungerManager().add(2, 0.05f);
+        else
+            holder.getHungerManager().add(1, 0);
+
+        if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
+            addToxicBloodEffects();
+
         if(entity.world instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
             serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
             if(holder.getRandom().nextDouble() > 0.5f)
                 entity.wakeUp();
         }
+    }
+
+    public void addToxicBloodEffects() {
+        holder.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 3));
+        holder.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 0));
+        if(holder.getRandom().nextDouble() > 0.75)
+            holder.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
     }
 
     @Override
