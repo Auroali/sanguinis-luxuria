@@ -75,8 +75,4 @@ public class BLConfig {
     }
 
     public float vampireDamageMultiplier = 2;
-
-    public static class Serializer {
-
-    }
 }
