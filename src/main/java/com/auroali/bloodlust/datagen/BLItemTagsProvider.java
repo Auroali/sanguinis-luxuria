@@ -21,6 +21,8 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
                 .add(BLItems.MASK_3);
         getOrCreateTagBuilder(BLTags.Items.VAMPIRE_EDIBLE)
                 .add(Items.GOLDEN_APPLE)
-                .add(Items.ENCHANTED_GOLDEN_APPLE);
+                .add(Items.ENCHANTED_GOLDEN_APPLE)
+                .add(Items.HONEY_BOTTLE)
+                .add(Items.SUSPICIOUS_STEW);
     }
 }
