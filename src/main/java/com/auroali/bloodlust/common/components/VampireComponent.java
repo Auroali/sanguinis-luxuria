@@ -6,7 +6,7 @@ import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.LivingEntity;
 
 public interface VampireComponent extends Component, AutoSyncedComponent, ServerTickingComponent {
-    int BLOOD_TIMER_LENGTH = 10;
+    int BLOOD_TIMER_LENGTH = 25;
 
     boolean isVampire();
     void setIsVampire(boolean isVampire);

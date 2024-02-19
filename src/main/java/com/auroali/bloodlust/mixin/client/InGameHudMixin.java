@@ -9,14 +9,18 @@ import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
     @Inject(method = "renderStatusBars", at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;getHeartCount(Lnet/minecraft/entity/LivingEntity;)I",
-            shift = At.Shift.AFTER
+            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V"
+    ), slice = @Slice(from =@At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
+            ordinal = 1)
     ))
     public void bloodlust$injectHungerIcons(MatrixStack matrices, CallbackInfo ci) {
         if(VampireHelper.isVampire(MinecraftClient.getInstance().player))

@@ -28,6 +28,8 @@ public class BLConfig {
             .setPrettyPrinting()
             .create();
 
+    public float vampireDamageMultiplier = 2;
+
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
                 .title(Text.translatable("bloodlust.config.title"))
@@ -74,5 +76,4 @@ public class BLConfig {
         vampireDamageMultiplier = root.get("vampireDamageMultiplier").getAsFloat();
     }
 
-    public float vampireDamageMultiplier = 2;
 }

@@ -6,14 +6,18 @@ import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLSounds;
 import com.auroali.bloodlust.common.registry.BLTags;
+import com.auroali.bloodlust.config.BLConfig;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -29,6 +33,7 @@ public class PlayerVampireComponent implements VampireComponent {
     private boolean isVampire;
     private LivingEntity target;
     private int bloodDrainTimer;
+    private int timeInSun;
 
 
     public PlayerVampireComponent(PlayerEntity holder) {
@@ -52,8 +57,12 @@ public class PlayerVampireComponent implements VampireComponent {
         if(!blood.hasBlood() || !blood.drainBlood())
             return;
 
-        System.out.println("added food");
         holder.getHungerManager().add(1, 0);
+        if(entity.world instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
+            serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
+            if(holder.getRandom().nextDouble() > 0.5f)
+                entity.wakeUp();
+        }
     }
 
     @Override
@@ -113,7 +122,7 @@ public class PlayerVampireComponent implements VampireComponent {
             float f = holder.getBrightnessAtEyes();
             BlockPos blockPos = new BlockPos(holder.getX(), holder.getEyeY(), holder.getZ());
             boolean bl = holder.isWet() || holder.inPowderSnow || holder.wasInPowderSnow;
-            return f > 0.5F && holder.getRandom().nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !bl && holder.world.isSkyVisible(blockPos);
+            return f > 0.5F && !bl && holder.world.isSkyVisible(blockPos);
         }
 
         return false;

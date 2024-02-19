@@ -29,6 +29,9 @@
 		],
 		"modmenu": [
 			"com.auroali.bloodlust.compat.ModMenuCompat"
+		],
+		"appleskin": [
+			"com.auroali.bloodlust.compat.AppleskinCompat"
 		]
 	},
 	"mixins": [

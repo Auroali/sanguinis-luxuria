@@ -8,7 +8,9 @@
   "mixins": [
     "IronGolemEntityMixin",
     "LivingEntityMixin",
-    "VillagerHostilesSensorMixin"
+    "VillagerEntityMixin",
+    "VillagerHostilesSensorMixin",
+    "WanderingTraderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
