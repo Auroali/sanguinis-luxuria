@@ -17,6 +17,7 @@ public class BLResources {
     public static final Identifier BLOOD_BAG_ID = id("blood_bag");
     public static final Identifier BLOOD_DRAIN_SOUND = id("drain_blood");
     public static final Identifier BLOOD_STORAGE_ITEM_MODEL_PREDICATE = id("blood_storage_item_fill");
+    public static final Identifier VAMPIRES_GET_HUNGER_FROM_ID = id("vampires_get_hunger_from");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

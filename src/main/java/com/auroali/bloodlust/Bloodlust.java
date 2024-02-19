@@ -45,7 +45,7 @@ public class Bloodlust implements ModInitializer {
 
 		UseItemCallback.EVENT.register((player, world, hand) -> {
 			ItemStack stack = player.getStackInHand(hand);
-			if(VampireHelper.isVampire(player) && stack.isFood() && ! stack.isIn(BLTags.Items.VAMPIRE_FOOD))
+			if(VampireHelper.isVampire(player) && stack.isFood() && ! stack.isIn(BLTags.Items.VAMPIRE_EDIBLE))
 				return TypedActionResult.fail(stack);
 
 			return TypedActionResult.pass(stack);
