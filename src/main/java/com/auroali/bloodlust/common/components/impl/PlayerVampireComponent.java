@@ -9,12 +9,14 @@ import com.auroali.bloodlust.common.registry.BLSounds;
 import com.auroali.bloodlust.common.registry.BLTags;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.EntityInteraction;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -81,11 +83,13 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void readFromNbt(NbtCompound tag) {
         isVampire = tag.getBoolean("IsVampire");
+        timeInSun = tag.getInt("TimeInSun");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("IsVampire", isVampire);
+        tag.putInt("TimeInSun", timeInSun);
     }
 
     @Override
@@ -93,12 +97,29 @@ public class PlayerVampireComponent implements VampireComponent {
         if(!isVampire)
             return;
 
-        if(isAffectedByDaylight())
-            holder.setOnFireFor(8);
+        tickSunEffects();
 
         if(target != null) {
             tickBloodDrain();
         }
+    }
+
+    public void tickSunEffects() {
+        if(!isAffectedByDaylight()) {
+            if(timeInSun > 0) {
+                timeInSun = 0;
+                BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+            }
+            return;
+        }
+
+        if(timeInSun < getMaxTimeInSun()) {
+            timeInSun++;
+            BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+            return;
+        }
+
+        holder.setOnFireFor(8);
     }
 
     public void tickBloodDrain() {
@@ -110,6 +131,16 @@ public class PlayerVampireComponent implements VampireComponent {
         }
 
         bloodDrainTimer++;
+
+        target.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.SLOWNESS,
+                2,
+                2,
+                true,
+                false,
+                false
+        ));
+
         if(bloodDrainTimer % 4 == 0)
             holder.world.playSound(
                     null,
@@ -135,7 +166,9 @@ public class PlayerVampireComponent implements VampireComponent {
             float f = holder.getBrightnessAtEyes();
             BlockPos blockPos = new BlockPos(holder.getX(), holder.getEyeY(), holder.getZ());
             boolean bl = holder.isWet() || holder.inPowderSnow || holder.wasInPowderSnow;
-            return f > 0.5F && !bl && holder.world.isSkyVisible(blockPos);
+            return f > 0.5F
+                    && !bl
+                    && holder.world.isSkyVisible(blockPos);
         }
 
         return false;
@@ -145,12 +178,14 @@ public class PlayerVampireComponent implements VampireComponent {
     public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
         buf.writeBoolean(isVampire);
         buf.writeInt(bloodDrainTimer);
+        buf.writeInt(timeInSun);
     }
 
     @Override
     public void applySyncPacket(PacketByteBuf buf) {
         isVampire = buf.readBoolean();
         bloodDrainTimer = buf.readInt();
+        timeInSun = buf.readInt();
     }
 
     @Override
@@ -185,6 +220,25 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public int getBloodDrainTimer() {
         return bloodDrainTimer;
+    }
+
+    @Override
+    public int getMaxTimeInSun() {
+        int maxTime = 40;
+        ItemStack helmet = holder.getEquippedStack(EquipmentSlot.HEAD);
+        if(helmet.isEmpty())
+            return maxTime;
+
+        if(helmet.isIn(BLTags.Items.SUN_BLOCKING_HELMETS))
+            maxTime *= 4;
+
+        // todo: add enchantment to protect from the sun?
+        return maxTime;
+    }
+
+    @Override
+    public int getTimeInSun() {
+        return timeInSun;
     }
 
     public void updateTarget() {

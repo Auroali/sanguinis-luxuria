@@ -41,11 +41,13 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
     @Override
     public void readFromNbt(NbtCompound tag) {
         currentBlood = tag.getInt("Blood");
+        bloodGainTimer = tag.getInt("BloodTimer");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putInt("Blood", currentBlood);
+        tag.putInt("BloodTimer", bloodGainTimer);
     }
 
     @Override
@@ -79,6 +81,8 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
             return true;
         }
 
+        currentBlood = 0;
+        BLEntityComponents.BLOOD_COMPONENT.sync(holder);
         holder.kill();
         return true;
     }

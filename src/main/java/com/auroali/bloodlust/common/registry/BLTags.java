@@ -18,5 +18,6 @@ public class BLTags {
         public static final TagKey<Item> VAMPIRE_EDIBLE = TagKey.of(Registry.ITEM_KEY, BLResources.VAMPIRE_FOOD_ID);
         public static final TagKey<Item> VAMPIRES_GET_HUNGER_FROM = TagKey.of(Registry.ITEM_KEY, BLResources.VAMPIRES_GET_HUNGER_FROM_ID);
         public static final TagKey<Item> FACE_TRINKETS = TagKey.of(Registry.ITEM_KEY, new Identifier("trinkets", "head/face"));
+        public static final TagKey<Item> SUN_BLOCKING_HELMETS = TagKey.of(Registry.ITEM_KEY, BLResources.SUN_BLOCKING_HELMETS);
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -18,6 +19,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class BloodStorageItem extends Item {
@@ -26,6 +28,16 @@ public class BloodStorageItem extends Item {
     public BloodStorageItem(Settings settings, int maxBlood) {
         super(settings);
         this.maxBlood = maxBlood;
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        super.appendStacks(group, stacks);
+        if(isIn(group)) {
+            ItemStack stack = new ItemStack(this);
+            setStoredBlood(stack, getMaxBlood());
+            stacks.add(stack);
+        }
     }
 
     public static boolean isHoldingBloodFillableItem(LivingEntity entity) {

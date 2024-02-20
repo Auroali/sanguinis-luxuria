@@ -13,7 +13,7 @@ public class BLItems {
     public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1));
     public static final BloodStorageItem BLOOD_BAG = new BloodStorageItem(
             new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1),
-            20
+            10
     );
 
     public static void register() {

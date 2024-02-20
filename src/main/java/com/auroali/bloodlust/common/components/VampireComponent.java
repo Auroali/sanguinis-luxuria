@@ -16,4 +16,6 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     void stopSuckingBlood();
     int getBloodDrainTimer();
+    int getMaxTimeInSun();
+    int getTimeInSun();
 }

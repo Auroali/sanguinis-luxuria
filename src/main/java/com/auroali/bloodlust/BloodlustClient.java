@@ -58,6 +58,7 @@ public class BloodlustClient implements ClientModInitializer {
                 sendBloodDrainPacket(false);
             }
         });
+
     }
 
     public static boolean isLookingAtValidTarget() {
