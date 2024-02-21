@@ -55,7 +55,7 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void drainBloodFrom(LivingEntity entity) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-        if(!blood.hasBlood() || !blood.drainBlood())
+        if(!blood.hasBlood() || !blood.drainBlood(holder))
             return;
 
         if(entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))

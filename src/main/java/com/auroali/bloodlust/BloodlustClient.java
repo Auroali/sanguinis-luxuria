@@ -2,10 +2,12 @@ package com.auroali.bloodlust;
 
 import com.auroali.bloodlust.client.BLHud;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
+import com.auroali.bloodlust.common.registry.BLBlocks;
 import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLTags;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -14,6 +16,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
@@ -40,6 +43,9 @@ public class BloodlustClient implements ClientModInitializer {
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
 
         ModelPredicateProviderRegistry.register(BLItems.BLOOD_BAG, BLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, BLItems.BLOOD_BAG::modelPredicate);
+        ModelPredicateProviderRegistry.register(BLItems.BLOOD_BOTTLE, BLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, BLItems.BLOOD_BOTTLE::modelPredicate);
+
+        BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.BLOOD_SPLATTER, RenderLayer.getCutout());
 
         HudRenderCallback.EVENT.register(BLHud::render);
     }

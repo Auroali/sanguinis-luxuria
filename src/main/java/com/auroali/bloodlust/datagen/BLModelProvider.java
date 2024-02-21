@@ -14,7 +14,6 @@ public class BLModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-
     }
 
     @Override
@@ -26,5 +25,7 @@ public class BLModelProvider extends FabricModelProvider {
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_1", Models.GENERATED);
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_2", Models.GENERATED);
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_3", Models.GENERATED);
+
+        itemModelGenerator.register(BLItems.BLOOD_BOTTLE, "_2", Models.GENERATED);
     }
 }

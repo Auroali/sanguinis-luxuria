@@ -61,5 +61,8 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.DROWNED)
                 .add(EntityType.ZOGLIN)
                 .add(EntityType.ZOMBIFIED_PIGLIN);
+
+        getOrCreateTagBuilder(BLTags.Entities.CAN_DROP_BLOOD)
+                .add(EntityType.VILLAGER);
     }
 }

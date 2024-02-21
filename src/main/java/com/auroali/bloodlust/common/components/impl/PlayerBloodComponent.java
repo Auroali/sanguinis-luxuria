@@ -1,6 +1,7 @@
 package com.auroali.bloodlust.common.components.impl;
 
 import com.auroali.bloodlust.common.components.BloodComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
@@ -37,13 +38,23 @@ public class PlayerBloodComponent implements BloodComponent {
     }
 
     @Override
-    public boolean drainBlood() {
+    public void setBlood(int amount) {
+        holder.getHungerManager().setFoodLevel(amount);
+    }
+
+    @Override
+    public boolean drainBlood(LivingEntity entity) {
         int currentBlood = getBlood();
         if(currentBlood > 0) {
             holder.getHungerManager().setFoodLevel(currentBlood - 1);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean drainBlood() {
+        return drainBlood(null);
     }
 
     @Override

@@ -6,10 +6,17 @@
   "bloodlust.config.option.vampire_exhaustion_multiplier.desc": "How much exhaustion is multiplied by for vampires",
   "bloodlust.config.title": "Bloodlust",
   "category.bloodlust.bloodlust": "Bloodlust",
+  "death.attack.blood_drain_by_entity": "%1$s had their blood drained by %2$s",
+  "death.attack.blood_drain_by_entity.item": "%1$s had their blood drained by %2$s",
+  "death.attack.bloodlust.drain_blood": "%1$s had their blood drained",
+  "death.attack.bloodlust.drain_blood.player": "%1$s had their blood drained whilst fighting %2$s",
+  "effect.bloodlust.blood_sickness": "Blood Sickness",
   "item.bloodlust.blood_bag": "Blood Bag",
+  "item.bloodlust.blood_bottle": "Blood Bottle",
   "item.bloodlust.mask_1": "Carved Mask",
   "item.bloodlust.mask_2": "Carved Mask",
   "item.bloodlust.mask_3": "Carved Mask",
+  "itemGroup.bloodlust.bloodlust": "Bloodlust",
   "key.bloodlust.bite": "Bite",
   "subtitles.bloodlust.drain_blood": "Vampire feeding"
 }

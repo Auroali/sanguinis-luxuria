@@ -2,17 +2,16 @@ package com.auroali.bloodlust.common.items;
 
 import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
+import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLSounds;
+import com.auroali.bloodlust.common.registry.BLStatusEffects;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
+import net.minecraft.item.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stats;
@@ -24,6 +23,7 @@ import net.minecraft.world.World;
 
 public class BloodStorageItem extends Item {
     final int maxBlood;
+    Item emptyItem = null;
 
     public BloodStorageItem(Settings settings, int maxBlood) {
         super(settings);
@@ -41,11 +41,14 @@ public class BloodStorageItem extends Item {
     }
 
     public static boolean isHoldingBloodFillableItem(LivingEntity entity) {
+        if(entity == null)
+            return false;
+
         ItemStack stack = ItemStack.EMPTY;
-        if(entity.getOffHandStack().getItem() instanceof BloodStorageItem) {
+        if(entity.getOffHandStack().getItem() instanceof BloodStorageItem || entity.getOffHandStack().isOf(Items.GLASS_BOTTLE)) {
             stack = entity.getOffHandStack();
         }
-        if(entity.getMainHandStack().getItem() instanceof BloodStorageItem) {
+        if(entity.getMainHandStack().getItem() instanceof BloodStorageItem || entity.getMainHandStack().isOf(Items.GLASS_BOTTLE)) {
             stack = entity.getMainHandStack();
         }
         return !stack.isEmpty();
@@ -64,22 +67,39 @@ public class BloodStorageItem extends Item {
                 return stack;
 
             if(!VampireHelper.isVampire(user))
-                user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 2));
+                applyNonVampireEffects(user);
             if(VampireHelper.isVampire(user))
                 bloodToAdd = BLEntityComponents.BLOOD_COMPONENT.get(user).addBlood(bloodToAdd);
 
-            setStoredBlood(stack, getStoredBlood(stack) - bloodToAdd);
+            if(!(user instanceof PlayerEntity entity && entity.isCreative()))
+                setStoredBlood(stack, getStoredBlood(stack) - bloodToAdd);
+            if(getStoredBlood(stack) == 0 && emptyItem != null)
+                return new ItemStack(emptyItem, stack.getCount());
         }
 
 
         return stack;
     }
 
+    private void applyNonVampireEffects(LivingEntity user) {
+        user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 2));
+        if(user.getRandom().nextDouble() > 0.9)
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
+
+        int bloodSicknessLevel = user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS) == null ? 0 : user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1;
+        user.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 200, bloodSicknessLevel));
+    }
+
+    public BloodStorageItem emptyItem(Item item) {
+        this.emptyItem = item;
+        return this;
+    }
+
     public float modelPredicate(ItemStack stack, ClientWorld world, LivingEntity entity, int seed) {
         int storedBlood = getStoredBlood(stack);
         if(storedBlood == 0)
-            return 0;
-        return Math.max(storedBlood / (float) maxBlood, 0.3f);
+            return -1;
+        return storedBlood / (float) maxBlood;
     }
 
     @Override
@@ -118,23 +138,35 @@ public class BloodStorageItem extends Item {
 
     public static boolean tryAddBloodToItemInHand(LivingEntity entity, int amount) {
         ItemStack stack = ItemStack.EMPTY;
+        Hand hand = Hand.MAIN_HAND;
         BloodStorageItem storage = null;
         if(entity.getOffHandStack().getItem() instanceof BloodStorageItem item) {
             stack = entity.getOffHandStack();
             storage = item;
+        } else if(entity.getOffHandStack().isOf(Items.GLASS_BOTTLE)) {
+            hand = Hand.OFF_HAND;
+            stack = new ItemStack(BLItems.BLOOD_BOTTLE);
+            storage = BLItems.BLOOD_BAG;
         }
         if(entity.getMainHandStack().getItem() instanceof BloodStorageItem item) {
             stack = entity.getMainHandStack();
             storage = item;
+        } else if(entity.getMainHandStack().isOf(Items.GLASS_BOTTLE)) {
+            hand = Hand.MAIN_HAND;
+            stack = new ItemStack(BLItems.BLOOD_BOTTLE);
+            storage = BLItems.BLOOD_BAG;
         }
 
-        if(stack.isEmpty() || storage.getStoredBlood(stack) + amount >= storage.getMaxBlood())
+        if(stack.isEmpty() || storage.getStoredBlood(stack) + amount > storage.getMaxBlood())
             return false;
 
         if(entity instanceof PlayerEntity player && player.getItemCooldownManager().isCoolingDown(stack.getItem()))
             return false;
 
         storage.setStoredBlood(stack, storage.getStoredBlood(stack) + amount);
+
+        entity.setStackInHand(hand, stack);
+
         if(entity instanceof PlayerEntity player) {
             player.getItemCooldownManager().set(storage, 5);
         }

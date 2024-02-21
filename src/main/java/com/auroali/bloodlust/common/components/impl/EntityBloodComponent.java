@@ -2,6 +2,7 @@ package com.auroali.bloodlust.common.components.impl;
 
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.registry.BLDamageSources;
 import com.auroali.bloodlust.common.registry.BLTags;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
@@ -66,11 +67,18 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         int newBlood = Math.min(maxBlood, amount + currentBlood);
         int bloodAdded = newBlood - currentBlood;
         currentBlood = newBlood;
+        BLEntityComponents.BLOOD_COMPONENT.sync(holder);
         return bloodAdded;
     }
 
     @Override
-    public boolean drainBlood() {
+    public void setBlood(int amount) {
+        this.currentBlood = amount;
+        BLEntityComponents.BLOOD_COMPONENT.sync(holder);
+    }
+
+    @Override
+    public boolean drainBlood(LivingEntity drainer) {
         if(!hasBlood())
             return false;
 
@@ -83,8 +91,16 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
 
         currentBlood = 0;
         BLEntityComponents.BLOOD_COMPONENT.sync(holder);
-        holder.kill();
+        if(drainer == null)
+            holder.damage(BLDamageSources.BLOOD_DRAIN, Float.MAX_VALUE);
+        else
+            holder.damage(BLDamageSources.bloodDrain(drainer), Float.MAX_VALUE);
         return true;
+    }
+
+    @Override
+    public boolean drainBlood() {
+        return drainBlood(null);
     }
 
     @Override

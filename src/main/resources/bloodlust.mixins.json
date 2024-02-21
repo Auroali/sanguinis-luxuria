@@ -9,6 +9,7 @@
     "HungerManagerMixin",
     "IronGolemEntityMixin",
     "LivingEntityMixin",
+    "PlayerEntityMixin",
     "StatusEffectMixin",
     "VillagerEntityMixin",
     "VillagerHostilesSensorMixin",

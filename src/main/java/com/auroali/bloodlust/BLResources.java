@@ -19,6 +19,12 @@ public class BLResources {
     public static final Identifier BLOOD_STORAGE_ITEM_MODEL_PREDICATE = id("blood_storage_item_fill");
     public static final Identifier VAMPIRES_GET_HUNGER_FROM_ID = id("vampires_get_hunger_from");
     public static final Identifier SUN_BLOCKING_HELMETS = id("sun_blocking_helmets");
+    public static final Identifier BLOOD_BOTTLE_ID = id("blood_bottle");
+    public static final Identifier ITEM_GROUP_ID = id("bloodlust");
+    public static final Identifier BLOOD_SICKNESS_ID = id("blood_sickness");
+    public static final Identifier BLOOD_SPLATTER_ID = id("blood_splatter");
+    public static final Identifier CAN_DROP_BLOOD = id("can_drop_blood");
+    public static final Identifier BLOOD_SPLATTER_REPLACEABLE = id("blood_splatter_replaceable");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

@@ -2,15 +2,18 @@ package com.auroali.bloodlust;
 
 import com.auroali.bloodlust.common.commands.BloodlustCommand;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
+import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
-import com.auroali.bloodlust.common.registry.BLItems;
-import com.auroali.bloodlust.common.registry.BLSounds;
-import com.auroali.bloodlust.common.registry.BLTags;
+import com.auroali.bloodlust.common.registry.*;
 import com.auroali.bloodlust.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.TypedActionResult;
 import org.slf4j.Logger;
@@ -22,6 +25,9 @@ public class Bloodlust implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final String MODID = "bloodlust";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+	public static final ItemGroup BLOODLUST_TAB = FabricItemGroupBuilder.create(BLResources.ITEM_GROUP_ID)
+			.icon(() -> new ItemStack(BLItems.BLOOD_BOTTLE))
+			.build();
 
 	@Override
 	public void onInitialize() {
@@ -51,7 +57,26 @@ public class Bloodlust implements ModInitializer {
 			return TypedActionResult.pass(stack);
 		});
 
+		ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
+			if(!VampireHelper.isVampire(entity)
+					&& entity.getType().isIn(BLTags.Entities.HAS_BLOOD)
+					&& entity.getType().isIn(BLTags.Entities.CAN_DROP_BLOOD)
+			) {
+				BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+				if(blood.getBlood() < blood.getMaxBlood())
+					return;
+
+				BlockState state = entity.world.getBlockState(entity.getBlockPos());
+				BlockState newState = BLBlocks.BLOOD_SPLATTER.getDefaultState();
+				if(!state.isIn(BLTags.Blocks.BLOOD_SPLATTER_REPLACEABLE) || !newState.canPlaceAt(entity.world, entity.getBlockPos()))
+					return;
+				entity.world.setBlockState(entity.getBlockPos(), newState);
+			}
+		});
+
+		BLBlocks.register();
 		BLItems.register();
 		BLSounds.register();
+		BLStatusEffects.register();
 	}
 }
