@@ -5,8 +5,11 @@ import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
+import com.auroali.bloodlust.common.registry.BLDamageSources;
 import com.auroali.bloodlust.common.registry.BLSounds;
+import com.auroali.bloodlust.common.registry.BLStatusEffects;
 import com.auroali.bloodlust.common.registry.BLTags;
+import com.auroali.bloodlust.config.BLConfig;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.EquipmentSlot;
@@ -57,6 +60,12 @@ public class PlayerVampireComponent implements VampireComponent {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
         if(!blood.hasBlood() || !blood.drainBlood(holder))
             return;
+
+        // damage the vampire and cancel filling up hunger if the target has blood protection
+        if(entity.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) {
+            holder.damage(BLDamageSources.blessedWater(entity), BLConfig.INSTANCE.blessedWaterDamage);
+            return;
+        }
 
         if(entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
             holder.getHungerManager().add(2, 0.05f);

@@ -28,6 +28,7 @@ public class BLConfig {
 
     public float vampireDamageMultiplier = 2.5f;
     public float vampireExhaustionMultiplier = 0.25f;
+    public float blessedWaterDamage = 4f;
 
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
@@ -47,6 +48,12 @@ public class BLConfig {
                                         .binding(0.25f, () -> this.vampireExhaustionMultiplier, f -> this.vampireExhaustionMultiplier = f)
                                         .controller(FloatFieldController::new)
                                         .build()
+                                ).option(Option.createBuilder(Float.class)
+                                        .name(Text.translatable("bloodlust.config.option.blessed_water_damage"))
+                                        .tooltip(Text.translatable("bloodlust.config.option.blessed_water_damage.desc"))
+                                        .binding(4f, () -> this.blessedWaterDamage, f -> this.blessedWaterDamage = f)
+                                        .controller(FloatFieldController::new)
+                                        .build()
                                 ).build()
                         ).build()
                 )
@@ -59,6 +66,7 @@ public class BLConfig {
         JsonObject root = new JsonObject();
         root.addProperty("vampireDamageMultiplier", vampireDamageMultiplier);
         root.addProperty("vampireExhaustionMultiplier", vampireExhaustionMultiplier);
+        root.addProperty("blessedWaterDamage", blessedWaterDamage);
 
         try {
             Files.writeString(CONFIG_FILE, GSON.toJson(root));
@@ -89,6 +97,11 @@ public class BLConfig {
         if(root.has("vampireExhaustionMultiplier"))
             vampireExhaustionMultiplier = root.get("vampireExhaustionMultiplier").getAsFloat();
         else isMissingEntry = true;
+
+        if(root.has("blessedWaterDamage"))
+            blessedWaterDamage = root.get("blessedWaterDamage").getAsFloat();
+        else isMissingEntry = true;
+
 
         if(isMissingEntry)
             save();

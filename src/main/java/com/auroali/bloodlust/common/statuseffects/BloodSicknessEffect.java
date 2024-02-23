@@ -2,6 +2,7 @@ package com.auroali.bloodlust.common.statuseffects;
 
 import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
+import com.auroali.bloodlust.common.registry.BLStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -31,6 +32,6 @@ public class BloodSicknessEffect extends StatusEffect {
     }
 
     public boolean isRightConditions(LivingEntity entity, int amplifier) {
-        return !VampireHelper.isVampire(entity) && amplifier >= 4 && entity.hasStatusEffect(StatusEffects.WEAKNESS);
+        return !entity.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) && !VampireHelper.isVampire(entity) && amplifier >= 4 && entity.hasStatusEffect(StatusEffects.WEAKNESS);
     }
 }

@@ -25,6 +25,8 @@ public class BLResources {
     public static final Identifier BLOOD_SPLATTER_ID = id("blood_splatter");
     public static final Identifier CAN_DROP_BLOOD = id("can_drop_blood");
     public static final Identifier BLOOD_SPLATTER_REPLACEABLE = id("blood_splatter_replaceable");
+    public static final Identifier BLESSED_WATER_ID = id("blessed_water");
+    public static final Identifier BLOOD_PROTECTION_ID = id("blessed_blood");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
