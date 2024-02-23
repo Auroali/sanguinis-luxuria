@@ -1,6 +1,7 @@
 package com.auroali.bloodlust.common.registry;
 
 import com.auroali.bloodlust.BLResources;
+import com.auroali.bloodlust.Bloodlust;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.items.MaskItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -9,15 +10,15 @@ import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 
 public class BLItems {
-    public static final MaskItem MASK_1 = new MaskItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1));
-    public static final MaskItem MASK_2 = new MaskItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1));
-    public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1));
+    public static final MaskItem MASK_1 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
+    public static final MaskItem MASK_2 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
+    public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
     public static final BloodStorageItem BLOOD_BAG = new BloodStorageItem(
-            new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1),
+            new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1),
             10
     );
     public static final BloodStorageItem BLOOD_BOTTLE = new BloodStorageItem(
-            new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
+            new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
             2
     ).emptyItem(Items.GLASS_BOTTLE);
 

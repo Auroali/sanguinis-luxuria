@@ -26,7 +26,11 @@ public class Bloodlust implements ModInitializer {
 	public static final String MODID = "bloodlust";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 	public static final ItemGroup BLOODLUST_TAB = FabricItemGroupBuilder.create(BLResources.ITEM_GROUP_ID)
-			.icon(() -> new ItemStack(BLItems.BLOOD_BOTTLE))
+			.icon(() -> {
+				ItemStack stack = new ItemStack(BLItems.BLOOD_BOTTLE);
+				BLItems.BLOOD_BOTTLE.setStoredBlood(stack, BLItems.BLOOD_BOTTLE.getMaxBlood());
+				return stack;
+			})
 			.build();
 
 	@Override
