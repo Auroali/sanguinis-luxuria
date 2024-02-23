@@ -135,7 +135,7 @@ public class PlayerVampireComponent implements VampireComponent {
         target.addStatusEffect(new StatusEffectInstance(
                 StatusEffects.SLOWNESS,
                 2,
-                2,
+                4,
                 true,
                 false,
                 false
