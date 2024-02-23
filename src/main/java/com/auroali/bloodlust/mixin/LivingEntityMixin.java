@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
@@ -39,6 +40,17 @@ public abstract class LivingEntityMixin extends Entity {
         if(VampireHelper.isVampire((LivingEntity)(Object)this))
             return VampireComponent.calculateDamage(amount, source.get());
         return amount;
+    }
+
+    @Inject(method = "applyDamage", at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/entity/LivingEntity;setHealth(F)V"))
+    public void bloodlust$cancelBloodDrainOnDamageTaken(DamageSource source, float amount, CallbackInfo ci) {
+        if(!VampireHelper.isVampire((LivingEntity)(Object)this))
+            return;
+
+        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        vampire.stopSuckingBlood();
     }
 
     @Redirect(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tryUseTotem(Lnet/minecraft/entity/damage/DamageSource;)Z"))

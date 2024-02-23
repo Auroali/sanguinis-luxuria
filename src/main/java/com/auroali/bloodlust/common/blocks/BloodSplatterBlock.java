@@ -1,11 +1,9 @@
 package com.auroali.bloodlust.common.blocks;
 
 import com.auroali.bloodlust.common.registry.BLItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
@@ -39,13 +37,20 @@ public class BloodSplatterBlock extends Block {
                 stack.decrement(1);
                 if(!player.getInventory().insertStack(bloodBottle))
                     player.dropItem(bloodBottle, true);
-                world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                world.removeBlock(pos, false);
                 world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
 
             return ActionResult.success(world.isClient);
         }
         return super.onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+        if(!state.canPlaceAt(world, pos))
+            world.removeBlock(pos, false);
     }
 
     @Override
@@ -62,6 +67,11 @@ public class BloodSplatterBlock extends Block {
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.randomTick(state, world, pos, random);
         if(random.nextInt(25) == 0)
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            world.removeBlock(pos, false);
+    }
+
+    @Override
+    public boolean canReplace(BlockState state, ItemPlacementContext context) {
+        return context.getStack().isEmpty() || !context.getStack().isOf(this.asItem());
     }
 }

@@ -14,15 +14,23 @@ public class BloodSicknessEffect extends StatusEffect {
     }
 
     @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        super.onApplied(entity, attributes, amplifier);
-        if(amplifier > 4 && !VampireHelper.isVampire(entity) && isRightConditions(entity)) {
-            BLEntityComponents.VAMPIRE_COMPONENT.get(entity).setIsVampire(true);
-            entity.clearStatusEffects();
-        }
+    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+        return duration == 1;
     }
 
-    public boolean isRightConditions(LivingEntity entity) {
-        return entity.hasStatusEffect(StatusEffects.WEAKNESS);
+    @Override
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        super.applyUpdateEffect(entity, amplifier);
+        if(isRightConditions(entity, amplifier) && BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity))
+            BLEntityComponents.VAMPIRE_COMPONENT.get(entity).setIsVampire(true);
+    }
+
+    @Override
+    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        super.onApplied(entity, attributes, amplifier);
+    }
+
+    public boolean isRightConditions(LivingEntity entity, int amplifier) {
+        return !VampireHelper.isVampire(entity) && amplifier >= 4 && entity.hasStatusEffect(StatusEffects.WEAKNESS);
     }
 }
