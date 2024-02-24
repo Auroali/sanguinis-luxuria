@@ -90,11 +90,20 @@ public class BloodStorageItem extends Item {
         user.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, bloodSicknessLevel));
     }
 
+    /**
+     * The item to replace this one with when it runs out of blood
+     * @param item the item to use
+     * @see BLItems#BLOOD_BOTTLE
+     */
     public BloodStorageItem emptyItem(Item item) {
         this.emptyItem = item;
         return this;
     }
 
+    /**
+     * The model predicate to use with ModelPredicateProviderRegistry
+     * @see net.minecraft.client.item.ModelPredicateProviderRegistry
+     */
     public float modelPredicate(ItemStack stack, ClientWorld world, LivingEntity entity, int seed) {
         int storedBlood = getStoredBlood(stack);
         if(storedBlood == 0)
@@ -109,14 +118,28 @@ public class BloodStorageItem extends Item {
         return ItemUsage.consumeHeldItem(world, user, hand);
     }
 
+    /**
+     * Sets the amount of blood stored in a given stack
+     * @param stack the blood storage item stack
+     * @param blood the amount of blood
+     */
     public void setStoredBlood(ItemStack stack, int blood) {
         stack.getOrCreateNbt().putInt("StoredBlood", blood);
     }
 
+    /**
+     * Gets the maximum amount of blood this item can store
+     * @return the maximum amount of blood
+     */
     public int getMaxBlood() {
         return maxBlood;
     }
 
+    /**
+     * Gets the amount of blood stored in a stack
+     * @param stack the item stack
+     * @return the amount of blood stored in the stack
+     */
     public int getStoredBlood(ItemStack stack) {
         return stack.getOrCreateNbt().getInt("StoredBlood");
     }
