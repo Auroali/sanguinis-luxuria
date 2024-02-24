@@ -57,6 +57,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLStatusEffects.BLESSED_WATER, "Blessed Water");
         translationBuilder.add(BLStatusEffects.BLOOD_PROTECTION, "Blessed Blood");
 
+        translationBuilder.add("argument.bloodlust.id.invalid", "'%s' is not a valid id!");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");

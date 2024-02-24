@@ -1,16 +1,16 @@
 package com.auroali.bloodlust.common.components.impl;
 
 import com.auroali.bloodlust.VampireHelper;
+import com.auroali.bloodlust.common.abilities.VampireAbility;
+import com.auroali.bloodlust.common.abilities.VampireAbilityContainer;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
-import com.auroali.bloodlust.common.registry.BLDamageSources;
-import com.auroali.bloodlust.common.registry.BLSounds;
-import com.auroali.bloodlust.common.registry.BLStatusEffects;
-import com.auroali.bloodlust.common.registry.BLTags;
+import com.auroali.bloodlust.common.registry.*;
 import com.auroali.bloodlust.config.BLConfig;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -35,6 +35,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class PlayerVampireComponent implements VampireComponent {
@@ -45,6 +46,7 @@ public class PlayerVampireComponent implements VampireComponent {
             EntityAttributeModifier.Operation.ADDITION
     );
 
+    private final VampireAbilityContainer abilities = new VampireAbilityContainer();
     private final PlayerEntity holder;
     private boolean isVampire;
     private LivingEntity target;
@@ -118,18 +120,23 @@ public class PlayerVampireComponent implements VampireComponent {
     public void readFromNbt(NbtCompound tag) {
         isVampire = tag.getBoolean("IsVampire");
         timeInSun = tag.getInt("TimeInSun");
+        abilities.load(tag);
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("IsVampire", isVampire);
         tag.putInt("TimeInSun", timeInSun);
+        abilities.save(tag);
     }
 
     @Override
     public void serverTick() {
         if(!isVampire)
             return;
+
+        abilities.tick(holder, this);
 
         tickSunEffects();
         tickBloodEffects();
@@ -250,6 +257,7 @@ public class PlayerVampireComponent implements VampireComponent {
         buf.writeBoolean(isVampire);
         buf.writeInt(bloodDrainTimer);
         buf.writeInt(timeInSun);
+        abilities.writePacket(buf);
     }
 
     @Override
@@ -257,6 +265,7 @@ public class PlayerVampireComponent implements VampireComponent {
         isVampire = buf.readBoolean();
         bloodDrainTimer = buf.readInt();
         timeInSun = buf.readInt();
+        abilities.readPacket(buf);
     }
 
     @Override
@@ -310,6 +319,11 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public int getTimeInSun() {
         return timeInSun;
+    }
+
+    @Override
+    public VampireAbilityContainer getAbilties() {
+        return abilities;
     }
 
     private void updateTarget() {

@@ -1,6 +1,7 @@
 package com.auroali.bloodlust;
 
 import com.auroali.bloodlust.common.commands.BloodlustCommand;
+import com.auroali.bloodlust.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
@@ -8,12 +9,15 @@ import com.auroali.bloodlust.common.registry.*;
 import com.auroali.bloodlust.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.block.BlockState;
+import net.minecraft.command.argument.serialize.ArgumentSerializer;
+import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.TypedActionResult;
@@ -37,7 +41,14 @@ public class Bloodlust implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		BLRegistry.init();
 		BLConfig.INSTANCE.load();
+
+		ArgumentTypeRegistry.registerArgumentType(
+				BLResources.VAMPIRE_ABILITY_ARGUMENT_ID,
+				VampireAbilityArgument.class,
+				ConstantArgumentSerializer.of(VampireAbilityArgument::argument)
+		);
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(BloodlustCommand.register()));
 
@@ -86,5 +97,6 @@ public class Bloodlust implements ModInitializer {
 		BLItems.register();
 		BLSounds.register();
 		BLStatusEffects.register();
+		BLVampireAbilities.register();
 	}
 }

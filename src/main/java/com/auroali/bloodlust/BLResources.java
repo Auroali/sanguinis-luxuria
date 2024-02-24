@@ -28,6 +28,9 @@ public class BLResources {
     public static final Identifier BLESSED_WATER_ID = id("blessed_water");
     public static final Identifier BLOOD_PROTECTION_ID = id("blessed_blood");
     public static final Identifier VAMPIRE_MASKS_ID = id("vampire_masks");
+    public static final Identifier VAMPIRE_ABILITY_REGISTRY_ID = id("vampire_ability");
+    public static final Identifier VAMPIRE_HEALTH_1_ID = id("health_1");
+    public static final Identifier VAMPIRE_ABILITY_ARGUMENT_ID = id("ability_argument");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

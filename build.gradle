@@ -40,6 +40,9 @@ repositories {
 	maven {
 		url "https://maven.shedaniel.me/"
 	}
+	maven {
+		url 'https://maven.blamejared.com'
+	}
 }
 
 fabricApi {
@@ -80,6 +83,9 @@ dependencies {
 		exclude module: 'modmenu'
 		exclude module: 'fabric-loader'
 	}
+
+	modImplementation "net.darkhax.maxhealthfix:MaxHealthFix-Fabric-${project.minecraft_version}:${project.max_health_fix_version}"
+	include "net.darkhax.maxhealthfix:MaxHealthFix-Fabric-${project.minecraft_version}:${project.max_health_fix_version}"
 
 	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.

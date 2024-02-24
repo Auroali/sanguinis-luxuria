@@ -8,6 +8,7 @@ import net.minecraft.server.command.ServerCommandSource;
 public class BloodlustCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal(Bloodlust.MODID.toLowerCase())
-                .then(VampireCommand.register());
+                .then(VampireCommand.register())
+                .then(AbilityCommand.register());
     }
 }
