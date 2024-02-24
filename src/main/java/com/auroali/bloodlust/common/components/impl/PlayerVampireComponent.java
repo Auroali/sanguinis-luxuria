@@ -14,6 +14,9 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -32,7 +35,16 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
+import java.util.UUID;
+
 public class PlayerVampireComponent implements VampireComponent {
+    private static final EntityAttributeModifier SPEED_ATTRIBUTE = new EntityAttributeModifier(
+            UUID.fromString("a2440a9d-964a-4a84-beac-3c56917cc9fd"),
+            "bloodlust.vampire_speed",
+            0.02,
+            EntityAttributeModifier.Operation.ADDITION
+    );
+
     private final PlayerEntity holder;
     private boolean isVampire;
     private LivingEntity target;
@@ -53,6 +65,8 @@ public class PlayerVampireComponent implements VampireComponent {
     public void setIsVampire(boolean isVampire) {
         this.isVampire = isVampire;
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+        if(!isVampire)
+            removeModifiers();
     }
 
     @Override
@@ -85,7 +99,7 @@ public class PlayerVampireComponent implements VampireComponent {
         }
     }
 
-    public void addBloodSickness(LivingEntity target) {
+    private void addBloodSickness(LivingEntity target) {
         int level = target.hasStatusEffect(BLStatusEffects.BLOOD_SICKNESS)
                 ? target.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1
                 : 0;
@@ -93,7 +107,7 @@ public class PlayerVampireComponent implements VampireComponent {
         target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, level));
     }
 
-    public void addToxicBloodEffects() {
+    private void addToxicBloodEffects() {
         holder.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 3));
         holder.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 0));
         if(holder.getRandom().nextDouble() > 0.75)
@@ -118,13 +132,40 @@ public class PlayerVampireComponent implements VampireComponent {
             return;
 
         tickSunEffects();
+        tickBloodEffects();
 
         if(target != null) {
             tickBloodDrain();
         }
     }
 
-    public void tickSunEffects() {
+    private void removeModifiers() {
+        AttributeContainer attributes = holder.getAttributes();
+        if(attributes.getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).hasModifier(SPEED_ATTRIBUTE))
+            attributes.getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(SPEED_ATTRIBUTE);
+    }
+
+    private void tickBloodEffects() {
+        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(holder);
+
+        if(blood.getBlood() < 6)
+            holder.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.WEAKNESS,
+                    4,
+                    0,
+                    true,
+                    true
+            ));
+
+        if(blood.getBlood() > 4 && !holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).hasModifier(SPEED_ATTRIBUTE)) {
+            holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)
+                    .addTemporaryModifier(SPEED_ATTRIBUTE);
+        } else if(blood.getBlood() <= 4 && holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).hasModifier(SPEED_ATTRIBUTE)) {
+            holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(SPEED_ATTRIBUTE);
+        }
+    }
+
+    private void tickSunEffects() {
         if(!isAffectedByDaylight()) {
             if(timeInSun > 0) {
                 timeInSun = 0;
@@ -132,6 +173,16 @@ public class PlayerVampireComponent implements VampireComponent {
             }
             return;
         }
+
+        if(timeInSun >= getMaxTimeInSun() / 2)
+            holder.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.WEAKNESS,
+                    4,
+                    0,
+                    true,
+                    true
+            ));
+
 
         if(timeInSun < getMaxTimeInSun()) {
             timeInSun++;
@@ -142,7 +193,7 @@ public class PlayerVampireComponent implements VampireComponent {
         holder.setOnFireFor(8);
     }
 
-    public void tickBloodDrain() {
+    private void tickBloodDrain() {
         updateTarget();
         if(target == null) {
             bloodDrainTimer = 0;
@@ -181,7 +232,7 @@ public class PlayerVampireComponent implements VampireComponent {
     }
 
     // from MobEntity
-    public boolean isAffectedByDaylight() {
+    private boolean isAffectedByDaylight() {
         if (holder.world.isDay() && !holder.world.isClient) {
             float f = holder.getBrightnessAtEyes();
             BlockPos blockPos = new BlockPos(holder.getX(), holder.getEyeY(), holder.getZ());
@@ -217,7 +268,7 @@ public class PlayerVampireComponent implements VampireComponent {
         }
     }
 
-    public void tryToFillStorage() {
+    private void tryToFillStorage() {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(holder);
         if(blood.getBlood() == 0)
             return;
@@ -233,7 +284,7 @@ public class PlayerVampireComponent implements VampireComponent {
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
-    boolean canDrainBlood() {
+    private boolean canDrainBlood() {
         return !VampireHelper.isMasked(holder);
     }
 
@@ -261,7 +312,7 @@ public class PlayerVampireComponent implements VampireComponent {
         return timeInSun;
     }
 
-    public void updateTarget() {
+    private void updateTarget() {
         HitResult result = getTarget();
         if(!canDrainBlood() || result.getType() != HitResult.Type.ENTITY) {
             target = null;
@@ -284,7 +335,7 @@ public class PlayerVampireComponent implements VampireComponent {
         target = entity;
     }
 
-    public HitResult getTarget() {
+    private HitResult getTarget() {
         double reachDistance = ReachEntityAttributes.getAttackRange(holder, 3.0);
         Vec3d start = holder.getEyePos();
         Vec3d end = start.add(holder.getRotationVector().multiply(reachDistance));
