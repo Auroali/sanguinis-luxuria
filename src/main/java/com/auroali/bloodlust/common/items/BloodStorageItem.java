@@ -87,7 +87,7 @@ public class BloodStorageItem extends Item {
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
 
         int bloodSicknessLevel = user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS) == null ? 0 : user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1;
-        user.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 200, bloodSicknessLevel));
+        user.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, bloodSicknessLevel));
     }
 
     public BloodStorageItem emptyItem(Item item) {

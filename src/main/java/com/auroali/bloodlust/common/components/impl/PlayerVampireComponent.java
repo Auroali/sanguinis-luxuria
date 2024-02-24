@@ -75,11 +75,22 @@ public class PlayerVampireComponent implements VampireComponent {
         if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
             addToxicBloodEffects();
 
+        if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS))
+            addBloodSickness(target);
+
         if(entity.world instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
             serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
             if(holder.getRandom().nextDouble() > 0.5f)
                 entity.wakeUp();
         }
+    }
+
+    public void addBloodSickness(LivingEntity target) {
+        int level = target.hasStatusEffect(BLStatusEffects.BLOOD_SICKNESS)
+                ? target.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1
+                : 0;
+
+        target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, level));
     }
 
     public void addToxicBloodEffects() {

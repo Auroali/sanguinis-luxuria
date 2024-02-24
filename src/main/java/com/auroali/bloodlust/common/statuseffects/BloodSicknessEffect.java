@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 
 public class BloodSicknessEffect extends StatusEffect {
@@ -16,13 +17,21 @@ public class BloodSicknessEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return duration == 1;
+        return true;
     }
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(entity, amplifier);
-        if(isRightConditions(entity, amplifier) && BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity))
+        int duration = entity.getStatusEffect(this).getDuration();
+
+        if(amplifier > 2 && entity.getRandom().nextInt(15) == 0)
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100));
+
+        if(amplifier >= 4 && duration < 1000 && entity.getRandom().nextInt(25) == 0)
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
+
+        if(duration == 1 && isRightConditions(entity, amplifier) && BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity))
             BLEntityComponents.VAMPIRE_COMPONENT.get(entity).setIsVampire(true);
     }
 
