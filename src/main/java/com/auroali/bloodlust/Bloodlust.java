@@ -1,5 +1,6 @@
 package com.auroali.bloodlust;
 
+import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.commands.BloodlustCommand;
 import com.auroali.bloodlust.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
@@ -63,6 +64,17 @@ public class Bloodlust implements ModInitializer {
 					vampire.tryStartSuckingBlood();
 				else
 					vampire.stopSuckingBlood();
+			});
+		});
+
+		ServerPlayNetworking.registerGlobalReceiver(BLResources.SKILL_TREE_CHANNEL, (server, player, handler, buf, responseSender) -> {
+			VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+			server.execute(() -> {
+				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+				if(vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()) || vampire.getSkillPoints() < ability.getRequiredSkillPoints())
+					return;
+
+				vampire.unlockAbility(ability);
 			});
 		});
 

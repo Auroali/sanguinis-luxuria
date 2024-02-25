@@ -1,4 +1,5 @@
 {
+  "argument.bloodlust.id.invalid": "'%s' is not a valid id!",
   "bloodlust.config.category.gameplay": "Gameplay",
   "bloodlust.config.option.blessed_water_damage": "Blessed Water Damage",
   "bloodlust.config.option.blessed_water_damage.desc": "The base amount of damage blessed water does against vampires and undead entities",
@@ -19,6 +20,8 @@
   "effect.bloodlust.blessed_blood": "Blessed Blood",
   "effect.bloodlust.blessed_water": "Blessed Water",
   "effect.bloodlust.blood_sickness": "Blood Sickness",
+  "gui.bloodlust.abilities": "Abilities",
+  "gui.bloodlust.skill_points": "Skill Points: %d",
   "item.bloodlust.blood_bag": "Blood Bag",
   "item.bloodlust.blood_bottle": "Blood Bottle",
   "item.bloodlust.mask_1": "Carved Mask",
@@ -30,5 +33,8 @@
   "item.minecraft.tipped_arrow.effect.blessed_water": "Arrow of Blessed Water",
   "itemGroup.bloodlust.bloodlust": "Bloodlust",
   "key.bloodlust.bite": "Bite",
-  "subtitles.bloodlust.drain_blood": "Vampire feeding"
+  "subtitles.bloodlust.drain_blood": "Vampire feeding",
+  "vampire_ability.bloodlust.health_1": "Increased Health",
+  "vampire_ability.bloodlust.health_2": "Increased Health",
+  "vampire_ability.bloodlust.strength_1": "Increased Strength"
 }

@@ -1,0 +1,53 @@
+package com.auroali.bloodlust.client.screen;
+
+import java.util.List;
+
+public class VampireAbilitiesPositioner {
+    public static void position(List<VampireAbilityWidget> widgets) {
+        final int rowSpacing = 32;
+        final int columnSpacing = 32;
+        List<VampireAbilityWidget> abilities = widgets.stream().filter(w -> w.parent == null).toList();
+        int currentRow = 0;
+        while(!abilities.isEmpty()) {
+            int currentX = 0;
+            for(VampireAbilityWidget widget : abilities) {
+                if(widget.parent != null)
+                    widget.setX(widget.parent.getX());
+                else {
+                    widget.setX(currentX * columnSpacing);
+                    currentX++;
+                }
+
+                widget.setY(currentRow * rowSpacing);
+            }
+            if(currentRow == 0) {
+                int size = abilities.size();
+                abilities.forEach(a ->
+                        a.setX(a.getX() - columnSpacing / 2 * (size / 2))
+                );
+            }
+            resolveCollisions(abilities, columnSpacing);
+            currentRow++;
+            abilities = abilities
+                    .stream()
+                    .flatMap(w -> w.getChildren().stream())
+                    .toList();
+        }
+    }
+
+    private static void resolveCollisions(List<VampireAbilityWidget> widgets, int columnSpacing) {
+        boolean hasCollisions = true;
+        while(hasCollisions) {
+            hasCollisions = false;
+            for (VampireAbilityWidget widget : widgets) {
+                for (VampireAbilityWidget other : widgets) {
+                    if(other != widget && widget.isOverlappingX(other)) {
+                        widget.setX(widget.getX() - columnSpacing / 2);
+                        other.setX(other.getX() + columnSpacing / 2);
+                        hasCollisions = true;
+                    }
+                }
+            }
+        }
+    }
+}

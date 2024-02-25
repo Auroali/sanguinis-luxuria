@@ -6,18 +6,22 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.item.ItemStack;
+
+import java.util.function.Supplier;
 
 public class VampireAttributeModifierAbility extends VampireAbility {
     private final EntityAttribute targetAttribute;
     private final EntityAttributeModifier modifier;
     private final int minBloodAmount;
 
-    public VampireAttributeModifierAbility(EntityAttribute targetAttribute, EntityAttributeModifier modifier) {
-        this(targetAttribute, modifier, 0);
+    public VampireAttributeModifierAbility(Supplier<ItemStack> icon, VampireAbility parent, EntityAttribute targetAttribute, EntityAttributeModifier modifier) {
+        this(icon, parent, targetAttribute, modifier, 0);
     }
 
 
-    public VampireAttributeModifierAbility(EntityAttribute targetAttribute, EntityAttributeModifier modifier, int minBloodAmount) {
+    public VampireAttributeModifierAbility(Supplier<ItemStack> icon, VampireAbility parent, EntityAttribute targetAttribute, EntityAttributeModifier modifier, int minBloodAmount) {
+        super(icon, parent);
         this.targetAttribute = targetAttribute;
         this.modifier = modifier;
         this.minBloodAmount = minBloodAmount;

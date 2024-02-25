@@ -1,6 +1,7 @@
 package com.auroali.bloodlust;
 
 import com.auroali.bloodlust.client.BLHud;
+import com.auroali.bloodlust.client.screen.VampireAbilitiesScreen;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.registry.BLBlocks;
 import com.auroali.bloodlust.common.registry.BLItems;
@@ -18,6 +19,7 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.util.NarratorManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.hit.EntityHitResult;
@@ -54,7 +56,10 @@ public class BloodlustClient implements ClientModInitializer {
         SUCK_BLOOD = KeyBindingHelper.registerKeyBinding(SUCK_BLOOD);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (SUCK_BLOOD.isPressed()) {
+            while(SUCK_BLOOD.wasPressed()) {
+                client.setScreen(new VampireAbilitiesScreen());
+            }
+            /*if (SUCK_BLOOD.isPressed()) {
                 if (isLookingAtValidTarget() || BloodStorageItem.isHoldingBloodFillableItem(client.player)) {
                     sendBloodDrainPacket(true);
                     drainingBlood = true;
@@ -62,7 +67,7 @@ public class BloodlustClient implements ClientModInitializer {
             } else if (drainingBlood) {
                 drainingBlood = false;
                 sendBloodDrainPacket(false);
-            }
+            }*/
         });
 
     }

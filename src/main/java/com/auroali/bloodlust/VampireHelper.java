@@ -28,4 +28,8 @@ public class VampireHelper {
                 .map(c -> c.isEquipped(i -> i.isIn(BLTags.Items.VAMPIRE_MASKS)))
                 .orElse(false);
     }
+
+    public static boolean canBeConvertedToVampire(LivingEntity entity) {
+        return BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity);
+    }
 }

@@ -52,6 +52,7 @@ public class PlayerVampireComponent implements VampireComponent {
     private LivingEntity target;
     private int bloodDrainTimer;
     private int timeInSun;
+    private int skillPoints;
 
 
     public PlayerVampireComponent(PlayerEntity holder) {
@@ -120,6 +121,7 @@ public class PlayerVampireComponent implements VampireComponent {
     public void readFromNbt(NbtCompound tag) {
         isVampire = tag.getBoolean("IsVampire");
         timeInSun = tag.getInt("TimeInSun");
+        skillPoints = tag.getInt("SkillPoints");
         abilities.load(tag);
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
@@ -128,6 +130,7 @@ public class PlayerVampireComponent implements VampireComponent {
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("IsVampire", isVampire);
         tag.putInt("TimeInSun", timeInSun);
+        tag.putInt("SkillPoints", skillPoints);
         abilities.save(tag);
     }
 
@@ -257,6 +260,7 @@ public class PlayerVampireComponent implements VampireComponent {
         buf.writeBoolean(isVampire);
         buf.writeInt(bloodDrainTimer);
         buf.writeInt(timeInSun);
+        buf.writeInt(skillPoints);
         abilities.writePacket(buf);
     }
 
@@ -265,6 +269,7 @@ public class PlayerVampireComponent implements VampireComponent {
         isVampire = buf.readBoolean();
         bloodDrainTimer = buf.readInt();
         timeInSun = buf.readInt();
+        skillPoints = buf.readInt();
         abilities.readPacket(buf);
     }
 
@@ -324,6 +329,17 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public VampireAbilityContainer getAbilties() {
         return abilities;
+    }
+
+    @Override
+    public int getSkillPoints() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public void unlockAbility(VampireAbility ability) {
+        getAbilties().addAbility(ability);
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
     private void updateTarget() {

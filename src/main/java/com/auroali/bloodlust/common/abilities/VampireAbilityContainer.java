@@ -13,10 +13,12 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.Set;
 
-public class VampireAbilityContainer {
+public class VampireAbilityContainer implements Iterable<VampireAbility> {
     private final Set<VampireAbility> abilities;
 
     public VampireAbilityContainer() {
@@ -39,6 +41,8 @@ public class VampireAbilityContainer {
     }
 
     public boolean hasAbility(VampireAbility ability) {
+        if(ability == null)
+            return true;
         return this.abilities.contains(ability);
     }
 
@@ -94,5 +98,11 @@ public class VampireAbilityContainer {
 
             abilities.add(ability);
         }
+    }
+
+    @NotNull
+    @Override
+    public Iterator<VampireAbility> iterator() {
+        return abilities.iterator();
     }
 }

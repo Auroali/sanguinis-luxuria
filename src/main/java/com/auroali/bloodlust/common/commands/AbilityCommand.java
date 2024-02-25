@@ -25,6 +25,14 @@ public class AbilityCommand {
                             BLEntityComponents.VAMPIRE_COMPONENT.sync(ctx.getSource().getPlayer());
                             return 0;
                         })
-                );
+                ).then(CommandManager.literal("reset").executes(ctx -> {
+                    if(!ctx.getSource().isExecutedByPlayer())
+                        return 1;
+                    VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(ctx.getSource().getPlayer());
+                    for(VampireAbility a : component.getAbilties())
+                        component.getAbilties().removeAbility(a);
+                    BLEntityComponents.VAMPIRE_COMPONENT.sync(ctx.getSource().getPlayer());
+                    return 0;
+                }));
     }
 }
