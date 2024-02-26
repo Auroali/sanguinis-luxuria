@@ -1,9 +1,13 @@
 package com.auroali.bloodlust.common.registry;
 
 import com.auroali.bloodlust.BLResources;
+import com.auroali.bloodlust.common.abilities.SimpleVampireAbility;
 import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.abilities.VampireAttributeModifierAbility;
 import com.auroali.bloodlust.common.abilities.VampireTeleportAbility;
+import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.components.VampireComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
@@ -66,11 +70,21 @@ public class BLVampireAbilities {
             () -> new ItemStack(Items.ENDER_PEARL),
             null
     );
+    public static final VampireAbility TELEPORT_RANGE_1 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+            .incompatible(() -> BLVampireAbilities.TELEPORT_COOLDOWN_1);
+    public static final VampireAbility TELEPORT_RANGE_2 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_RANGE_1);
+    public static final VampireAbility TELEPORT_COOLDOWN_1 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+            .incompatible(() -> BLVampireAbilities.TELEPORT_RANGE_1);
+    public static final VampireAbility TELEPORT_COOLDOWN_2 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_COOLDOWN_1);
 
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_1_ID, VAMPIRE_STRENGTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_ID, TELEPORT);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_1_ID, TELEPORT_RANGE_1);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_2_ID, TELEPORT_RANGE_2);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_1_ID, TELEPORT_COOLDOWN_1);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_2_ID, TELEPORT_COOLDOWN_2);
     }
 }

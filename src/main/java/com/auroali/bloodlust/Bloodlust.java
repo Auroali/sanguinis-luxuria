@@ -113,6 +113,10 @@ public class Bloodlust implements ModInitializer {
 					if (vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()) || vampire.getSkillPoints() < ability.getRequiredSkillPoints())
 						return;
 
+					for(VampireAbility other : vampire.getAbilties()) {
+						if(ability.incompatibleWith(other))
+							return;
+					}
 					vampire.unlockAbility(ability);
 				} else {
 					if(!vampire.getAbilties().hasAbility(ability))

@@ -12,15 +12,19 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Lazy;
 import net.minecraft.util.registry.RegistryEntry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public abstract class VampireAbility {
     private final VampireAbility parent;
     private final Supplier<ItemStack> icon;
+    private final List<Supplier<VampireAbility>> incompatibilities;
     private String transKey;
     public VampireAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         this.icon = icon;
         this.parent = parent;
+        this.incompatibilities = new ArrayList<>();
     }
 
     private final RegistryEntry.Reference<VampireAbility> holder = BLRegistry.VAMPIRE_ABILITIES.createEntry(this);
@@ -64,5 +68,24 @@ public abstract class VampireAbility {
 
     public boolean canTickCooldown(LivingEntity entity, VampireComponent vampireComponent) {
         return true;
+    }
+
+    public boolean incompatibleWith(VampireAbility ability) {
+        return incompatibilities
+                .stream()
+                .map(Supplier::get)
+                .anyMatch(a -> a == ability)
+                || ability.incompatibilities
+                .stream()
+                .map(Supplier::get)
+                .anyMatch(a -> a == ability);
+    }
+
+    public List<VampireAbility> getIncompatibilities() {
+        return incompatibilities.stream().map(Supplier::get).toList();
+    }
+    public VampireAbility incompatible(Supplier<VampireAbility> abilitySupplier) {
+        incompatibilities.add(abilitySupplier);
+        return this;
     }
 }

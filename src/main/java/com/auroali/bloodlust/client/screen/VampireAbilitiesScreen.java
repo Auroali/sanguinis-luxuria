@@ -76,17 +76,22 @@ public class VampireAbilitiesScreen extends Screen {
     }
 
     public void renderAbilityWidgetTooltip(MatrixStack matrices, int mouseX, int mouseY, VampireAbilityContainer container, VampireAbilityWidget widget) {
-        if(!widget.ability.isKeybindable())
-            renderTooltip(matrices, Text.translatable(widget.ability.getTranslationKey()), mouseX, mouseY);
-
         ArrayList<Text> text = new ArrayList<>();
         text.add(Text.translatable(widget.ability.getTranslationKey()));
+
+        List<VampireAbility> incompatibilities = widget.ability.getIncompatibilities();
+        if(!incompatibilities.isEmpty()) {
+            for(VampireAbility ability : incompatibilities) {
+                text.add(Text.translatable(ability.getTranslationKey()).formatted(Formatting.RED, Formatting.ITALIC));
+            }
+        }
+
         int slot = container.getAbilityBinding(widget.ability);
         if(widget == bindingWidget)
             text.add(Text.translatable("gui.bloodlust.abilities.binding").formatted(Formatting.GRAY, Formatting.ITALIC));
-        else if(slot == -1)
+        else if(slot == -1 && widget.ability.isKeybindable())
             text.add(Text.translatable("gui.bloodlust.abilities.bind_prompt").formatted(Formatting.GRAY, Formatting.ITALIC));
-        else
+        else if(widget.ability.isKeybindable())
             text.add(Text.translatable("gui.bloodlust.abilities.bound", getTextForSlot(slot)).formatted(Formatting.GRAY, Formatting.ITALIC));
         renderTooltip(matrices, text, mouseX, mouseY);
     }

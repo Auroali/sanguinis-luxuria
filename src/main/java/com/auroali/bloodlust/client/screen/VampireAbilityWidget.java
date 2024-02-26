@@ -172,14 +172,22 @@ public class VampireAbilityWidget extends DrawableHelper {
     }
 
     private boolean tryUnlock(VampireComponent vampire, ClientPlayerEntity entity) {
-        if(vampire.getSkillPoints() < ability.getRequiredSkillPoints() || vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()))
-            return true;
+        if (vampire.getSkillPoints() < ability.getRequiredSkillPoints() || vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent())) {
+            entity.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BASS, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            return false;
+        }
 
+        for(VampireAbility other : vampire.getAbilties()) {
+            if(ability.incompatibleWith(other)) {
+                entity.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BASS, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                return false;
+            }
+        }
         entity.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);
         buf.writeBoolean(false);
         ClientPlayNetworking.send(BLResources.SKILL_TREE_CHANNEL, buf);
-        return false;
+        return true;
     }
 }
