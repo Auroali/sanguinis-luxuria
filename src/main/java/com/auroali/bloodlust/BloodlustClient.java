@@ -33,6 +33,25 @@ public class BloodlustClient implements ClientModInitializer {
             GLFW.GLFW_KEY_R,
             "category.bloodlust.bloodlust"
     );
+    public static KeyBinding OPEN_ABILITIES = new KeyBinding(
+            "key.bloodlust.open_abilities",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_Y,
+            "category.bloodlust.bloodlust"
+    );
+    public static KeyBinding ABILITY_1 = new KeyBinding(
+            "key.bloodlust.ability_1",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_Z,
+            "category.bloodlust.bloodlust"
+    );
+    public static KeyBinding ABILITY_2 = new KeyBinding(
+            "key.bloodlust.ability_2",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_X,
+            "category.bloodlust.bloodlust"
+    );
+
 
     public boolean drainingBlood;
 
@@ -54,12 +73,21 @@ public class BloodlustClient implements ClientModInitializer {
 
     public void registerBindings() {
         SUCK_BLOOD = KeyBindingHelper.registerKeyBinding(SUCK_BLOOD);
+        OPEN_ABILITIES = KeyBindingHelper.registerKeyBinding(OPEN_ABILITIES);
+        ABILITY_1 = KeyBindingHelper.registerKeyBinding(ABILITY_1);
+        ABILITY_2 = KeyBindingHelper.registerKeyBinding(ABILITY_2);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while(SUCK_BLOOD.wasPressed()) {
+            while(OPEN_ABILITIES.wasPressed()) {
                 client.setScreen(new VampireAbilitiesScreen());
             }
-            /*if (SUCK_BLOOD.isPressed()) {
+            while(ABILITY_1.wasPressed()) {
+                sendAbilityKeyPress(0);
+            }
+            while(ABILITY_2.wasPressed()) {
+                sendAbilityKeyPress(1);
+            }
+            if (SUCK_BLOOD.isPressed()) {
                 if (isLookingAtValidTarget() || BloodStorageItem.isHoldingBloodFillableItem(client.player)) {
                     sendBloodDrainPacket(true);
                     drainingBlood = true;
@@ -67,9 +95,15 @@ public class BloodlustClient implements ClientModInitializer {
             } else if (drainingBlood) {
                 drainingBlood = false;
                 sendBloodDrainPacket(false);
-            }*/
+            }
         });
 
+    }
+
+    public static void sendAbilityKeyPress(int i) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeInt(i);
+        ClientPlayNetworking.send(BLResources.ABILITY_KEY_CHANNEL, buf);
     }
 
     public static boolean isLookingAtValidTarget() {

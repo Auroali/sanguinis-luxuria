@@ -140,6 +140,8 @@ public class PlayerVampireComponent implements VampireComponent {
             return;
 
         abilities.tick(holder, this);
+        if(abilities.needsSync())
+            BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
 
         tickSunEffects();
         tickBloodEffects();
@@ -261,7 +263,11 @@ public class PlayerVampireComponent implements VampireComponent {
         buf.writeInt(bloodDrainTimer);
         buf.writeInt(timeInSun);
         buf.writeInt(skillPoints);
-        abilities.writePacket(buf);
+        buf.writeBoolean(abilities.needsSync());
+        if(abilities.needsSync()) {
+            abilities.writePacket(buf);
+            abilities.setShouldSync(false);
+        }
     }
 
     @Override
@@ -270,7 +276,9 @@ public class PlayerVampireComponent implements VampireComponent {
         bloodDrainTimer = buf.readInt();
         timeInSun = buf.readInt();
         skillPoints = buf.readInt();
-        abilities.readPacket(buf);
+        boolean abilitiesSync = buf.readBoolean();
+        if(abilitiesSync)
+            abilities.readPacket(buf);
     }
 
     @Override
@@ -333,12 +341,13 @@ public class PlayerVampireComponent implements VampireComponent {
 
     @Override
     public int getSkillPoints() {
-        return Integer.MAX_VALUE;
+        return skillPoints;
     }
 
     @Override
     public void unlockAbility(VampireAbility ability) {
         getAbilties().addAbility(ability);
+        skillPoints -= ability.getRequiredSkillPoints();
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 

@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,16 +153,33 @@ public class VampireAbilityWidget extends DrawableHelper {
         return getY() >= other.getY() && getY() <= other.getY() + HEIGHT;
     }
 
-    public boolean onClick() {
+    public boolean onClick(VampireAbilitiesScreen screen, int button) {
         ClientPlayerEntity entity = MinecraftClient.getInstance().player;
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
-        if(vampire.getSkillPoints() < ability.getRequiredSkillPoints() || vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()))
+        if (button == 0 && tryUnlock(vampire, entity))
+            return true;
+        if(button == 1 && bindTo(vampire, entity, screen))
+            return true;
+        return false;
+    }
+
+    private boolean bindTo(VampireComponent vampire, ClientPlayerEntity entity, VampireAbilitiesScreen screen) {
+        if(!vampire.getAbilties().hasAbility(ability) || !ability.isKeybindable())
             return false;
+
+        screen.bindingWidget = this;
+        return true;
+    }
+
+    private boolean tryUnlock(VampireComponent vampire, ClientPlayerEntity entity) {
+        if(vampire.getSkillPoints() < ability.getRequiredSkillPoints() || vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()))
+            return true;
 
         entity.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);
+        buf.writeBoolean(false);
         ClientPlayNetworking.send(BLResources.SKILL_TREE_CHANNEL, buf);
-        return true;
+        return false;
     }
 }

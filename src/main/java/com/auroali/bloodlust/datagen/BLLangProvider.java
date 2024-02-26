@@ -23,6 +23,9 @@ public class BLLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
         translationBuilder.add("key.bloodlust.bite", "Bite");
+        translationBuilder.add("key.bloodlust.open_abilities", "Open Abilities");
+        translationBuilder.add("key.bloodlust.ability_1", "Ability 1");
+        translationBuilder.add("key.bloodlust.ability_2", "Ability 2");
         translationBuilder.add("category.bloodlust.bloodlust", "Bloodlust");
 
         translationBuilder.add(BLItems.MASK_1, "Carved Mask");
@@ -63,6 +66,10 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add("gui.bloodlust.abilities", "Abilities");
         translationBuilder.add("gui.bloodlust.skill_points", "Skill Points: %d");
+
+        translationBuilder.add("gui.bloodlust.abilities.bound", "Bound to [%s]");
+        translationBuilder.add("gui.bloodlust.abilities.bind_prompt", "Right click to bind...");
+        translationBuilder.add("gui.bloodlust.abilities.binding", "Press a key...");
 
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");

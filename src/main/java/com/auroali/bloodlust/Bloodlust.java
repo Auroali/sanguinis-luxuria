@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.command.argument.serialize.ArgumentSerializer;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -53,30 +52,7 @@ public class Bloodlust implements ModInitializer {
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(BloodlustCommand.register()));
 
-		ServerPlayNetworking.registerGlobalReceiver(BLResources.KEYBIND_CHANNEL, (server, player, handler, buf, responseSender) -> {
-			boolean draining = buf.readBoolean();
-			server.execute(() -> {
-				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-				if(!vampire.isVampire())
-					return;
-
-				if(draining)
-					vampire.tryStartSuckingBlood();
-				else
-					vampire.stopSuckingBlood();
-			});
-		});
-
-		ServerPlayNetworking.registerGlobalReceiver(BLResources.SKILL_TREE_CHANNEL, (server, player, handler, buf, responseSender) -> {
-			VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
-			server.execute(() -> {
-				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-				if(vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()) || vampire.getSkillPoints() < ability.getRequiredSkillPoints())
-					return;
-
-				vampire.unlockAbility(ability);
-			});
-		});
+		registerNetworkHandlers();
 
 		UseItemCallback.EVENT.register((player, world, hand) -> {
 			ItemStack stack = player.getStackInHand(hand);
@@ -110,5 +86,60 @@ public class Bloodlust implements ModInitializer {
 		BLSounds.register();
 		BLStatusEffects.register();
 		BLVampireAbilities.register();
+	}
+
+	public static void registerNetworkHandlers() {
+		ServerPlayNetworking.registerGlobalReceiver(BLResources.KEYBIND_CHANNEL, (server, player, handler, buf, responseSender) -> {
+			boolean draining = buf.readBoolean();
+			server.execute(() -> {
+				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+				if(!vampire.isVampire())
+					return;
+
+				if(draining)
+					vampire.tryStartSuckingBlood();
+				else
+					vampire.stopSuckingBlood();
+			});
+		});
+
+		ServerPlayNetworking.registerGlobalReceiver(BLResources.SKILL_TREE_CHANNEL, (server, player, handler, buf, responseSender) -> {
+			VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+			boolean isAbilityBind = buf.readBoolean();
+			int abilitySlot = isAbilityBind ? buf.readInt() : 0;
+			server.execute(() -> {
+				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+				if(!isAbilityBind) {
+					if (vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()) || vampire.getSkillPoints() < ability.getRequiredSkillPoints())
+						return;
+
+					vampire.unlockAbility(ability);
+				} else {
+					if(!vampire.getAbilties().hasAbility(ability))
+						return;
+
+					if(abilitySlot == -1) {
+						int current = vampire.getAbilties().getAbilityBinding(ability);
+						if(current != -1)
+							vampire.getAbilties().setBoundAbility(null, current);
+
+						BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
+						return;
+					}
+					vampire.getAbilties().setBoundAbility(ability, abilitySlot);
+					BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
+				}
+			});
+		});
+
+		ServerPlayNetworking.registerGlobalReceiver(BLResources.ABILITY_KEY_CHANNEL, (server, player, handler, buf, responseSender) -> {
+			int slot = buf.readInt();
+			server.execute(() -> {
+				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+				VampireAbility ability = vampire.getAbilties().getBoundAbility(slot);
+				if(ability != null)
+					ability.activate(player, vampire);
+			});
+		});
 	}
 }

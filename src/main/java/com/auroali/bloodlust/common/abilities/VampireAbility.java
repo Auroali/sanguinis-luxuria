@@ -57,4 +57,12 @@ public abstract class VampireAbility {
     public int getRequiredSkillPoints() {
         return 0;
     }
+
+    public boolean activate(LivingEntity entity, VampireComponent component) {
+        return false;
+    }
+
+    public boolean canTickCooldown(LivingEntity entity, VampireComponent vampireComponent) {
+        return true;
+    }
 }

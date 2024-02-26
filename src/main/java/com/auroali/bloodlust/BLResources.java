@@ -36,6 +36,8 @@ public class BLResources {
     public static final Identifier SKILL_TREE_CHANNEL = id("skill_trees");
     public static final Identifier ABILITIES_SCREEN = id("textures/gui/abilities.png");
     public static final Identifier ABILITIES_BG = id("textures/gui/abilities_bg.png");
+    public static final Identifier ABILITY_KEY_CHANNEL = id("ability_keys");
+    public static final Identifier TELEPORT_ID = id("teleport");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

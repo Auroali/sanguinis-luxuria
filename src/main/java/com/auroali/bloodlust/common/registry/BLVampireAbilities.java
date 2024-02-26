@@ -3,6 +3,7 @@ package com.auroali.bloodlust.common.registry;
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.abilities.VampireAttributeModifierAbility;
+import com.auroali.bloodlust.common.abilities.VampireTeleportAbility;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
@@ -61,9 +62,15 @@ public class BLVampireAbilities {
             )
     );
 
+    public static final VampireAbility TELEPORT = new VampireTeleportAbility(
+            () -> new ItemStack(Items.ENDER_PEARL),
+            null
+    );
+
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_1_ID, VAMPIRE_STRENGTH_1);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_ID, TELEPORT);
     }
 }
