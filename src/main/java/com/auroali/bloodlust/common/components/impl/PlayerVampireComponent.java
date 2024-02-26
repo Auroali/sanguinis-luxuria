@@ -7,10 +7,12 @@ import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
-import com.auroali.bloodlust.common.registry.*;
+import com.auroali.bloodlust.common.registry.BLDamageSources;
+import com.auroali.bloodlust.common.registry.BLSounds;
+import com.auroali.bloodlust.common.registry.BLStatusEffects;
+import com.auroali.bloodlust.common.registry.BLTags;
 import com.auroali.bloodlust.config.BLConfig;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -35,7 +37,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
-import java.util.Set;
 import java.util.UUID;
 
 public class PlayerVampireComponent implements VampireComponent {

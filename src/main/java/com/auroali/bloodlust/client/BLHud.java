@@ -15,8 +15,6 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.hit.EntityHitResult;
 
-import java.util.Map;
-
 public class BLHud {
     public static void render(MatrixStack stack, float deltaTick) {
         MinecraftClient client = MinecraftClient.getInstance();

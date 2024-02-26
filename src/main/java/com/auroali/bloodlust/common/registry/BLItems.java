@@ -5,7 +5,6 @@ import com.auroali.bloodlust.Bloodlust;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.items.MaskItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 

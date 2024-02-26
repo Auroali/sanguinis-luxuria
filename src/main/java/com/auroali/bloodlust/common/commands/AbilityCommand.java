@@ -4,13 +4,9 @@ import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.VampireComponent;
-import com.auroali.bloodlust.common.registry.BLRegistry;
-import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.minecraft.command.argument.RegistryKeyArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.util.registry.RegistryKey;
 
 public class AbilityCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {

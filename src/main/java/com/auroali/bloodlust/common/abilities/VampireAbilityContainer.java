@@ -16,7 +16,10 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class VampireAbilityContainer implements Iterable<VampireAbility> {
     private final Set<VampireAbility> abilities;

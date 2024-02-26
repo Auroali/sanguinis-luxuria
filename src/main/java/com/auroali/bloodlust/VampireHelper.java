@@ -1,7 +1,6 @@
 package com.auroali.bloodlust;
 
 import com.auroali.bloodlust.common.components.BLEntityComponents;
-import com.auroali.bloodlust.common.items.MaskItem;
 import com.auroali.bloodlust.common.registry.BLTags;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.LivingEntity;
