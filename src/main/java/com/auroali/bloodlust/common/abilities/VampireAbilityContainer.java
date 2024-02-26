@@ -16,10 +16,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VampireAbilityContainer implements Iterable<VampireAbility> {
     private final Set<VampireAbility> abilities;
@@ -100,6 +97,13 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         return cooldown.ticks;
     }
 
+    public int getMaxCooldown(VampireAbility ability) {
+        AbilityCooldown cooldown = cooldowns.get(ability);
+        if(cooldown == null)
+            return 0;
+        return cooldown.maxTicks;
+    }
+
     public boolean isOnCooldown(VampireAbility ability) {
         return getCooldown(ability) > 0;
     }
@@ -144,6 +148,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
             NbtCompound tag = new NbtCompound();
             tag.putString("Ability", id.toString());
             tag.putInt("Ticks", cooldown.ticks);
+            tag.putInt("MaxTicks", cooldown.maxTicks);
             cooldownsTag.add(tag);
         });
 
@@ -198,6 +203,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
             NbtCompound cooldown = cooldownsTag.getCompound(i);
             Identifier id = Identifier.tryParse(cooldown.getString("Ability"));
             int ticks = cooldown.getInt("Ticks");
+            int maxTicks = cooldown.getInt("MaxTicks");
 
             if(id == null) {
                 Bloodlust.LOGGER.warn("Could not get ability for {}", abilitySlotsTag.getString(i));
@@ -210,7 +216,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
                 continue;
             }
 
-            cooldowns.put(ability, new AbilityCooldown(ticks));
+            cooldowns.put(ability, new AbilityCooldown(ticks, maxTicks));
         }
         setShouldSync(true);
     }
@@ -242,6 +248,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         cooldowns.forEach((ability, cooldown) -> {
             buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);
             buf.writeInt(cooldown.ticks);
+            buf.writeInt(cooldown.maxTicks);
         });
     }
 
@@ -279,11 +286,12 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         for(int i = 0; i < size; i++) {
             VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
             int ticks = buf.readInt();
+            int maxTicks = buf.readInt();
             if (ability == null) {
                 Bloodlust.LOGGER.warn("Could not read ability from packet!");
                 continue;
             }
-            cooldowns.put(ability, new AbilityCooldown(ticks));
+            cooldowns.put(ability, new AbilityCooldown(ticks, maxTicks));
         }
     }
 
@@ -303,8 +311,14 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
 
     private static class AbilityCooldown {
         int ticks;
+        int maxTicks;
         public AbilityCooldown(int ticks) {
+            this(ticks, ticks);
+        }
+
+        public AbilityCooldown(int ticks, int maxTicks) {
             this.ticks = ticks;
+            this.maxTicks = maxTicks;
         }
     }
 
