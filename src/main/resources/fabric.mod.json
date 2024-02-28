@@ -10,7 +10,7 @@
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Auroali/bloodlust"
 	},
 	"license": "MIT",
 	"icon": "assets/bloodlust/icon.png",
@@ -47,7 +47,8 @@
 		"reach-entity-attributes": ">=2.3.0",
 		"cardinal-components-entity": "~5.0.2",
 		"yet-another-config-lib": ">=2",
-		"maxhealthfix": ">=8.0.1"
+		"maxhealthfix": ">=8.0.1",
+		"patchouli": ">=1.19.2-77-FABRIC"
 	},
 	"suggests": {
 		"another-mod": "*"
