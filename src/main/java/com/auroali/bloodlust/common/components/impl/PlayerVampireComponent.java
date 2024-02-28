@@ -1,6 +1,8 @@
 package com.auroali.bloodlust.common.components.impl;
 
 import com.auroali.bloodlust.VampireHelper;
+import com.auroali.bloodlust.common.abilities.VampireAbility;
+import com.auroali.bloodlust.common.abilities.VampireAbilityContainer;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
@@ -45,11 +47,13 @@ public class PlayerVampireComponent implements VampireComponent {
             EntityAttributeModifier.Operation.ADDITION
     );
 
+    private final VampireAbilityContainer abilities = new VampireAbilityContainer();
     private final PlayerEntity holder;
     private boolean isVampire;
     private LivingEntity target;
     private int bloodDrainTimer;
     private int timeInSun;
+    private int skillPoints;
 
 
     public PlayerVampireComponent(PlayerEntity holder) {
@@ -118,18 +122,27 @@ public class PlayerVampireComponent implements VampireComponent {
     public void readFromNbt(NbtCompound tag) {
         isVampire = tag.getBoolean("IsVampire");
         timeInSun = tag.getInt("TimeInSun");
+        skillPoints = tag.getInt("SkillPoints");
+        abilities.load(tag);
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("IsVampire", isVampire);
         tag.putInt("TimeInSun", timeInSun);
+        tag.putInt("SkillPoints", skillPoints);
+        abilities.save(tag);
     }
 
     @Override
     public void serverTick() {
         if(!isVampire)
             return;
+
+        abilities.tick(holder, this);
+        if(abilities.needsSync())
+            BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
 
         tickSunEffects();
         tickBloodEffects();
@@ -250,6 +263,12 @@ public class PlayerVampireComponent implements VampireComponent {
         buf.writeBoolean(isVampire);
         buf.writeInt(bloodDrainTimer);
         buf.writeInt(timeInSun);
+        buf.writeInt(skillPoints);
+        buf.writeBoolean(abilities.needsSync());
+        if(abilities.needsSync()) {
+            abilities.writePacket(buf);
+            abilities.setShouldSync(false);
+        }
     }
 
     @Override
@@ -257,6 +276,10 @@ public class PlayerVampireComponent implements VampireComponent {
         isVampire = buf.readBoolean();
         bloodDrainTimer = buf.readInt();
         timeInSun = buf.readInt();
+        skillPoints = buf.readInt();
+        boolean abilitiesSync = buf.readBoolean();
+        if(abilitiesSync)
+            abilities.readPacket(buf);
     }
 
     @Override
@@ -310,6 +333,23 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public int getTimeInSun() {
         return timeInSun;
+    }
+
+    @Override
+    public VampireAbilityContainer getAbilties() {
+        return abilities;
+    }
+
+    @Override
+    public int getSkillPoints() {
+        return skillPoints;
+    }
+
+    @Override
+    public void unlockAbility(VampireAbility ability) {
+        getAbilties().addAbility(ability);
+        skillPoints -= ability.getRequiredSkillPoints();
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
     private void updateTarget() {

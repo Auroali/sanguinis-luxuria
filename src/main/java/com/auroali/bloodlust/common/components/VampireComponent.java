@@ -1,5 +1,7 @@
 package com.auroali.bloodlust.common.components;
 
+import com.auroali.bloodlust.common.abilities.VampireAbility;
+import com.auroali.bloodlust.common.abilities.VampireAbilityContainer;
 import com.auroali.bloodlust.config.BLConfig;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -62,6 +64,12 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @return how long the component holder has been in the sun, in ticks
      */
     int getTimeInSun();
+
+    VampireAbilityContainer getAbilties();
+
+    int getSkillPoints();
+
+    void unlockAbility(VampireAbility ability);
 
     /**
      * Calculates the amount of damage taken by a vampire for a given damage source

@@ -1,6 +1,7 @@
 package com.auroali.bloodlust.common.registry;
 
 import com.auroali.bloodlust.BLResources;
+import com.auroali.bloodlust.common.abilities.VampireAbility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -9,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class BLTags {
+
     public static class Blocks {
 
         public static final TagKey<Block> BLOOD_SPLATTER_REPLACEABLE = TagKey.of(Registry.BLOCK_KEY, BLResources.BLOOD_SPLATTER_REPLACEABLE);;
@@ -27,5 +29,8 @@ public class BLTags {
         public static final TagKey<Item> FACE_TRINKETS = TagKey.of(Registry.ITEM_KEY, new Identifier("trinkets", "head/face"));
         public static final TagKey<Item> SUN_BLOCKING_HELMETS = TagKey.of(Registry.ITEM_KEY, BLResources.SUN_BLOCKING_HELMETS);
         public static final TagKey<Item> VAMPIRE_MASKS = TagKey.of(Registry.ITEM_KEY, BLResources.VAMPIRE_MASKS_ID);
+    }
+    public static class VampireAbilities {
+        public static final TagKey<VampireAbility> TELEPORT_RANGE = TagKey.of(BLRegistry.VAMPIRE_ABILITIES_KEY, BLResources.TELEPORT_RANGE_TAG_ID);
     }
 }

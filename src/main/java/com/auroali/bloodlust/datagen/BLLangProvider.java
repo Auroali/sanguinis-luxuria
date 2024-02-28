@@ -1,15 +1,16 @@
 package com.auroali.bloodlust.datagen;
 
 import com.auroali.bloodlust.Bloodlust;
+import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.registry.BLDamageSources;
 import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLStatusEffects;
+import com.auroali.bloodlust.common.registry.BLVampireAbilities;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.PotionItem;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 
@@ -21,6 +22,9 @@ public class BLLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
         translationBuilder.add("key.bloodlust.bite", "Bite");
+        translationBuilder.add("key.bloodlust.open_abilities", "Open Abilities");
+        translationBuilder.add("key.bloodlust.ability_1", "Ability 1");
+        translationBuilder.add("key.bloodlust.ability_2", "Ability 2");
         translationBuilder.add("category.bloodlust.bloodlust", "Bloodlust");
 
         translationBuilder.add(BLItems.MASK_1, "Carved Mask");
@@ -57,15 +61,42 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLStatusEffects.BLESSED_WATER, "Blessed Water");
         translationBuilder.add(BLStatusEffects.BLOOD_PROTECTION, "Blessed Blood");
 
+        translationBuilder.add("argument.bloodlust.id.invalid", "'%s' is not a valid id!");
+
+        translationBuilder.add("gui.bloodlust.abilities", "Abilities");
+        translationBuilder.add("gui.bloodlust.skill_points", "Skill Points: %d");
+
+        translationBuilder.add("gui.bloodlust.abilities.bound", "Bound to [%s]");
+        translationBuilder.add("gui.bloodlust.abilities.bind_prompt", "Right click to bind...");
+        translationBuilder.add("gui.bloodlust.abilities.binding", "Press a key...");
+
+        translationBuilder.add("gui.bloodlust.abilities.incompatibilites", "Incompatible With:");
+        translationBuilder.add("gui.bloodlust.abilities.incompatibilites_entry", "  - %s");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.TIPPED_ARROW, "Arrow of Blessed Water");
+
+        generateAbilityKey(translationBuilder, BLVampireAbilities.HEALTH_1, "Increased Health");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.HEALTH_2, "Increased Health");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_1, "Increased Strength");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_2, "Increased Strength");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT, "Teleport");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_1, "Decreased Teleport Cooldown");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_2, "Decreased Teleport Cooldown");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_1, "Increased Teleport Range");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_2, "Increased Teleport Range");
+
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {
         ItemStack stack = new ItemStack(item);
         PotionUtil.setPotion(stack, potion);
         builder.add(stack.getTranslationKey(), entry);
+    }
+
+    public static void generateAbilityKey(TranslationBuilder builder, VampireAbility ability, String entry) {
+        builder.add(ability.getTranslationKey(), entry);
     }
 }

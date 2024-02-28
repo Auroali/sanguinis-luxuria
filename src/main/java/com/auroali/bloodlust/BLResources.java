@@ -28,6 +28,22 @@ public class BLResources {
     public static final Identifier BLESSED_WATER_ID = id("blessed_water");
     public static final Identifier BLOOD_PROTECTION_ID = id("blessed_blood");
     public static final Identifier VAMPIRE_MASKS_ID = id("vampire_masks");
+    public static final Identifier VAMPIRE_ABILITY_REGISTRY_ID = id("vampire_ability");
+    public static final Identifier VAMPIRE_HEALTH_1_ID = id("health_1");
+    public static final Identifier VAMPIRE_ABILITY_ARGUMENT_ID = id("ability_argument");
+    public static final Identifier VAMPIRE_HEALTH_2_ID = id("health_2");
+    public static final Identifier VAMPIRE_STRENGTH_1_ID = id("strength_1");
+    public static final Identifier SKILL_TREE_CHANNEL = id("skill_trees");
+    public static final Identifier ABILITIES_SCREEN = id("textures/gui/abilities.png");
+    public static final Identifier ABILITIES_BG = id("textures/gui/abilities_bg.png");
+    public static final Identifier ABILITY_KEY_CHANNEL = id("ability_keys");
+    public static final Identifier TELEPORT_ID = id("teleport");
+    public static final Identifier TELEPORT_COOLDOWN_1_ID = id("teleport_cooldown_1");
+    public static final Identifier TELEPORT_COOLDOWN_2_ID = id("teleport_cooldown_2");
+    public static final Identifier TELEPORT_RANGE_1_ID = id("teleport_range_1");
+    public static final Identifier TELEPORT_RANGE_2_ID = id("teleport_range_2");
+    public static final Identifier TELEPORT_RANGE_TAG_ID = id("teleport_range_increase");
+    public static final Identifier VAMPIRE_STRENGTH_2_ID = id("vampire_strength_2");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

@@ -31,7 +31,7 @@ public class BloodSicknessEffect extends StatusEffect {
         if(amplifier >= 4 && duration < 1000 && entity.getRandom().nextInt(25) == 0)
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
 
-        if(duration == 1 && isRightConditions(entity, amplifier) && BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity))
+        if(duration == 1 && isRightConditions(entity, amplifier) && VampireHelper.canBeConvertedToVampire(entity))
             BLEntityComponents.VAMPIRE_COMPONENT.get(entity).setIsVampire(true);
     }
 

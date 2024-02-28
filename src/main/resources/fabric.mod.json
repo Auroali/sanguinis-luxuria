@@ -46,7 +46,8 @@
 		"trinkets": ">=3.4",
 		"reach-entity-attributes": ">=2.3.0",
 		"cardinal-components-entity": "~5.0.2",
-		"yet-another-config-lib": ">=2"
+		"yet-another-config-lib": ">=2",
+		"maxhealthfix": ">=8.0.1"
 	},
 	"suggests": {
 		"another-mod": "*"

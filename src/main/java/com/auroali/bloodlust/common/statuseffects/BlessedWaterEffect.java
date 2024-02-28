@@ -11,8 +11,6 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public class BlessedWaterEffect extends StatusEffect {
     public BlessedWaterEffect(StatusEffectCategory statusEffectCategory, int color) {
         super(statusEffectCategory, color);
