@@ -36,7 +36,7 @@ public class VampireTeleportAbility extends VampireAbility{
 
         BlockHitResult result = entity.world.raycast(new RaycastContext(
                 entity.getEyePos(),
-                entity.getEyePos().add(entity.getRotationVector().multiply(6)),
+                entity.getEyePos().add(entity.getRotationVector().multiply(getRange(component.getAbilties()))),
                 RaycastContext.ShapeType.COLLIDER,
                 RaycastContext.FluidHandling.NONE,
                 entity
