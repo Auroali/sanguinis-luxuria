@@ -24,6 +24,8 @@
   "gui.bloodlust.abilities.bind_prompt": "Right click to bind...",
   "gui.bloodlust.abilities.binding": "Press a key...",
   "gui.bloodlust.abilities.bound": "Bound to [%s]",
+  "gui.bloodlust.abilities.incompatibilites": "Incompatible With:",
+  "gui.bloodlust.abilities.incompatibilites_entry": "  - %s",
   "gui.bloodlust.skill_points": "Skill Points: %d",
   "item.bloodlust.blood_bag": "Blood Bag",
   "item.bloodlust.blood_bottle": "Blood Bottle",
@@ -42,5 +44,11 @@
   "subtitles.bloodlust.drain_blood": "Vampire feeding",
   "vampire_ability.bloodlust.health_1": "Increased Health",
   "vampire_ability.bloodlust.health_2": "Increased Health",
-  "vampire_ability.bloodlust.strength_1": "Increased Strength"
+  "vampire_ability.bloodlust.strength_1": "Increased Strength",
+  "vampire_ability.bloodlust.teleport": "Teleport",
+  "vampire_ability.bloodlust.teleport_cooldown_1": "Decreased Teleport Cooldown",
+  "vampire_ability.bloodlust.teleport_cooldown_2": "Decreased Teleport Cooldown",
+  "vampire_ability.bloodlust.teleport_range_1": "Increased Teleport Range",
+  "vampire_ability.bloodlust.teleport_range_2": "Increased Teleport Range",
+  "vampire_ability.bloodlust.vampire_strength_2": "Increased Strength"
 }

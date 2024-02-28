@@ -62,6 +62,21 @@ public class BLVampireAbilities {
                     EntityAttributeModifier.Operation.ADDITION
             )
     );
+    public static final VampireAbility VAMPIRE_STRENGTH_2 = new VampireAttributeModifierAbility(
+            () -> {
+                ItemStack stack = new ItemStack(Items.POTION);
+                PotionUtil.setPotion(stack, Potions.STRENGTH);
+                return stack;
+            },
+            VAMPIRE_STRENGTH_1,
+            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+            new EntityAttributeModifier(
+                    UUID.fromString("33682391-db06-4c6e-8674-770fa4051870"),
+                    "bloodlust.vampire_strength",
+                    0.5,
+                    EntityAttributeModifier.Operation.ADDITION
+            )
+    );
 
     public static final VampireAbility TELEPORT = new VampireTeleportAbility(
             () -> new ItemStack(Items.ENDER_PEARL),
@@ -78,6 +93,7 @@ public class BLVampireAbilities {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_1_ID, VAMPIRE_STRENGTH_1);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_2_ID, VAMPIRE_STRENGTH_2);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_ID, TELEPORT);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_1_ID, TELEPORT_RANGE_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_2_ID, TELEPORT_RANGE_2);

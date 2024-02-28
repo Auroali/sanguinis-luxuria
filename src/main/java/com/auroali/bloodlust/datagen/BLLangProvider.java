@@ -70,6 +70,9 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("gui.bloodlust.abilities.bind_prompt", "Right click to bind...");
         translationBuilder.add("gui.bloodlust.abilities.binding", "Press a key...");
 
+        translationBuilder.add("gui.bloodlust.abilities.incompatibilites", "Incompatible With:");
+        translationBuilder.add("gui.bloodlust.abilities.incompatibilites_entry", "  - %s");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");
@@ -78,6 +81,13 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityKey(translationBuilder, BLVampireAbilities.HEALTH_1, "Increased Health");
         generateAbilityKey(translationBuilder, BLVampireAbilities.HEALTH_2, "Increased Health");
         generateAbilityKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_1, "Increased Strength");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_2, "Increased Strength");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT, "Teleport");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_1, "Decreased Teleport Cooldown");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_2, "Decreased Teleport Cooldown");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_1, "Increased Teleport Range");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_2, "Increased Teleport Range");
+
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {

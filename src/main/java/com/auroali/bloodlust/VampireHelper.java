@@ -1,6 +1,8 @@
 package com.auroali.bloodlust;
 
+import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
+import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLTags;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.LivingEntity;
@@ -30,5 +32,19 @@ public class VampireHelper {
 
     public static boolean canBeConvertedToVampire(LivingEntity entity) {
         return BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity);
+    }
+
+    public static boolean hasIncompatibleAbility(LivingEntity entity, VampireAbility ability) {
+        if(!isVampire(entity))
+            return false;
+
+        VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
+
+        for(VampireAbility other : component.getAbilties()) {
+            if(ability.incompatibleWith(other)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

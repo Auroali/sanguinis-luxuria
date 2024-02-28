@@ -78,8 +78,12 @@ public class VampireAbilitiesScreen extends Screen {
 
         List<VampireAbility> incompatibilities = widget.ability.getIncompatibilities();
         if(!incompatibilities.isEmpty()) {
+            text.add(Text.translatable("gui.bloodlust.abilities.incompatibilites"));
             for(VampireAbility ability : incompatibilities) {
-                text.add(Text.translatable(ability.getTranslationKey()).formatted(Formatting.RED, Formatting.ITALIC));
+                text.add(Text.translatable(
+                        "gui.bloodlust.abilities.incompatibilites_entry",
+                        Text.translatable(ability.getTranslationKey())
+                ).formatted(Formatting.DARK_RED, Formatting.ITALIC));
             }
         }
 

@@ -42,8 +42,11 @@ public class VampireAbilitiesPositioner {
             for (VampireAbilityWidget widget : widgets) {
                 for (VampireAbilityWidget other : widgets) {
                     if(other != widget && widget.isOverlappingX(other)) {
-                        widget.setX(widget.getX() - columnSpacing / 2);
-                        other.setX(other.getX() + columnSpacing / 2);
+                        int dir = 1;
+                        if(other.parent.getX() > widget.parent.getX())
+                            dir = -1;
+                        widget.setX(widget.getX() + dir * (columnSpacing / 2));
+                        other.setX(other.getX() - dir * (columnSpacing / 2));
                         hasCollisions = true;
                     }
                 }

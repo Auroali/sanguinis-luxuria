@@ -42,6 +42,8 @@ public class BLResources {
     public static final Identifier TELEPORT_COOLDOWN_2_ID = id("teleport_cooldown_2");
     public static final Identifier TELEPORT_RANGE_1_ID = id("teleport_range_1");
     public static final Identifier TELEPORT_RANGE_2_ID = id("teleport_range_2");
+    public static final Identifier TELEPORT_RANGE_TAG_ID = id("teleport_range_increase");
+    public static final Identifier VAMPIRE_STRENGTH_2_ID = id("vampire_strength_2");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

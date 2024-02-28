@@ -1,6 +1,7 @@
 package com.auroali.bloodlust.client.screen;
 
 import com.auroali.bloodlust.BLResources;
+import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.abilities.VampireAbilityContainer;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
@@ -80,11 +81,11 @@ public class VampireAbilityWidget extends DrawableHelper {
 
         int colour = -1;
         int blackColour = 0xFF000000;
-        if(!container.hasAbility(parent.ability)) {
+        if(VampireHelper.hasIncompatibleAbility(MinecraftClient.getInstance().player, ability) || !container.hasAbility(parent.ability)) {
             colour = 0xFF6C0000;
             blackColour = 0xFF0C0000;
         }
-        if(container.hasAbility(ability)) {
+        else if(container.hasAbility(ability)) {
             colour = 0xFFFF6E11;
             blackColour = 0xFF260005;
         }
