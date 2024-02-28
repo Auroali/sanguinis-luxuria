@@ -2,6 +2,7 @@ package com.auroali.bloodlust.config;
 
 import com.auroali.bloodlust.Bloodlust;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import dev.isxander.yacl.api.ConfigCategory;
@@ -64,9 +65,13 @@ public class BLConfig {
 
     public void save() {
         JsonObject root = new JsonObject();
-        root.addProperty("vampireDamageMultiplier", vampireDamageMultiplier);
-        root.addProperty("vampireExhaustionMultiplier", vampireExhaustionMultiplier);
-        root.addProperty("blessedWaterDamage", blessedWaterDamage);
+        ConfigSerializer.create(root)
+                .category("gameplay")
+                .writeValue("vampireDamageMultiplier", vampireDamageMultiplier, JsonObject::addProperty)
+                .writeValue("vampireExhaustionMultiplier", vampireExhaustionMultiplier, JsonObject::addProperty)
+                .writeValue("blessedWaterDamage", blessedWaterDamage, JsonObject::addProperty)
+                .up();
+
 
         try {
             Files.writeString(CONFIG_FILE, GSON.toJson(root));
@@ -88,23 +93,13 @@ public class BLConfig {
             return;
         }
 
-        boolean isMissingEntry = false;
-
-        if(root.has("vampireDamageMultiplier"))
-            vampireDamageMultiplier = root.get("vampireDamageMultiplier").getAsFloat();
-        else isMissingEntry = true;
-
-        if(root.has("vampireExhaustionMultiplier"))
-            vampireExhaustionMultiplier = root.get("vampireExhaustionMultiplier").getAsFloat();
-        else isMissingEntry = true;
-
-        if(root.has("blessedWaterDamage"))
-            blessedWaterDamage = root.get("blessedWaterDamage").getAsFloat();
-        else isMissingEntry = true;
-
-
-        if(isMissingEntry)
-            save();
+        ConfigSerializer.create(root)
+                .category("gameplay")
+                .readValue("vampireDamageMultiplier", v -> vampireDamageMultiplier = v, vampireDamageMultiplier, JsonElement::getAsFloat)
+                .readValue("vampireExhaustionMultiplier", v -> vampireExhaustionMultiplier = v, vampireExhaustionMultiplier, JsonElement::getAsFloat)
+                .readValue("blessedWaterDamage", v -> blessedWaterDamage = v, blessedWaterDamage, JsonElement::getAsFloat)
+                .up()
+                .saveIfNeeded(this::save);
     }
 
 }
