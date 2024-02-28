@@ -27,9 +27,9 @@ public class BLConfig {
             .setPrettyPrinting()
             .create();
 
-    public float vampireDamageMultiplier = 2.5f;
+    public float vampireDamageMultiplier = 1.5f;
     public float vampireExhaustionMultiplier = 0.25f;
-    public float blessedWaterDamage = 4f;
+    public float blessedWaterDamage = 6f;
 
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
@@ -40,7 +40,7 @@ public class BLConfig {
                                 .option(Option.createBuilder(Float.class)
                                         .name(Text.translatable("bloodlust.config.option.vampire_damage_multiplier"))
                                         .tooltip(Text.translatable("bloodlust.config.option.vampire_damage_multiplier.desc"))
-                                        .binding(2.5f, () -> this.vampireDamageMultiplier, f -> this.vampireDamageMultiplier = f)
+                                        .binding(1.5f, () -> this.vampireDamageMultiplier, f -> this.vampireDamageMultiplier = f)
                                         .controller(FloatFieldController::new)
                                         .build()
                                 ).option(Option.createBuilder(Float.class)
@@ -52,7 +52,7 @@ public class BLConfig {
                                 ).option(Option.createBuilder(Float.class)
                                         .name(Text.translatable("bloodlust.config.option.blessed_water_damage"))
                                         .tooltip(Text.translatable("bloodlust.config.option.blessed_water_damage.desc"))
-                                        .binding(4f, () -> this.blessedWaterDamage, f -> this.blessedWaterDamage = f)
+                                        .binding(6f, () -> this.blessedWaterDamage, f -> this.blessedWaterDamage = f)
                                         .controller(FloatFieldController::new)
                                         .build()
                                 ).build()
