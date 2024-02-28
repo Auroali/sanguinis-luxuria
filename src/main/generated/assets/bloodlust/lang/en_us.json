@@ -1,4 +1,6 @@
 {
+  "advancements.bloodlust.become_vampire.description": "Transform into a vampire after drinking enough blood with weakness",
+  "advancements.bloodlust.become_vampire.title": "Bloodlust",
   "argument.bloodlust.id.invalid": "'%s' is not a valid id!",
   "bloodlust.config.category.gameplay": "Gameplay",
   "bloodlust.config.option.blessed_water_damage": "Blessed Water Damage",

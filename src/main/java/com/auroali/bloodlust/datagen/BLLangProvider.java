@@ -88,6 +88,12 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_1, "Increased Teleport Range");
         generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_2, "Increased Teleport Range");
 
+        generateAdvancements(translationBuilder);
+    }
+
+    public static void generateAdvancements(TranslationBuilder translationBuilder) {
+        translationBuilder.add(BLAdvancementsProvider.title("become_vampire"), "Bloodlust");
+        translationBuilder.add(BLAdvancementsProvider.desc("become_vampire"), "Transform into a vampire after drinking enough blood with weakness");
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {

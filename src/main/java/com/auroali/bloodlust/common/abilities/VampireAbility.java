@@ -55,6 +55,7 @@ public abstract class VampireAbility {
         return transKey == null ? "" : transKey;
     }
 
+    // todo: implement way to set this
     public int getRequiredSkillPoints() {
         return 0;
     }

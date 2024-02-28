@@ -5,6 +5,7 @@ import com.auroali.bloodlust.Bloodlust;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.items.MaskItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 
@@ -27,5 +28,8 @@ public class BLItems {
         Registry.register(Registry.ITEM, BLResources.MASK_THREE_ID, MASK_3);
         Registry.register(Registry.ITEM, BLResources.BLOOD_BAG_ID, BLOOD_BAG);
         Registry.register(Registry.ITEM, BLResources.BLOOD_BOTTLE_ID, BLOOD_BOTTLE);
+        Registry.register(Registry.ITEM, BLResources.SKILL_UPGRADER_ID, new BlockItem(BLBlocks.SKILL_UPGRADER, new FabricItemSettings()
+                .group(Bloodlust.BLOODLUST_TAB))
+        );
     }
 }

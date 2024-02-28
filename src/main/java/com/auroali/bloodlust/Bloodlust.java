@@ -82,10 +82,12 @@ public class Bloodlust implements ModInitializer {
 		TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 5, BLTradeOffers::registerClericTrades);
 
 		BLBlocks.register();
+		BLBlockEntities.register();
 		BLItems.register();
 		BLSounds.register();
 		BLStatusEffects.register();
 		BLVampireAbilities.register();
+		BLAdvancementCriterion.register();
 	}
 
 	public static void registerNetworkHandlers() {

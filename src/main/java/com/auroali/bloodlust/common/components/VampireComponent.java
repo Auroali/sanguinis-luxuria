@@ -113,4 +113,6 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
         return false;
     }
+
+    void setSkillPoints(int i);
 }

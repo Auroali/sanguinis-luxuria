@@ -7,6 +7,7 @@ import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.ItemTags;
+import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.function.Consumer;
 

@@ -2,6 +2,7 @@ package com.auroali.bloodlust.common.statuseffects;
 
 import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
+import com.auroali.bloodlust.common.registry.BLAdvancementCriterion;
 import com.auroali.bloodlust.common.registry.BLStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
@@ -9,6 +10,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class BloodSicknessEffect extends StatusEffect {
     public BloodSicknessEffect(StatusEffectCategory statusEffectCategory, int color) {
@@ -31,8 +33,11 @@ public class BloodSicknessEffect extends StatusEffect {
         if(amplifier >= 4 && duration < 1000 && entity.getRandom().nextInt(25) == 0)
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
 
-        if(duration == 1 && isRightConditions(entity, amplifier) && VampireHelper.canBeConvertedToVampire(entity))
+        if(duration == 1 && isRightConditions(entity, amplifier) && VampireHelper.canBeConvertedToVampire(entity)) {
+            if(entity instanceof ServerPlayerEntity p)
+                BLAdvancementCriterion.BECOME_VAMPIRE.trigger(p);
             BLEntityComponents.VAMPIRE_COMPONENT.get(entity).setIsVampire(true);
+        }
     }
 
     @Override

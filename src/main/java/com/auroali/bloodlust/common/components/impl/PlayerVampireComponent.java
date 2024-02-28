@@ -352,6 +352,12 @@ public class PlayerVampireComponent implements VampireComponent {
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
+    @Override
+    public void setSkillPoints(int i) {
+        this.skillPoints = i;
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+    }
+
     private void updateTarget() {
         HitResult result = getTarget();
         if(!canDrainBlood() || result.getType() != HitResult.Type.ENTITY) {
