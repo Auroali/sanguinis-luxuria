@@ -1,10 +1,12 @@
 package com.auroali.bloodlust.datagen;
 
 import com.auroali.bloodlust.common.advancements.BecomeVampireCriterion;
+import com.auroali.bloodlust.common.registry.BLBlocks;
 import com.auroali.bloodlust.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -35,6 +37,21 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(Items.TWISTING_VINES)
                 .criterion("is_vampire", BecomeVampireCriterion.Conditions.create())
                 .offerTo(exporter);
-
+        ShapedRecipeJsonBuilder.create(BLBlocks.SKILL_UPGRADER)
+                .pattern("lbl")
+                .pattern("sss")
+                .input('b', BLItems.BLOOD_BOTTLE)
+                .input('s', Items.BLACKSTONE)
+                .input('l', ItemTags.LOGS)
+                .criterion("is_vampire", BecomeVampireCriterion.Conditions.create())
+                .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(BLBlocks.PEDESTAL)
+                .pattern(" l ")
+                .pattern(" s ")
+                .input('s', Items.BLACKSTONE_WALL)
+                .input('l', ItemTags.LOGS)
+                .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
+                .offerTo(exporter);
     }
 }

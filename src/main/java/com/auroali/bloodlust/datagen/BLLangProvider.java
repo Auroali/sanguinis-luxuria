@@ -2,10 +2,7 @@ package com.auroali.bloodlust.datagen;
 
 import com.auroali.bloodlust.Bloodlust;
 import com.auroali.bloodlust.common.abilities.VampireAbility;
-import com.auroali.bloodlust.common.registry.BLDamageSources;
-import com.auroali.bloodlust.common.registry.BLItems;
-import com.auroali.bloodlust.common.registry.BLStatusEffects;
-import com.auroali.bloodlust.common.registry.BLVampireAbilities;
+import com.auroali.bloodlust.common.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.item.Item;
@@ -73,7 +70,13 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("gui.bloodlust.abilities.incompatibilites", "Incompatible With:");
         translationBuilder.add("gui.bloodlust.abilities.incompatibilites_entry", "  - %s");
 
-        translationBuilder.add(BLItems.TWISTED_BLOOD, "Twisted Blood");
+        translationBuilder.add(BLItems.TWISTED_BLOOD, "Twisted Blood Bottle");
+        translationBuilder.add(BLBlocks.PEDESTAL, "Pedestal");
+        translationBuilder.add(BLBlocks.SKILL_UPGRADER, "Altar");
+
+        translationBuilder.add("bloodlust.config.category.abilities", "Abilities");
+        translationBuilder.add("bloodlust.config.option.skill_points_per_level", "Skill Points Per Level");
+        translationBuilder.add("bloodlust.config.option.skill_points_per_level.desc", "How many skill points are gained per level");
 
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");

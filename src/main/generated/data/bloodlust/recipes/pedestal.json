@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "l": {
+      "tag": "minecraft:logs"
+    },
+    "s": {
+      "item": "minecraft:blackstone_wall"
+    }
+  },
+  "pattern": [
+    " l ",
+    " s "
+  ],
+  "result": {
+    "item": "bloodlust:pedestal"
+  }
+}
