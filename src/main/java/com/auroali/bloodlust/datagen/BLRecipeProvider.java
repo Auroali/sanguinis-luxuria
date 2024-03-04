@@ -1,19 +1,14 @@
 package com.auroali.bloodlust.datagen;
 
 import com.auroali.bloodlust.common.advancements.BecomeVampireCriterion;
-import com.auroali.bloodlust.common.registry.BLAdvancementCriterion;
 import com.auroali.bloodlust.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.ItemTags;
-import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.function.Consumer;
 

@@ -3,7 +3,6 @@ package com.auroali.bloodlust.common.registry;
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.common.blockentities.PedestalBlockEntity;
 import com.auroali.bloodlust.common.blockentities.SkillUpgraderBlockEntity;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 

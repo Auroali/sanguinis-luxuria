@@ -8,7 +8,6 @@ import com.auroali.bloodlust.common.items.TwistedBloodItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 

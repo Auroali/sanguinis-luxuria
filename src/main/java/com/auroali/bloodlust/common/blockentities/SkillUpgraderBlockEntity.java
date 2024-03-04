@@ -9,13 +9,11 @@ import com.auroali.bloodlust.common.recipes.AltarInventory;
 import com.auroali.bloodlust.common.recipes.AltarRecipe;
 import com.auroali.bloodlust.common.registry.BLBlockEntities;
 import com.auroali.bloodlust.common.registry.BLRecipeTypes;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -66,6 +64,8 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
         pedestals.forEach(p -> {
             p.getItem().decrement(1);
             p.markDirty();
+            BlockState state = world.getBlockState(p.getPos());
+            world.updateListeners(p.getPos(), state, state, Block.NOTIFY_LISTENERS);
         });
 
         this.recipe = recipe;

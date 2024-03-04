@@ -3,7 +3,6 @@ package com.auroali.bloodlust.config;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class ConfigSerializer {

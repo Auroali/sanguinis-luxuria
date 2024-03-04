@@ -1,12 +1,16 @@
 package com.auroali.bloodlust.common.blockentities;
 
 import com.auroali.bloodlust.common.registry.BLBlockEntities;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlockEntity extends BlockEntity {
     ItemStack stack = ItemStack.EMPTY;
@@ -20,6 +24,10 @@ public class PedestalBlockEntity extends BlockEntity {
 
     public void setItem(ItemStack stack) {
         this.stack = stack;
+        if(world != null) {
+            BlockState state = world.getBlockState(pos);
+            world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+        }
         markDirty();
     }
 
@@ -33,5 +41,16 @@ public class PedestalBlockEntity extends BlockEntity {
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         nbt.put("Item", stack.writeNbt(new NbtCompound()));
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 }

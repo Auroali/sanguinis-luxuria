@@ -124,6 +124,7 @@ public class PlayerVampireComponent implements VampireComponent {
         isVampire = tag.getBoolean("IsVampire");
         timeInSun = tag.getInt("TimeInSun");
         skillPoints = tag.getInt("SkillPoints");
+        level = tag.getInt("Level");
         abilities.load(tag);
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
@@ -133,6 +134,7 @@ public class PlayerVampireComponent implements VampireComponent {
         tag.putBoolean("IsVampire", isVampire);
         tag.putInt("TimeInSun", timeInSun);
         tag.putInt("SkillPoints", skillPoints);
+        tag.putInt("Level", level);
         abilities.save(tag);
     }
 
@@ -262,9 +264,10 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
         buf.writeBoolean(isVampire);
-        buf.writeInt(bloodDrainTimer);
-        buf.writeInt(timeInSun);
+        buf.writeVarInt(bloodDrainTimer);
+        buf.writeVarInt(timeInSun);
         buf.writeInt(skillPoints);
+        buf.writeInt(level);
         buf.writeBoolean(abilities.needsSync());
         if(abilities.needsSync()) {
             abilities.writePacket(buf);
@@ -275,9 +278,10 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void applySyncPacket(PacketByteBuf buf) {
         isVampire = buf.readBoolean();
-        bloodDrainTimer = buf.readInt();
-        timeInSun = buf.readInt();
+        bloodDrainTimer = buf.readVarInt();
+        timeInSun = buf.readVarInt();
         skillPoints = buf.readInt();
+        level = buf.readInt();
         boolean abilitiesSync = buf.readBoolean();
         if(abilitiesSync)
             abilities.readPacket(buf);

@@ -3,7 +3,6 @@ package com.auroali.bloodlust.common.registry;
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.common.recipes.AltarRecipe;
 import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.registry.Registry;
 
 public class BLRecipeSerializers {

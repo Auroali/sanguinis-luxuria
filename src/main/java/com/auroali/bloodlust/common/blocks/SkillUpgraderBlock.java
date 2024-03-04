@@ -1,8 +1,6 @@
 package com.auroali.bloodlust.common.blocks;
 
 import com.auroali.bloodlust.common.blockentities.SkillUpgraderBlockEntity;
-import com.auroali.bloodlust.common.components.BLEntityComponents;
-import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -36,6 +34,11 @@ public class SkillUpgraderBlock extends BlockWithEntity {
     public SkillUpgraderBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getStateManager().getDefaultState().with(ACTIVE, false));
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override

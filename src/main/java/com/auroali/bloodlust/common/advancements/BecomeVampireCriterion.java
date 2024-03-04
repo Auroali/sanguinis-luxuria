@@ -2,7 +2,6 @@ package com.auroali.bloodlust.common.advancements;
 
 import com.auroali.bloodlust.BLResources;
 import com.google.gson.JsonObject;
-import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;

@@ -1,8 +1,10 @@
 package com.auroali.bloodlust;
 
 import com.auroali.bloodlust.client.BLHud;
+import com.auroali.bloodlust.client.render.PedestalBlockRenderer;
 import com.auroali.bloodlust.client.screen.VampireAbilitiesScreen;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
+import com.auroali.bloodlust.common.registry.BLBlockEntities;
 import com.auroali.bloodlust.common.registry.BLBlocks;
 import com.auroali.bloodlust.common.registry.BLItems;
 import com.auroali.bloodlust.common.registry.BLTags;
@@ -18,6 +20,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
@@ -67,6 +70,9 @@ public class BloodlustClient implements ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.BLOOD_SPLATTER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.PEDESTAL, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.SKILL_UPGRADER, RenderLayer.getCutout());
+
+        BlockEntityRendererFactories.register(BLBlockEntities.PEDESTAL, ctx -> new PedestalBlockRenderer(ctx.getItemRenderer()));
 
         HudRenderCallback.EVENT.register(BLHud::render);
     }

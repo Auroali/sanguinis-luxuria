@@ -3,13 +3,10 @@ package com.auroali.bloodlust.datagen;
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.Bloodlust;
 import com.auroali.bloodlust.common.advancements.BecomeVampireCriterion;
-import com.auroali.bloodlust.common.registry.BLAdvancementCriterion;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.advancement.criterion.UsingItemCriterion;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
