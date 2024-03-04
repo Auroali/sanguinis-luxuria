@@ -17,14 +17,16 @@ public abstract class VampireAbility {
     private final VampireAbility parent;
     private final Supplier<ItemStack> icon;
     private final List<Supplier<VampireAbility>> incompatibilities;
+    private int skillPoints;
     private String transKey;
+    private final RegistryEntry.Reference<VampireAbility> holder = BLRegistry.VAMPIRE_ABILITIES.createEntry(this);
     public VampireAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         this.icon = icon;
         this.parent = parent;
         this.incompatibilities = new ArrayList<>();
+        this.skillPoints = 1;
     }
 
-    private final RegistryEntry.Reference<VampireAbility> holder = BLRegistry.VAMPIRE_ABILITIES.createEntry(this);
     public abstract void tick(LivingEntity entity, VampireComponent component, BloodComponent blood);
 
     public RegistryEntry.Reference<VampireAbility> getRegistryEntry() {
@@ -55,9 +57,8 @@ public abstract class VampireAbility {
         return transKey == null ? "" : transKey;
     }
 
-    // todo: implement way to set this
     public int getRequiredSkillPoints() {
-        return 0;
+        return skillPoints;
     }
 
     public boolean activate(LivingEntity entity, VampireComponent component) {
@@ -82,8 +83,14 @@ public abstract class VampireAbility {
     public List<VampireAbility> getIncompatibilities() {
         return incompatibilities.stream().map(Supplier::get).toList();
     }
+
     public VampireAbility incompatible(Supplier<VampireAbility> abilitySupplier) {
         incompatibilities.add(abilitySupplier);
+        return this;
+    }
+
+    public VampireAbility skillPoints(int points) {
+        this.skillPoints = points;
         return this;
     }
 }

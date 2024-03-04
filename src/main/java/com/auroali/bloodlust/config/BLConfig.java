@@ -10,6 +10,7 @@ import dev.isxander.yacl.api.Option;
 import dev.isxander.yacl.api.OptionGroup;
 import dev.isxander.yacl.api.YetAnotherConfigLib;
 import dev.isxander.yacl.gui.controllers.string.number.FloatFieldController;
+import dev.isxander.yacl.gui.controllers.string.number.IntegerFieldController;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -30,6 +31,7 @@ public class BLConfig {
     public float vampireDamageMultiplier = 1.5f;
     public float vampireExhaustionMultiplier = 0.25f;
     public float blessedWaterDamage = 6f;
+    public int skillPointsPerLevel = 1;
 
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
@@ -58,6 +60,18 @@ public class BLConfig {
                                 ).build()
                         ).build()
                 )
+                .category(ConfigCategory.createBuilder()
+                        .name(Text.translatable("bloodlust.config.category.abilities"))
+                        .group(OptionGroup.createBuilder()
+                                .option(Option.createBuilder(Integer.class)
+                                        .name(Text.translatable("bloodlust.config.option.skill_points_per_level"))
+                                        .tooltip(Text.translatable("bloodlust.config.option.skill_points_per_level.desc"))
+                                        .binding(1, () -> this.skillPointsPerLevel, f -> this.skillPointsPerLevel = f)
+                                        .controller(IntegerFieldController::new)
+                                        .build()
+                                ).build()
+                        ).build()
+                )
                 .save(INSTANCE::save)
                 .build()
                 .generateScreen(screen);
@@ -70,6 +84,9 @@ public class BLConfig {
                 .writeValue("vampireDamageMultiplier", vampireDamageMultiplier, JsonObject::addProperty)
                 .writeValue("vampireExhaustionMultiplier", vampireExhaustionMultiplier, JsonObject::addProperty)
                 .writeValue("blessedWaterDamage", blessedWaterDamage, JsonObject::addProperty)
+                .up()
+                .category("abilities")
+                .writeValue("skillPointsPerLevel", skillPointsPerLevel, JsonObject::addProperty)
                 .up();
 
 
@@ -98,6 +115,9 @@ public class BLConfig {
                 .readValue("vampireDamageMultiplier", v -> vampireDamageMultiplier = v, vampireDamageMultiplier, JsonElement::getAsFloat)
                 .readValue("vampireExhaustionMultiplier", v -> vampireExhaustionMultiplier = v, vampireExhaustionMultiplier, JsonElement::getAsFloat)
                 .readValue("blessedWaterDamage", v -> blessedWaterDamage = v, blessedWaterDamage, JsonElement::getAsFloat)
+                .up()
+                .category("abilities")
+                .readValue("skillPointsPerLevel", v -> skillPointsPerLevel = v, skillPointsPerLevel, JsonElement::getAsInt)
                 .up()
                 .saveIfNeeded(this::save);
     }

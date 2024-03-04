@@ -2,6 +2,7 @@ package com.auroali.bloodlust.common.registry;
 
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.common.blocks.BloodSplatterBlock;
+import com.auroali.bloodlust.common.blocks.PedestalBlock;
 import com.auroali.bloodlust.common.blocks.SkillUpgraderBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -16,9 +17,11 @@ public class BLBlocks {
                     .ticksRandomly()
     );
     public static final Block SKILL_UPGRADER = new SkillUpgraderBlock(FabricBlockSettings.of(Material.STONE));
+    public static final Block PEDESTAL = new PedestalBlock(FabricBlockSettings.of(Material.DECORATION));
 
     public static void register() {
         Registry.register(Registry.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
         Registry.register(Registry.BLOCK, BLResources.SKILL_UPGRADER_ID, SKILL_UPGRADER);
+        Registry.register(Registry.BLOCK, BLResources.PEDESTAL_ID, PEDESTAL);
     }
 }

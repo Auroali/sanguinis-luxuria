@@ -46,7 +46,11 @@ public class BLResources {
     public static final Identifier VAMPIRE_STRENGTH_2_ID = id("vampire_strength_2");
     public static final Identifier BECOME_VAMPIRE_CRITERION_ID = id("become_vampire");
     // todo: give this a better name
-    public static final Identifier SKILL_UPGRADER_ID = id("skill_upgrader");
+    public static final Identifier SKILL_UPGRADER_ID = id("altar");
+    public static final Identifier MORE_BLOOD_ID = id("more_blood");
+    public static final Identifier ALTAR_RECIPE_ID = id("altar_recipe");
+    public static final Identifier TWISTED_BLOOD_ID = id("twisted_blood_bottle");
+    public static final Identifier PEDESTAL_ID = id("pedestal");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

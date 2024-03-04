@@ -88,7 +88,14 @@ public class BLVampireAbilities {
     public static final VampireAbility TELEPORT_COOLDOWN_1 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
             .incompatible(() -> BLVampireAbilities.TELEPORT_RANGE_1);
     public static final VampireAbility TELEPORT_COOLDOWN_2 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_COOLDOWN_1);
-
+    public static final VampireAbility MORE_BLOOD = new SimpleVampireAbility(
+            () -> {
+                ItemStack bottle = new ItemStack(BLItems.BLOOD_BOTTLE);
+                BLItems.BLOOD_BOTTLE.setStoredBlood(bottle, BLItems.BLOOD_BOTTLE.getMaxBlood());
+                return new ItemStack(Items.ENDER_PEARL);
+            },
+            HEALTH_1
+    );
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
@@ -99,5 +106,6 @@ public class BLVampireAbilities {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_2_ID, TELEPORT_RANGE_2);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_1_ID, TELEPORT_COOLDOWN_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_2_ID, TELEPORT_COOLDOWN_2);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.MORE_BLOOD_ID, MORE_BLOOD);
     }
 }

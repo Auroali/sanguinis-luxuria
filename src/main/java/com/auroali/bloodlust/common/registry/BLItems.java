@@ -4,8 +4,11 @@ import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.Bloodlust;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.items.MaskItem;
+import com.auroali.bloodlust.common.items.TwistedBloodItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 
@@ -21,6 +24,7 @@ public class BLItems {
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
             2
     ).emptyItem(Items.GLASS_BOTTLE);
+    public static final Item TWISTED_BLOOD = new TwistedBloodItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
 
     public static void register() {
         Registry.register(Registry.ITEM, BLResources.MASK_ONE_ID, MASK_1);
@@ -28,7 +32,11 @@ public class BLItems {
         Registry.register(Registry.ITEM, BLResources.MASK_THREE_ID, MASK_3);
         Registry.register(Registry.ITEM, BLResources.BLOOD_BAG_ID, BLOOD_BAG);
         Registry.register(Registry.ITEM, BLResources.BLOOD_BOTTLE_ID, BLOOD_BOTTLE);
+        Registry.register(Registry.ITEM, BLResources.TWISTED_BLOOD_ID, TWISTED_BLOOD);
         Registry.register(Registry.ITEM, BLResources.SKILL_UPGRADER_ID, new BlockItem(BLBlocks.SKILL_UPGRADER, new FabricItemSettings()
+                .group(Bloodlust.BLOODLUST_TAB))
+        );
+        Registry.register(Registry.ITEM, BLResources.PEDESTAL_ID, new BlockItem(BLBlocks.PEDESTAL, new FabricItemSettings()
                 .group(Bloodlust.BLOODLUST_TAB))
         );
     }

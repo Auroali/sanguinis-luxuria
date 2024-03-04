@@ -54,6 +54,7 @@ public class PlayerVampireComponent implements VampireComponent {
     private int bloodDrainTimer;
     private int timeInSun;
     private int skillPoints;
+    private int level;
 
 
     public PlayerVampireComponent(PlayerEntity holder) {
@@ -356,6 +357,18 @@ public class PlayerVampireComponent implements VampireComponent {
     public void setSkillPoints(int i) {
         this.skillPoints = i;
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.skillPoints += BLConfig.INSTANCE.skillPointsPerLevel * Math.max(level - this.level, 0);
+        this.level = level;
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+    }
+
+    @Override
+    public int getLevel() {
+        return level;
     }
 
     private void updateTarget() {

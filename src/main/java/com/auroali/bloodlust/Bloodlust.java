@@ -83,6 +83,8 @@ public class Bloodlust implements ModInitializer {
 
 		BLBlocks.register();
 		BLBlockEntities.register();
+		BLRecipeSerializers.register();
+		BLRecipeTypes.register();
 		BLItems.register();
 		BLSounds.register();
 		BLStatusEffects.register();

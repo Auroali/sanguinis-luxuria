@@ -7,6 +7,9 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.Supplier;
 
+/**
+ * Vampire ability with an empty tick function
+ */
 public class SimpleVampireAbility extends VampireAbility{
     public SimpleVampireAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         super(icon, parent);

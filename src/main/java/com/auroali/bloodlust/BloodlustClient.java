@@ -66,6 +66,7 @@ public class BloodlustClient implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(BLItems.BLOOD_BOTTLE, BLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, BLItems.BLOOD_BOTTLE::modelPredicate);
 
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.BLOOD_SPLATTER, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.PEDESTAL, RenderLayer.getCutout());
 
         HudRenderCallback.EVENT.register(BLHud::render);
     }

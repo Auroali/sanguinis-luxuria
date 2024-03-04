@@ -73,6 +73,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("gui.bloodlust.abilities.incompatibilites", "Incompatible With:");
         translationBuilder.add("gui.bloodlust.abilities.incompatibilites_entry", "  - %s");
 
+        translationBuilder.add(BLItems.TWISTED_BLOOD, "Twisted Blood");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");

@@ -68,6 +68,9 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     VampireAbilityContainer getAbilties();
 
     int getSkillPoints();
+    void setSkillPoints(int i);
+    void setLevel(int level);
+    int getLevel();
 
     void unlockAbility(VampireAbility ability);
 
@@ -114,5 +117,4 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         return false;
     }
 
-    void setSkillPoints(int i);
 }

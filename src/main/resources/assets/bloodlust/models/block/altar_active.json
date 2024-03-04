@@ -1,0 +1,6 @@
+{
+  "parent": "bloodlust:block/altar",
+  "textures": {
+    "0": "bloodlust:block/altar_active"
+  }
+}

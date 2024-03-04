@@ -4,6 +4,7 @@ import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.VampireComponent;
+import com.auroali.bloodlust.config.BLConfig;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -27,6 +28,7 @@ public class AbilityCommand {
                     VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(ctx.getSource().getPlayer());
                     for(VampireAbility a : component.getAbilties())
                         component.getAbilties().removeAbility(a);
+                    component.setSkillPoints(BLConfig.INSTANCE.skillPointsPerLevel * component.getLevel());
                     BLEntityComponents.VAMPIRE_COMPONENT.sync(ctx.getSource().getPlayer());
                     return 0;
                 }));

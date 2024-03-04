@@ -123,8 +123,9 @@ public class BloodStorageItem extends Item {
      * @param stack the blood storage item stack
      * @param blood the amount of blood
      */
-    public void setStoredBlood(ItemStack stack, int blood) {
+    public ItemStack setStoredBlood(ItemStack stack, int blood) {
         stack.getOrCreateNbt().putInt("StoredBlood", blood);
+        return stack;
     }
 
     /**
