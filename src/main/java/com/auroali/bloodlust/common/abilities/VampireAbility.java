@@ -1,9 +1,11 @@
 package com.auroali.bloodlust.common.abilities;
 
+import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLRegistry;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -17,6 +19,7 @@ public abstract class VampireAbility {
     private final VampireAbility parent;
     private final Supplier<ItemStack> icon;
     private final List<Supplier<VampireAbility>> incompatibilities;
+    private final List<VampireAbilityCondition> conditions = new ArrayList<>();
     private int skillPoints;
     private String transKey;
     private final RegistryEntry.Reference<VampireAbility> holder = BLRegistry.VAMPIRE_ABILITIES.createEntry(this);
@@ -39,6 +42,22 @@ public abstract class VampireAbility {
 
     public boolean isIn(TagKey<VampireAbility> tag) {
         return getRegistryEntry().isIn(tag);
+    }
+
+    public boolean isHidden(PlayerEntity entity) {
+        if(conditions.isEmpty())
+            return false;
+        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
+        for(VampireAbilityCondition condition : conditions) {
+            if(!condition.test(entity, vampire, vampire.getAbilties()))
+                return true;
+        }
+        return false;
+    }
+
+    public VampireAbility condition(VampireAbilityCondition condition) {
+        this.conditions.add(condition);
+        return this;
     }
 
     public VampireAbility getParent() {
@@ -92,5 +111,10 @@ public abstract class VampireAbility {
     public VampireAbility skillPoints(int points) {
         this.skillPoints = points;
         return this;
+    }
+
+    @FunctionalInterface
+    public interface VampireAbilityCondition {
+        boolean test(PlayerEntity entity, VampireComponent vampire, VampireAbilityContainer container);
     }
 }

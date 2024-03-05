@@ -31,6 +31,7 @@ public class VampireAbilityWidget extends DrawableHelper {
     VampireAbilityWidget parent;
     ItemStack icon;
     List<VampireAbilityWidget> children;
+    private boolean hidden = false;
     private int x;
     private int y;
 
@@ -39,6 +40,7 @@ public class VampireAbilityWidget extends DrawableHelper {
         this.parent = parent;
         this.icon = ability.getIcon();
         this.children = new ArrayList<>();
+        this.hidden = ability.isHidden(MinecraftClient.getInstance().player);
     }
 
     public void resolveParent(List<VampireAbilityWidget> abilities) {
@@ -46,12 +48,30 @@ public class VampireAbilityWidget extends DrawableHelper {
             if(widget.ability == ability.getParent()) {
                 this.parent = widget;
                 this.parent.getChildren().add(this);
+                if(!this.hidden)
+                    this.hidden = parent.hidden;
+                progateHiddenStateToChildren();
                 return;
             }
         }
     }
 
+    public void progateHiddenStateToChildren() {
+        List<VampireAbilityWidget> children = this.children.stream().filter(c -> !c.hidden).toList();
+        while(!children.isEmpty()) {
+            children.forEach(c -> c.hidden = hidden);
+            children = children
+                    .stream()
+                    .flatMap(c -> c.getChildren().stream())
+                    .filter(c -> !c.hidden)
+                    .toList();
+        }
+    }
+
     public void render(MatrixStack matrices, VampireAbilityContainer container, int offsetX, int offsetY, int mouseX, int mouseY) {
+        if(hidden)
+            return;
+
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BLResources.ICONS);
 
@@ -115,6 +135,8 @@ public class VampireAbilityWidget extends DrawableHelper {
     }
 
     public boolean isMouseOver(int mouseX, int mouseY, int offsetX, int offsetY) {
+        if(hidden)
+            return false;
         int x = getX() + offsetX;
         int y = getY() + offsetY;
 
@@ -142,14 +164,20 @@ public class VampireAbilityWidget extends DrawableHelper {
     }
 
     public boolean isOverlappingX(VampireAbilityWidget other) {
+        if(hidden)
+            return false;
         return getX() >= other.getX() && getX() <= other.getX() + WIDTH;
     }
 
     public boolean isOverlappingY(VampireAbilityWidget other) {
+        if(hidden)
+            return false;
         return getY() >= other.getY() && getY() <= other.getY() + HEIGHT;
     }
 
     public boolean onClick(VampireAbilitiesScreen screen, int button) {
+        if(hidden)
+            return false;
         ClientPlayerEntity entity = MinecraftClient.getInstance().player;
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
         if (button == 0 && tryUnlock(vampire, entity))

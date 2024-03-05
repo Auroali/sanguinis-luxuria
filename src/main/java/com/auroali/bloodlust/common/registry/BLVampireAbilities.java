@@ -5,6 +5,7 @@ import com.auroali.bloodlust.common.abilities.SimpleVampireAbility;
 import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.abilities.VampireAttributeModifierAbility;
 import com.auroali.bloodlust.common.abilities.VampireTeleportAbility;
+import com.auroali.bloodlust.common.items.BloodStorageItem;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
@@ -17,11 +18,7 @@ import java.util.UUID;
 
 public class BLVampireAbilities {
     public static final VampireAbility HEALTH_1 = new VampireAttributeModifierAbility(
-            () -> {
-                ItemStack stack = new ItemStack(Items.POTION);
-                PotionUtil.setPotion(stack, Potions.HEALING);
-                return stack;
-            },
+            () -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING),
             null,
             EntityAttributes.GENERIC_MAX_HEALTH,
             new EntityAttributeModifier(
@@ -32,11 +29,7 @@ public class BLVampireAbilities {
             )
     );
     public static final VampireAbility HEALTH_2 = new VampireAttributeModifierAbility(
-            () -> {
-                ItemStack stack = new ItemStack(Items.POTION);
-                PotionUtil.setPotion(stack, Potions.HEALING);
-                return stack;
-            },
+            () -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING),
             HEALTH_1,
             EntityAttributes.GENERIC_MAX_HEALTH,
             new EntityAttributeModifier(
@@ -48,11 +41,7 @@ public class BLVampireAbilities {
     );
 
     public static final VampireAbility VAMPIRE_STRENGTH_1 = new VampireAttributeModifierAbility(
-            () -> {
-                ItemStack stack = new ItemStack(Items.POTION);
-                PotionUtil.setPotion(stack, Potions.STRENGTH);
-                return stack;
-            },
+            () -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH),
             null,
             EntityAttributes.GENERIC_ATTACK_DAMAGE,
             new EntityAttributeModifier(
@@ -63,11 +52,7 @@ public class BLVampireAbilities {
             )
     );
     public static final VampireAbility VAMPIRE_STRENGTH_2 = new VampireAttributeModifierAbility(
-            () -> {
-                ItemStack stack = new ItemStack(Items.POTION);
-                PotionUtil.setPotion(stack, Potions.STRENGTH);
-                return stack;
-            },
+            () -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH),
             VAMPIRE_STRENGTH_1,
             EntityAttributes.GENERIC_ATTACK_DAMAGE,
             new EntityAttributeModifier(
@@ -89,13 +74,14 @@ public class BLVampireAbilities {
             .incompatible(() -> BLVampireAbilities.TELEPORT_RANGE_1);
     public static final VampireAbility TELEPORT_COOLDOWN_2 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_COOLDOWN_1);
     public static final VampireAbility MORE_BLOOD = new SimpleVampireAbility(
-            () -> {
-                ItemStack bottle = new ItemStack(BLItems.BLOOD_BOTTLE);
-                BLItems.BLOOD_BOTTLE.setStoredBlood(bottle, BLItems.BLOOD_BOTTLE.getMaxBlood());
-                return new ItemStack(Items.ENDER_PEARL);
-            },
+            () -> BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BLItems.BLOOD_BOTTLE.getMaxBlood()),
             HEALTH_1
     );
+    public static final VampireAbility TRANSFER_EFFECTS = new SimpleVampireAbility(
+            () -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.POISON),
+            HEALTH_2
+    );
+
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
@@ -107,5 +93,6 @@ public class BLVampireAbilities {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_1_ID, TELEPORT_COOLDOWN_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_2_ID, TELEPORT_COOLDOWN_2);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.MORE_BLOOD_ID, MORE_BLOOD);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TRANSFER_EFFECTS, TRANSFER_EFFECTS);
     }
 }

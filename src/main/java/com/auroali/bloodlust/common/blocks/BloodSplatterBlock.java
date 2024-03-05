@@ -1,5 +1,6 @@
 package com.auroali.bloodlust.common.blocks;
 
+import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.registry.BLItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -34,7 +35,7 @@ public class BloodSplatterBlock extends Block {
         ItemStack stack = player.getStackInHand(hand);
         if(stack.isOf(Items.GLASS_BOTTLE)) {
             ItemStack bloodBottle = new ItemStack(BLItems.BLOOD_BOTTLE);
-            BLItems.BLOOD_BOTTLE.setStoredBlood(bloodBottle, BLItems.BLOOD_BOTTLE.getMaxBlood());
+            BloodStorageItem.setStoredBlood(bloodBottle, BLItems.BLOOD_BOTTLE.getMaxBlood());
             if(!world.isClient) {
                 stack.decrement(1);
                 if(!player.getInventory().insertStack(bloodBottle))

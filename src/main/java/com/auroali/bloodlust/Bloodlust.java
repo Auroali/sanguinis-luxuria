@@ -6,6 +6,7 @@ import com.auroali.bloodlust.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
+import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.registry.*;
 import com.auroali.bloodlust.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
@@ -34,7 +35,7 @@ public class Bloodlust implements ModInitializer {
 	public static final ItemGroup BLOODLUST_TAB = FabricItemGroupBuilder.create(BLResources.ITEM_GROUP_ID)
 			.icon(() -> {
 				ItemStack stack = new ItemStack(BLItems.BLOOD_BOTTLE);
-				BLItems.BLOOD_BOTTLE.setStoredBlood(stack, BLItems.BLOOD_BOTTLE.getMaxBlood());
+				BloodStorageItem.setStoredBlood(stack, BLItems.BLOOD_BOTTLE.getMaxBlood());
 				return stack;
 			})
 			.build();

@@ -7,10 +7,7 @@ import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
-import com.auroali.bloodlust.common.registry.BLDamageSources;
-import com.auroali.bloodlust.common.registry.BLSounds;
-import com.auroali.bloodlust.common.registry.BLStatusEffects;
-import com.auroali.bloodlust.common.registry.BLTags;
+import com.auroali.bloodlust.common.registry.*;
 import com.auroali.bloodlust.config.BLConfig;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.EntityInteraction;
@@ -86,22 +83,43 @@ public class PlayerVampireComponent implements VampireComponent {
             return;
         }
 
-        if(entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
-            holder.getHungerManager().add(2, 0.05f);
-        else
-            holder.getHungerManager().add(1, 0);
+        // handle differing amounts of blood depending on the good blood tag and unlocked abilities
+        int bloodMultiplier = 1;
+        if(!VampireHelper.isVampire(entity) && abilities.hasAbility(BLVampireAbilities.MORE_BLOOD))
+            bloodMultiplier = 2;
 
+        if(!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+            holder.getHungerManager().add(bloodMultiplier * 2, 0.05f);
+        else
+            holder.getHungerManager().add(bloodMultiplier, 0);
+
+        // if the potion transfer ability is unlocked, transfer potion effects to the target
+        if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS))
+            transferPotionEffectsTo(entity);
+
+        // apply any negative effects for toxic blood
         if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
             addToxicBloodEffects();
 
+        // allow conversion of entities with weakness
         if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS))
             addBloodSickness(target);
 
+        // villagers have a 50% chance to wake up when having their blood drained
+        // it also adds negative reputation to the player
         if(entity.world instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
             serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
             if(holder.getRandom().nextDouble() > 0.5f)
                 entity.wakeUp();
         }
+    }
+
+    private void transferPotionEffectsTo(LivingEntity entity) {
+        for(StatusEffectInstance instance : holder.getStatusEffects()) {
+            entity.addStatusEffect(instance);
+        }
+
+        holder.clearStatusEffects();
     }
 
     private void addBloodSickness(LivingEntity target) {

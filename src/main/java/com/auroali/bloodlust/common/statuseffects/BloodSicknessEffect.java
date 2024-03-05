@@ -46,6 +46,6 @@ public class BloodSicknessEffect extends StatusEffect {
     }
 
     public boolean isRightConditions(LivingEntity entity, int amplifier) {
-        return !entity.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) && !VampireHelper.isVampire(entity) && amplifier >= 4 && entity.hasStatusEffect(StatusEffects.WEAKNESS);
+        return !entity.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) && !VampireHelper.isVampire(entity) && amplifier >= 4;
     }
 }

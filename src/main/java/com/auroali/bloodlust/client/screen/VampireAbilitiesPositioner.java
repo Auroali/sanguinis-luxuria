@@ -1,12 +1,18 @@
 package com.auroali.bloodlust.client.screen;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
+
 import java.util.List;
 
 public class VampireAbilitiesPositioner {
     public static void position(List<VampireAbilityWidget> widgets) {
         final int rowSpacing = 32;
         final int columnSpacing = 32;
-        List<VampireAbilityWidget> abilities = widgets.stream().filter(w -> w.parent == null).toList();
+
+        MinecraftClient client = MinecraftClient.getInstance();
+        ClientPlayerEntity player = client.player;
+        List<VampireAbilityWidget> abilities = widgets.stream().filter(w -> w.parent == null && !w.ability.isHidden(player)).toList();
         int currentRow = 0;
         while(!abilities.isEmpty()) {
             int currentX = 0;
@@ -31,6 +37,7 @@ public class VampireAbilitiesPositioner {
             abilities = abilities
                     .stream()
                     .flatMap(w -> w.getChildren().stream())
+                    .filter((w -> !w.ability.isHidden(player)))
                     .toList();
         }
     }

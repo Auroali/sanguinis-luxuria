@@ -123,7 +123,7 @@ public class BloodStorageItem extends Item {
      * @param stack the blood storage item stack
      * @param blood the amount of blood
      */
-    public ItemStack setStoredBlood(ItemStack stack, int blood) {
+    public static ItemStack setStoredBlood(ItemStack stack, int blood) {
         stack.getOrCreateNbt().putInt("StoredBlood", blood);
         return stack;
     }
@@ -137,11 +137,22 @@ public class BloodStorageItem extends Item {
     }
 
     /**
+     * Gets the maximum amount of blood this item can store
+     * @param stack the blood storing item
+     * @return the maximum amount of blood
+     */
+    public static int getMaxBlood(ItemStack stack) {
+        if(stack.getItem() instanceof BloodStorageItem item)
+            return item.getMaxBlood();
+        return 0;
+    }
+
+    /**
      * Gets the amount of blood stored in a stack
      * @param stack the item stack
      * @return the amount of blood stored in the stack
      */
-    public int getStoredBlood(ItemStack stack) {
+    public static int getStoredBlood(ItemStack stack) {
         return stack.getOrCreateNbt().getInt("StoredBlood");
     }
 
@@ -181,13 +192,13 @@ public class BloodStorageItem extends Item {
             storage = BLItems.BLOOD_BAG;
         }
 
-        if(stack.isEmpty() || storage.getStoredBlood(stack) + amount > storage.getMaxBlood())
+        if(stack.isEmpty() || getStoredBlood(stack) + amount > storage.getMaxBlood())
             return false;
 
         if(entity instanceof PlayerEntity player && player.getItemCooldownManager().isCoolingDown(stack.getItem()))
             return false;
 
-        storage.setStoredBlood(stack, storage.getStoredBlood(stack) + amount);
+        setStoredBlood(stack, getStoredBlood(stack) + amount);
 
         entity.setStackInHand(hand, stack);
 
