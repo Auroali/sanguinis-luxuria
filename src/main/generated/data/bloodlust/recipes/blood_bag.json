@@ -1,0 +1,22 @@
+{
+  "type": "bloodlust:altar_recipe",
+  "input": [
+    {
+      "item": "bloodlust:twisted_blood_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "minLevel": 0,
+  "result": {
+    "item": "bloodlust:blood_bag"
+  },
+  "ticksToProcess": 300
+}

@@ -37,6 +37,11 @@ public class AltarRecipe implements Recipe<AltarInventory> {
     }
 
     @Override
+    public DefaultedList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    @Override
     public boolean matches(AltarInventory inventory, World world) {
         return false;
     }

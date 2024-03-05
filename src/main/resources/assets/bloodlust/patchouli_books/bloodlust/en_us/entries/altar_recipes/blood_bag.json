@@ -1,0 +1,15 @@
+{
+  "name": "Blood Bag",
+  "icon": "bloodlust:blood_bag",
+  "category": "bloodlust:altar_recipes",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Carrying 10 bottles just to fill satiate your thirst is very inconvenient. The blood bag is a better solution.$(br2)It has the capacity of 5 bottles, yet takes up a single slot in your inventory."
+    },
+    {
+      "type": "bloodlust:altar_4by4",
+      "recipe": "bloodlust:blood_bag"
+    }
+  ]
+}
