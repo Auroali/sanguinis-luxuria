@@ -112,6 +112,9 @@ public class AltarRecipe implements Recipe<AltarInventory> {
             if(ingredients.isEmpty())
                 throw new JsonParseException("No ingredients for recipe");
 
+            if(ingredients.size() > 8)
+                throw new JsonParseException("There must be at most 8 inputs the the recipe");
+
             ItemStack itemStack = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
             return new AltarRecipe(id, itemStack, string, minLevel, maxLevel, ticksToProcess, ingredients);
         }

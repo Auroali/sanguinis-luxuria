@@ -93,8 +93,18 @@ public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         return output;
     }
 
+    public void validate(Identifier id) {
+        if(this.ingredients.isEmpty())
+            throw new IllegalStateException("Recipe " + id + " must have at least 1 input");
+        if(this.ingredients.size() > 8)
+            throw new IllegalStateException("Recipe " + id + " must have at most 8 inputs");
+        if (this.advancementBuilder.getCriteria().isEmpty())
+            throw new IllegalStateException("No way of obtaining recipe " + id);
+    }
+
     @Override
     public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
+        validate(recipeId);
         this.advancementBuilder
                 .parent(ROOT)
                 .criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId))

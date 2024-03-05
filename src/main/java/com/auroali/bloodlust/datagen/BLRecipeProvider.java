@@ -37,6 +37,13 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(Items.TWISTING_VINES)
                 .criterion("is_vampire", BecomeVampireCriterion.Conditions.create())
                 .offerTo(exporter);
+        AltarRecipeJsonBuilder.create(BLItems.BLOOD_BAG)
+                .input(BLItems.TWISTED_BLOOD)
+                .input(Items.GLASS_BOTTLE)
+                .input(Items.GLASS)
+                .input(Items.GLASS)
+                .criterion("has_twisted_blood", conditionsFromItem(BLItems.TWISTED_BLOOD))
+                .offerTo(exporter);
         ShapedRecipeJsonBuilder.create(BLBlocks.SKILL_UPGRADER)
                 .pattern("lbl")
                 .pattern("sss")
