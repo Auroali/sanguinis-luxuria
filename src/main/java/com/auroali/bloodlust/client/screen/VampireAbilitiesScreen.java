@@ -97,7 +97,7 @@ public class VampireAbilitiesScreen extends Screen {
         renderTooltip(matrices, text, mouseX, mouseY);
     }
 
-    public Text getTextForSlot(int slot) {
+    public static Text getTextForSlot(int slot) {
         return switch (slot) {
             case 0 -> Text.keybind(BloodlustClient.ABILITY_1.getTranslationKey());
             case 1 -> Text.keybind(BloodlustClient.ABILITY_2.getTranslationKey());

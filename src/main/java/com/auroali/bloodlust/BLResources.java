@@ -51,7 +51,8 @@ public class BLResources {
     public static final Identifier ALTAR_RECIPE_ID = id("altar_recipe");
     public static final Identifier TWISTED_BLOOD_ID = id("twisted_blood_bottle");
     public static final Identifier PEDESTAL_ID = id("pedestal");
-    public static final Identifier TRANSFER_EFFECTS = id("transfer_effects");
+    public static final Identifier TRANSFER_EFFECTS_ID = id("transfer_effects");
+    public static final Identifier BITE_ID = id("bite");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

@@ -1,6 +1,7 @@
 package com.auroali.bloodlust.common.registry;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.damage.ProjectileDamageSource;
@@ -30,5 +31,10 @@ public class BLDamageSources {
         return new ProjectileDamageSource("bloodlust.blessed_water_entity", entity, attacker)
                 .setBypassesArmor()
                 .setUsesMagic();
+    }
+
+    public static DamageSource bite(LivingEntity entity) {
+        return new EntityDamageSource("bloodlust.bite", entity)
+                .setBypassesArmor();
     }
 }

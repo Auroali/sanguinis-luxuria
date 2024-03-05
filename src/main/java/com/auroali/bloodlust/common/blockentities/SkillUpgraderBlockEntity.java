@@ -45,7 +45,9 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
                 .forEach(p -> {
                     BlockEntity bl = world.getBlockEntity(p);
                     if(bl instanceof PedestalBlockEntity pedestal && !pedestal.getItem().isEmpty()) {
-                        collectedStacks.add(pedestal.getItem());
+                        ItemStack stack = pedestal.getItem().copy();
+                        stack.setCount(1);
+                        collectedStacks.add(stack);
                         pedestals.add(pedestal);
                     }
                 });

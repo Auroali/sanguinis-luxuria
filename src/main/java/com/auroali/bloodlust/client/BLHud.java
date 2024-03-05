@@ -2,6 +2,7 @@ package com.auroali.bloodlust.client;
 
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.BloodlustClient;
+import com.auroali.bloodlust.client.screen.VampireAbilitiesScreen;
 import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.abilities.VampireAbilityContainer;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
@@ -13,9 +14,12 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 
 public class BLHud {
+    private static final AbilityIconHolder[] CACHED_ICONS = new AbilityIconHolder[3];
     public static void render(MatrixStack stack, float deltaTick) {
         MinecraftClient client = MinecraftClient.getInstance();
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(client.player);
@@ -24,7 +28,7 @@ public class BLHud {
         int width = client.getWindow().getScaledWidth();
         int height = client.getWindow().getScaledHeight();
         drawBloodDrainIndicator(stack, client, vampire, width, height);
-        drawCooldowns(stack, client, width, height, vampire.getAbilties());
+        drawBoundAbilities(stack, client, width, height, vampire.getAbilties());
 
     }
 
@@ -60,18 +64,42 @@ public class BLHud {
         DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, currentBloodX2, height / 2 - 6, 0xFFDF0000);
     }
 
-    public static void drawCooldowns(MatrixStack matrices, MinecraftClient client, int width, int height, VampireAbilityContainer container) {
-        matrices.push();
-        for(VampireAbility ability : container) {
-            if(!container.isOnCooldown(ability))
+    public static void drawBoundAbilities(MatrixStack matrices, MinecraftClient client, int width, int height, VampireAbilityContainer container) {
+        int x = 16;
+        for(int i = 0; i < 3; i++) {
+            VampireAbility ability = container.getBoundAbility(i);
+            if(ability == null)
                 continue;
 
-            double progress = (double) container.getCooldown(ability) / container.getMaxCooldown(ability);
-            client.getItemRenderer().renderInGui(ability.getIcon(), 0, height - 16);
-            RenderSystem.disableDepthTest();
-            DrawableHelper.fill(matrices, 0, height, 16, height - (int) (16 * progress), 0x7AFFFFFF);
-            matrices.translate(0, -32, 0);
+            ItemStack stack = getOrCreateIcon(i, ability);
+            Text text = VampireAbilitiesScreen.getTextForSlot(i);
+            float offset = (16 - client.textRenderer.getWidth(text)) / 2.0f;
+            client.textRenderer.drawWithShadow(matrices, text, x + offset, height - client.textRenderer.fontHeight, -1);
+            client.getItemRenderer().renderInGui(stack, x, height - 16 - client.textRenderer.fontHeight);
+            if(container.isOnCooldown(ability)) {
+                double progress = (double) container.getCooldown(ability) / container.getMaxCooldown(ability);
+                RenderSystem.disableDepthTest();
+                DrawableHelper.fill(matrices, x, height - client.textRenderer.fontHeight, x + 16, height - (int) (16 * progress) - client.textRenderer.fontHeight, 0x7AFFFFFF);
+            }
+            x += 22;
         }
-        matrices.pop();
+    }
+
+    public static ItemStack getOrCreateIcon(int slot, VampireAbility ability) {
+        if(CACHED_ICONS[slot] != null && CACHED_ICONS[slot].ability == ability)
+            return CACHED_ICONS[slot].icon;
+
+        CACHED_ICONS[slot] = new AbilityIconHolder(ability, ability.getIcon());
+        return CACHED_ICONS[slot].icon;
+    }
+
+    public static class AbilityIconHolder {
+        VampireAbility ability;
+        ItemStack icon;
+
+        public AbilityIconHolder(VampireAbility ability, ItemStack icon) {
+            this.ability = ability;
+            this.icon = icon;
+        }
     }
 }

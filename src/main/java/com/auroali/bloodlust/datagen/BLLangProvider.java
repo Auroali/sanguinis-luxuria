@@ -43,8 +43,11 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add("death.attack.%s".formatted(BLDamageSources.BLOOD_DRAIN.name), "%1$s had their blood drained");
         translationBuilder.add("death.attack.%s.player".formatted(BLDamageSources.BLOOD_DRAIN.name), "%1$s had their blood drained whilst fighting %2$s");
-        translationBuilder.add("death.attack.blood_drain_by_entity", "%1$s had their blood drained by %2$s");
-        translationBuilder.add("death.attack.blood_drain_by_entity.item", "%1$s had their blood drained by %2$s");
+        translationBuilder.add("death.attack.bloodlust.blood_drain_by_entity", "%1$s had their blood drained by %2$s");
+        translationBuilder.add("death.attack.bloodlust.blood_drain_by_entity.item", "%1$s had their blood drained by %2$s");
+
+        translationBuilder.add("death.attack.bloodlust.bite", "%1$s was bit by %2$s");
+        translationBuilder.add("death.attack.bloodlust.bite.item", "%1$s was bit by %2$s");
 
         translationBuilder.add("death.attack.bloodlust.blessed_water", "%1$s was burned by blessed water");
         translationBuilder.add("death.attack.bloodlust.blessed_water.player", "%1$s was burned by blessed water whilst fighting %2$s");
@@ -94,6 +97,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_2, "Increased Teleport Range");
         generateAbilityKey(translationBuilder, BLVampireAbilities.MORE_BLOOD, "Blood Efficiency");
         generateAbilityKey(translationBuilder, BLVampireAbilities.TRANSFER_EFFECTS, "Infectious");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.BITE, "Bite");
 
         generateAdvancements(translationBuilder);
     }
