@@ -66,9 +66,12 @@ public class BloodStorageItem extends Item {
             if(bloodToAdd == 0)
                 return stack;
 
-            if(!VampireHelper.isVampire(user))
+            if(!VampireHelper.isVampire(user)) {
                 applyNonVampireEffects(user);
-            if(VampireHelper.isVampire(user))
+                // i know i could use a food component but this seems like it gives more control
+                if(user instanceof ServerPlayerEntity e && e.getRandom().nextInt(2) == 0)
+                    e.getHungerManager().add(1, 0);
+            } else if(VampireHelper.isVampire(user))
                 bloodToAdd = BLEntityComponents.BLOOD_COMPONENT.get(user).addBlood(bloodToAdd);
 
             if(!(user instanceof PlayerEntity entity && entity.isCreative()))
@@ -82,8 +85,13 @@ public class BloodStorageItem extends Item {
     }
 
     private void applyNonVampireEffects(LivingEntity user) {
+        if(user.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION))
+            return;
+
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 2));
-        if(user.getRandom().nextDouble() > 0.9)
+        if(user.getRandom().nextInt(2) == 0)
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 120, 0));
+        if(user.getRandom().nextInt(4) == 0)
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
 
         int bloodSicknessLevel = user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS) == null ? 0 : user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1;

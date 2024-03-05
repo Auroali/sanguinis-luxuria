@@ -82,6 +82,8 @@ public class AltarRecipe implements Recipe<AltarInventory> {
     }
 
     public boolean matches(int level, Collection<ItemStack> input) {
+        if(level < minLevel || level > maxLevel || input.size() != ingredients.size())
+            return false;
         List<ItemStack> stacks = new ArrayList<>(input);
         boolean matches = false;
         for(Ingredient i : ingredients) {
@@ -93,6 +95,8 @@ public class AltarRecipe implements Recipe<AltarInventory> {
                 }
                 matches = false;
             }
+            if(!matches)
+                return false;
         }
 
         return matches;

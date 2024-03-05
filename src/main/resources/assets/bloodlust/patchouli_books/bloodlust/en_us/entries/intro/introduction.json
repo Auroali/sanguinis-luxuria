@@ -1,0 +1,11 @@
+{
+  "name": "Blood",
+  "icon": "minecraft:redstone",
+  "category": "bloodlust:intro",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "It would seem that killing villagers can sometimes leave some blood behind on the floor. Not only that, but it can be picked up with a bottle; although drinking it provides very little nutritional value and makes you feel more sick with each sip.$(br2)I wonder why anyone would want to drink this..."
+    }
+  ]
+}

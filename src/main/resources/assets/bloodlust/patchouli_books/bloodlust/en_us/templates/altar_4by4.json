@@ -42,6 +42,12 @@
       "type": "patchouli:text",
       "text": "#text",
       "y": 58
+    },
+    {
+      "type": "patchouli:text",
+      "text": "#time",
+      "x": 75,
+      "y": 43
     }
   ],
   "processor": "com.auroali.bloodlust.compat.patchouli.AltarRecipeProcessor"

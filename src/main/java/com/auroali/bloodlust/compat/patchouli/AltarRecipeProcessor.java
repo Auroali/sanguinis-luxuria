@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
@@ -33,6 +34,9 @@ public class AltarRecipeProcessor implements IComponentProcessor {
         }
         if(key.equals("output"))
             return IVariable.from(recipe.getOutput());
+        if(key.equals("time")) {
+            return IVariable.from(Text.of("%ds".formatted(recipe.getProcessingTicks() / 20)));
+        }
         return null;
     }
 }

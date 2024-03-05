@@ -1,6 +1,6 @@
 {
-  "name": "My First Book!",
-  "landing_text": "Welcome to Patchouli",
+  "name": "item.bloodlust.book",
+  "landing_text": "bloodlust.landing",
   "version": 1,
   "creative_tab": "bloodlust.bloodlust",
   "use_resource_pack": true
