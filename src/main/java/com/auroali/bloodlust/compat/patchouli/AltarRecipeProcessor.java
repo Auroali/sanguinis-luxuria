@@ -4,7 +4,6 @@ import com.auroali.bloodlust.common.recipes.AltarRecipe;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
