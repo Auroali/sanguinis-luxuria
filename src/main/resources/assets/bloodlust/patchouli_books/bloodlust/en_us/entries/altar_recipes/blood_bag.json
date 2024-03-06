@@ -2,6 +2,7 @@
   "name": "Blood Bag",
   "icon": "bloodlust:blood_bag",
   "category": "bloodlust:altar_recipes",
+  "advancement": "bloodlust:drink_twisted_blood",
   "pages": [
     {
       "type": "patchouli:text",

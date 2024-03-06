@@ -2,6 +2,7 @@
   "name": "Vampires",
   "icon": "bloodlust:blood_bottle",
   "category": "bloodlust:intro",
+  "advancement": "bloodlust:become_vampire",
   "pages": [
     {
       "type": "patchouli:text",

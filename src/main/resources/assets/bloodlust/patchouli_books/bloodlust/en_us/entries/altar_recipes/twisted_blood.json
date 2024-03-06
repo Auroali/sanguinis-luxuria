@@ -2,6 +2,7 @@
   "name": "Twisted Blood",
   "icon": "bloodlust:twisted_blood_bottle",
   "category": "bloodlust:altar_recipes",
+  "advancement": "bloodlust:become_vampire",
   "pages": [
     {
       "type": "patchouli:text",

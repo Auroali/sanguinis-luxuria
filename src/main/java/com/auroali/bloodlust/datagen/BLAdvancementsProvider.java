@@ -3,10 +3,12 @@ package com.auroali.bloodlust.datagen;
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.Bloodlust;
 import com.auroali.bloodlust.common.advancements.BecomeVampireCriterion;
+import com.auroali.bloodlust.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -33,7 +35,23 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
                 )
                 .criterion("convert", BecomeVampireCriterion.Conditions.create())
                 .build(BLResources.id("become_vampire"));
+        Advancement drinkTwistedBlood = Advancement.Builder
+                .create()
+                .display(
+                        BLItems.TWISTED_BLOOD,
+                        Text.translatable(title("drink_twisted_blood")),
+                        Text.translatable(desc("drink_twisted_blood")),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .criterion("convert", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))
+                .parent(becomeVampire)
+                .build(BLResources.id("drink_twisted_blood"));
         consumer.accept(becomeVampire);
+        consumer.accept(drinkTwistedBlood);
     }
 
     public static String title(String name) {

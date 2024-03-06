@@ -2,6 +2,7 @@
   "name": "Mask",
   "icon": "bloodlust:mask_1",
   "category": "bloodlust:intro",
+  "advancement": "bloodlust:become_vampire",
   "pages": [
     {
       "type": "patchouli:text",

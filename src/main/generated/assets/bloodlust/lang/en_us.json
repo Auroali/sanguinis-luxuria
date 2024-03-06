@@ -1,6 +1,8 @@
 {
-  "advancements.bloodlust.become_vampire.description": "Transform into a vampire after drinking enough blood with weakness",
+  "advancements.bloodlust.become_vampire.description": "Transform into a vampire after drinking enough blood",
   "advancements.bloodlust.become_vampire.title": "Bloodlust",
+  "advancements.bloodlust.drink_twisted_blood.description": "Drink twisted blood",
+  "advancements.bloodlust.drink_twisted_blood.title": "Consumption",
   "argument.bloodlust.id.invalid": "'%s' is not a valid id!",
   "block.bloodlust.altar": "Altar",
   "block.bloodlust.pedestal": "Pedestal",

@@ -2,6 +2,7 @@
   "name": "Altar",
   "icon": "bloodlust:altar",
   "category": "bloodlust:intro",
+  "advancement": "bloodlust:become_vampire",
   "pages": [
     {
       "type": "patchouli:text",
