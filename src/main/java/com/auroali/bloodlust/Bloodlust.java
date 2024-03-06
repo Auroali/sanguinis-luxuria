@@ -91,6 +91,7 @@ public class Bloodlust implements ModInitializer {
 		BLStatusEffects.register();
 		BLVampireAbilities.register();
 		BLAdvancementCriterion.register();
+		BLEnchantments.register();
 	}
 
 	public static void registerNetworkHandlers() {

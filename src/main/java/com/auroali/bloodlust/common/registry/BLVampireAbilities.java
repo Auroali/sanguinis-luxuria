@@ -92,6 +92,11 @@ public class BLVampireAbilities {
             VAMPIRE_STRENGTH_2
     ).incompatible(() -> BLVampireAbilities.MORE_BLOOD);
 
+    public static final VampireAbility SUN_PROTECTION = new BiteAbility(
+            () -> new ItemStack(Items.LEATHER_HELMET),
+            HEALTH_2
+    );
+
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
@@ -105,5 +110,6 @@ public class BLVampireAbilities {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.MORE_BLOOD_ID, MORE_BLOOD);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TRANSFER_EFFECTS_ID, TRANSFER_EFFECTS);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.BITE_ID, BITE);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.SUN_PROTECTION_ID, SUN_PROTECTION);
     }
 }

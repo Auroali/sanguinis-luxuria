@@ -10,6 +10,7 @@ import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.registry.*;
 import com.auroali.bloodlust.config.BLConfig;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -343,13 +344,16 @@ public class PlayerVampireComponent implements VampireComponent {
     public int getMaxTimeInSun() {
         int maxTime = 40;
         ItemStack helmet = holder.getEquippedStack(EquipmentSlot.HEAD);
-        if(helmet.isEmpty())
-            return maxTime;
 
         if(helmet.isIn(BLTags.Items.SUN_BLOCKING_HELMETS))
             maxTime *= 4;
 
-        // todo: add enchantment to protect from the sun?
+        if(abilities.hasAbility(BLVampireAbilities.SUN_PROTECTION))
+            maxTime += 40;
+
+        int level = EnchantmentHelper.getLevel(BLEnchantments.SUN_PROTECTION, helmet);
+        maxTime += level * 20;
+
         return maxTime;
     }
 

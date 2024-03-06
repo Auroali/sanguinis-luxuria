@@ -53,6 +53,7 @@ public class BLResources {
     public static final Identifier PEDESTAL_ID = id("pedestal");
     public static final Identifier TRANSFER_EFFECTS_ID = id("transfer_effects");
     public static final Identifier BITE_ID = id("bite");
+    public static final Identifier SUN_PROTECTION_ID = id("sun_protection");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
