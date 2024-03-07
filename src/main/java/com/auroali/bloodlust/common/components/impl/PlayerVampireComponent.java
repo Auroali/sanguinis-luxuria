@@ -53,7 +53,7 @@ public class PlayerVampireComponent implements VampireComponent {
     private int timeInSun;
     private int skillPoints;
     private int level;
-
+    private boolean isDowned;
 
     public PlayerVampireComponent(PlayerEntity holder) {
         this.holder = holder;
@@ -144,6 +144,7 @@ public class PlayerVampireComponent implements VampireComponent {
         timeInSun = tag.getInt("TimeInSun");
         skillPoints = tag.getInt("SkillPoints");
         level = tag.getInt("Level");
+        isDowned = tag.getBoolean("IsDowned");
         abilities.load(tag);
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
@@ -154,6 +155,7 @@ public class PlayerVampireComponent implements VampireComponent {
         tag.putInt("TimeInSun", timeInSun);
         tag.putInt("SkillPoints", skillPoints);
         tag.putInt("Level", level);
+        tag.putBoolean("IsDowned", isDowned);
         abilities.save(tag);
     }
 
@@ -377,6 +379,16 @@ public class PlayerVampireComponent implements VampireComponent {
         getAbilties().addAbility(ability);
         skillPoints -= ability.getRequiredSkillPoints();
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+    }
+
+    @Override
+    public boolean isDown() {
+        return isDowned;
+    }
+
+    @Override
+    public void setDowned(boolean down) {
+        this.isDowned = down;
     }
 
     @Override

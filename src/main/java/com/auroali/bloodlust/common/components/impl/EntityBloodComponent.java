@@ -1,7 +1,9 @@
 package com.auroali.bloodlust.common.components.impl;
 
+import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLDamageSources;
 import com.auroali.bloodlust.common.registry.BLTags;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -68,6 +70,10 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         int bloodAdded = newBlood - currentBlood;
         currentBlood = newBlood;
         BLEntityComponents.BLOOD_COMPONENT.sync(holder);
+        if(VampireHelper.isVampire(holder) && bloodAdded > 0) {
+            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(holder);
+            vampire.setDowned(false);
+        }
         return bloodAdded;
     }
 

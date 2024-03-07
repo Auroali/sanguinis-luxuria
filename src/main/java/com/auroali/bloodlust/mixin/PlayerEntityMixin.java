@@ -3,6 +3,7 @@ package com.auroali.bloodlust.mixin;
 import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.components.VampireComponent;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -24,8 +25,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if(!VampireHelper.isVampire(this))
             return;
 
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
-        if(!hasVehicle() && blood.getBlood() == 0) {
+        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        if(!hasVehicle() && vampire.isDown()) {
             setPose(EntityPose.SWIMMING);
             ci.cancel();
         }

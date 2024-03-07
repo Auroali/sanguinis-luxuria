@@ -1,6 +1,9 @@
 package com.auroali.bloodlust.common.components.impl;
 
+import com.auroali.bloodlust.VampireHelper;
+import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.BloodComponent;
+import com.auroali.bloodlust.common.components.VampireComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -34,6 +37,10 @@ public class PlayerBloodComponent implements BloodComponent {
         int newBlood = Math.min(getMaxBlood(), amount + getBlood());
         int bloodAdded = newBlood - getBlood();
         holder.getHungerManager().setFoodLevel(newBlood);
+        if(VampireHelper.isVampire(holder) && bloodAdded > 0) {
+            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(holder);
+            vampire.setDowned(false);
+        }
         return bloodAdded;
     }
 

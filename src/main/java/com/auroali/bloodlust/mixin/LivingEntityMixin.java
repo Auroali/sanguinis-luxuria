@@ -64,13 +64,14 @@ public abstract class LivingEntityMixin extends Entity {
         if(!VampireHelper.isVampire(instance))
             return false;
 
-//        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(instance);
+        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(instance);
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(instance);
 
         if(blood.getBlood() == 0 || VampireComponent.isEffectiveAgainstVampires(source))
             return false;
 
         instance.setHealth(Math.max(Math.min(instance.getMaxHealth(), (float) blood.getBlood() / 4), 1));
+        vampire.setDowned(true);
         blood.setBlood(0);
         return true;
     }

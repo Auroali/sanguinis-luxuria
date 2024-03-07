@@ -75,6 +75,18 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     void unlockAbility(VampireAbility ability);
 
     /**
+     * Gets the downed state of this component
+     * @return the downed state
+     */
+    boolean isDown();
+
+    /**
+     * Sets the 'downed' state of this component
+     * @param down whether downed or not
+     */
+    void setDowned(boolean down);
+
+    /**
      * Calculates the amount of damage taken by a vampire for a given damage source
      * @param amount the initial amount of damage
      * @param source the damage source
