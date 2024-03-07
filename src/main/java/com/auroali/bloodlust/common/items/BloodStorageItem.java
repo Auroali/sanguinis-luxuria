@@ -186,6 +186,7 @@ public class BloodStorageItem extends Item {
         if(entity.getOffHandStack().getItem() instanceof BloodStorageItem item) {
             stack = entity.getOffHandStack();
             storage = item;
+            hand = Hand.OFF_HAND;
         } else if(entity.getOffHandStack().isOf(Items.GLASS_BOTTLE)) {
             hand = Hand.OFF_HAND;
             stack = new ItemStack(BLItems.BLOOD_BOTTLE);
@@ -194,6 +195,7 @@ public class BloodStorageItem extends Item {
         if(entity.getMainHandStack().getItem() instanceof BloodStorageItem item) {
             stack = entity.getMainHandStack();
             storage = item;
+            hand = Hand.MAIN_HAND;
         } else if(entity.getMainHandStack().isOf(Items.GLASS_BOTTLE)) {
             hand = Hand.MAIN_HAND;
             stack = new ItemStack(BLItems.BLOOD_BOTTLE);

@@ -5,8 +5,8 @@ import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import com.auroali.bloodlust.common.registry.BLTags;
 import dev.emi.trinkets.api.TrinketsApi;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 
 public class VampireHelper {
     /**
@@ -14,8 +14,8 @@ public class VampireHelper {
      * @param entity the entity to check
      * @return whether the entity is a vampire
      */
-    public static boolean isVampire(LivingEntity entity) {
-        return entity instanceof PlayerEntity && BLEntityComponents.VAMPIRE_COMPONENT.get(entity).isVampire();
+    public static boolean isVampire(Entity entity) {
+        return BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity) && BLEntityComponents.VAMPIRE_COMPONENT.get(entity).isVampire();
     }
 
     /**

@@ -87,6 +87,9 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLEnchantments.SUN_PROTECTION, "Sun Protection");
         translationBuilder.add(BLEnchantments.SUN_PROTECTION.getTranslationKey() + ".desc", "Increases the amount of time a vampire can stay in the sun");
 
+        translationBuilder.add(BLEnchantments.BLOOD_DRAIN, "Blood Transfer");
+        translationBuilder.add(BLEnchantments.BLOOD_DRAIN.getTranslationKey() + ".desc", "Allows a trident to latch on and slowly drain blood from what it hits, filling up either a vampire's blood bar or a held item that can store blood");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");

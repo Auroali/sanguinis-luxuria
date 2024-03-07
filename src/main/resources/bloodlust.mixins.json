@@ -11,6 +11,7 @@
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "StatusEffectMixin",
+    "TridentEntityMixin",
     "VillagerEntityMixin",
     "VillagerHostilesSensorMixin",
     "WanderingTraderMixin"

@@ -2,7 +2,6 @@ package com.auroali.bloodlust.mixin;
 
 import com.auroali.bloodlust.VampireHelper;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
-import com.auroali.bloodlust.common.components.BloodComponent;
 import com.auroali.bloodlust.common.components.VampireComponent;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
