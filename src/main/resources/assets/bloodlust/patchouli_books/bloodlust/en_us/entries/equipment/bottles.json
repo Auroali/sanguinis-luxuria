@@ -1,0 +1,18 @@
+{
+  "name": "Bottles",
+  "icon": "minecraft:glass_bottle",
+  "category": "bloodlust:equipment",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:glass_bottle",
+      "text": "Bottles are very useful, as they can be used to store blood. Blood can be picked up off the ground with a bottle."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "advancement": "bloodlust:become_vampire",
+      "item": "bloodlust:blood_bottle{StoredBlood:2}",
+      "text": "Blood Bottles can fortunately be obtained through more means than blood left on the ground. By pressing $(#a51e12)$(l)$(k:key.bloodlust.bite)$() while holding an empty bottle and not looking at any living thing with blood, it will take some blood from your blood bar and store it in the bottle.$(br2)It does seem like blood bottles have a limited capacity, however, only storing 2 units of blood."
+    }
+  ]
+}

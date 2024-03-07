@@ -1,0 +1,18 @@
+{
+  "name": "Tridents",
+  "icon": "minecraft:trident",
+  "category": "bloodlust:equipment",
+  "advancement": "bloodlust:become_vampire",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:trident",
+      "text": "Tridents can be a rather useful tool for a vampire, due to a certain trident-specific enchantment"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:enchanted_book{Enchantments:[{id:\"bloodlust:blood_drain\", lvl:1}]},minecraft:enchanted_book{Enchantments:[{id:\"bloodlust:blood_drain\", lvl:2}]},minecraft:enchanted_book{Enchantments:[{id:\"bloodlust:blood_drain\", lvl:3}]}",
+      "text": "Blood Transfer allows a trident to latch on to an entity and drain its blood, at the cost of a damage decrease.$(br)Blood drained by the trident will either go directly into your blood bar, or into a blood-storing item in your hand. Blood Transfer cannot completely drain something's blood, the amount it can drain depends on the level."
+    }
+  ]
+}

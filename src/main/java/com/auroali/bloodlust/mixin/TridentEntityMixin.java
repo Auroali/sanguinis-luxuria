@@ -77,7 +77,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 return;
             }
 
-            setPosition(bloodlust$latchedEntity.getPos().add(0, bloodlust$latchedEntity.getEyeHeight(bloodlust$latchedEntity.getPose()) / 2, 0));
+            setPosition(bloodlust$latchedEntity.getPos().add(0, bloodlust$latchedEntity.getEyeHeight(bloodlust$latchedEntity.getPose()) * 0.75, 0));
             setVelocity(Vec3d.ZERO);
 
             if(bloodlust$latchedTicks % 20 == 0 && !world.isClient && blood.drainBlood()) {

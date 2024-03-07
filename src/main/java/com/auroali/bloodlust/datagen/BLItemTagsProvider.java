@@ -25,7 +25,8 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
                 .add(Items.HONEY_BOTTLE)
                 .add(Items.SUSPICIOUS_STEW);
         getOrCreateTagBuilder(BLTags.Items.SUN_BLOCKING_HELMETS)
-                .add(Items.LEATHER_HELMET);
+                .add(Items.LEATHER_HELMET)
+                .add(Items.CARVED_PUMPKIN);
         getOrCreateTagBuilder(BLTags.Items.VAMPIRE_MASKS)
                 .add(BLItems.MASK_1)
                 .add(BLItems.MASK_2)
