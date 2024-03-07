@@ -122,8 +122,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         if(source.getAttacker() instanceof LivingEntity entity) {
             ItemStack stack = entity.getMainHandStack();
             int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
-            if(level > 0)
-                return true;
+            return level > 0;
         }
 
         return false;

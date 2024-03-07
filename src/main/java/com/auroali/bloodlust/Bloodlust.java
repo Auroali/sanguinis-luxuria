@@ -122,6 +122,10 @@ public class Bloodlust implements ModInitializer {
 			boolean isAbilityBind = buf.readBoolean();
 			int abilitySlot = isAbilityBind ? buf.readInt() : 0;
 			server.execute(() -> {
+				if(ability == null) {
+					LOGGER.warn("Failed to read ability from packet!");
+					return;
+				}
 				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
 				if(!isAbilityBind) {
 					if (vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()) || vampire.getSkillPoints() < ability.getRequiredSkillPoints())
