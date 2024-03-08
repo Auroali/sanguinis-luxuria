@@ -50,9 +50,6 @@
 		"maxhealthfix": ">=8.0.1",
 		"patchouli": ">=1.19.2-77-FABRIC"
 	},
-	"suggests": {
-		"another-mod": "*"
-	},
 	"custom": {
 		"cardinal-components": [
 			"bloodlust:blood",
