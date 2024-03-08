@@ -83,8 +83,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             if(bloodlust$latchedTicks % 20 == 0 && !world.isClient && blood.drainBlood()) {
                 if(!(owner instanceof LivingEntity entity && BloodStorageItem.tryAddBloodToItemInHand(entity, 1)) && vampire.isVampire()) {
                     ownerBlood.addBlood(1);
-                    playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
                 }
+                playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
             }
 
             bloodlust$latchedTicks++;

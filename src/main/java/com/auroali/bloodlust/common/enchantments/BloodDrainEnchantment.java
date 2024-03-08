@@ -13,7 +13,7 @@ public class BloodDrainEnchantment extends Enchantment {
 
     @Override
     protected boolean canAccept(Enchantment other) {
-        return super.canAccept(other) && other != Enchantments.RIPTIDE;
+        return super.canAccept(other) && other != Enchantments.RIPTIDE && other != Enchantments.IMPALING;
     }
 
     @Override

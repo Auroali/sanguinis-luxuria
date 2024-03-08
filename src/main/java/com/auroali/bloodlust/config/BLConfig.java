@@ -30,7 +30,7 @@ public class BLConfig {
 
     public float vampireDamageMultiplier = 1.5f;
     public float vampireExhaustionMultiplier = 0.25f;
-    public float blessedWaterDamage = 6f;
+    public float blessedWaterDamage = 5f;
     public int skillPointsPerLevel = 1;
 
     public Screen generateScreen(Screen screen) {
@@ -54,7 +54,7 @@ public class BLConfig {
                                 ).option(Option.createBuilder(Float.class)
                                         .name(Text.translatable("bloodlust.config.option.blessed_water_damage"))
                                         .tooltip(Text.translatable("bloodlust.config.option.blessed_water_damage.desc"))
-                                        .binding(6f, () -> this.blessedWaterDamage, f -> this.blessedWaterDamage = f)
+                                        .binding(5f, () -> this.blessedWaterDamage, f -> this.blessedWaterDamage = f)
                                         .controller(FloatFieldController::new)
                                         .build()
                                 ).build()

@@ -1,6 +1,6 @@
 {
   "name": "Equipment",
   "sortnum": 1,
-  "description": "Items that vampires may find useful",
+  "description": "Items that you may find useful",
   "icon": "minecraft:glass_bottle"
 }

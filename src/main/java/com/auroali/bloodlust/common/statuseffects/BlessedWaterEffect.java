@@ -24,7 +24,7 @@ public class BlessedWaterEffect extends StatusEffect {
             return;
         }
 
-        float damage = BLConfig.INSTANCE.blessedWaterDamage + amplifier;
+        float damage = BLConfig.INSTANCE.blessedWaterDamage * amplifier;
 
         if(source != null)
             target.damage(BLDamageSources.blessedWater(source, attacker), damage);
