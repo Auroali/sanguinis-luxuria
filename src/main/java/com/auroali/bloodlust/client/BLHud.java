@@ -54,14 +54,18 @@ public class BLHud {
         int fangX = (width - 26) / 2;
         int fangY = (height - 9) / 2;
 
+        int bloodBarX = (width - 14) / 2;
+        int bloodBarY = height / 2 - 9;
         DrawableHelper.drawTexture(stack, fangX, fangY, 0, 0, 26, 9, 256, 256);
+        DrawableHelper.drawTexture(stack, bloodBarX, bloodBarY, 0, 17, 14, 3, 256, 256);
 
         RenderSystem.disableBlend();
 
+        DrawableHelper.drawTexture(stack, bloodBarX, bloodBarY, 14, 17, (int) (bloodPercent * 14), 3, 256, 256);
         DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - percent)), 0, 9 + (int) (9 * (1 - percent)), 26, (int) (9 * percent), 256, 256);
 
-        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, width / 2 + 10, height / 2 - 6, 0xFF040000);
-        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, currentBloodX2, height / 2 - 6, 0xFFDF0000);
+//        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, width / 2 + 10, height / 2 - 6, 0xFF040000);
+//        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, currentBloodX2, height / 2 - 6, 0xFFDF0000);
     }
 
     public static void drawBoundAbilities(MatrixStack matrices, MinecraftClient client, int width, int height, VampireAbilityContainer container) {
