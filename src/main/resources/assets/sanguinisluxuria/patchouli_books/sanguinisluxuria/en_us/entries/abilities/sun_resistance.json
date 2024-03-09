@@ -1,0 +1,12 @@
+{
+  "name": "Blood Efficiency",
+  "icon": "minecraft:leather_helmet",
+  "category": "sanguinisluxuria:abilities",
+  "advancement": "sanguinisluxuria:drink_twisted_blood",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Allows you to stay in the sun for an extra 2 seconds without burning."
+    }
+  ]
+}

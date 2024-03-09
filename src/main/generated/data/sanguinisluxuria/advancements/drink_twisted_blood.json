@@ -1,0 +1,35 @@
+{
+  "parent": "sanguinisluxuria:become_vampire",
+  "criteria": {
+    "convert": {
+      "conditions": {
+        "item": {
+          "items": [
+            "sanguinisluxuria:twisted_blood_bottle"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.drink_twisted_blood.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "sanguinisluxuria:twisted_blood_bottle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.drink_twisted_blood.title"
+    }
+  },
+  "requirements": [
+    [
+      "convert"
+    ]
+  ]
+}

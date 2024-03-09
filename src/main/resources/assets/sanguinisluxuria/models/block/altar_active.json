@@ -1,0 +1,6 @@
+{
+  "parent": "sanguinisluxuria:block/altar",
+  "textures": {
+    "0": "sanguinisluxuria:block/altar_active"
+  }
+}

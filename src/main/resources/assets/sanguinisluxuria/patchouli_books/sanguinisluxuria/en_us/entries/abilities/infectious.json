@@ -1,0 +1,12 @@
+{
+  "name": "Infectious",
+  "icon": "minecraft:potion{Potion:\"minecraft:poison\"}",
+  "category": "sanguinisluxuria:abilities",
+  "advancement": "sanguinisluxuria:drink_twisted_blood",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Draining blood from creatures will now also transfer all your potion effects to them."
+    }
+  ]
+}

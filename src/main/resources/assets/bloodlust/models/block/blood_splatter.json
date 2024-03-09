@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/redstone_dust_dot",
-  "textures": {
-    "particle": "bloodlust:block/blood_splatter",
-    "line": "bloodlust:block/blood_splatter",
-    "overlay": "bloodlust:block/blood_splatter"
-  }
-}

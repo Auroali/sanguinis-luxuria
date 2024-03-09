@@ -1,0 +1,6 @@
+{
+  "parent": "sanguinisluxuria:item/mask_base",
+  "textures": {
+    "layer0": "sanguinisluxuria:item/mask_1"
+  }
+}

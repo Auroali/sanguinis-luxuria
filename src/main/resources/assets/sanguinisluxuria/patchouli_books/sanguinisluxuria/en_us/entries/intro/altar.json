@@ -1,0 +1,17 @@
+{
+  "name": "Altar",
+  "icon": "sanguinisluxuria:altar",
+  "category": "sanguinisluxuria:intro",
+  "advancement": "sanguinisluxuria:become_vampire",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The altar allows crafting special items. Its inputs are from nearby pedestals, and it outputs items on top of it, on to the ground.$(br2)It does take time to craft items though, and it seems like it can only be used by vampires."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:altar",
+      "recipe2": "sanguinisluxuria:pedestal"
+    }
+  ]
+}

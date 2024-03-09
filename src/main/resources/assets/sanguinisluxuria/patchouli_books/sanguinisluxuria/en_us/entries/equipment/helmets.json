@@ -1,0 +1,20 @@
+{
+  "name": "Bottles",
+  "icon": "minecraft:leather_helmet",
+  "category": "sanguinisluxuria:equipment",
+  "advancement": "sanguinisluxuria:become_vampire",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "tag": "sanguinisluxuria:sun_blocking_helmets"
+      },
+      "text": "Certain helmets can grant extra time in the sun before you start to burn. These helmets usually have the trade-off of very little protection, however"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:1}]},minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:2}]},minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:3}]},minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:4}]}",
+      "text": "Sun Protection is an enchantment that can be applied to any helmet. It provides an extra second per level of time without burning in the sun, while also stacking with other methods."
+    }
+  ]
+}

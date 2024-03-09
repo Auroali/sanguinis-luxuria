@@ -1,0 +1,22 @@
+{
+  "type": "sanguinisluxuria:altar_recipe",
+  "input": [
+    {
+      "item": "sanguinisluxuria:twisted_blood_bottle"
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "item": "minecraft:sunflower"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "minLevel": 0,
+  "result": {
+    "item": "sanguinisluxuria:blessed_blood_bottle"
+  },
+  "ticksToProcess": 300
+}

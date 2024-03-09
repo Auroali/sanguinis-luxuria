@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "com.auroali.sanguinisluxuria.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "client.InGameHudMixin"
+  ],
+  "mixins": [
+    "HungerManagerMixin",
+    "IronGolemEntityMixin",
+    "LivingEntityMixin",
+    "PlayerEntityMixin",
+    "StatusEffectMixin",
+    "TridentEntityMixin",
+    "VillagerEntityMixin",
+    "VillagerHostilesSensorMixin",
+    "WanderingTraderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

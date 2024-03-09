@@ -1,0 +1,22 @@
+{
+  "type": "sanguinisluxuria:altar_recipe",
+  "input": [
+    {
+      "item": "sanguinisluxuria:blood_bottle"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "minecraft:wither_rose"
+    },
+    {
+      "item": "minecraft:twisting_vines"
+    }
+  ],
+  "minLevel": 0,
+  "result": {
+    "item": "sanguinisluxuria:twisted_blood_bottle"
+  },
+  "ticksToProcess": 300
+}

@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "active=false": { "model": "bloodlust:block/altar" },
-    "active=true": { "model": "bloodlust:block/altar_active" }
-  }
-}

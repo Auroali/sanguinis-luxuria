@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "bloodlust",
+	"id": "sanguinisluxuria",
 	"version": "${version}",
-	"name": "Bloodlust",
+	"name": "Sanguinis Luxuria",
 	"description": "A mod about becoming a vampire",
 	"authors": [
 		"Auroali",
@@ -13,30 +13,30 @@
 		"sources": "https://github.com/Auroali/bloodlust"
 	},
 	"license": "MIT",
-	"icon": "assets/bloodlust/icon.png",
+	"icon": "assets/sanguinisluxuria/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.auroali.bloodlust.Bloodlust"
+			"com.auroali.sanguinisluxuria.Bloodlust"
 		],
 		"client": [
-			"com.auroali.bloodlust.BloodlustClient"
+			"com.auroali.sanguinisluxuria.BloodlustClient"
 		],
 		"fabric-datagen": [
-			"com.auroali.bloodlust.BloodlustDataGenerator"
+			"com.auroali.sanguinisluxuria.BloodlustDataGenerator"
 		],
 		"cardinal-components": [
-			"com.auroali.bloodlust.common.components.BLEntityComponents"
+			"com.auroali.sanguinisluxuria.common.components.BLEntityComponents"
 		],
 		"modmenu": [
-			"com.auroali.bloodlust.compat.ModMenuCompat"
+			"com.auroali.sanguinisluxuria.compat.ModMenuCompat"
 		],
 		"appleskin": [
-			"com.auroali.bloodlust.compat.AppleskinCompat"
+			"com.auroali.sanguinisluxuria.compat.AppleskinCompat"
 		]
 	},
 	"mixins": [
-		"bloodlust.mixins.json"
+		"sanguinisluxuria.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.7",
@@ -52,8 +52,8 @@
 	},
 	"custom": {
 		"cardinal-components": [
-			"bloodlust:blood",
-			"bloodlust:vampire"
+			"sanguinisluxuria:blood",
+			"sanguinisluxuria:vampire"
 		]
 	}
 }

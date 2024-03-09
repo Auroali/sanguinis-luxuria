@@ -1,0 +1,12 @@
+{
+  "name": "Blood Efficiency",
+  "icon": "sanguinisluxuria:blood_bottle{StoredBlood:2}",
+  "category": "sanguinisluxuria:abilities",
+  "advancement": "sanguinisluxuria:drink_twisted_blood",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Doubles the amount of blood you get from draining things with blood. Does not apply to Blood Transfer."
+    }
+  ]
+}

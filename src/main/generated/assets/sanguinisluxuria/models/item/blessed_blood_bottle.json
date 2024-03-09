@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sanguinisluxuria:item/blessed_blood_bottle"
+  }
+}

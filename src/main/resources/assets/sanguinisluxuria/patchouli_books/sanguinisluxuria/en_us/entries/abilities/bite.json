@@ -1,0 +1,12 @@
+{
+  "name": "Bite",
+  "icon": "minecraft:bone",
+  "category": "sanguinisluxuria:abilities",
+  "advancement": "sanguinisluxuria:drink_twisted_blood",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Allows you to perform a bite. Biting deals a heart and a half of damage and also bypasses armor."
+    }
+  ]
+}
