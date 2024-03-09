@@ -6,19 +6,19 @@
   "overrides": [
     {
       "predicate": {
-        "bloodlust:blood_storage_item_fill": 0.001
+        "sanguinisluxuria:blood_storage_item_fill": 0.001
       },
       "model": "sanguinisluxuria:item/blood_bag_1"
     },
     {
       "predicate": {
-        "bloodlust:blood_storage_item_fill": 0.3
+        "sanguinisluxuria:blood_storage_item_fill": 0.3
       },
       "model": "sanguinisluxuria:item/blood_bag_2"
     },
     {
       "predicate": {
-        "bloodlust:blood_storage_item_fill": 0.6
+        "sanguinisluxuria:blood_storage_item_fill": 0.6
       },
       "model": "sanguinisluxuria:item/blood_bag_3"
     }
