@@ -6,7 +6,7 @@
   "overrides": [
     {
       "predicate": {
-        "bloodlust:blood_storage_item_fill": 0.7
+        "sanguinisluxuria:blood_storage_item_fill": 0.7
       },
       "model": "sanguinisluxuria:item/blood_bottle_2"
     }
