@@ -55,7 +55,7 @@ public class BLHud {
         int fangY = (height - 9) / 2;
 
         int bloodBarX = (width - 14) / 2;
-        int bloodBarY = height / 2 - 9;
+        int bloodBarY = height / 2 + 5;
         DrawableHelper.drawTexture(stack, fangX, fangY, 0, 0, 26, 9, 256, 256);
         DrawableHelper.drawTexture(stack, bloodBarX, bloodBarY, 0, 17, 14, 3, 256, 256);
 
