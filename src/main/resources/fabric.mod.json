@@ -3,7 +3,7 @@
 	"id": "bloodlust",
 	"version": "${version}",
 	"name": "Bloodlust",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A mod about becoming a vampire",
 	"authors": [
 		"Auroali",
 		"EastCoastJack"
