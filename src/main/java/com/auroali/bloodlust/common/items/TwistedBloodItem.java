@@ -33,17 +33,17 @@ public class TwistedBloodItem extends Item {
 
         if (!world.isClient && VampireHelper.isVampire(user)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
-            if(vampire.getLevel() >= getMinLevel(stack) && vampire.getLevel() <= getMaxLevel(stack))
+            if(vampire.getLevel() >= getMinLevel() && vampire.getLevel() <= getMaxLevel())
                 vampire.setLevel(vampire.getLevel() + 1);
         }
 
         return new ItemStack(Items.GLASS_BOTTLE);
     }
 
-    public static int getMinLevel(ItemStack stack) {
+    public static int getMinLevel() {
         return 0;
     }
-    public static int getMaxLevel(ItemStack stack) {
+    public static int getMaxLevel() {
         return 6;
     }
 

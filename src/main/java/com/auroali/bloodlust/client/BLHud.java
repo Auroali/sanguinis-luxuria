@@ -20,6 +20,7 @@ import net.minecraft.util.hit.EntityHitResult;
 
 public class BLHud {
     private static final AbilityIconHolder[] CACHED_ICONS = new AbilityIconHolder[3];
+
     public static void render(MatrixStack stack, float deltaTick) {
         MinecraftClient client = MinecraftClient.getInstance();
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(client.player);
@@ -28,7 +29,7 @@ public class BLHud {
         int width = client.getWindow().getScaledWidth();
         int height = client.getWindow().getScaledHeight();
         drawBloodDrainIndicator(stack, client, vampire, width, height);
-        drawBoundAbilities(stack, client, width, height, vampire.getAbilties());
+        drawBoundAbilities(stack, client, height, vampire.getAbilties());
 
     }
 
@@ -49,8 +50,6 @@ public class BLHud {
         double percent = (double) vampire.getBloodDrainTimer() / VampireComponent.BLOOD_TIMER_LENGTH;
         double bloodPercent = (double) blood.getBlood() / blood.getMaxBlood();
 
-        int currentBloodX2 = width / 2 - 10 + (int) (bloodPercent * 20);
-
         int fangX = (width - 26) / 2;
         int fangY = (height - 9) / 2;
 
@@ -68,7 +67,7 @@ public class BLHud {
 //        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, currentBloodX2, height / 2 - 6, 0xFFDF0000);
     }
 
-    public static void drawBoundAbilities(MatrixStack matrices, MinecraftClient client, int width, int height, VampireAbilityContainer container) {
+    public static void drawBoundAbilities(MatrixStack matrices, MinecraftClient client, int height, VampireAbilityContainer container) {
         int x = 16;
         for(int i = 0; i < 3; i++) {
             VampireAbility ability = container.getBoundAbility(i);
