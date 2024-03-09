@@ -1,0 +1,22 @@
+{
+  "type": "bloodlust:altar_recipe",
+  "input": [
+    {
+      "item": "bloodlust:twisted_blood_bottle"
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "item": "minecraft:sunflower"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "minLevel": 0,
+  "result": {
+    "item": "bloodlust:blessed_blood_bottle"
+  },
+  "ticksToProcess": 300
+}

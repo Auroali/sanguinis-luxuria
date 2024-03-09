@@ -74,6 +74,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("gui.bloodlust.abilities.incompatibilites_entry", "  - %s");
 
         translationBuilder.add(BLItems.TWISTED_BLOOD, "Twisted Blood Bottle");
+        translationBuilder.add(BLItems.BLESSED_BLOOD, "Blessed Blood Bottle");
         translationBuilder.add(BLBlocks.PEDESTAL, "Pedestal");
         translationBuilder.add(BLBlocks.SKILL_UPGRADER, "Altar");
 

@@ -55,6 +55,7 @@ public class BLResources {
     public static final Identifier BITE_ID = id("bite");
     public static final Identifier SUN_PROTECTION_ID = id("sun_protection");
     public static final Identifier BLOOD_DRAIN_ID = id("blood_drain");
+    public static final Identifier BLESSED_BLOOD_ID = id("blessed_blood_bottle");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

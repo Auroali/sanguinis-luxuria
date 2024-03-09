@@ -58,6 +58,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
                 this.discard();
+                ci.cancel();
                 return;
             }
             if(bloodlust$latchedTicks > 300) {

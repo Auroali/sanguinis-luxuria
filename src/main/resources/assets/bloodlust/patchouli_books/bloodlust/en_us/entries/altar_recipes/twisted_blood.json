@@ -10,7 +10,8 @@
     },
     {
       "type": "bloodlust:altar_4by4",
-      "recipe": "bloodlust:twisted_blood_bottle"
+      "recipe": "bloodlust:twisted_blood_bottle",
+      "text": "Unfortunately, it seems to stop being effective after being drank 6 times"
     }
   ]
 }

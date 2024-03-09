@@ -102,8 +102,8 @@ public class PlayerVampireComponent implements VampireComponent {
         if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
             addToxicBloodEffects();
 
-        // allow conversion of entities with weakness
-        if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS))
+        // allow conversion of entities with weakness 2
+        if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS) && entity.getStatusEffect(StatusEffects.WEAKNESS).getAmplifier() > 0)
             addBloodSickness(target);
 
         // villagers have a 50% chance to wake up when having their blood drained

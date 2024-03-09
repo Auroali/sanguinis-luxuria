@@ -5,6 +5,7 @@ import com.auroali.bloodlust.common.registry.BLBlocks;
 import com.auroali.bloodlust.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
@@ -59,6 +60,14 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input('s', Items.BLACKSTONE_WALL)
                 .input('l', ItemTags.LOGS)
                 .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
+                .offerTo(exporter);
+        AltarRecipeJsonBuilder.create(BLItems.BLESSED_BLOOD)
+                .input(BLItems.TWISTED_BLOOD)
+                // minecraft doesn't support nbt in ingredients so i cant use blessed water ;-;
+                .input(Items.ENCHANTED_GOLDEN_APPLE)
+                .input(Items.SUNFLOWER)
+                .input(Items.HONEY_BOTTLE)
+                .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.BLESSED_BLOOD))
                 .offerTo(exporter);
     }
 }

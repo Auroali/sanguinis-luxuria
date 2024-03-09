@@ -2,6 +2,7 @@ package com.auroali.bloodlust.common.registry;
 
 import com.auroali.bloodlust.BLResources;
 import com.auroali.bloodlust.Bloodlust;
+import com.auroali.bloodlust.common.items.BlessedBloodItem;
 import com.auroali.bloodlust.common.items.BloodStorageItem;
 import com.auroali.bloodlust.common.items.MaskItem;
 import com.auroali.bloodlust.common.items.TwistedBloodItem;
@@ -24,6 +25,7 @@ public class BLItems {
             2
     ).emptyItem(Items.GLASS_BOTTLE);
     public static final Item TWISTED_BLOOD = new TwistedBloodItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
+    public static final Item BLESSED_BLOOD = new BlessedBloodItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
 
     public static void register() {
         Registry.register(Registry.ITEM, BLResources.MASK_ONE_ID, MASK_1);
@@ -32,6 +34,9 @@ public class BLItems {
         Registry.register(Registry.ITEM, BLResources.BLOOD_BAG_ID, BLOOD_BAG);
         Registry.register(Registry.ITEM, BLResources.BLOOD_BOTTLE_ID, BLOOD_BOTTLE);
         Registry.register(Registry.ITEM, BLResources.TWISTED_BLOOD_ID, TWISTED_BLOOD);
+        Registry.register(Registry.ITEM, BLResources.BLESSED_BLOOD_ID, BLESSED_BLOOD);
+
+        // blocks
         Registry.register(Registry.ITEM, BLResources.SKILL_UPGRADER_ID, new BlockItem(BLBlocks.SKILL_UPGRADER, new FabricItemSettings()
                 .group(Bloodlust.BLOODLUST_TAB))
         );

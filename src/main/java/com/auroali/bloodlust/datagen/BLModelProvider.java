@@ -28,5 +28,7 @@ public class BLModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(BLItems.BLOOD_BOTTLE, "_2", Models.GENERATED);
         itemModelGenerator.register(BLItems.TWISTED_BLOOD, Models.GENERATED);
+
+        itemModelGenerator.register(BLItems.BLESSED_BLOOD, Models.GENERATED);
     }
 }

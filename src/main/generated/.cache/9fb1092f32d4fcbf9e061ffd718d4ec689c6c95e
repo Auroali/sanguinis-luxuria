@@ -1,4 +1,4 @@
-// 1.19.2	2024-03-07T16:32:57.411172116	Recipes
+// 1.19.2	2024-03-08T23:16:33.640590428	Recipes
 1be45ca114a22778bb650ae20cfaac51b1d600b9 data/bloodlust/recipes/twisted_blood_bottle.json
 4e8c69f9ebafcc58860e950252577ab966c478de data/bloodlust/recipes/blood_bag.json
 03e32d9a4db803820bff9ec1a01692e8a069b381 data/bloodlust/advancements/recipes/bloodlust.bloodlust/mask_2.json
@@ -9,7 +9,9 @@
 c58f56c2b1ded5ebf3d90f0e26a09775f265592b data/bloodlust/advancements/recipes/bloodlust.bloodlust/mask_1.json
 3c826be381c53da0de192a34403926db51189973 data/bloodlust/advancements/recipes/bloodlust.bloodlust/twisted_blood_bottle.json
 8350cf563b6af2053348a1727978088cd94e7647 data/bloodlust/recipes/altar.json
+4a5a60518335c6d5f0b86d014ceae8444533e589 data/bloodlust/recipes/blessed_blood_bottle.json
 df188b38dd983729b7d4cfaa330600ddd71c2c0a data/bloodlust/advancements/recipes/bloodlust.bloodlust/altar.json
 5ebfff410117685d2bc2e548cb7b6d95308c6f0a data/bloodlust/advancements/recipes/bloodlust.bloodlust/pedestal.json
+4071513978e9951d3392f93fb85cc9e6b7361a3d data/bloodlust/advancements/recipes/bloodlust.bloodlust/blessed_blood_bottle.json
 124e64487976c3c0be50d4f56177a234d410168f data/bloodlust/recipes/mask_3.json
 3240068d42003266f4de95379ad705805dac1854 data/bloodlust/recipes/pedestal.json

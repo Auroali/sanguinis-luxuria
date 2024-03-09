@@ -1,9 +1,12 @@
 package com.auroali.bloodlust.common.items;
 
 import com.auroali.bloodlust.VampireHelper;
+import com.auroali.bloodlust.common.abilities.VampireAbility;
 import com.auroali.bloodlust.common.components.BLEntityComponents;
 import com.auroali.bloodlust.common.components.VampireComponent;
+import com.auroali.bloodlust.common.registry.BLDamageSources;
 import com.auroali.bloodlust.common.registry.BLSounds;
+import com.auroali.bloodlust.config.BLConfig;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,8 +22,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class TwistedBloodItem extends Item {
-    public TwistedBloodItem(Settings settings) {
+public class BlessedBloodItem extends Item {
+    public BlessedBloodItem(Settings settings) {
         super(settings);
     }
 
@@ -32,19 +35,20 @@ public class TwistedBloodItem extends Item {
         }
 
         if (!world.isClient && VampireHelper.isVampire(user)) {
+            if(!(user instanceof PlayerEntity player && player.isCreative())) {
+                user.damage(BLDamageSources.BLESSED_BLOOD, 19);
+                if (!user.isAlive())
+                    return new ItemStack(Items.GLASS_BOTTLE);
+            }
+
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
-            if(vampire.getLevel() >= getMinLevel(stack) && vampire.getLevel() <= getMaxLevel(stack))
-                vampire.setLevel(vampire.getLevel() + 1);
+            for(VampireAbility ability : vampire.getAbilties()) {
+                vampire.getAbilties().removeAbility(ability);
+            }
+            vampire.setSkillPoints(vampire.getLevel() * BLConfig.INSTANCE.skillPointsPerLevel);
         }
 
         return new ItemStack(Items.GLASS_BOTTLE);
-    }
-
-    public static int getMinLevel(ItemStack stack) {
-        return 0;
-    }
-    public static int getMaxLevel(ItemStack stack) {
-        return 6;
     }
 
     @Override

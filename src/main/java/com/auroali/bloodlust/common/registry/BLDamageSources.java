@@ -7,13 +7,16 @@ import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.damage.ProjectileDamageSource;
 
 public class BLDamageSources {
-    public static DamageSource BLOOD_DRAIN = new DamageSource("bloodlust.drain_blood")
+    public static final DamageSource BLOOD_DRAIN = new DamageSource("bloodlust.drain_blood")
             .setBypassesArmor()
             .setOutOfWorld();
 
-    public static DamageSource BLESSED_WATER = new DamageSource("bloodlust.blessed_water")
+    public static final DamageSource BLESSED_WATER = new DamageSource("bloodlust.blessed_water")
             .setBypassesArmor()
             .setUsesMagic();
+
+    public static final DamageSource BLESSED_BLOOD = new DamageSource("bloodlust.blessed_water")
+            .setOutOfWorld();
 
     public static DamageSource bloodDrain(Entity entity) {
         return new EntityDamageSource("bloodlust.drain_blood_by_entity", entity)
