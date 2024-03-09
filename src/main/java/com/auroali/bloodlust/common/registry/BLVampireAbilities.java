@@ -92,7 +92,7 @@ public class BLVampireAbilities {
             VAMPIRE_STRENGTH_2
     ).incompatible(() -> BLVampireAbilities.MORE_BLOOD);
 
-    public static final VampireAbility SUN_PROTECTION = new BiteAbility(
+    public static final VampireAbility SUN_PROTECTION = new SimpleVampireAbility(
             () -> new ItemStack(Items.LEATHER_HELMET),
             HEALTH_2
     );

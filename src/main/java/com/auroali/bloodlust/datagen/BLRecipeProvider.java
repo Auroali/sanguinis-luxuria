@@ -67,7 +67,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(Items.ENCHANTED_GOLDEN_APPLE)
                 .input(Items.SUNFLOWER)
                 .input(Items.HONEY_BOTTLE)
-                .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.BLESSED_BLOOD))
+                .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))
                 .offerTo(exporter);
     }
 }

@@ -42,8 +42,8 @@ public class BiteAbility extends VampireAbility{
         if(target == null)
             return false;
 
-        target.damage(BLDamageSources.bite(entity), (float)entity.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
-        component.getAbilties().setCooldown(this, 100);
+        target.damage(BLDamageSources.bite(entity), 3);
+        component.getAbilties().setCooldown(this, 150);
         return true;
     }
 

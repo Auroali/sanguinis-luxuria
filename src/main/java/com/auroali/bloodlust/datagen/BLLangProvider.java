@@ -108,6 +108,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityKey(translationBuilder, BLVampireAbilities.MORE_BLOOD, "Blood Efficiency");
         generateAbilityKey(translationBuilder, BLVampireAbilities.TRANSFER_EFFECTS, "Infectious");
         generateAbilityKey(translationBuilder, BLVampireAbilities.BITE, "Bite");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.SUN_PROTECTION, "Sun Resistance");
 
         generateAdvancements(translationBuilder);
     }
