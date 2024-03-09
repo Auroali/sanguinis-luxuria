@@ -9,8 +9,9 @@
 		"EastCoastJack"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/Auroali/bloodlust"
+		"homepage": "https://modrinth.com/project/sanguinis-luxuria",
+		"sources": "https://github.com/Auroali/sanguinis-luxuria",
+		"issues": "https://github.com/Auroali/sanguinis-luxuria/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/sanguinisluxuria/icon.png",
