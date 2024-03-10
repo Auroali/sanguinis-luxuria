@@ -23,7 +23,8 @@ public class BLVampireAbilities {
                     "sanguinisluxuria.vampire_health",
                     2,
                     EntityAttributeModifier.Operation.ADDITION
-            )
+            ),
+            4
     );
 
     public static final VampireAbility HEALTH_2 = new VampireAttributeModifierAbility(
@@ -35,7 +36,8 @@ public class BLVampireAbilities {
                     "sanguinisluxuria.vampire_health",
                     2,
                     EntityAttributeModifier.Operation.ADDITION
-            )
+            ),
+            4
     );
 
     public static final VampireAbility VAMPIRE_STRENGTH_1 = new VampireAttributeModifierAbility(
@@ -47,7 +49,8 @@ public class BLVampireAbilities {
                     "sanguinisluxuria.vampire_strength",
                     0.5,
                     EntityAttributeModifier.Operation.ADDITION
-            )
+            ),
+            6
     );
 
     public static final VampireAbility VAMPIRE_STRENGTH_2 = new VampireAttributeModifierAbility(
@@ -59,7 +62,8 @@ public class BLVampireAbilities {
                     "sanguinisluxuria.vampire_strength",
                     0.5,
                     EntityAttributeModifier.Operation.ADDITION
-            )
+            ),
+            6
     );
 
     public static final VampireAbility TELEPORT = new VampireTeleportAbility(
