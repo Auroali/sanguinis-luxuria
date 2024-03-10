@@ -68,8 +68,12 @@ public class PlayerVampireComponent implements VampireComponent {
     public void setIsVampire(boolean isVampire) {
         this.isVampire = isVampire;
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
-        if(!isVampire)
+        if(!isVampire) {
             removeModifiers();
+            for(VampireAbility a : abilities) {
+                a.onUnVampire(holder, this);
+            }
+        }
     }
 
     @Override

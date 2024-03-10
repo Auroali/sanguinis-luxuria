@@ -26,8 +26,10 @@ public class AbilityCommand {
                     if(!ctx.getSource().isExecutedByPlayer())
                         return 1;
                     VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(ctx.getSource().getPlayer());
-                    for(VampireAbility a : component.getAbilties())
+                    for(VampireAbility a : component.getAbilties()) {
+                        a.onAbilityRemoved(ctx.getSource().getPlayer(), component);
                         component.getAbilties().removeAbility(a);
+                    }
                     component.setSkillPoints(BLConfig.INSTANCE.skillPointsPerLevel * component.getLevel());
                     BLEntityComponents.VAMPIRE_COMPONENT.sync(ctx.getSource().getPlayer());
                     return 0;

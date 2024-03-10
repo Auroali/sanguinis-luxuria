@@ -28,6 +28,14 @@ public class VampireAttributeModifierAbility extends VampireAbility {
     }
 
     @Override
+    public void onAbilityRemoved(LivingEntity entity, VampireComponent vampire) {
+        super.onAbilityRemoved(entity, vampire);
+        AttributeContainer attributes = entity.getAttributes();
+        if(attributes.getCustomInstance(targetAttribute).hasModifier(modifier))
+            attributes.getCustomInstance(targetAttribute).removeModifier(modifier);
+    }
+
+    @Override
     public void tick(LivingEntity entity, VampireComponent component, BloodComponent blood) {
         AttributeContainer attributes = entity.getAttributes();
         if(blood.getBlood() >= minBloodAmount && !attributes.getCustomInstance(targetAttribute).hasModifier(modifier))

@@ -99,6 +99,12 @@ public abstract class VampireAbility {
                 .anyMatch(a -> a == ability);
     }
 
+    public void onUnVampire(LivingEntity entity, VampireComponent vampire) {
+        this.onAbilityRemoved(entity, vampire);
+    }
+
+    public void onAbilityRemoved(LivingEntity entity, VampireComponent vampire) {}
+
     public List<VampireAbility> getIncompatibilities() {
         return incompatibilities.stream().map(Supplier::get).toList();
     }

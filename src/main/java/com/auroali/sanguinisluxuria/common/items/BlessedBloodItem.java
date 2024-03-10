@@ -43,6 +43,7 @@ public class BlessedBloodItem extends Item {
 
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
             for(VampireAbility ability : vampire.getAbilties()) {
+                ability.onAbilityRemoved(user, vampire);
                 vampire.getAbilties().removeAbility(ability);
             }
             vampire.setSkillPoints(vampire.getLevel() * BLConfig.INSTANCE.skillPointsPerLevel);
