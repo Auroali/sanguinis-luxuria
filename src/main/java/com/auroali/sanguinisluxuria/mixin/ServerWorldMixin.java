@@ -32,15 +32,14 @@ public abstract class ServerWorldMixin extends World {
         super(properties, registryRef, dimension, profiler, isClient, debugWorld, seed, maxChainedNeighborUpdates);
     }
 
-    @Inject(method = "tick",
-            slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/MutableWorldProperties;getTimeOfDay()J")),
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/MutableWorldProperties;getTimeOfDay()J", shift = At.Shift.BY, by = 4))
-
-    public void sanguinisluxuria$modifySleep(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Local(name = "l") LocalLongRef l) {
+    @ModifyVariable(method = "tick",
+            at = @At("STORE")
+    )
+    public long sanguinisluxuria$modifySleep(long l) {
         if(this.isDay() && this.players.stream().filter(VampireHelper::isVampire).anyMatch(PlayerEntity::isSleeping)) {
-            System.out.println(properties.getTimeOfDay());
-            l.set(properties.getTimeOfDay() + 13000);
+            return properties.getTimeOfDay() + 13000;
         }
+        return l;
     }
 
     @ModifyConstant(method = "tick",
