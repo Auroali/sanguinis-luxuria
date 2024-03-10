@@ -45,13 +45,13 @@ public class BloodlustClient implements ClientModInitializer {
             "key.sanguinisluxuria.ability_1",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_Z,
-            "category.sanguinisluxuria.bloodlust"
+            "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static KeyBinding ABILITY_2 = new KeyBinding(
             "key.sanguinisluxuria.ability_2",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_X,
-            "category.sanguinisluxuria.bloodlust"
+            "category.sanguinisluxuria.sanguinisluxuria"
     );
 
 
@@ -84,7 +84,7 @@ public class BloodlustClient implements ClientModInitializer {
         ABILITY_2 = KeyBindingHelper.registerKeyBinding(ABILITY_2);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while(OPEN_ABILITIES.wasPressed()) {
+            while(OPEN_ABILITIES.wasPressed() && VampireHelper.isVampire(client.player)) {
                 client.setScreen(new VampireAbilitiesScreen());
             }
             while(ABILITY_1.wasPressed()) {

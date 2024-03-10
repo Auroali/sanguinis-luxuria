@@ -135,13 +135,13 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
 
     @Override
     public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
-        buf.writeInt(getMaxBlood());
-        buf.writeInt(getBlood());
+        buf.writeVarInt(getMaxBlood());
+        buf.writeVarInt(getBlood());
     }
 
     @Override
     public void applySyncPacket(PacketByteBuf buf) {
-        maxBlood = buf.readInt();
-        currentBlood = buf.readInt();
+        maxBlood = buf.readVarInt();
+        currentBlood = buf.readVarInt();
     }
 }

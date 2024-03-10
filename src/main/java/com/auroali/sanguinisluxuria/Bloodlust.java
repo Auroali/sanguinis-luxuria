@@ -167,6 +167,8 @@ public class Bloodlust implements ModInitializer {
 			int slot = buf.readInt();
 			server.execute(() -> {
 				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+				if(!vampire.isVampire())
+					return;
 				VampireAbility ability = vampire.getAbilties().getBoundAbility(slot);
 				if(ability != null)
 					ability.activate(player, vampire);

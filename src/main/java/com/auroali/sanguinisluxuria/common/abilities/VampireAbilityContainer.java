@@ -237,21 +237,21 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
             if(a != null)
                 abilities++;
         }
-        buf.writeInt(abilities);
+        buf.writeVarInt(abilities);
         for(int i = 0; i < abilityBindings.length; i++) {
             if(abilityBindings[i] == null)
                 continue;
 
-            buf.writeInt(i);
+            buf.writeVarInt(i);
             buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, abilityBindings[i]);
         }
 
         // write cooldowns
-        buf.writeInt(cooldowns.size());
+        buf.writeVarInt(cooldowns.size());
         cooldowns.forEach((ability, cooldown) -> {
             buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);
-            buf.writeInt(cooldown.ticks);
-            buf.writeInt(cooldown.maxTicks);
+            buf.writeVarInt(cooldown.ticks);
+            buf.writeVarInt(cooldown.maxTicks);
         });
     }
 
@@ -270,10 +270,10 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         }
 
         // read bound abilities
-        size = buf.readInt();
+        size = buf.readVarInt();
         Arrays.fill(abilityBindings, null);
         for(int i = 0; i < size; i++) {
-            int slot = buf.readInt();
+            int slot = buf.readVarInt();
             VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
             if (ability == null) {
                 Bloodlust.LOGGER.warn("Could not read ability from packet!");
@@ -284,12 +284,12 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         }
 
         // read cooldowns
-        size = buf.readInt();
+        size = buf.readVarInt();
         cooldowns.clear();
         for(int i = 0; i < size; i++) {
             VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
-            int ticks = buf.readInt();
-            int maxTicks = buf.readInt();
+            int ticks = buf.readVarInt();
+            int maxTicks = buf.readVarInt();
             if (ability == null) {
                 Bloodlust.LOGGER.warn("Could not read ability from packet!");
                 continue;
