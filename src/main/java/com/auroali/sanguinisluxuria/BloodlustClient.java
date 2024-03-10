@@ -33,13 +33,13 @@ public class BloodlustClient implements ClientModInitializer {
             "key.sanguinisluxuria.bite",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_R,
-            "category.sanguinisluxuria.bloodlust"
+            "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static KeyBinding OPEN_ABILITIES = new KeyBinding(
             "key.sanguinisluxuria.open_abilities",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_Y,
-            "category.sanguinisluxuria.bloodlust"
+            "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static KeyBinding ABILITY_1 = new KeyBinding(
             "key.sanguinisluxuria.ability_1",

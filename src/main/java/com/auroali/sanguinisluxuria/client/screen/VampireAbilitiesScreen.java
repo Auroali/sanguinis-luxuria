@@ -62,8 +62,8 @@ public class VampireAbilitiesScreen extends Screen {
         drawTexture(matrices, panelX, panelY, 0, 0, 252, 148);
         RenderSystem.disableBlend();
 
-        textRenderer.draw(matrices, Text.translatable("gui.bloodlust.abilities"), panelX + 8, panelY + 6, 4210752);
-        textRenderer.draw(matrices, Text.translatable("gui.bloodlust.skill_points", component.getSkillPoints()), panelX + 8, panelY + 134, 4210752);
+        textRenderer.draw(matrices, Text.translatable("gui.sanguinisluxuria.abilities"), panelX + 8, panelY + 6, 4210752);
+        textRenderer.draw(matrices, Text.translatable("gui.sanguinisluxuria.skill_points", component.getSkillPoints()), panelX + 8, panelY + 134, 4210752);
 
         for(VampireAbilityWidget ability : abilities) {
             if(ability.isMouseOver(mouseX, mouseY, (int) (centerX + scrollX), (int) (centerY + scrollY))) {
@@ -78,10 +78,10 @@ public class VampireAbilitiesScreen extends Screen {
 
         List<VampireAbility> incompatibilities = widget.ability.getIncompatibilities();
         if(!incompatibilities.isEmpty()) {
-            text.add(Text.translatable("gui.bloodlust.abilities.incompatibilites"));
+            text.add(Text.translatable("gui.sanguinisluxuria.abilities.incompatibilites"));
             for(VampireAbility ability : incompatibilities) {
                 text.add(Text.translatable(
-                        "gui.bloodlust.abilities.incompatibilites_entry",
+                        "gui.sanguinisluxuria.abilities.incompatibilites_entry",
                         Text.translatable(ability.getTranslationKey())
                 ).formatted(Formatting.DARK_RED, Formatting.ITALIC));
             }
@@ -89,11 +89,11 @@ public class VampireAbilitiesScreen extends Screen {
 
         int slot = container.getAbilityBinding(widget.ability);
         if(widget == bindingWidget)
-            text.add(Text.translatable("gui.bloodlust.abilities.binding").formatted(Formatting.GRAY, Formatting.ITALIC));
+            text.add(Text.translatable("gui.sanguinisluxuria.abilities.binding").formatted(Formatting.GRAY, Formatting.ITALIC));
         else if(slot == -1 && widget.ability.isKeybindable())
-            text.add(Text.translatable("gui.bloodlust.abilities.bind_prompt").formatted(Formatting.GRAY, Formatting.ITALIC));
+            text.add(Text.translatable("gui.sanguinisluxuria.abilities.bind_prompt").formatted(Formatting.GRAY, Formatting.ITALIC));
         else if(widget.ability.isKeybindable())
-            text.add(Text.translatable("gui.bloodlust.abilities.bound", getTextForSlot(slot)).formatted(Formatting.GRAY, Formatting.ITALIC));
+            text.add(Text.translatable("gui.sanguinisluxuria.abilities.bound", getTextForSlot(slot)).formatted(Formatting.GRAY, Formatting.ITALIC));
         renderTooltip(matrices, text, mouseX, mouseY);
     }
 

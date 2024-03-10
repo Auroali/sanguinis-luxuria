@@ -35,9 +35,9 @@ public class BLConfig {
 
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
-                .title(Text.translatable("bloodlust.config.title"))
+                .title(Text.translatable("sanguinisluxuria.config.title"))
                 .category(ConfigCategory.createBuilder()
-                        .name(Text.translatable("bloodlust.config.category.gameplay"))
+                        .name(Text.translatable("sanguinisluxuria.config.category.gameplay"))
                         .group(OptionGroup.createBuilder()
                                 .option(Option.createBuilder(Float.class)
                                         .name(Text.translatable("sanguinisluxuria.config.option.vampire_damage_multiplier"))

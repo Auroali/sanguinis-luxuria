@@ -20,7 +20,7 @@ public class BLVampireAbilities {
             EntityAttributes.GENERIC_MAX_HEALTH,
             new EntityAttributeModifier(
                     UUID.fromString("0970971f-a4e1-41cf-8566-72686979a161"),
-                    "bloodlust.vampire_health",
+                    "sanguinisluxuria.vampire_health",
                     2,
                     EntityAttributeModifier.Operation.ADDITION
             )
@@ -32,7 +32,7 @@ public class BLVampireAbilities {
             EntityAttributes.GENERIC_MAX_HEALTH,
             new EntityAttributeModifier(
                     UUID.fromString("a3b13d9b-fc8d-4a02-881b-134c04b41f65"),
-                    "bloodlust.vampire_health",
+                    "sanguinisluxuria.vampire_health",
                     2,
                     EntityAttributeModifier.Operation.ADDITION
             )
@@ -44,7 +44,7 @@ public class BLVampireAbilities {
             EntityAttributes.GENERIC_ATTACK_DAMAGE,
             new EntityAttributeModifier(
                     UUID.fromString("a3b13d9b-fc8d-4a02-881b-134c04b41f65"),
-                    "bloodlust.vampire_strength",
+                    "sanguinisluxuria.vampire_strength",
                     0.5,
                     EntityAttributeModifier.Operation.ADDITION
             )
@@ -56,7 +56,7 @@ public class BLVampireAbilities {
             EntityAttributes.GENERIC_ATTACK_DAMAGE,
             new EntityAttributeModifier(
                     UUID.fromString("33682391-db06-4c6e-8674-770fa4051870"),
-                    "bloodlust.vampire_strength",
+                    "sanguinisluxuria.vampire_strength",
                     0.5,
                     EntityAttributeModifier.Operation.ADDITION
             )

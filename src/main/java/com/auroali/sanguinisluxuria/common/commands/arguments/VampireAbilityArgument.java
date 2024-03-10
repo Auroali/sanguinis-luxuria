@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
     public static final Collection<String> EXAMPLES = List.of(BLResources.VAMPIRE_HEALTH_1_ID.toString());
     private static final DynamicCommandExceptionType ID_INVALID_EXCEPTION = new DynamicCommandExceptionType(
-            id -> Text.translatable("argument.bloodlust.id.invalid", id)
+            id -> Text.translatable("argument.sanguinisluxuria.id.invalid", id)
     );
     @Override
     public VampireAbility parse(StringReader reader) throws CommandSyntaxException {
