@@ -100,7 +100,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
 
     @Inject(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
     public void sanguinisluxuria$latchOnEntity(EntityHitResult entityHitResult, CallbackInfo ci, @Local(ordinal = 0) Entity target, @Local(ordinal = 1) Entity owner) {
-        if(dataTracker.get(sanguinisluxuria$BLOOD_DRAIN) != 0 && VampireHelper.isVampire(owner) && target.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
+        if(dataTracker.get(sanguinisluxuria$BLOOD_DRAIN) != 0 && target.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
             if(target instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION))
                 return;
             sanguinisluxuria$latchedEntity = target;
