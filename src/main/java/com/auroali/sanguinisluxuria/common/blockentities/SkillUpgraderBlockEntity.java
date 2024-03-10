@@ -9,6 +9,7 @@ import com.auroali.sanguinisluxuria.common.recipes.AltarInventory;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
+import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,6 +20,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -101,6 +104,8 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
 
         if(entity.recipe != null) {
             if(entity.ticksProcessing < entity.recipe.getProcessingTicks()) {
+                if(entity.ticksProcessing % 20 == 0)
+                    world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), BLSounds.ALTAR_BEATS, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 entity.ticksProcessing++;
                 entity.markDirty();
                 return;

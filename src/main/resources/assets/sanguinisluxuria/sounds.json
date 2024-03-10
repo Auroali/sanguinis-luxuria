@@ -1,17 +1,34 @@
 {
   "drain_blood": {
     "sounds": [
-      "item/bottle/drink_honey1",
-      "item/bottle/drink_honey2",
       {
-        "name": "item/bottle/drink_honey3",
-        "volume": 0.35
+        "name": "item/bottle/drink_honey1",
+        "pitch": 0.85
+      },
+      {
+        "name": "item/bottle/drink_honey2",
+        "pitch": 0.85
       },
       {
         "name": "item/bottle/drink_honey3",
-        "volume": 0.75
+        "volume": 0.35,
+        "pitch": 0.85
+      },
+      {
+        "name": "item/bottle/drink_honey3",
+        "volume": 0.75,
+        "pitch": 0.85
       }
     ],
     "subtitle": "subtitles.sanguinisluxuria.drain_blood"
+  },
+  "altar_beats": {
+    "sounds": [
+      "mob/warden/heartbeat_1",
+      "mob/warden/heartbeat_2",
+      "mob/warden/heartbeat_3",
+      "mob/warden/heartbeat_4"
+    ],
+    "subtitle": "subtitles.sanguinisluxuria.altar_beats"
   }
 }

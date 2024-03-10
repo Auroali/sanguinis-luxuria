@@ -265,7 +265,7 @@ public class PlayerVampireComponent implements VampireComponent {
                     BLSounds.DRAIN_BLOOD,
                     SoundCategory.PLAYERS,
                     0.5f,
-                    0.85f
+                    1.0f
             );
         if(bloodDrainTimer >= BLOOD_TIMER_LENGTH) {
             drainBloodFrom(target);
