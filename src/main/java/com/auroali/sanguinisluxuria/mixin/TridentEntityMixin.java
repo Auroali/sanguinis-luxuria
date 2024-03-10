@@ -50,7 +50,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;getOwner()Lnet/minecraft/entity/Entity;", shift = At.Shift.BY, by = 2), cancellable = true)
-    public void sanguinisluxuria$handleBloodDrainLogic(CallbackInfo ci, @Local(name = "entity") Entity owner) {
+    public void sanguinisluxuria$handleBloodDrainLogic(CallbackInfo ci, @Local(ordinal = 0) Entity owner) {
         int bloodDrainLevel = dataTracker.get(sanguinisluxuria$BLOOD_DRAIN);
         if(bloodDrainLevel != 0 && sanguinisluxuria$latchedEntity != null && sanguinisluxuria$latchedEntity.isAlive() && !sanguinisluxuria$latchedEntity.isRemoved()) {
             if(!this.isOwnerAlive()) {
@@ -99,7 +99,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     }
 
     @Inject(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
-    public void sanguinisluxuria$latchOnEntity(EntityHitResult entityHitResult, CallbackInfo ci, @Local(name = "entity") Entity target, @Local(name = "entity2") Entity owner) {
+    public void sanguinisluxuria$latchOnEntity(EntityHitResult entityHitResult, CallbackInfo ci, @Local(ordinal = 0) Entity target, @Local(ordinal = 1) Entity owner) {
         if(dataTracker.get(sanguinisluxuria$BLOOD_DRAIN) != 0 && VampireHelper.isVampire(owner) && target.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
             if(target instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION))
                 return;
