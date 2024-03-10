@@ -70,6 +70,9 @@ public class PlayerVampireComponent implements VampireComponent {
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
         if(!isVampire) {
             removeModifiers();
+            timeInSun = 0;
+            bloodDrainTimer = 0;
+            isDowned = false;
             for(VampireAbility a : abilities) {
                 a.onUnVampire(holder, this);
             }
