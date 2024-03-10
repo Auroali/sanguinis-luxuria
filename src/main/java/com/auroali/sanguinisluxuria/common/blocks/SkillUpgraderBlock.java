@@ -67,7 +67,7 @@ public class SkillUpgraderBlock extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if(world.isClient)
-            return null;
+            return checkType(type, BLBlockEntities.SKILL_UPGRADER, SkillUpgraderBlockEntity::vfxTick);
         return checkType(type, BLBlockEntities.SKILL_UPGRADER, SkillUpgraderBlockEntity::tick);
     }
 

@@ -54,7 +54,6 @@ public class BloodlustClient implements ClientModInitializer {
             "category.sanguinisluxuria.sanguinisluxuria"
     );
 
-
     public boolean drainingBlood;
 
     @Override

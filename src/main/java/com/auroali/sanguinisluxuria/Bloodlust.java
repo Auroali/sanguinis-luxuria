@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
 import com.auroali.sanguinisluxuria.common.commands.BloodlustCommand;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -19,6 +20,8 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.item.ItemGroup;
@@ -96,6 +99,12 @@ public class Bloodlust implements ModInitializer {
 			}
 			return ActionResult.PASS;
 		});
+
+		ItemStorage.SIDED.registerForBlockEntities((blockEntity, context) -> {
+			if(blockEntity instanceof PedestalBlockEntity e)
+				return InventoryStorage.of(e.getInventory(), null);
+			return null;
+		}, BLBlockEntities.PEDESTAL);
 
 		TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 5, BLTradeOffers::registerClericTrades);
 

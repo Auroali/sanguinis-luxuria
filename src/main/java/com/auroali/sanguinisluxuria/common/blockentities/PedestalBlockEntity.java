@@ -4,6 +4,8 @@ import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
@@ -13,17 +15,22 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlockEntity extends BlockEntity {
-    ItemStack stack = ItemStack.EMPTY;
+    SimpleInventory inv = new SimpleInventory(ItemStack.EMPTY);
+
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.PEDESTAL, pos, state);
+        inv.addListener(inv -> {
+            if(world != null && !world.isClient)
+                world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+        });
     }
 
     public ItemStack getItem() {
-        return stack;
+        return inv.getStack(0);
     }
 
     public void setItem(ItemStack stack) {
-        this.stack = stack;
+        inv.setStack(0, stack);
         if(world != null) {
             BlockState state = world.getBlockState(pos);
             world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
@@ -34,13 +41,13 @@ public class PedestalBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        stack = ItemStack.fromNbt(nbt.getCompound("Item"));
+        inv.setStack(0, ItemStack.fromNbt(nbt.getCompound("Item")));
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        nbt.put("Item", stack.writeNbt(new NbtCompound()));
+        nbt.put("Item", inv.getStack(0).writeNbt(new NbtCompound()));
     }
 
     @Nullable
@@ -51,6 +58,12 @@ public class PedestalBlockEntity extends BlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+        NbtCompound data = new NbtCompound();
+        data.put("Item", inv.getStack(0).writeNbt(new NbtCompound()));
+        return data;
+    }
+
+    public Inventory getInventory() {
+        return inv;
     }
 }

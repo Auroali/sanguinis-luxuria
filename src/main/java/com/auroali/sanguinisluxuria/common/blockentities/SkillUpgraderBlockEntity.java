@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -30,6 +31,7 @@ import java.util.List;
 public class SkillUpgraderBlockEntity extends BlockEntity {
     DefaultedList<ItemStack> stacks = DefaultedList.of();
     AltarRecipe recipe = null;
+    Identifier recipeId = null;
     int ticksProcessing = 0;
     public SkillUpgraderBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.SKILL_UPGRADER, pos, state);
@@ -79,7 +81,24 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
         world.setBlockState(pos, state.with(SkillUpgraderBlock.ACTIVE, true));
     }
 
+    public static void vfxTick(World world, BlockPos pos, BlockState state, SkillUpgraderBlockEntity entity) {
+        if(!state.get(SkillUpgraderBlock.ACTIVE)) {
+            return;
+        }
+
+        Box box = new Box(pos).expand(5);
+        for(int i = 0; i < 4; i++) {
+            double x = box.minX + world.random.nextDouble() * box.getXLength();
+            double y = box.minY + world.random.nextDouble() * box.getYLength();
+            double z = box.minZ + world.random.nextDouble() * box.getZLength();
+            world.addParticle(DustParticleEffect.DEFAULT, x, y, z, 0, 0, 0);
+        }
+    }
+
     public static void tick(World world, BlockPos pos, BlockState state, SkillUpgraderBlockEntity entity) {
+        if(entity.recipeId != null)
+            entity.validateRecipe();
+
         if(entity.recipe != null) {
             if(entity.ticksProcessing < entity.recipe.getProcessingTicks()) {
                 entity.ticksProcessing++;
@@ -119,15 +138,26 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
                 return;
             }
 
-            world.getRecipeManager().get(recipeId).ifPresent(recipe -> {
-                this.ticksProcessing = nbt.getInt("ProcessingTicks");
-                NbtList inv = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
-                inv.stream()
-                        .map(NbtCompound.class::cast)
-                        .map(ItemStack::fromNbt)
-                        .forEach(stacks::add);
-                this.recipe = (AltarRecipe) recipe;
-            });
+            this.recipeId = recipeId;
+            this.ticksProcessing = nbt.getInt("ProcessingTicks");
+            NbtList inv = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
+            inv.stream()
+                    .map(NbtCompound.class::cast)
+                    .map(ItemStack::fromNbt)
+                    .forEach(stacks::add);
+        }
+    }
+
+    private void validateRecipe() {
+        recipe = (AltarRecipe) world.getRecipeManager().get(recipeId).orElse(null);
+
+        if(recipe == null) {
+            stacks.clear();
+            ticksProcessing = 0;
+            recipeId = null;
+            markDirty();
+        } else {
+            recipeId = null;
         }
     }
 
