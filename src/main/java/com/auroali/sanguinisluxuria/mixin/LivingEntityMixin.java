@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.entity.Entity;
@@ -40,8 +41,12 @@ public abstract class LivingEntityMixin extends Entity {
             value = "HEAD"
     ), argsOnly = true)
     public float sanguinisluxuria$actuallyIncreaseDamage(float amount, @Share("source") LocalRef<DamageSource> source) {
-        if(VampireHelper.isVampire((LivingEntity)(Object)this))
+        if(VampireHelper.isVampire(this)) {
+            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+            if(!VampireComponent.isEffectiveAgainstVampires(source.get()) && vampire.getAbilties().hasAbility(BLVampireAbilities.DAMAGE_REDUCTION))
+                amount *= 0.85f;
             return VampireComponent.calculateDamage(amount, source.get());
+        }
         return amount;
     }
 

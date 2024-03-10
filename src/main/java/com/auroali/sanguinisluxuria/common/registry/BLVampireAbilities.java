@@ -100,6 +100,10 @@ public class BLVampireAbilities {
             () -> new ItemStack(Items.LEATHER_HELMET),
             HEALTH_2
     );
+    public static final VampireAbility DAMAGE_REDUCTION = new SimpleVampireAbility(
+            () -> new ItemStack(Items.IRON_CHESTPLATE),
+            VAMPIRE_STRENGTH_2
+    );
 
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
@@ -115,5 +119,6 @@ public class BLVampireAbilities {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TRANSFER_EFFECTS_ID, TRANSFER_EFFECTS);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.BITE_ID, BITE);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.SUN_PROTECTION_ID, SUN_PROTECTION);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.DAMAGE_REDUCTION_ID, DAMAGE_REDUCTION);
     }
 }

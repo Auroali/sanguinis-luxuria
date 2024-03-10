@@ -59,5 +59,36 @@ public class VampireAbilitiesPositioner {
                 }
             }
         }
+
+        hasCollisions = true;
+        while(hasCollisions) {
+            hasCollisions = false;
+            for (VampireAbilityWidget widget : widgets) {
+                if (widget.parent == null)
+                    continue;
+                boolean next = false;
+                while (!next) {
+                    int original = widget.getX();
+                    if (widget.getX() < widget.parent.getX() - columnSpacing / 2) {
+                        widget.setX(widget.getX() + columnSpacing / 2);
+                        hasCollisions = true;
+                    }
+                    if (widget.getX() > widget.parent.getX() + columnSpacing / 2) {
+                        widget.setX(widget.getX() - columnSpacing / 2);
+                        hasCollisions = true;
+                    }
+                    if (widget.getX() == original)
+                        break;
+                    for (VampireAbilityWidget other : widgets) {
+                        if (other != widget && (widget.isOverlappingX(other) || other.isOverlappingX(widget))) {
+                            widget.setX(original);
+                            hasCollisions = false;
+                            next = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
