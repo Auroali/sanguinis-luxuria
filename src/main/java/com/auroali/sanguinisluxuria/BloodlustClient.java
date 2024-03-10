@@ -30,28 +30,28 @@ import org.lwjgl.glfw.GLFW;
 
 public class BloodlustClient implements ClientModInitializer {
     public static KeyBinding SUCK_BLOOD = new KeyBinding(
-            "key.bloodlust.bite",
+            "key.sanguinisluxuria.bite",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_R,
-            "category.bloodlust.bloodlust"
+            "category.sanguinisluxuria.bloodlust"
     );
     public static KeyBinding OPEN_ABILITIES = new KeyBinding(
-            "key.bloodlust.open_abilities",
+            "key.sanguinisluxuria.open_abilities",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_Y,
-            "category.bloodlust.bloodlust"
+            "category.sanguinisluxuria.bloodlust"
     );
     public static KeyBinding ABILITY_1 = new KeyBinding(
-            "key.bloodlust.ability_1",
+            "key.sanguinisluxuria.ability_1",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_Z,
-            "category.bloodlust.bloodlust"
+            "category.sanguinisluxuria.bloodlust"
     );
     public static KeyBinding ABILITY_2 = new KeyBinding(
-            "key.bloodlust.ability_2",
+            "key.sanguinisluxuria.ability_2",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_X,
-            "category.bloodlust.bloodlust"
+            "category.sanguinisluxuria.bloodlust"
     );
 
 
