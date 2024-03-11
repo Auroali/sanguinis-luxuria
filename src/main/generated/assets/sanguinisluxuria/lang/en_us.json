@@ -5,6 +5,8 @@
   "advancements.sanguinisluxuria.drink_twisted_blood.title": "Consumption",
   "argument.sanguinisluxuria.id.invalid": "'%s' is not a valid id!",
   "block.sanguinisluxuria.altar": "Altar",
+  "block.sanguinisluxuria.blood_cauldron": "Blood Cauldron",
+  "block.sanguinisluxuria.blood_splatter": "Blood",
   "block.sanguinisluxuria.pedestal": "Pedestal",
   "category.sanguinisluxuria.sanguinisluxuria": "Sanguinis Luxuria",
   "death.attack.sanguinisluxuria.bite": "%1$s was bit by %2$s",

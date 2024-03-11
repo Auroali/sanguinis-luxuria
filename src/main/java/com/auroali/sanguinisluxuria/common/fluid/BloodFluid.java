@@ -1,17 +1,16 @@
 package com.auroali.sanguinisluxuria.common.fluid;
 
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLFluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
@@ -42,7 +41,7 @@ public class BloodFluid extends FlowableFluid {
 
     @Override
     public Item getBucketItem() {
-        return null;
+        return Items.AIR;
     }
 
     @Override
@@ -62,7 +61,7 @@ public class BloodFluid extends FlowableFluid {
 
     @Override
     protected BlockState toBlockState(FluidState state) {
-        return BLBlocks.BLOOD.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(state));
+        return Blocks.AIR.getDefaultState(); //BLBlocks.BLOOD.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(state));
     }
 
     @Override
@@ -81,14 +80,15 @@ public class BloodFluid extends FlowableFluid {
     }
 
     @Override
+    public Fluid getStill() {
+        return BLFluids.BLOOD_STILL;
+    }
+
+    @Override
     public boolean matchesType(Fluid fluid) {
         return fluid == getStill() || fluid == getFlowing();
     }
 
-    @Override
-    public Fluid getStill() {
-        return BLFluids.BLOOD_STILL;
-    }
 
     public static class BloodFluidStill extends BloodFluid {
         @Override

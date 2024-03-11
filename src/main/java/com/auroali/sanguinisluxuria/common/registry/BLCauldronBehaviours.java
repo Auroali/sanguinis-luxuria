@@ -1,14 +1,13 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.cauldron.CauldronBehavior;
-import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 
 import java.util.Map;
@@ -22,6 +21,7 @@ public class BLCauldronBehaviours {
                 if(item.getEmptyItem() != null && BloodStorageItem.getStoredBlood(stack) == 0) {
                     player.setStackInHand(hand, item.getEmptyItem().getDefaultStack());
                 }
+                world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
                 world.setBlockState(pos, BLBlocks.BLOOD_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, 1));
                 return ActionResult.success(world.isClient);
             }
@@ -34,6 +34,7 @@ public class BLCauldronBehaviours {
                 BloodStorageItem.setStoredBlood(stack, BloodStorageItem.getStoredBlood(stack) + 2);
 
                 LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
+                world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1);
                 return ActionResult.success(world.isClient);
             }
 
@@ -45,6 +46,7 @@ public class BLCauldronBehaviours {
             if(item.getEmptyItem() != null && BloodStorageItem.getStoredBlood(stack) == 0) {
                 player.setStackInHand(hand, item.getEmptyItem().getDefaultStack());
             }
+            world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
             world.setBlockState(pos, BLBlocks.BLOOD_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, level));
             return ActionResult.success(world.isClient);
         }
@@ -55,7 +57,12 @@ public class BLCauldronBehaviours {
         if(stack.isOf(Items.GLASS_BOTTLE)) {
             ItemStack bloodBottle = BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), 2);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-            player.setStackInHand(hand, bloodBottle);
+            stack.decrement(1);
+            if(stack.isEmpty())
+                player.setStackInHand(hand, bloodBottle);
+            else if(!player.getInventory().insertStack(bloodBottle))
+                player.dropItem(bloodBottle, false);
+            world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1);
             return ActionResult.success(world.isClient);
         }
         return ActionResult.FAIL;
