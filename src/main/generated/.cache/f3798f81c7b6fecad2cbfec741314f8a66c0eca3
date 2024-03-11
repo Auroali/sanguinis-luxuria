@@ -1,10 +1,14 @@
-// 1.19.2	2024-03-11T15:49:27.504109087	Models
+// 1.19.2	2024-03-11T15:57:09.236505306	Models
+22eccfe91464ea67d7237ea269f01b83bdf4a835 assets/sanguinisluxuria/blockstates/blood_cauldron.json
 273ed2c74f7c4bf5d531935d7d91c71be193ac73 assets/sanguinisluxuria/models/item/mask_1.json
 4011cef21efa8d8cf51904edca5ac905a28084e8 assets/sanguinisluxuria/models/item/blood_bag_3.json
 2ba69946e6b7ecacbbe764c408c721073163e427 assets/sanguinisluxuria/models/item/mask_2.json
 82b9ddbe10916675e17e710d698a0392e2996bec assets/sanguinisluxuria/models/item/blood_bag_1.json
 57886639d96806390545ec167f0ca48899fe07f5 assets/sanguinisluxuria/models/item/twisted_blood_bottle.json
-ebeb94ef2985e056d6157b510afd5fe5b48b020a assets/sanguinisluxuria/models/item/blood_bottle_2.json
+bb9cb3bd7f21d26173e113e25915bc5d2475cad8 assets/sanguinisluxuria/models/block/blood_cauldron_level2.json
 a1ddda013fb9a6521813d77d0db2b8b34603e67a assets/sanguinisluxuria/models/item/blessed_blood_bottle.json
+c21266859770272a89a632adf2987d5366d537f4 assets/sanguinisluxuria/models/block/blood_cauldron_full.json
+ebeb94ef2985e056d6157b510afd5fe5b48b020a assets/sanguinisluxuria/models/item/blood_bottle_2.json
+9ba3774628a6964a6dd4fa4d1b2947d09d9c0a7e assets/sanguinisluxuria/models/block/blood_cauldron_level1.json
 bd72cf180238e6e34c5973f41c5428dcf6b3b3f1 assets/sanguinisluxuria/models/item/mask_3.json
 cc65376c9ff293c4f2a30d1df9246cb9d3611832 assets/sanguinisluxuria/models/item/blood_bag_2.json
