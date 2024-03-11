@@ -84,7 +84,7 @@ public class BloodStorageItem extends Item {
         return stack;
     }
 
-    private void applyNonVampireEffects(LivingEntity user) {
+    public static void applyNonVampireEffects(LivingEntity user) {
         if(user.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION))
             return;
 
