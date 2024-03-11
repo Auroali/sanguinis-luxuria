@@ -16,8 +16,8 @@ public class BLBlocks {
                     .noCollision()
                     .ticksRandomly()
     );
-    public static final Block SKILL_UPGRADER = new SkillUpgraderBlock(FabricBlockSettings.of(Material.STONE));
-    public static final Block PEDESTAL = new PedestalBlock(FabricBlockSettings.of(Material.DECORATION));
+    public static final Block SKILL_UPGRADER = new SkillUpgraderBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(1.5F, 6.0F));
+    public static final Block PEDESTAL = new PedestalBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(1.5F, 6.0F));
 
     public static void register() {
         Registry.register(Registry.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);

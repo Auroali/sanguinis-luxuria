@@ -15,5 +15,6 @@ public class BloodlustDataGenerator implements DataGeneratorEntrypoint {
 		fabricDataGenerator.addProvider(new BLBlockTagsProvider(fabricDataGenerator));
 		fabricDataGenerator.addProvider(new BLVampireAbiltyTagsProvider(fabricDataGenerator));
 		fabricDataGenerator.addProvider(new BLAdvancementsProvider(fabricDataGenerator));
+		fabricDataGenerator.addProvider(new BLBlockLootTableProvider(fabricDataGenerator));
 	}
 }

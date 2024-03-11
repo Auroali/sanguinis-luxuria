@@ -1,2 +1,3 @@
-// 1.19.2	2024-03-10T17:30:40.462334636	Tags for minecraft:block
+// 1.19.2	2024-03-11T15:49:27.504630687	Tags for minecraft:block
 3af22e3d928ea71b5ef30ddf6753eb909789ef88 data/sanguinisluxuria/tags/blocks/blood_splatter_replaceable.json
+c6141ca2f88b645ab703749ea568e62c2b959098 data/minecraft/tags/blocks/mineable/pickaxe.json

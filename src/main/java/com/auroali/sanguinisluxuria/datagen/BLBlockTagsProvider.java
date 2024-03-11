@@ -1,10 +1,12 @@
 package com.auroali.sanguinisluxuria.datagen;
 
+import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.registry.Registry;
 
 public class BLBlockTagsProvider extends FabricTagProvider<Block> {
@@ -20,5 +22,8 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
                 .add(Blocks.AIR)
                 .add(Blocks.CAVE_AIR)
                 .add(Blocks.VOID_AIR);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+                .add(BLBlocks.SKILL_UPGRADER)
+                .add(BLBlocks.PEDESTAL);
     }
 }
