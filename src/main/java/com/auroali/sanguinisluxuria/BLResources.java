@@ -63,6 +63,7 @@ public class BLResources {
     public static final Identifier BLOOD_STILL_TEXTURE = id("block/blood_still");
     public static final Identifier BLOOD_FLOWING_TEXTURE = id("block/blood_flowing");
     public static final Identifier BLOOD_CAULDRON_ID = id("blood_cauldron");
+    public static final Identifier PATCHOULI_BOOK = id("sanguinisluxuria");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

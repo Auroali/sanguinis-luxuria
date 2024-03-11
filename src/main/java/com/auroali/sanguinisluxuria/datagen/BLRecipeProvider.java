@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.datagen;
 
+import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
@@ -8,10 +9,12 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.ItemTags;
+import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.function.Consumer;
 

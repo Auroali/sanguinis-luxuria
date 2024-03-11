@@ -1,0 +1,15 @@
+{
+  "type": "patchouli:shapeless_book_recipe",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "minecraft:blackstone"
+    },
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "book": "sanguinisluxuria:sanguinisluxuria"
+}
