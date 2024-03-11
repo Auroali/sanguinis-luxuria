@@ -4,23 +4,24 @@ import com.auroali.sanguinisluxuria.client.BLHud;
 import com.auroali.sanguinisluxuria.client.render.PedestalBlockRenderer;
 import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
@@ -74,6 +75,18 @@ public class BloodlustClient implements ClientModInitializer {
         BlockEntityRendererFactories.register(BLBlockEntities.PEDESTAL, ctx -> new PedestalBlockRenderer(ctx.getItemRenderer()));
 
         HudRenderCallback.EVENT.register(BLHud::render);
+
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), BLFluids.BLOOD_STILL, BLFluids.BLOOD_FLOWING);
+
+        FluidRenderHandlerRegistry.INSTANCE.register(BLFluids.BLOOD_STILL, BLFluids.BLOOD_FLOWING, new SimpleFluidRenderHandler(
+                BLResources.BLOOD_STILL_TEXTURE,
+                BLResources.BLOOD_FLOWING_TEXTURE
+        ));
+
+        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+            registry.register(BLResources.BLOOD_FLOWING_TEXTURE);
+            registry.register(BLResources.BLOOD_STILL_TEXTURE);
+        });
     }
 
     public void registerBindings() {

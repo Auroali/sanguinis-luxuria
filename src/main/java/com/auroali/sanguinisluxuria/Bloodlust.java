@@ -20,9 +20,13 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -106,8 +110,12 @@ public class Bloodlust implements ModInitializer {
 			return null;
 		}, BLBlockEntities.PEDESTAL);
 
+		CauldronFluidContent.registerCauldron(BLBlocks.BLOOD_CAULDRON, BLFluids.BLOOD_STILL, FluidConstants.BOTTLE, LeveledCauldronBlock.LEVEL);
+
 		TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 5, BLTradeOffers::registerClericTrades);
 
+		BLCauldronBehaviours.register();
+		BLFluids.register();
 		BLBlocks.register();
 		BLBlockEntities.register();
 		BLRecipeSerializers.register();
