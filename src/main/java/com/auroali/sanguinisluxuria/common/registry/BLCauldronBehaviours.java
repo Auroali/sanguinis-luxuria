@@ -31,15 +31,9 @@ public class BLCauldronBehaviours {
     public static final CauldronBehavior BLOOD_STORING_ITEM_DRAIN_FILL = (state, world, pos, player, hand, stack) -> {
         if(stack.getItem() instanceof BloodStorageItem item) {
             if(state.get(LeveledCauldronBlock.LEVEL) >= 1 && BloodStorageItem.getStoredBlood(stack) <= BloodStorageItem.getMaxBlood(stack) - 2) {
-                int level = state.get(LeveledCauldronBlock.LEVEL);
-
                 BloodStorageItem.setStoredBlood(stack, BloodStorageItem.getStoredBlood(stack) + 2);
 
-                BlockState replaced = Blocks.CAULDRON.getDefaultState();
-                if(level - 1 > 0)
-                    replaced = state.with(LeveledCauldronBlock.LEVEL, level - 1);
-
-                world.setBlockState(pos, replaced);
+                LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
                 return ActionResult.success(world.isClient);
             }
 
@@ -54,23 +48,24 @@ public class BLCauldronBehaviours {
             world.setBlockState(pos, BLBlocks.BLOOD_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, level));
             return ActionResult.success(world.isClient);
         }
-        if(stack.getItem() instanceof GlassBottleItem) {
+        return ActionResult.FAIL;
+    };
+
+    public static final CauldronBehavior FILL_GLASS_BOTTLE = (state, world, pos, player, hand, stack) -> {
+        if(stack.isOf(Items.GLASS_BOTTLE)) {
             ItemStack bloodBottle = BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), 2);
-            int level = state.get(LeveledCauldronBlock.LEVEL);
-            BlockState replaced = Blocks.CAULDRON.getDefaultState();
-            if(level - 1 > 0)
-                replaced = state.with(LeveledCauldronBlock.LEVEL, level - 1);
-            world.setBlockState(pos, replaced);
+            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
             player.setStackInHand(hand, bloodBottle);
             return ActionResult.success(world.isClient);
         }
         return ActionResult.FAIL;
     };
+
     public static void register() {
         CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.put(BLItems.BLOOD_BOTTLE, BLOOD_STORING_ITEM_FILL);
         CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.put(BLItems.BLOOD_BAG, BLOOD_STORING_ITEM_FILL);
         BLOOD_CAULDRON_BEHAVIOUR.put(BLItems.BLOOD_BOTTLE, BLOOD_STORING_ITEM_DRAIN_FILL);
         BLOOD_CAULDRON_BEHAVIOUR.put(BLItems.BLOOD_BAG, BLOOD_STORING_ITEM_DRAIN_FILL);
-        BLOOD_CAULDRON_BEHAVIOUR.put(Items.GLASS_BOTTLE, BLOOD_STORING_ITEM_DRAIN_FILL);
+        BLOOD_CAULDRON_BEHAVIOUR.put(Items.GLASS_BOTTLE, FILL_GLASS_BOTTLE);
     }
 }
