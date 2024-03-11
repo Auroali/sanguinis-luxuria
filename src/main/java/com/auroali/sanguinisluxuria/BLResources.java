@@ -58,6 +58,11 @@ public class BLResources {
     public static final Identifier BLESSED_BLOOD_ID = id("blessed_blood_bottle");
     public static final Identifier DAMAGE_REDUCTION_ID = id("damage_reduction");
     public static final Identifier ALTAR_BEATS_SOUND = id("altar_beats");
+    public static final Identifier BLOOD_STILL = id("blood");
+    public static final Identifier BLOOD_FLOWING = id("blood_flowing");
+    public static final Identifier BLOOD_STILL_TEXTURE = id("block/blood_still");
+    public static final Identifier BLOOD_FLOWING_TEXTURE = id("block/blood_flowing");
+    public static final Identifier BLOOD_CAULDRON_ID = id("blood_cauldron");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

@@ -1,11 +1,12 @@
 package com.auroali.sanguinisluxuria.datagen;
 
+import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Models;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LeveledCauldronBlock;
+import net.minecraft.data.client.*;
 
 public class BLModelProvider extends FabricModelProvider {
     public BLModelProvider(FabricDataGenerator dataGenerator) {
@@ -14,6 +15,40 @@ public class BLModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        blockStateModelGenerator.blockStateCollector
+                .accept(
+                        VariantsBlockStateSupplier.create(BLBlocks.BLOOD_CAULDRON)
+                                .coordinate(
+                                        BlockStateVariantMap.create(LeveledCauldronBlock.LEVEL)
+                                                .register(
+                                                        1,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.TEMPLATE_CAULDRON_LEVEL1
+                                                                                .upload(BLBlocks.BLOOD_CAULDRON, "_level1", TextureMap.cauldron(TextureMap.getSubId(BLBlocks.BLOOD, "_still")), blockStateModelGenerator.modelCollector)
+                                                                )
+                                                )
+                                                .register(
+                                                        2,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.TEMPLATE_CAULDRON_LEVEL2
+                                                                                .upload(BLBlocks.BLOOD_CAULDRON, "_level2", TextureMap.cauldron(TextureMap.getSubId(BLBlocks.BLOOD, "_still")), blockStateModelGenerator.modelCollector)
+                                                                )
+                                                )
+                                                .register(
+                                                        3,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.TEMPLATE_CAULDRON_FULL
+                                                                                .upload(BLBlocks.BLOOD_CAULDRON, "_full", TextureMap.cauldron(TextureMap.getSubId(BLBlocks.BLOOD, "_still")), blockStateModelGenerator.modelCollector)
+                                                                )
+                                                )
+                                )
+                );
     }
 
     @Override

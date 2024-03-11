@@ -217,4 +217,8 @@ public class BloodStorageItem extends Item {
         }
         return true;
     }
+
+    public Item getEmptyItem() {
+        return this.emptyItem;
+    }
 }
