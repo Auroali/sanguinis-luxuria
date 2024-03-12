@@ -106,6 +106,14 @@ public class AltarRecipe implements Recipe<AltarInventory> {
         return ticksToProcess;
     }
 
+    public int getMinLevel() {
+        return minLevel;
+    }
+
+    public int getMaxLevel() {
+        return maxLevel;
+    }
+
     public static class Serializer implements RecipeSerializer<AltarRecipe> {
 
         @Override

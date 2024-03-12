@@ -60,7 +60,7 @@ public class BLHud {
 
         RenderSystem.disableBlend();
 
-        DrawableHelper.drawTexture(stack, bloodBarX, bloodBarY, 14, 17, (int) (bloodPercent * 14), 3, 256, 256);
+        DrawableHelper.drawTexture(stack, bloodBarX + 1, bloodBarY, 15, 17, (int) (bloodPercent * 13), 3, 256, 256);
         DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - percent)), 0, 9 + (int) (9 * (1 - percent)), 26, (int) (9 * percent), 256, 256);
 
 //        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, width / 2 + 10, height / 2 - 6, 0xFF040000);
