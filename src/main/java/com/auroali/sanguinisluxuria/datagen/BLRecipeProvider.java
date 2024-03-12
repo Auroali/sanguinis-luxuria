@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
+import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
@@ -11,7 +12,9 @@ import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.ItemTags;
 import vazkii.patchouli.api.PatchouliAPI;
@@ -66,10 +69,9 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter);
         AltarRecipeJsonBuilder.create(BLItems.BLESSED_BLOOD)
                 .input(BLItems.TWISTED_BLOOD)
-                // minecraft doesn't support nbt in ingredients so i cant use blessed water ;-;
                 .input(Items.ENCHANTED_GOLDEN_APPLE)
                 .input(Items.SUNFLOWER)
-                .input(Items.HONEY_BOTTLE)
+                .input(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION))
                 .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))
                 .offerTo(exporter);
     }

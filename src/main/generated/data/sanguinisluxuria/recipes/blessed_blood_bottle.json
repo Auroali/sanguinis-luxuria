@@ -11,7 +11,14 @@
       "item": "minecraft:sunflower"
     },
     {
-      "item": "minecraft:honey_bottle"
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "fabric:type": "fabric:nbt",
+      "nbt": {
+        "Potion": "sanguinisluxuria:blessed_water"
+      },
+      "strict": false
     }
   ],
   "minLevel": 0,

@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.CriterionMerger;
@@ -48,6 +49,12 @@ public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     }
 
     public AltarRecipeJsonBuilder input(ItemStack item) {
+        return input(item, true);
+    }
+
+    public AltarRecipeJsonBuilder input(ItemStack item, boolean nbtIngredient) {
+        if(nbtIngredient && item.getNbt() != null)
+            return input(DefaultCustomIngredients.nbt(item, false));
         return input(Ingredient.ofStacks(item));
     }
 
