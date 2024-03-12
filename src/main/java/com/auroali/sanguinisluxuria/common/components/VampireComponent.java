@@ -98,7 +98,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
             ItemStack stack = entity.getMainHandStack();
             int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
             if(level > 0)
-                return amount * (level * (BLConfig.INSTANCE.vampireDamageMultiplier / Enchantments.SMITE.getMaxLevel()));
+                return amount + (level * (BLConfig.INSTANCE.vampireDamageMultiplier / Enchantments.SMITE.getMaxLevel()));
         }
 
         if(isEffectiveAgainstVampires(source))
