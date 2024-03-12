@@ -44,14 +44,7 @@ public class BloodStorageItem extends Item {
         if(entity == null)
             return false;
 
-        ItemStack stack = ItemStack.EMPTY;
-        if(entity.getOffHandStack().getItem() instanceof BloodStorageItem || entity.getOffHandStack().isOf(Items.GLASS_BOTTLE)) {
-            stack = entity.getOffHandStack();
-        }
-        if(entity.getMainHandStack().getItem() instanceof BloodStorageItem || entity.getMainHandStack().isOf(Items.GLASS_BOTTLE)) {
-            stack = entity.getMainHandStack();
-        }
-        return !stack.isEmpty();
+        return !getBloodStorageItemInHand(entity, Hand.OFF_HAND).isEmpty() || !getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty();
     }
 
     @Override
@@ -179,42 +172,42 @@ public class BloodStorageItem extends Item {
         return BLSounds.DRAIN_BLOOD;
     }
 
+    private static ItemStack getBloodStorageItemInHand(LivingEntity entity, Hand hand) {
+        ItemStack stack = entity.getStackInHand(hand);
+        if(stack.isOf(Items.GLASS_BOTTLE))
+            return new ItemStack(BLItems.BLOOD_BOTTLE);
+        return stack.getItem() instanceof BloodStorageItem ? stack : ItemStack.EMPTY;
+    }
+
     public static boolean tryAddBloodToItemInHand(LivingEntity entity, int amount) {
-        ItemStack stack = ItemStack.EMPTY;
-        Hand hand = Hand.MAIN_HAND;
-        BloodStorageItem storage = null;
-        if(entity.getOffHandStack().getItem() instanceof BloodStorageItem item) {
-            stack = entity.getOffHandStack();
-            storage = item;
-            hand = Hand.OFF_HAND;
-        } else if(entity.getOffHandStack().isOf(Items.GLASS_BOTTLE)) {
-            hand = Hand.OFF_HAND;
-            stack = new ItemStack(BLItems.BLOOD_BOTTLE);
-            storage = BLItems.BLOOD_BAG;
-        }
-        if(entity.getMainHandStack().getItem() instanceof BloodStorageItem item) {
-            stack = entity.getMainHandStack();
-            storage = item;
+        ItemStack stack = getBloodStorageItemInHand(entity, Hand.OFF_HAND);
+        Hand hand = Hand.OFF_HAND;
+        if(!getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty()) {
+            stack = getBloodStorageItemInHand(entity, Hand.MAIN_HAND);
             hand = Hand.MAIN_HAND;
-        } else if(entity.getMainHandStack().isOf(Items.GLASS_BOTTLE)) {
-            hand = Hand.MAIN_HAND;
-            stack = new ItemStack(BLItems.BLOOD_BOTTLE);
-            storage = BLItems.BLOOD_BAG;
         }
 
-        if(stack.isEmpty() || getStoredBlood(stack) + amount > storage.getMaxBlood())
-            return false;
-
-        if(entity instanceof PlayerEntity player && player.getItemCooldownManager().isCoolingDown(stack.getItem()))
+        if(stack.isEmpty() || getStoredBlood(stack) + amount > getMaxBlood(stack))
             return false;
 
         setStoredBlood(stack, getStoredBlood(stack) + amount);
 
-        entity.setStackInHand(hand, stack);
+        Item originalHeldItem = entity.getStackInHand(hand).getItem();
 
-        if(entity instanceof PlayerEntity player) {
-            player.getItemCooldownManager().set(storage, 5);
+        if(stack != entity.getStackInHand(hand))
+            entity.getStackInHand(hand).decrement(1);
+
+        if(stack == entity.getStackInHand(hand) || entity.getStackInHand(hand).isEmpty())
+            entity.setStackInHand(hand, stack);
+        else if(!(entity instanceof PlayerEntity e && e.getInventory().insertStack(stack))) {
+            if (entity instanceof PlayerEntity player)
+                player.dropItem(stack, false);
+            else entity.dropStack(stack);
         }
+
+        if(entity instanceof PlayerEntity player)
+            player.getItemCooldownManager().set(originalHeldItem, 10);
+
         return true;
     }
 
