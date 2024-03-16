@@ -1,4 +1,4 @@
-// 1.19.2	2024-03-16T15:27:11.437147665	Recipes
+// 1.19.2	2024-03-16T15:45:34.112107951	Recipes
 86ef44621ce8e13c942b240bbd213979cc677b6c data/sanguinisluxuria/recipes/blood_bag.json
 94070ea026d0bb19a9a6e59cb7bcedd3f484016d data/sanguinisluxuria/recipes/altar.json
 459c0b744832d5d489bc113d04e0b4e7ed483f83 data/sanguinisluxuria/advancements/recipes/sanguinisluxuria.sanguinisluxuria/altar.json
@@ -12,6 +12,6 @@ d33f600ec1b1c861f19fa761cbce53f5731367c7 data/sanguinisluxuria/advancements/reci
 02268aa2a1a1b5fcc864a9b96c63c759705c684d data/sanguinisluxuria/advancements/recipes/sanguinisluxuria.sanguinisluxuria/mask_3.json
 71bad0ed5d27e828564994d80100f9828a3c38ee data/sanguinisluxuria/recipes/twisted_blood_bottle.json
 412ae1d17545fa281e4cf15616bd700341ffb63f data/sanguinisluxuria/recipes/pedestal.json
-a685b8b420b4a71e403d1943f86b425c77d4cb1e data/sanguinisluxuria/recipes/blessed_blood_bottle.json
+2328daf2525597e62735403d2519b17fbf9e13f7 data/sanguinisluxuria/recipes/blessed_blood_bottle.json
 b9dcf132467bbc4ee965f6445c84181ca7451826 data/sanguinisluxuria/recipes/mask_1.json
 d1548dc726017569acf0a310104f7d38eb53dc7f data/sanguinisluxuria/advancements/recipes/sanguinisluxuria.sanguinisluxuria/twisted_blood_bottle.json

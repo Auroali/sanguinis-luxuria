@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
@@ -30,7 +29,6 @@ import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.village.VillagerProfession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,13 +62,13 @@ public class Bloodlust implements ModInitializer {
 
 		registerNetworkHandlers();
 
-		UseItemCallback.EVENT.register((player, world, hand) -> {
-			ItemStack stack = player.getStackInHand(hand);
-			if(VampireHelper.isVampire(player) && stack.isFood() && ! stack.isIn(BLTags.Items.VAMPIRE_EDIBLE))
-				return TypedActionResult.fail(stack);
-
-			return TypedActionResult.pass(stack);
-		});
+//		UseItemCallback.EVENT.register((player, world, hand) -> {
+//			ItemStack stack = player.getStackInHand(hand);
+//			if(VampireHelper.isVampire(player) && stack.isFood() && ! stack.isIn(BLTags.Items.VAMPIRE_EDIBLE))
+//				return TypedActionResult.fail(stack);
+//
+//			return TypedActionResult.pass(stack);
+//		});
 
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
 			if(VampireHelper.isVampire(newPlayer)) {

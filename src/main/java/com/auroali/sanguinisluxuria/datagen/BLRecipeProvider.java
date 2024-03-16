@@ -66,7 +66,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter);
         AltarRecipeJsonBuilder.create(BLItems.BLESSED_BLOOD)
                 .input(BLItems.TWISTED_BLOOD)
-                .input(Items.ENCHANTED_GOLDEN_APPLE)
+                .input(Items.GOLDEN_APPLE)
                 .input(Items.SUNFLOWER)
                 .input(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION))
                 .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))

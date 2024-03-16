@@ -12,7 +12,7 @@ public class AppleskinCompat implements AppleSkinApi {
         HUDOverlayEvent.Saturation.EVENT.register(this::cancelEventIfVampire);
         HUDOverlayEvent.HungerRestored.EVENT.register(this::cancelEventIfVampire);
         HUDOverlayEvent.HealthRestored.EVENT.register(event -> {
-            if(!event.itemStack.isIn(BLTags.Items.VAMPIRE_EDIBLE))
+            if(!event.itemStack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM))
                 cancelEventIfVampire(event);
         });
 
