@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 
 public class BLBlocks {
@@ -17,6 +18,7 @@ public class BLBlocks {
                     .breakInstantly()
                     .noCollision()
                     .ticksRandomly()
+                    .sounds(BlockSoundGroup.HONEY)
     );
 
     //public static final FluidBlock BLOOD = new FluidBlock(BLFluids.BLOOD_STILL, FabricBlockSettings.of(Material.LAVA));
