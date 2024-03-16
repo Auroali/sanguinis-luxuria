@@ -32,7 +32,8 @@ public class BloodStorageItem extends Item {
 
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        super.appendStacks(group, stacks);
+        if(this.emptyItem == null)
+            super.appendStacks(group, stacks);
         if(isIn(group)) {
             ItemStack stack = new ItemStack(this);
             setStoredBlood(stack, getMaxBlood());
