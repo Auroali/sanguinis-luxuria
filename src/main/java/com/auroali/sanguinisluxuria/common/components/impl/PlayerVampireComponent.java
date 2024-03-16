@@ -386,6 +386,9 @@ public class PlayerVampireComponent implements VampireComponent {
         getAbilties().addAbility(ability);
         skillPoints -= ability.getRequiredSkillPoints();
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+        if(holder instanceof ServerPlayerEntity entity) {
+            BLAdvancementCriterion.UNLOCK_ABILITY.trigger(entity, ability);
+        }
     }
 
     @Override

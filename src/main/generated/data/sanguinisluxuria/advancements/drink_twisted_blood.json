@@ -1,7 +1,7 @@
 {
   "parent": "sanguinisluxuria:become_vampire",
   "criteria": {
-    "convert": {
+    "drink_twisted_blood": {
       "conditions": {
         "item": {
           "items": [
@@ -29,7 +29,7 @@
   },
   "requirements": [
     [
-      "convert"
+      "drink_twisted_blood"
     ]
   ]
 }

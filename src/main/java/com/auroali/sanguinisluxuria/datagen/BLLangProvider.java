@@ -125,6 +125,12 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLAdvancementsProvider.desc("become_vampire"), "Transform into a vampire after drinking enough blood");
         translationBuilder.add(BLAdvancementsProvider.title("drink_twisted_blood"), "Consumption");
         translationBuilder.add(BLAdvancementsProvider.desc("drink_twisted_blood"), "Drink twisted blood");
+        translationBuilder.add(BLAdvancementsProvider.title("blood_sickness"), "Feeling Ill");
+        translationBuilder.add(BLAdvancementsProvider.desc("blood_sickness"), "Get blood sickness from drinking blood");
+        translationBuilder.add(BLAdvancementsProvider.title("unlock_ability"), "Abilities");
+        translationBuilder.add(BLAdvancementsProvider.desc("unlock_ability"), "Allocate a skill point to an ability");
+        translationBuilder.add(BLAdvancementsProvider.title("reset_abilities"), "Clean Slate");
+        translationBuilder.add(BLAdvancementsProvider.desc("reset_abilities"), "Convert unlocked abilities back into skill points using blessed blood");
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {

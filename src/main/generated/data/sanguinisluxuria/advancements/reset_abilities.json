@@ -1,0 +1,29 @@
+{
+  "parent": "sanguinisluxuria:unlock_ability",
+  "criteria": {
+    "reset_abilities": {
+      "conditions": {},
+      "trigger": "sanguinisluxuria:reset_abilities"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.reset_abilities.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "sanguinisluxuria:blessed_blood_bottle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.reset_abilities.title"
+    }
+  },
+  "requirements": [
+    [
+      "reset_abilities"
+    ]
+  ]
+}

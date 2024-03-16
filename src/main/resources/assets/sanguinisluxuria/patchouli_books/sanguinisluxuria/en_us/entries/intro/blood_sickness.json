@@ -1,0 +1,12 @@
+{
+  "name": "Blood Sickness",
+  "icon": "minecraft:rotten_flesh",
+  "category": "sanguinisluxuria:intro",
+  "advancement": "sanguinisluxuria:blood_sickness",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Blood sickness is the direct result of drinking blood. The more blood you drink, the more sick you get. It seems that at a high enough level it starts poisoning you, perhaps if you let the effect run out something interesting would happen?"
+    }
+  ]
+}

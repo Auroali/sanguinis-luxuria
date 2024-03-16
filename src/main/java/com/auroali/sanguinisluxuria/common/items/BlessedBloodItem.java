@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.config.BLConfig;
@@ -45,7 +46,10 @@ public class BlessedBloodItem extends Item {
             for(VampireAbility ability : vampire.getAbilties()) {
                 ability.onAbilityRemoved(user, vampire);
                 vampire.getAbilties().removeAbility(ability);
+                if(user instanceof ServerPlayerEntity player)
+                    BLAdvancementCriterion.RESET_ABILITIES.trigger(player);
             }
+
             vampire.setSkillPoints(vampire.getLevel() * BLConfig.INSTANCE.skillPointsPerLevel);
         }
 

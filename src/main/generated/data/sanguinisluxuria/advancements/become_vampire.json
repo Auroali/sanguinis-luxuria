@@ -11,11 +11,11 @@
     "description": {
       "translate": "advancements.sanguinisluxuria.become_vampire.description"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "hidden": false,
     "icon": {
       "item": "sanguinisluxuria:blood_bottle",
-      "nbt": "{StoredBlood:2}"
+      "nbt": "{StoredBlood:1}"
     },
     "show_toast": true,
     "title": {

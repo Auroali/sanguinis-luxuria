@@ -1,0 +1,33 @@
+{
+  "parent": "sanguinisluxuria:become_vampire",
+  "criteria": {
+    "get_blood_sickness": {
+      "conditions": {
+        "effects": {
+          "sanguinisluxuria:blood_sickness": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.blood_sickness.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.blood_sickness.title"
+    }
+  },
+  "requirements": [
+    [
+      "get_blood_sickness"
+    ]
+  ]
+}

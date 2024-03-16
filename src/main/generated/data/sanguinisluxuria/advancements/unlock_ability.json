@@ -1,0 +1,29 @@
+{
+  "parent": "sanguinisluxuria:drink_twisted_blood",
+  "criteria": {
+    "unlock_ability": {
+      "conditions": {},
+      "trigger": "sanguinisluxuria:unlock_ability"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.unlock_ability.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "sanguinisluxuria:altar"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.unlock_ability.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlock_ability"
+    ]
+  ]
+}

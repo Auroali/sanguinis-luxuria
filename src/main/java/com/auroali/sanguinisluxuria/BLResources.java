@@ -45,7 +45,6 @@ public class BLResources {
     public static final Identifier TELEPORT_RANGE_TAG_ID = id("teleport_range_increase");
     public static final Identifier VAMPIRE_STRENGTH_2_ID = id("vampire_strength_2");
     public static final Identifier BECOME_VAMPIRE_CRITERION_ID = id("become_vampire");
-    // todo: give this a better name
     public static final Identifier SKILL_UPGRADER_ID = id("altar");
     public static final Identifier MORE_BLOOD_ID = id("more_blood");
     public static final Identifier ALTAR_RECIPE_ID = id("altar_recipe");
@@ -63,7 +62,8 @@ public class BLResources {
     public static final Identifier BLOOD_STILL_TEXTURE = id("block/blood_still");
     public static final Identifier BLOOD_FLOWING_TEXTURE = id("block/blood_flowing");
     public static final Identifier BLOOD_CAULDRON_ID = id("blood_cauldron");
-    public static final Identifier PATCHOULI_BOOK = id("sanguinisluxuria");
+    public static final Identifier UNLOCK_VAMPIRE_ABILITY_ID = id("unlock_ability");
+    public static final Identifier RESET_ABILITIES_ID = id("reset_abilities");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
