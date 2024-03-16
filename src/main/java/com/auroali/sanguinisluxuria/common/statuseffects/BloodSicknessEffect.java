@@ -27,15 +27,16 @@ public class BloodSicknessEffect extends StatusEffect {
         super.applyUpdateEffect(entity, amplifier);
         int duration = entity.getStatusEffect(this).getDuration();
 
-        if(amplifier > 2 && entity.getRandom().nextInt(15) == 0)
+        if(amplifier > 2 && entity.getRandom().nextInt(200) == 0)
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100));
 
-        if(amplifier >= 4 && duration < 1000 && entity.getRandom().nextInt(25) == 0)
+        if(amplifier >= 4 && duration < 1000 && entity.getRandom().nextInt(325) == 0)
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
 
         if(duration == 1 && isRightConditions(entity, amplifier) && VampireHelper.canBeConvertedToVampire(entity)) {
             if(entity instanceof ServerPlayerEntity p)
                 BLAdvancementCriterion.BECOME_VAMPIRE.trigger(p);
+            entity.clearStatusEffects();
             BLEntityComponents.VAMPIRE_COMPONENT.get(entity).setIsVampire(true);
         }
     }
