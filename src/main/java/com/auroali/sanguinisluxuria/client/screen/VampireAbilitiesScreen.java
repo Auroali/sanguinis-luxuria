@@ -76,6 +76,10 @@ public class VampireAbilitiesScreen extends Screen {
         ArrayList<Text> text = new ArrayList<>();
         text.add(Text.translatable(widget.ability.getTranslationKey()));
 
+        if(!container.hasAbility(widget.ability))
+            text.add(Text.translatable("gui.sanguinisluxuria.abilities.required_skill_points", widget.ability.getRequiredSkillPoints())
+                    .formatted(Formatting.GRAY));
+
         List<VampireAbility> incompatibilities = widget.ability.getIncompatibilities();
         if(!incompatibilities.isEmpty()) {
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.incompatibilites"));

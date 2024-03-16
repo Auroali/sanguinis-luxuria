@@ -74,6 +74,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("gui.sanguinisluxuria.abilities.incompatibilites", "Incompatible With:");
         translationBuilder.add("gui.sanguinisluxuria.abilities.incompatibilites_entry", "  - %s");
 
+        translationBuilder.add("gui.sanguinisluxuria.abilities.required_skill_points", "Requires %d skill point(s)");
+
         translationBuilder.add(BLItems.TWISTED_BLOOD, "Twisted Blood Bottle");
         translationBuilder.add(BLItems.BLESSED_BLOOD, "Blessed Blood Bottle");
         translationBuilder.add(BLBlocks.PEDESTAL, "Pedestal");

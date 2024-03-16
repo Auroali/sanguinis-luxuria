@@ -32,6 +32,7 @@
   "gui.sanguinisluxuria.abilities.bound": "Bound to [%s]",
   "gui.sanguinisluxuria.abilities.incompatibilites": "Incompatible With:",
   "gui.sanguinisluxuria.abilities.incompatibilites_entry": "  - %s",
+  "gui.sanguinisluxuria.abilities.required_skill_points": "Requires %d skill point(s)",
   "gui.sanguinisluxuria.skill_points": "Skill Points: %d",
   "item.minecraft.lingering_potion.effect.blessed_water": "Lingering Potion of Blessed Water",
   "item.minecraft.potion.effect.blessed_water": "Potion of Blessed Water",
