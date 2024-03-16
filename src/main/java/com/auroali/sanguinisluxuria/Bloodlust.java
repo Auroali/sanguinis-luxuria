@@ -52,6 +52,19 @@ public class Bloodlust implements ModInitializer {
 		BLRegistry.init();
 		BLConfig.INSTANCE.load();
 
+		BLCauldronBehaviours.register();
+		BLFluids.register();
+		BLBlocks.register();
+		BLBlockEntities.register();
+		BLRecipeSerializers.register();
+		BLRecipeTypes.register();
+		BLItems.register();
+		BLSounds.register();
+		BLStatusEffects.register();
+		BLVampireAbilities.register();
+		BLAdvancementCriterion.register();
+		BLEnchantments.register();
+
 		ArgumentTypeRegistry.registerArgumentType(
 				BLResources.VAMPIRE_ABILITY_ARGUMENT_ID,
 				VampireAbilityArgument.class,
@@ -101,6 +114,8 @@ public class Bloodlust implements ModInitializer {
 			return ActionResult.PASS;
 		});
 
+		TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 5, BLTradeOffers::registerClericTrades);
+
 		ItemStorage.SIDED.registerForBlockEntities((blockEntity, context) -> {
 			if(blockEntity instanceof PedestalBlockEntity e)
 				return InventoryStorage.of(e.getInventory(), null);
@@ -108,21 +123,6 @@ public class Bloodlust implements ModInitializer {
 		}, BLBlockEntities.PEDESTAL);
 
 		CauldronFluidContent.registerCauldron(BLBlocks.BLOOD_CAULDRON, BLFluids.BLOOD_STILL, FluidConstants.BOTTLE, LeveledCauldronBlock.LEVEL);
-
-		TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 5, BLTradeOffers::registerClericTrades);
-
-		BLCauldronBehaviours.register();
-		BLFluids.register();
-		BLBlocks.register();
-		BLBlockEntities.register();
-		BLRecipeSerializers.register();
-		BLRecipeTypes.register();
-		BLItems.register();
-		BLSounds.register();
-		BLStatusEffects.register();
-		BLVampireAbilities.register();
-		BLAdvancementCriterion.register();
-		BLEnchantments.register();
 	}
 
 	public static void registerNetworkHandlers() {
