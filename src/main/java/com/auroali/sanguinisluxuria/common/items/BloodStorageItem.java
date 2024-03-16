@@ -105,10 +105,10 @@ public class BloodStorageItem extends Item {
      * The model predicate to use with ModelPredicateProviderRegistry
      * @see net.minecraft.client.item.ModelPredicateProviderRegistry
      */
-    public float modelPredicate(ItemStack stack, ClientWorld world, LivingEntity entity, int seed) {
+    @SuppressWarnings("unused")
+    public static float modelPredicate(ItemStack stack, ClientWorld world, LivingEntity entity, int seed) {
         int storedBlood = getStoredBlood(stack);
-        if(storedBlood == 0)
-            return -1;
+        int maxBlood = getMaxBlood(stack);
         return storedBlood / (float) maxBlood;
     }
 
@@ -179,6 +179,12 @@ public class BloodStorageItem extends Item {
         return stack.getItem() instanceof BloodStorageItem ? stack : ItemStack.EMPTY;
     }
 
+    /**
+     * Tries to fill a valid blood-storing item in an entity's hand
+     * @param entity the entity holding the item
+     * @param amount the amount of blood to add
+     * @return if the entity was both holding a valid item and the item could successfully be filled by amount
+     */
     public static boolean tryAddBloodToItemInHand(LivingEntity entity, int amount) {
         ItemStack stack = getBloodStorageItemInHand(entity, Hand.OFF_HAND);
         Hand hand = Hand.OFF_HAND;
@@ -211,6 +217,9 @@ public class BloodStorageItem extends Item {
         return true;
     }
 
+    /**
+     * @return the item to replace this one with when emptied
+     */
     public Item getEmptyItem() {
         return this.emptyItem;
     }
