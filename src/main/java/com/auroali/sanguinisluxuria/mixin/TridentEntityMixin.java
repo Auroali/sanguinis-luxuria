@@ -80,7 +80,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             setPosition(sanguinisluxuria$latchedEntity.getPos().add(0, sanguinisluxuria$latchedEntity.getEyeHeight(sanguinisluxuria$latchedEntity.getPose()) * 0.75, 0));
             setVelocity(Vec3d.ZERO);
 
-            if(sanguinisluxuria$latchedTicks % 20 == 0 && !world.isClient && blood.drainBlood()) {
+            if(sanguinisluxuria$latchedTicks % 40 == 0 && !world.isClient && blood.drainBlood()) {
                 if(!(owner instanceof LivingEntity entity && BloodStorageItem.tryAddBloodToItemInHand(entity, 1)) && vampire.isVampire()) {
                     ownerBlood.addBlood(1);
                 }
