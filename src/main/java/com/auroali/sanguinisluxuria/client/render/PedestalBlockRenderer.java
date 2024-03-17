@@ -40,6 +40,9 @@ public class PedestalBlockRenderer implements BlockEntityRenderer<PedestalBlockE
 
     @Override
     public void render(PedestalBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        if(entity.getItem().isEmpty())
+            return;
+
         matrices.push();
         random.setSeed(entity.getItem().isEmpty() ? 187 : Item.getRawId(entity.getItem().getItem()) + entity.getItem().getDamage());
         matrices.translate(0.5, 0.8, 0.5);
