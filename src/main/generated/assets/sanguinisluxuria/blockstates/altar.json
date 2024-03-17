@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "sanguinisluxuria:block/altar"
+    },
+    "active=true": {
+      "model": "sanguinisluxuria:block/altar_active"
+    }
+  }
+}

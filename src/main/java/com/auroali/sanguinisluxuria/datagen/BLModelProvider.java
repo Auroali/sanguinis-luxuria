@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -49,6 +50,28 @@ public class BLModelProvider extends FabricModelProvider {
                                                 )
                                 )
                 );
+        blockStateModelGenerator.blockStateCollector
+                .accept(BlockStateModelGenerator.createSingletonBlockState(
+                        BLBlocks.BLOOD_SPLATTER,
+                        BLModels.REDSTONE_DUST_DOT.upload(
+                                BLBlocks.BLOOD_SPLATTER,
+                                new TextureMap()
+                                        .put(TextureKey.PARTICLE, BLResources.id("block/blood_splatter"))
+                                        .put(BLTextureKeys.LINE, BLResources.id("block/blood_splatter"))
+                                        .put(BLTextureKeys.OVERLAY, BLResources.id("block/blood_splatter")),
+                                blockStateModelGenerator.modelCollector)
+                        ));
+        blockStateModelGenerator.blockStateCollector
+                .accept(VariantsBlockStateSupplier.create(BLBlocks.SKILL_UPGRADER)
+                        .coordinate(BlockStateVariantMap.create(SkillUpgraderBlock.ACTIVE)
+                                .register(false, BlockStateVariant.create()
+                                        .put(VariantSettings.MODEL, BLResources.id("block/altar")))
+                                .register(true, BlockStateVariant.create()
+                                        .put(VariantSettings.MODEL, BLResources.id("block/altar_active")))
+                        )
+                );
+        blockStateModelGenerator.blockStateCollector
+                .accept(BlockStateModelGenerator.createSingletonBlockState(BLBlocks.PEDESTAL, BLResources.id("block/pedestal")));
     }
 
     @Override
