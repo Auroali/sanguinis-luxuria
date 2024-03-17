@@ -8,6 +8,8 @@ import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
+import it.unimi.dsi.fastutil.ints.IntComparator;
+import it.unimi.dsi.fastutil.ints.IntComparators;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
@@ -19,11 +21,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class VampireAbilityWidget extends DrawableHelper {
+public class VampireAbilityWidget extends DrawableHelper implements Comparable<VampireAbilityWidget> {
     public static final int WIDTH = 19;
     public static final int HEIGHT = 19;
 
@@ -95,6 +99,7 @@ public class VampireAbilityWidget extends DrawableHelper {
                         getX() + offsetX + 1,
                         getY() + offsetY + 1
                 );
+        RenderSystem.disableDepthTest();
     }
 
     public void drawLines(MatrixStack stack, VampireAbilityContainer container, int offsetX, int offsetY) {
@@ -112,7 +117,7 @@ public class VampireAbilityWidget extends DrawableHelper {
 
         fill(stack, offsetX + childrenMinX + WIDTH / 2 - 1, y + yOff - 1, offsetX + childrenMaxX + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
         fill(stack, offsetX + x + WIDTH / 2 - 1, offsetY + y + 16, offsetX + x + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
-        for(VampireAbilityWidget w : children) {
+        children.stream().sorted().forEach(w -> {
             int colour = -1;
             if(VampireHelper.hasIncompatibleAbility(MinecraftClient.getInstance().player, w.ability) || !container.hasAbility(ability)) {
                 colour = 0xFF6C0000;
@@ -125,7 +130,7 @@ public class VampireAbilityWidget extends DrawableHelper {
             drawVerticalLine(stack, offsetX + w.getX() + WIDTH / 2, offsetY + w.getY() - childYOff, offsetY + w.getY(), colour);
             drawVerticalLine(stack, offsetX + x + WIDTH / 2, offsetY + y, y + yOff, colour);
             drawHorizontalLine(stack,offsetX + w.getX() + WIDTH / 2, offsetX + x + WIDTH / 2, y + yOff, colour);
-        }
+        });
     }
 
     public void calculateLineMinMaxX() {
@@ -221,5 +226,16 @@ public class VampireAbilityWidget extends DrawableHelper {
         buf.writeBoolean(false);
         ClientPlayNetworking.send(BLResources.SKILL_TREE_CHANNEL, buf);
         return true;
+    }
+
+    @Override
+    public int compareTo(@NotNull VampireAbilityWidget ability) {
+        if(parent != null) {
+            int xDiff = x - parent.x;
+            int xDiff2 = ability.x - parent.x;
+
+            return IntComparators.OPPOSITE_COMPARATOR.compare(Math.abs(xDiff), Math.abs(xDiff2));
+        }
+        return Integer.compare(x, ability.x);
     }
 }
