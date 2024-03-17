@@ -33,7 +33,7 @@ public class TwistedBloodItem extends Item {
 
         if (!world.isClient && VampireHelper.isVampire(user)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
-            if(vampire.getLevel() >= getMinLevel() && vampire.getLevel() <= getMaxLevel())
+            if(vampire.getLevel() >= getMinLevel() && vampire.getLevel() < getMaxLevel())
                 vampire.setLevel(vampire.getLevel() + 1);
         }
         else if(!world.isClient) BloodStorageItem.applyNonVampireEffects(user);

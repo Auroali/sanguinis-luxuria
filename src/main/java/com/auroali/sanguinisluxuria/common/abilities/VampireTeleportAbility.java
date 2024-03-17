@@ -55,7 +55,7 @@ public class VampireTeleportAbility extends VampireAbility{
     }
 
     public double getRange(VampireAbilityContainer container) {
-        double range = 6;
+        double range = 8;
         for(VampireAbility ability : container) {
             if(ability.isIn(BLTags.VampireAbilities.TELEPORT_RANGE))
                 range += 4;
@@ -63,7 +63,7 @@ public class VampireTeleportAbility extends VampireAbility{
         return range;
     }
     public int getCooldown(VampireAbilityContainer container) {
-        int cooldown = 300;
+        int cooldown = 250;
         if(container.hasAbility(BLVampireAbilities.TELEPORT_COOLDOWN_1))
             cooldown -= 75;
         if(container.hasAbility(BLVampireAbilities.TELEPORT_COOLDOWN_2))
