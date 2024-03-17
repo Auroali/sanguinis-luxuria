@@ -31,9 +31,11 @@ public class VampireAbilityWidget extends DrawableHelper {
     VampireAbilityWidget parent;
     ItemStack icon;
     List<VampireAbilityWidget> children;
-    private boolean hidden = false;
+    private boolean hidden;
     private int x;
     private int y;
+    int childrenMinX = Integer.MIN_VALUE;
+    int childrenMaxX = Integer.MIN_VALUE;
 
     public VampireAbilityWidget(VampireAbility ability, VampireAbilityWidget parent) {
         this.ability = ability;
@@ -96,42 +98,48 @@ public class VampireAbilityWidget extends DrawableHelper {
     }
 
     public void drawLines(MatrixStack stack, VampireAbilityContainer container, int offsetX, int offsetY) {
-        if(parent == null)
+        if(children.isEmpty())
             return;
 
-        int colour = -1;
-        int blackColour = 0xFF000000;
-        if(VampireHelper.hasIncompatibleAbility(MinecraftClient.getInstance().player, ability) || !container.hasAbility(parent.ability)) {
-            colour = 0xFF6C0000;
-            blackColour = 0xFF0C0000;
+        if(childrenMinX == Integer.MIN_VALUE && childrenMaxX == Integer.MIN_VALUE)
+            calculateLineMinMaxX();
+
+//        int colour = -1;
+//        int blackColour = 0xFF000000;
+//
+
+        int yOff = offsetY + (children.get(0).getY() - y + 16) / 2;
+
+        fill(stack, offsetX + childrenMinX + WIDTH / 2 - 1, y + yOff - 1, offsetX + childrenMaxX + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
+        fill(stack, offsetX + x + WIDTH / 2 - 1, offsetY + y + 16, offsetX + x + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
+        for(VampireAbilityWidget w : children) {
+            int colour = -1;
+            if(VampireHelper.hasIncompatibleAbility(MinecraftClient.getInstance().player, w.ability) || !container.hasAbility(ability)) {
+                colour = 0xFF6C0000;
+            }
+            else if(container.hasAbility(w.ability)) {
+                colour = 0xFFFF6E11;
+            }
+            int childYOff = (w.getY() - y) / 4;
+            fill(stack, offsetX + w.getX() + WIDTH / 2 - 1, offsetY + w.getY() - childYOff + 2, offsetX + w.getX() + WIDTH / 2 + 2, offsetY + w.getY(), 0xFF000000);
+            drawVerticalLine(stack, offsetX + w.getX() + WIDTH / 2, offsetY + w.getY() - childYOff, offsetY + w.getY(), colour);
+            drawVerticalLine(stack, offsetX + x + WIDTH / 2, offsetY + y, y + yOff, colour);
+            drawHorizontalLine(stack,offsetX + w.getX() + WIDTH / 2, offsetX + x + WIDTH / 2, y + yOff, colour);
         }
-        else if(container.hasAbility(ability)) {
-            colour = 0xFFFF6E11;
-            blackColour = 0xFF260005;
-        }
+    }
 
-        int lineOffset = WIDTH / 2;
-        int yAmount = (getY() - (parent.getY() + HEIGHT)) / 2;
-        drawVerticalLine(stack, getX() + lineOffset + offsetX, getY() + offsetY, getY() + offsetY - yAmount - 1, colour);
-
-        drawVerticalLine(stack, getX() + 1 + lineOffset + offsetX, getY() + offsetY, getY() + offsetY - yAmount - 1, blackColour);
-        drawVerticalLine(stack, getX() - 1 + lineOffset + offsetX, getY() + offsetY, getY() + offsetY - yAmount - 1, blackColour);
-
-
-        drawVerticalLine(stack, parent.getX() + lineOffset + offsetX, parent.getY() + HEIGHT - 1 + offsetY, parent.getY() + HEIGHT + 1 + offsetY + yAmount, colour);
-
-        drawVerticalLine(stack, parent.getX() + 1 + lineOffset + offsetX, parent.getY() + HEIGHT - 1 + offsetY, parent.getY() + HEIGHT + 1 + offsetY + yAmount, blackColour);
-        drawVerticalLine(stack, parent.getX() - 1 + lineOffset + offsetX, parent.getY() + HEIGHT - 1 + offsetY, parent.getY() + HEIGHT + 1 + offsetY + yAmount, blackColour);
-
-        if(parent.getX() == getX())
+    public void calculateLineMinMaxX() {
+        if(children.isEmpty())
             return;
 
-        int horizLineOffset = parent.getX() < getX() ? 1 : 0;
-        drawHorizontalLine(stack, getX() + offsetX + lineOffset, parent.getX() + offsetX + lineOffset, getY() + offsetY - yAmount, colour);
-        //drawHorizontalLine(stack, getX() + offsetX + lineOffset + horizLineOffset, parent.getX() + offsetX + lineOffset, getY() + offsetY - yAmount + 1, colour);
-
-        drawHorizontalLine(stack, getX() + 2 * (getX() > parent.getX() ? -1 : 1) + offsetX + lineOffset, parent.getX() + offsetX + lineOffset, getY() + offsetY - yAmount + 1, blackColour);
-        drawHorizontalLine(stack, getX() + offsetX + lineOffset - (getX() > parent.getX() ? -1 : 1), parent.getX() + offsetX + lineOffset - 2 * (getX() > parent.getX() ? -1 : 1), getY() + offsetY - yAmount - 1, blackColour);
+        childrenMinX = getX();
+        childrenMaxX = getX();
+        for(VampireAbilityWidget w : children) {
+            if(childrenMinX > w.getX())
+                childrenMinX = w.getX();
+            if(childrenMaxX < w.getX())
+                childrenMaxX = w.getX();
+        }
     }
 
     public boolean isMouseOver(int mouseX, int mouseY, int offsetX, int offsetY) {
