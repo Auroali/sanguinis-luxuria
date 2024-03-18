@@ -1,5 +1,5 @@
 {
-  "name": "Increased Health",
+  "name": "Increased Strength",
   "icon": "minecraft:potion{Potion:\"minecraft:strength\"}",
   "category": "sanguinisluxuria:abilities",
   "advancement": "sanguinisluxuria:drink_twisted_blood",
