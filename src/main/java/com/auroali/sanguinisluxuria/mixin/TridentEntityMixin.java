@@ -30,6 +30,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Optional;
+import java.util.OptionalInt;
+
 @Mixin(TridentEntity.class)
 public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     @Shadow private ItemStack tridentStack;
@@ -38,6 +41,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
 
     @Unique
     private static final TrackedData<Byte> sanguinisluxuria$BLOOD_DRAIN = DataTracker.registerData(TridentEntity.class, TrackedDataHandlerRegistry.BYTE);
+    @Unique
+    private static final TrackedData<OptionalInt> sanguinisluxuria$LATCHED_ENTITY = DataTracker.registerData(TridentEntity.class, TrackedDataHandlerRegistry.OPTIONAL_INT);
 
     @Unique
     private int sanguinisluxuria$latchedTicks = 0;
@@ -51,7 +56,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;getOwner()Lnet/minecraft/entity/Entity;", shift = At.Shift.BY, by = 2), cancellable = true)
     public void sanguinisluxuria$handleBloodDrainLogic(CallbackInfo ci, @Local(ordinal = 0) Entity owner) {
         int bloodDrainLevel = dataTracker.get(sanguinisluxuria$BLOOD_DRAIN);
-        if(bloodDrainLevel != 0 && sanguinisluxuria$latchedEntity != null && sanguinisluxuria$latchedEntity.isAlive() && !sanguinisluxuria$latchedEntity.isRemoved()) {
+        Entity latched = sanguinisluxuria$getLatchedEntity();
+        if(bloodDrainLevel != 0 && latched != null && latched.isAlive() && !latched.isRemoved()) {
             if(!this.isOwnerAlive()) {
                 if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
                     this.dropStack(this.asItemStack(), 0.1F);
@@ -66,18 +72,18 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 return;
             }
 
-            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(sanguinisluxuria$latchedEntity);
+            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(latched);
             BloodComponent ownerBlood = BLEntityComponents.BLOOD_COMPONENT.get(owner);
 
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(owner);
 
-            if((sanguinisluxuria$latchedEntity instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
+            if((latched instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
                 sanguinisluxuria$latchedEntity = null;
                 sanguinisluxuria$latchedTicks = 0;
                 return;
             }
 
-            setPosition(sanguinisluxuria$latchedEntity.getPos().add(0, sanguinisluxuria$latchedEntity.getEyeHeight(sanguinisluxuria$latchedEntity.getPose()) * 0.75, 0));
+            setPosition(latched.getPos().add(0, latched.getEyeHeight(latched.getPose()) * 0.75, 0));
             setVelocity(Vec3d.ZERO);
 
             if(sanguinisluxuria$latchedTicks % 40 == 0 && !world.isClient && blood.drainBlood()) {
@@ -104,12 +110,29 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 return;
             sanguinisluxuria$latchedEntity = target;
             sanguinisluxuria$latchedTicks = 0;
+            if(!world.isClient)
+                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.of(target.getId()));
         }
+    }
+
+    @Unique
+    public Entity sanguinisluxuria$getLatchedEntity() {
+        if(dataTracker.get(sanguinisluxuria$LATCHED_ENTITY).isPresent() && (sanguinisluxuria$latchedEntity == null || !sanguinisluxuria$latchedEntity.isAlive() || sanguinisluxuria$latchedEntity.isRemoved())) {
+            sanguinisluxuria$latchedEntity = null;
+            Entity newEntity = world.getEntityById(dataTracker.get(sanguinisluxuria$LATCHED_ENTITY).getAsInt());
+            if(newEntity == null) {
+                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
+                return null;
+            }
+            sanguinisluxuria$latchedEntity = newEntity;
+        }
+        return sanguinisluxuria$latchedEntity;
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     public void sanguinisluxuria$injectTrackedData(CallbackInfo ci) {
         this.dataTracker.startTracking(sanguinisluxuria$BLOOD_DRAIN, (byte) 0);
+        this.dataTracker.startTracking(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
