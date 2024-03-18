@@ -10,6 +10,7 @@
     "IronGolemEntityMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
+    "ServerPlayerEntityMixin",
     "ServerWorldMixin",
     "StatusEffectMixin",
     "TridentEntityMixin",

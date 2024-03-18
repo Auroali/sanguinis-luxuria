@@ -7,9 +7,12 @@ import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PlayerBloodComponent implements BloodComponent {
     private final PlayerEntity holder;
+    private int blood;
 
     public PlayerBloodComponent(PlayerEntity holder) {
         this.holder = holder;
@@ -23,6 +26,9 @@ public class PlayerBloodComponent implements BloodComponent {
 
     @Override
     public int getBlood() {
+        if(holder.world.isClient) {
+            return blood;
+        }
         return holder.getHungerManager().getFoodLevel();
     }
 
@@ -57,6 +63,16 @@ public class PlayerBloodComponent implements BloodComponent {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
+        buf.writeVarInt(getBlood());
+    }
+
+    @Override
+    public void applySyncPacket(PacketByteBuf buf) {
+        blood = buf.readVarInt();
     }
 
     @Override

@@ -13,7 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class EntityBloodComponent implements BloodComponent, ServerTickingComponent, AutoSyncedComponent {
+public class EntityBloodComponent implements BloodComponent, ServerTickingComponent {
     private static final int BLOOD_GAIN_RATE = 1200;
     private final LivingEntity holder;
     private int maxBlood;
