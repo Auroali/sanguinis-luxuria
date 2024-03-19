@@ -151,7 +151,11 @@ public class Bloodlust implements ModInitializer {
 				}
 				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
 				if(!isAbilityBind) {
-					if (vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent()) || vampire.getSkillPoints() < ability.getRequiredSkillPoints())
+					if (vampire.getAbilties().hasAbility(ability)
+							|| !vampire.getAbilties().hasAbility(ability.getParent())
+							|| vampire.getSkillPoints() < ability.getRequiredSkillPoints()
+							|| ability.isHidden(player)
+					)
 						return;
 
 					for(VampireAbility other : vampire.getAbilties()) {
