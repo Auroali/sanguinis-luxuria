@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Carrying 10 bottles just to fully satiate your thirst is very inconvenient. The blood bag is a better solution.$(br2)It has the capacity of 5 bottles, yet takes up a single slot in your inventory. They can also be filled just like $(l)$(l:sanguinisluxuria:equipment/bottles)glass bottles$()"
+      "text": "Carrying 10 bottles just to fully satiate your thirst is very inconvenient. The blood bag is a better solution.$(br2)It has the capacity of 10 bottles, yet takes up a single slot in your inventory. They can also be filled just like $(l)$(l:sanguinisluxuria:equipment/bottles)glass bottles$()"
     },
     {
       "type": "sanguinisluxuria:altar_4by4",

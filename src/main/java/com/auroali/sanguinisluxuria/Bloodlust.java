@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -26,8 +27,11 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.village.VillagerProfession;
 import org.slf4j.Logger;
@@ -114,6 +118,9 @@ public class Bloodlust implements ModInitializer {
 			return ActionResult.PASS;
 		});
 
+		ServerEntityWorldChangeEvents.AFTER_ENTITY_CHANGE_WORLD.register(this::syncComponentsOnWorldChange);
+		ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(this::syncComponentsOnWorldChange);
+
 		TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 5, BLTradeOffers::registerClericTrades);
 
 		ItemStorage.SIDED.registerForBlockEntities((blockEntity, context) -> {
@@ -123,6 +130,20 @@ public class Bloodlust implements ModInitializer {
 		}, BLBlockEntities.PEDESTAL);
 
 		CauldronFluidContent.registerCauldron(BLBlocks.BLOOD_CAULDRON, BLFluids.BLOOD_STILL, FluidConstants.BOTTLE, LeveledCauldronBlock.LEVEL);
+	}
+
+	private void syncComponentsOnWorldChange(ServerPlayerEntity entity, ServerWorld serverWorld, ServerWorld serverWorld1) {
+		syncComponentsOnWorldChange(entity, entity, serverWorld, serverWorld1);
+	}
+
+	private void syncComponentsOnWorldChange(Entity entity, Entity newEntity, ServerWorld from, ServerWorld to) {
+		if(entity.getType().isIn(BLTags.Entities.HAS_BLOOD) && BLEntityComponents.BLOOD_COMPONENT.isProvidedBy(newEntity))
+			BLEntityComponents.BLOOD_COMPONENT.sync(newEntity);
+		if(BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(newEntity)) {
+			VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(newEntity);
+			vampire.getAbilties().setShouldSync(true);
+			BLEntityComponents.BLOOD_COMPONENT.sync(newEntity);
+		}
 	}
 
 	public static void registerNetworkHandlers() {
