@@ -153,6 +153,7 @@ public class PlayerVampireComponent implements VampireComponent {
         level = tag.getInt("Level");
         isDowned = tag.getBoolean("IsDowned");
         abilities.load(tag);
+        abilities.setShouldSync(true);
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
