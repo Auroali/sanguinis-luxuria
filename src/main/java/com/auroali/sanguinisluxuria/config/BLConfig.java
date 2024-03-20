@@ -29,7 +29,7 @@ public class BLConfig {
             .create();
 
     public float vampireDamageMultiplier = 1.5f;
-    public float vampireExhaustionMultiplier = 0.25f;
+    public float vampireExhaustionMultiplier = 0.15f;
     public float blessedWaterDamage = 5f;
     public int skillPointsPerLevel = 1;
 
