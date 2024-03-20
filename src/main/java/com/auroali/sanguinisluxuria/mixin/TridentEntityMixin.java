@@ -68,6 +68,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             }
             if(sanguinisluxuria$latchedTicks > 300) {
                 sanguinisluxuria$latchedEntity = null;
+                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
                 sanguinisluxuria$latchedTicks = 0;
                 return;
             }
@@ -79,6 +80,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
 
             if((latched instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
                 sanguinisluxuria$latchedEntity = null;
+                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
                 sanguinisluxuria$latchedTicks = 0;
                 return;
             }

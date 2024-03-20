@@ -48,7 +48,7 @@ public class BLConfig {
                                 ).option(Option.createBuilder(Float.class)
                                         .name(Text.translatable("sanguinisluxuria.config.option.vampire_exhaustion_multiplier"))
                                         .tooltip(Text.translatable("sanguinisluxuria.config.option.vampire_exhaustion_multiplier.desc"))
-                                        .binding(0.25f, () -> this.vampireExhaustionMultiplier, f -> this.vampireExhaustionMultiplier = f)
+                                        .binding(0.15f, () -> this.vampireExhaustionMultiplier, f -> this.vampireExhaustionMultiplier = f)
                                         .controller(FloatFieldController::new)
                                         .build()
                                 ).option(Option.createBuilder(Float.class)

@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.items;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
@@ -56,7 +57,8 @@ public class BloodStorageItem extends Item {
         }
 
         if(!world.isClient) {
-            int bloodToAdd = Math.min(2, getStoredBlood(stack));
+            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(user);
+            int bloodToAdd = Math.min(blood.getMaxBlood() - blood.getBlood(), getStoredBlood(stack));
             if(bloodToAdd == 0)
                 return stack;
 

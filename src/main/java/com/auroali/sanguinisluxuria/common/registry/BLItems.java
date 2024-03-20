@@ -18,7 +18,7 @@ public class BLItems {
     public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
     public static final BloodStorageItem BLOOD_BAG = new BloodStorageItem(
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1),
-            10
+            20
     );
     public static final BloodStorageItem BLOOD_BOTTLE = new BloodStorageItem(
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
