@@ -67,7 +67,6 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void setIsVampire(boolean isVampire) {
         this.isVampire = isVampire;
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
         if(!isVampire) {
             removeModifiers();
             timeInSun = 0;
@@ -77,6 +76,7 @@ public class PlayerVampireComponent implements VampireComponent {
                 a.onUnVampire(holder, this);
             }
         }
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
     @Override
@@ -100,6 +100,8 @@ public class PlayerVampireComponent implements VampireComponent {
             holder.getHungerManager().add(bloodMultiplier * 2, 0.05f);
         else
             holder.getHungerManager().add(bloodMultiplier, 0);
+
+        setDowned(false);
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
         if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS))
@@ -297,6 +299,7 @@ public class PlayerVampireComponent implements VampireComponent {
         buf.writeVarInt(timeInSun);
         buf.writeInt(skillPoints);
         buf.writeInt(level);
+        buf.writeBoolean(isDowned);
         buf.writeBoolean(abilities.needsSync());
         if(abilities.needsSync()) {
             abilities.writePacket(buf);
@@ -311,6 +314,7 @@ public class PlayerVampireComponent implements VampireComponent {
         timeInSun = buf.readVarInt();
         skillPoints = buf.readInt();
         level = buf.readInt();
+        isDowned = buf.readBoolean();
         boolean abilitiesSync = buf.readBoolean();
         if(abilitiesSync)
             abilities.readPacket(buf);
@@ -400,6 +404,7 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void setDowned(boolean down) {
         this.isDowned = down;
+        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
     @Override

@@ -75,7 +75,7 @@ public abstract class LivingEntityMixin extends Entity {
         if(blood.getBlood() == 0 || VampireComponent.isEffectiveAgainstVampires(source))
             return false;
 
-        instance.setHealth(Math.max(Math.min(instance.getMaxHealth(), (float) blood.getBlood() / 4), 1));
+        instance.setHealth(Math.max(Math.min(instance.getMaxHealth(), (float) blood.getBlood() / 2), 1));
         vampire.setDowned(true);
         blood.setBlood(0);
         return true;

@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import net.minecraft.entity.player.HungerManager;
@@ -20,6 +21,17 @@ public class HungerManagerMixin {
     @Inject(method = "update", at = @At("HEAD"))
     public void sanguinisluxuria$setTrackedPlayer(PlayerEntity player, CallbackInfo ci) {
         sanguinisluxuria$hmTrackedPlayer = player;
+    }
+
+    @ModifyConstant(method = "update",
+            slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F", ordinal = 1)),
+            constant = @Constant(floatValue = 1.0f, ordinal = 1)
+    )
+    public float sanguinisluxuria$stopStarvingDamageWhenDowned(float constant) {
+        if (VampireHelper.isVampire(sanguinisluxuria$hmTrackedPlayer) && BLEntityComponents.VAMPIRE_COMPONENT.get(sanguinisluxuria$hmTrackedPlayer).isDown()) {
+            return 0;
+        }
+        return constant;
     }
 
     @ModifyVariable(method = "addExhaustion", at = @At("HEAD"), argsOnly = true)
