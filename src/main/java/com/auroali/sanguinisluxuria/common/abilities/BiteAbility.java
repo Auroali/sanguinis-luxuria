@@ -3,8 +3,11 @@ package com.auroali.sanguinisluxuria.common.abilities;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.EntityHitResult;
@@ -42,6 +45,12 @@ public class BiteAbility extends VampireAbility{
             return false;
 
         target.damage(BLDamageSources.bite(entity), 3);
+        if(component.getAbilties().hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
+            for(StatusEffectInstance effect : entity.getStatusEffects()) {
+                target.addStatusEffect(effect);
+            }
+            entity.clearStatusEffects();
+        }
         component.getAbilties().setCooldown(this, 150);
         return true;
     }
