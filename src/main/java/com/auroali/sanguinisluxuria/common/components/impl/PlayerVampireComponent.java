@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.abilities.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -104,8 +105,10 @@ public class PlayerVampireComponent implements VampireComponent {
         setDowned(false);
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
-        if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS))
+        if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
+            BLVampireAbilities.TRANSFER_EFFECTS.sync(entity, InfectiousAbility.InfectiousData.create(entity, holder.getStatusEffects()));
             transferPotionEffectsTo(entity);
+        }
 
         // apply any negative effects for toxic blood
         if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))

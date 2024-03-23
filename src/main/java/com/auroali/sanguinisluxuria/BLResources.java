@@ -64,6 +64,7 @@ public class BLResources {
     public static final Identifier BLOOD_CAULDRON_ID = id("blood_cauldron");
     public static final Identifier UNLOCK_VAMPIRE_ABILITY_ID = id("unlock_ability");
     public static final Identifier RESET_ABILITIES_ID = id("reset_abilities");
+    public static final Identifier ABILITY_SYNC_CHANNEL = id("ability_sync_id");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

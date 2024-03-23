@@ -6,15 +6,18 @@ import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
 import java.util.function.Supplier;
 
-public class VampireTeleportAbility extends VampireAbility{
+public class VampireTeleportAbility extends VampireAbility implements SyncableVampireAbility<VampireTeleportAbility.TeleportData> {
     public VampireTeleportAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         super(icon, parent);
     }
@@ -34,6 +37,7 @@ public class VampireTeleportAbility extends VampireAbility{
         if(component.getAbilties().isOnCooldown(this))
             return false;
 
+        Vec3d start = entity.getPos();
         BlockHitResult result = entity.world.raycast(new RaycastContext(
                 entity.getEyePos(),
                 entity.getEyePos().add(entity.getRotationVector().multiply(getRange(component.getAbilties()))),
@@ -49,6 +53,8 @@ public class VampireTeleportAbility extends VampireAbility{
 
         entity.teleport(pos.getX() + 0.5f, result.getPos().getY(), pos.getZ() + 0.5f);
         entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+        sync(entity, new TeleportData(start, entity.getPos()));
 
         component.getAbilties().setCooldown(this, getCooldown(component.getAbilties()));
         return true;
@@ -74,4 +80,48 @@ public class VampireTeleportAbility extends VampireAbility{
     public boolean canTickCooldown(LivingEntity entity, VampireComponent vampireComponent) {
         return entity.isOnGround();
     }
+
+    @Override
+    public void writePacket(PacketByteBuf buf, LivingEntity entity, TeleportData data) {
+        buf.writeDouble(data.from.x);
+        buf.writeDouble(data.from.y);
+        buf.writeDouble(data.from.z);
+        buf.writeDouble(data.to.x);
+        buf.writeDouble(data.to.y);
+        buf.writeDouble(data.to.z);
+    }
+
+    @Override
+    public TeleportData readPacket(PacketByteBuf buf, LivingEntity entity) {
+        double fromX = buf.readDouble();
+        double fromY = buf.readDouble();
+        double fromZ = buf.readDouble();
+        double toX = buf.readDouble();
+        double toY = buf.readDouble();
+        double toZ = buf.readDouble();
+        return new TeleportData(
+                new Vec3d(fromX, fromY, fromZ),
+                new Vec3d(toX, toY, toZ)
+        );
+    }
+
+    @Override
+    public void handle(LivingEntity entity, TeleportData data) {
+        int dist = (int) data.to.distanceTo(data.from);
+        double yOffset = entity.getEyeHeight(entity.getPose()) / 2;
+        for(int i = 0; i < dist; i++) {
+            Vec3d pos = data.from.lerp(data.to, (float) i / dist).add(0, yOffset, 0);
+            entity.world.addParticle(
+                    DustParticleEffect.DEFAULT,
+                    pos.getX(),
+                    pos.getY(),
+                    pos.getZ(),
+                    0,
+                    0,
+                    0
+            );
+        }
+    }
+
+    public record TeleportData(Vec3d from, Vec3d to) {}
 }

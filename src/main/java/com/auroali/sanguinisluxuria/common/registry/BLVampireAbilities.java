@@ -86,7 +86,7 @@ public class BLVampireAbilities {
             HEALTH_1
     ).incompatible(() -> BLVampireAbilities.BITE);
 
-    public static final VampireAbility TRANSFER_EFFECTS = new SimpleVampireAbility(
+    public static final InfectiousAbility TRANSFER_EFFECTS = new InfectiousAbility(
             () -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.POISON),
             HEALTH_2
     );

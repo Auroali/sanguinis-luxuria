@@ -13,7 +13,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
-import java.util.OptionalInt;
 import java.util.UUID;
 
 public class BloodTransferComponent implements Component, AutoSyncedComponent {

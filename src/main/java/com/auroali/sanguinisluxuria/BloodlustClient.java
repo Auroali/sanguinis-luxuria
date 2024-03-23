@@ -3,6 +3,8 @@ package com.auroali.sanguinisluxuria;
 import com.auroali.sanguinisluxuria.client.BLHud;
 import com.auroali.sanguinisluxuria.client.render.PedestalBlockRenderer;
 import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
+import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
@@ -86,6 +88,13 @@ public class BloodlustClient implements ClientModInitializer {
         ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
             registry.register(BLResources.BLOOD_FLOWING_TEXTURE);
             registry.register(BLResources.BLOOD_STILL_TEXTURE);
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(BLResources.ABILITY_SYNC_CHANNEL, (client, handler, buf, responseSender) -> {
+            int id = buf.readVarInt();
+            VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+            if(client.world != null && client.world.getEntityById(id) instanceof LivingEntity entity && ability instanceof SyncableVampireAbility<?> s)
+                s.handlePacket(entity, buf, client::execute);
         });
     }
 

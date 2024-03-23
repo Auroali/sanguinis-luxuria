@@ -6,19 +6,23 @@ import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
 
+import java.util.List;
 import java.util.function.Supplier;
 
-public class BiteAbility extends VampireAbility{
+public class BiteAbility extends VampireAbility implements SyncableVampireAbility<LivingEntity> {
     public BiteAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         super(icon, parent);
     }
@@ -45,7 +49,9 @@ public class BiteAbility extends VampireAbility{
             return false;
 
         target.damage(BLDamageSources.bite(entity), 3);
+        sync(entity, target);
         if(component.getAbilties().hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
+            BLVampireAbilities.TRANSFER_EFFECTS.sync(entity, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
             for(StatusEffectInstance effect : entity.getStatusEffects()) {
                 target.addStatusEffect(effect);
             }
@@ -80,5 +86,38 @@ public class BiteAbility extends VampireAbility{
             }
         }
         return result;
+    }
+
+    @Override
+    public void writePacket(PacketByteBuf buf, LivingEntity entity, LivingEntity data) {
+        buf.writeVarInt(data.getId());
+    }
+
+    @Override
+    public LivingEntity readPacket(PacketByteBuf buf, LivingEntity entity) {
+        return (LivingEntity) entity.world.getEntityById(buf.readVarInt());
+    }
+
+    @Override
+    public void handle(LivingEntity entity, LivingEntity data) {
+        List<Vec3f> colours = List.of(DustParticleEffect.RED);
+        Box box = data.getBoundingBox();
+        Random rand = data.getRandom();
+        int max = 15;
+        for(int i = 0; i < max; i++) {
+            double x = box.minX + rand.nextDouble() * box.getXLength();
+            double y = box.minY + rand.nextDouble() * box.getYLength();
+            double z = box.minZ + rand.nextDouble() * box.getZLength();
+            Vec3f colour = colours.get(rand.nextInt(colours.size()));
+            data.world.addParticle(
+                    new DustParticleEffect(colour, 1.0f),
+                    x,
+                    y,
+                    z,
+                    0,
+                    0,
+                    0
+            );
+        }
     }
 }
