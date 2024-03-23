@@ -34,6 +34,7 @@
     "minecraft:drowned",
     "minecraft:zoglin",
     "minecraft:zombified_piglin",
+    "minecraft:enderman",
     {
       "id": "ratsmischief:rat",
       "required": false
