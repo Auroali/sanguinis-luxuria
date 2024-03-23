@@ -48,6 +48,7 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.DROWNED)
                 .add(EntityType.ZOGLIN)
                 .add(EntityType.ZOMBIFIED_PIGLIN)
+                .add(EntityType.ENDERMAN)
                 .addOptional(new Identifier("ratsmischief", "rat"))
                 .addOptional(new Identifier("spectrum", "egg_laying_wooly_pig"))
                 .addOptional(new Identifier("spectrum", "kindling"));
@@ -75,5 +76,8 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.EVOKER)
                 .add(EntityType.VINDICATOR)
                 .add(EntityType.PILLAGER);
+
+        getOrCreateTagBuilder(BLTags.Entities.TELEPORTS_ON_DRAIN)
+                .add(EntityType.ENDERMAN);
     }
 }

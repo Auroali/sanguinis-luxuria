@@ -20,21 +20,28 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.item.ChorusFruitItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
+import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
 import java.util.UUID;
 
@@ -124,6 +131,39 @@ public class PlayerVampireComponent implements VampireComponent {
             serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
             if(holder.getRandom().nextDouble() > 0.5f)
                 entity.wakeUp();
+        }
+
+        if(entity.getType().isIn(BLTags.Entities.TELEPORTS_ON_DRAIN)) {
+            teleportRandomly();
+        }
+    }
+
+    private void teleportRandomly() {
+        World world = holder.getWorld();
+        double x = holder.getX();
+        double y = holder.getY();
+        double z = holder.getZ();
+
+        for(int i = 0; i < 16; ++i) {
+            double newPosX = holder.getX() + (holder.getRandom().nextDouble() - 0.5) * 16.0;
+            double newPosY = MathHelper.clamp(
+                    holder.getY() + (double) (holder.getRandom().nextInt(16) - 8),
+                    world.getBottomY(),
+                    (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1)
+            );
+            double newPosZ = holder.getZ() + (holder.getRandom().nextDouble() - 0.5) * 16.0;
+            if (holder.hasVehicle()) {
+                holder.stopRiding();
+            }
+
+            Vec3d pos = holder.getPos();
+            if (holder.teleport(newPosX, newPosY, newPosZ, true)) {
+                world.emitGameEvent(GameEvent.TELEPORT, pos, GameEvent.Emitter.of(holder));
+                SoundEvent soundEvent = SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
+                world.playSound(null, x, y, z, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                holder.playSound(soundEvent, 1.0F, 1.0F);
+                break;
+            }
         }
     }
 

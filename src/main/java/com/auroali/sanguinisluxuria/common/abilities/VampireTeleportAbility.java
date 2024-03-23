@@ -14,6 +14,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
+import net.minecraft.world.event.GameEvent;
 
 import java.util.function.Supplier;
 
@@ -49,9 +50,13 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         if(result == null)
             return false;
 
-        BlockPos pos = result.getBlockPos().offset(result.getSide());
+        if(entity.hasVehicle())
+            entity.stopRiding();
 
-        entity.teleport(pos.getX() + 0.5f, result.getPos().getY(), pos.getZ() + 0.5f);
+        BlockPos pos = result.getBlockPos().offset(result.getSide());
+        Vec3d newPos = new Vec3d(pos.getX() + 0.5f, result.getPos().getY(), pos.getZ() + 0.5f);
+        entity.teleport(newPos.getX(), newPos.getY(), newPos.getZ());
+        entity.world.emitGameEvent(GameEvent.TELEPORT, start, GameEvent.Emitter.of(entity));
         entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
 
         sync(entity, new TeleportData(start, entity.getPos()));
