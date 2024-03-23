@@ -28,9 +28,23 @@
     "minecraft:polar_bear",
     "minecraft:ravager",
     "minecraft:zombie",
+    "minecraft:zombie_villager",
+    "minecraft:zombie_horse",
     "minecraft:husk",
     "minecraft:drowned",
     "minecraft:zoglin",
-    "minecraft:zombified_piglin"
+    "minecraft:zombified_piglin",
+    {
+      "id": "ratsmischief:rat",
+      "required": false
+    },
+    {
+      "id": "spectrum:egg_laying_wooly_pig",
+      "required": false
+    },
+    {
+      "id": "spectrum:kindling",
+      "required": false
+    }
   ]
 }

@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
@@ -41,10 +42,15 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.POLAR_BEAR)
                 .add(EntityType.RAVAGER)
                 .add(EntityType.ZOMBIE)
+                .add(EntityType.ZOMBIE_VILLAGER)
+                .add(EntityType.ZOMBIE_HORSE)
                 .add(EntityType.HUSK)
                 .add(EntityType.DROWNED)
                 .add(EntityType.ZOGLIN)
-                .add(EntityType.ZOMBIFIED_PIGLIN);
+                .add(EntityType.ZOMBIFIED_PIGLIN)
+                .addOptional(new Identifier("ratsmischief", "rat"))
+                .addOptional(new Identifier("spectrum", "egg_laying_wooly_pig"))
+                .addOptional(new Identifier("spectrum", "kindling"));
 
         getOrCreateTagBuilder(BLTags.Entities.GOOD_BLOOD)
                 .add(EntityType.VILLAGER)
@@ -57,12 +63,17 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
 
         getOrCreateTagBuilder(BLTags.Entities.TOXIC_BLOOD)
                 .add(EntityType.ZOMBIE)
+                .add(EntityType.ZOMBIE_VILLAGER)
+                .add(EntityType.ZOMBIE_HORSE)
                 .add(EntityType.HUSK)
                 .add(EntityType.DROWNED)
                 .add(EntityType.ZOGLIN)
                 .add(EntityType.ZOMBIFIED_PIGLIN);
 
         getOrCreateTagBuilder(BLTags.Entities.CAN_DROP_BLOOD)
-                .add(EntityType.VILLAGER);
+                .add(EntityType.VILLAGER)
+                .add(EntityType.EVOKER)
+                .add(EntityType.VINDICATOR)
+                .add(EntityType.PILLAGER);
     }
 }
