@@ -54,7 +54,8 @@
 	"custom": {
 		"cardinal-components": [
 			"sanguinisluxuria:blood",
-			"sanguinisluxuria:vampire"
+			"sanguinisluxuria:vampire",
+			"sanguinisluxuria:blood_drain"
 		]
 	}
 }

@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.BloodTransferComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.BLEnchantments;
@@ -40,14 +41,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     @Shadow protected abstract boolean isOwnerAlive();
 
     @Unique
-    private static final TrackedData<Byte> sanguinisluxuria$BLOOD_DRAIN = DataTracker.registerData(TridentEntity.class, TrackedDataHandlerRegistry.BYTE);
-    @Unique
-    private static final TrackedData<OptionalInt> sanguinisluxuria$LATCHED_ENTITY = DataTracker.registerData(TridentEntity.class, TrackedDataHandlerRegistry.OPTIONAL_INT);
-
-    @Unique
     private int sanguinisluxuria$latchedTicks = 0;
-    @Unique
-    private Entity sanguinisluxuria$latchedEntity;
 
     protected TridentEntityMixin(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
         super(entityType, world);
@@ -55,8 +49,9 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;getOwner()Lnet/minecraft/entity/Entity;", shift = At.Shift.BY, by = 2), cancellable = true)
     public void sanguinisluxuria$handleBloodDrainLogic(CallbackInfo ci, @Local(ordinal = 0) Entity owner) {
-        int bloodDrainLevel = dataTracker.get(sanguinisluxuria$BLOOD_DRAIN);
-        Entity latched = sanguinisluxuria$getLatchedEntity();
+        BloodTransferComponent bloodTransfer = BLEntityComponents.BLOOD_TRANSFER_COMPONENT.get(this);
+        int bloodDrainLevel = bloodTransfer.getBloodTransferLevel();
+        Entity latched = bloodTransfer.getLatchedEntity();
         if(bloodDrainLevel != 0 && latched != null && latched.isAlive() && !latched.isRemoved()) {
             if(!this.isOwnerAlive()) {
                 if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
@@ -67,8 +62,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 return;
             }
             if(sanguinisluxuria$latchedTicks > 300) {
-                sanguinisluxuria$latchedEntity = null;
-                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
+                bloodTransfer.setLatchedEntity(null);
                 sanguinisluxuria$latchedTicks = 0;
                 return;
             }
@@ -79,8 +73,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(owner);
 
             if((latched instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
-                sanguinisluxuria$latchedEntity = null;
-                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
+                bloodTransfer.setLatchedEntity(null);
                 sanguinisluxuria$latchedTicks = 0;
                 return;
             }
@@ -100,45 +93,14 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
         }
     }
 
-    @Inject(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;)V", at = @At("TAIL"))
-    public void sanguinisluxuria$initTrackedData(World world, LivingEntity owner, ItemStack stack, CallbackInfo ci) {
-        dataTracker.set(sanguinisluxuria$BLOOD_DRAIN, (byte) EnchantmentHelper.getLevel(BLEnchantments.BLOOD_DRAIN, stack));
-    }
-
     @Inject(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
     public void sanguinisluxuria$latchOnEntity(EntityHitResult entityHitResult, CallbackInfo ci, @Local(ordinal = 0) Entity target, @Local(ordinal = 1) Entity owner) {
-        if(dataTracker.get(sanguinisluxuria$BLOOD_DRAIN) != 0 && target.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
+        BloodTransferComponent bloodTransfer = BLEntityComponents.BLOOD_TRANSFER_COMPONENT.get(this);
+        if(bloodTransfer.getBloodTransferLevel() != 0 && target.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
             if(target instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION))
                 return;
-            sanguinisluxuria$latchedEntity = target;
+            bloodTransfer.setLatchedEntity(target);
             sanguinisluxuria$latchedTicks = 0;
-            if(!world.isClient)
-                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.of(target.getId()));
         }
-    }
-
-    @Unique
-    public Entity sanguinisluxuria$getLatchedEntity() {
-        if(dataTracker.get(sanguinisluxuria$LATCHED_ENTITY).isPresent() && (sanguinisluxuria$latchedEntity == null || !sanguinisluxuria$latchedEntity.isAlive() || sanguinisluxuria$latchedEntity.isRemoved())) {
-            sanguinisluxuria$latchedEntity = null;
-            Entity newEntity = world.getEntityById(dataTracker.get(sanguinisluxuria$LATCHED_ENTITY).getAsInt());
-            if(newEntity == null) {
-                dataTracker.set(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
-                return null;
-            }
-            sanguinisluxuria$latchedEntity = newEntity;
-        }
-        return sanguinisluxuria$latchedEntity;
-    }
-
-    @Inject(method = "initDataTracker", at = @At("TAIL"))
-    public void sanguinisluxuria$injectTrackedData(CallbackInfo ci) {
-        this.dataTracker.startTracking(sanguinisluxuria$BLOOD_DRAIN, (byte) 0);
-        this.dataTracker.startTracking(sanguinisluxuria$LATCHED_ENTITY, OptionalInt.empty());
-    }
-
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    public void sanguinisluxuria$readBloodDrainFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        dataTracker.set(sanguinisluxuria$BLOOD_DRAIN, (byte) EnchantmentHelper.getLevel(BLEnchantments.BLOOD_DRAIN, tridentStack));
     }
 }

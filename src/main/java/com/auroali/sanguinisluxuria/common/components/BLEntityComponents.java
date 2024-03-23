@@ -10,10 +10,13 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 
 public class BLEntityComponents implements EntityComponentInitializer {
     public static final ComponentKey<BloodComponent> BLOOD_COMPONENT = ComponentRegistry.getOrCreate(BLResources.BLOOD_COMPONENT_ID, BloodComponent.class);
     public static final ComponentKey<VampireComponent> VAMPIRE_COMPONENT = ComponentRegistry.getOrCreate(BLResources.VAMPIRE_COMPONENT_ID, VampireComponent.class);
+
+    public static final ComponentKey<BloodTransferComponent> BLOOD_TRANSFER_COMPONENT = ComponentRegistry.getOrCreate(BLResources.BLOOD_DRAIN_ID, BloodTransferComponent.class);
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         // we don't need to copy the player component, as it stores no actual data
@@ -22,6 +25,7 @@ public class BLEntityComponents implements EntityComponentInitializer {
         registry.beginRegistration(LivingEntity.class, BLOOD_COMPONENT)
                 .impl(EntityBloodComponent.class)
                 .end(EntityBloodComponent::new);
+        registry.registerFor(TridentEntity.class, BLOOD_TRANSFER_COMPONENT, BloodTransferComponent::new);
 
     }
 }
