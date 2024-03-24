@@ -1,6 +1,8 @@
 package com.auroali.sanguinisluxuria.common.fluid;
 
 import com.auroali.sanguinisluxuria.common.registry.BLFluids;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -11,6 +13,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
@@ -46,7 +49,7 @@ public class BloodFluid extends FlowableFluid {
 
     @Override
     protected boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid, Direction direction) {
-        return false;
+        return direction == Direction.DOWN && !matchesType(fluid);
     }
 
     @Override
@@ -117,6 +120,14 @@ public class BloodFluid extends FlowableFluid {
         @Override
         public boolean isStill(FluidState fluidState) {
             return false;
+        }
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static class AttributeHandler implements FluidVariantAttributeHandler {
+        @Override
+        public Text getName(FluidVariant fluidVariant) {
+            return Text.translatable("fluids.sanguinisluxuria.blood");
         }
     }
 }

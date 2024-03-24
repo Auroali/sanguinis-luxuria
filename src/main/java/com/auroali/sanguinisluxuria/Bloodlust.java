@@ -22,6 +22,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.block.BlockState;
@@ -30,6 +32,7 @@ import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
@@ -130,6 +133,13 @@ public class Bloodlust implements ModInitializer {
 		}, BLBlockEntities.PEDESTAL);
 
 		CauldronFluidContent.registerCauldron(BLBlocks.BLOOD_CAULDRON, BLFluids.BLOOD_STILL, FluidConstants.BOTTLE, LeveledCauldronBlock.LEVEL);
+
+		FluidStorage.combinedItemApiProvider(BLItems.BLOOD_BOTTLE).register(ctx -> new BloodStorageItem.FluidStorage(ctx, BLItems.BLOOD_BOTTLE));
+		FluidStorage.combinedItemApiProvider(Items.GLASS_BOTTLE).register(ctx -> new BloodStorageItem.FluidStorage(ctx, BLItems.BLOOD_BOTTLE));
+		FluidStorage.combinedItemApiProvider(BLItems.BLOOD_BAG).register(ctx -> new BloodStorageItem.FluidStorage(ctx, BLItems.BLOOD_BAG));
+
+		FluidVariantAttributes.register(BLFluids.BLOOD_STILL, BLFluids.BLOOD_ATTRIBUTE_HANDLER);
+		FluidVariantAttributes.register(BLFluids.BLOOD_FLOWING, BLFluids.BLOOD_ATTRIBUTE_HANDLER);
 	}
 
 	private void syncComponentsOnWorldChange(ServerPlayerEntity entity, ServerWorld serverWorld, ServerWorld serverWorld1) {

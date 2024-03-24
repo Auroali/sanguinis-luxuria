@@ -1,11 +1,22 @@
 package com.auroali.sanguinisluxuria.common.items;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLFluids;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.fabricmc.fabric.impl.transfer.TransferApiImpl;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
@@ -21,6 +32,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+
+import java.util.Iterator;
 
 public class BloodStorageItem extends Item {
     final int maxBlood;
@@ -241,5 +254,105 @@ public class BloodStorageItem extends Item {
      */
     public Item getEmptyItem() {
         return this.emptyItem;
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    public static class FluidStorage implements Storage<FluidVariant>, StorageView<FluidVariant> {
+        private final ContainerItemContext context;
+        private final BloodStorageItem item;
+        private final FluidVariant containedFluid;
+
+        public FluidStorage(ContainerItemContext ctx, BloodStorageItem bloodStoringItem) {
+            this.context = ctx;
+            this.item = bloodStoringItem;
+            this.containedFluid = FluidVariant.of(BLFluids.BLOOD_STILL);
+        }
+
+        private long getStoredFluid() {
+            if(context.getItemVariant().getNbt() == null)
+                return 0;
+            return (long) (FluidConstants.BOTTLE * context.getItemVariant().getNbt().getInt("StoredBlood") / (float) BloodConstants.BLOOD_PER_BOTTLE);
+        }
+
+        private long getMaxStoredFluid() {
+            return (long) (FluidConstants.BOTTLE * item.getMaxBlood() / (float) BloodConstants.BLOOD_PER_BOTTLE);
+        }
+
+        private int convertStoredFluidToBlood(long fluid) {
+            return (int) ((float) fluid / FluidConstants.BOTTLE * BloodConstants.BLOOD_PER_BOTTLE);
+        }
+
+        @Override
+        public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+            StoragePreconditions.notBlankNotNegative(resource, maxAmount);
+
+            Item emptyItem = item.getEmptyItem() == null ? item : item.emptyItem;
+            long insertableAmount = Math.min(maxAmount, getMaxStoredFluid() - getStoredFluid());
+
+            // Can't insert if the item is not emptyItem anymore.
+            if (!context.getItemVariant().isOf(emptyItem)) return 0;
+
+            // Make sure that the fluid and amount match.
+            if (resource.isOf(BLFluids.BLOOD_STILL) && insertableAmount != 0) {
+                // If that's ok, just convert one of the empty item into the full item, with the mapping function.
+                ItemVariant newVariant = ItemVariant.of(setStoredBlood(new ItemStack(this.item), convertStoredFluidToBlood(getStoredFluid() + insertableAmount)));
+
+                if (context.exchange(newVariant, 1, transaction) == 1) {
+                    // Conversion ok!
+                    return insertableAmount;
+                }
+            }
+
+            return 0;
+        }
+
+        @Override
+        public long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+            StoragePreconditions.notBlankNotNegative(resource, maxAmount);
+
+            // If the context's item is not fullItem anymore, can't extract!
+            if (!context.getItemVariant().isOf(item)) return 0;
+
+            long storedAmount = Math.min(getStoredFluid(), maxAmount);
+            // Make sure that the fluid and the amount match.
+            if (resource.equals(containedFluid) && storedAmount != 0) {
+                // If that's ok, just convert one of the full item into the empty item, copying the nbt.
+                ItemVariant newVariant = getStoredFluid() - storedAmount > 0
+                        ? ItemVariant.of(setStoredBlood(new ItemStack(item), convertStoredFluidToBlood(getStoredFluid() - storedAmount)))
+                        : this.item.getEmptyItem() == null ? ItemVariant.of(this.item) : ItemVariant.of(this.item.getEmptyItem());
+
+                if (context.exchange(newVariant, 1, transaction) == 1) {
+                    // Conversion ok!
+                    return storedAmount;
+                }
+            }
+
+            return 0;
+        }
+
+        @Override
+        public boolean isResourceBlank() {
+            return !context.getItemVariant().isOf(item) || (context.getItemVariant().getNbt() == null || context.getItemVariant().getNbt().getInt("StoredBlood") == 0);
+        }
+
+        @Override
+        public FluidVariant getResource() {
+            return containedFluid;
+        }
+
+        @Override
+        public long getAmount() {
+            return getStoredFluid();
+        }
+
+        @Override
+        public long getCapacity() {
+            return getMaxStoredFluid();
+        }
+
+        @Override
+        public Iterator<StorageView<FluidVariant>> iterator() {
+            return TransferApiImpl.singletonIterator(this);
+        }
     }
 }

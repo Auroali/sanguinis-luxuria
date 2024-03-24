@@ -34,6 +34,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.sanguinisluxuria.altar_beats", "Altar beats");
         translationBuilder.add("subtitles.sanguinisluxuria.bleeding", "Something bleeds");
 
+        translationBuilder.add("fluids.sanguinisluxuria.blood", "Blood");
+
         translationBuilder.add("sanguinisluxuria.config.title", "Bloodlust");
         translationBuilder.add("sanguinisluxuria.config.category.gameplay", "Gameplay");
         translationBuilder.add("sanguinisluxuria.config.option.vampire_damage_multiplier", "Damage Multiplier");
