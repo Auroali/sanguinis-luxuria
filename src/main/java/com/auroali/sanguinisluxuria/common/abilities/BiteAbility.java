@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.common.abilities;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.entity.LivingEntity;
@@ -49,6 +50,7 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
             return false;
 
         target.damage(BLDamageSources.bite(entity), 3);
+        target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLEEDING, 100, 0));
         sync(entity, target);
         if(component.getAbilties().hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
             BLVampireAbilities.TRANSFER_EFFECTS.sync(entity, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
@@ -57,7 +59,7 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
             }
             entity.clearStatusEffects();
         }
-        component.getAbilties().setCooldown(this, 150);
+        component.getAbilties().setCooldown(this, 220);
         return true;
     }
 

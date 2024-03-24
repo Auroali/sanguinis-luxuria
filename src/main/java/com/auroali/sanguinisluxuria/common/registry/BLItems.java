@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.items.BlessedBloodItem;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.items.MaskItem;
@@ -18,11 +19,11 @@ public class BLItems {
     public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
     public static final BloodStorageItem BLOOD_BAG = new BloodStorageItem(
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1),
-            20
+            10 * BloodConstants.BLOOD_PER_BOTTLE
     );
     public static final BloodStorageItem BLOOD_BOTTLE = new BloodStorageItem(
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
-            2
+            BloodConstants.BLOOD_PER_BOTTLE
     ).emptyItem(Items.GLASS_BOTTLE);
     public static final Item TWISTED_BLOOD = new TwistedBloodItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
     public static final Item BLESSED_BLOOD = new BlessedBloodItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));

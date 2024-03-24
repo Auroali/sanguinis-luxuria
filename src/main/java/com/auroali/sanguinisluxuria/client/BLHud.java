@@ -96,13 +96,5 @@ public class BLHud {
         return CACHED_ICONS[slot].icon;
     }
 
-    public static class AbilityIconHolder {
-        VampireAbility ability;
-        ItemStack icon;
-
-        public AbilityIconHolder(VampireAbility ability, ItemStack icon) {
-            this.ability = ability;
-            this.icon = icon;
-        }
-    }
+    public record AbilityIconHolder(VampireAbility ability, ItemStack icon) {}
 }

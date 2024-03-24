@@ -220,6 +220,22 @@ public class BloodStorageItem extends Item {
         return true;
     }
 
+    @Override
+    public boolean isItemBarVisible(ItemStack stack) {
+        return getStoredBlood(stack) > 0 && getStoredBlood(stack) != getMaxBlood(stack);
+    }
+
+    @Override
+    public int getItemBarStep(ItemStack stack) {
+        int t = Math.round(getStoredBlood(stack) * 13.f / getMaxBlood(stack));
+        return Math.round(getStoredBlood(stack) * 13.f / getMaxBlood(stack));
+    }
+
+    @Override
+    public int getItemBarColor(ItemStack stack) {
+        return 0xFFDF0000;
+    }
+
     /**
      * @return the item to replace this one with when emptied
      */

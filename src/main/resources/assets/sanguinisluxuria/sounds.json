@@ -30,5 +30,13 @@
       "mob/warden/heartbeat_4"
     ],
     "subtitle": "subtitles.sanguinisluxuria.altar_beats"
+  },
+  "bleeding": {
+    "sounds": [
+      "item/bottle/empty1",
+      "item/bottle/empty2"
+    ],
+    "subtitle": "subtitles.sanguinisluxuria.bleeding"
+
   }
 }

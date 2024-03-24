@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
@@ -13,7 +14,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class EntityBloodComponent implements BloodComponent, ServerTickingComponent {
-    private static final int BLOOD_GAIN_RATE = 1200;
     private final LivingEntity holder;
     private int maxBlood;
     private int currentBlood;
@@ -122,10 +122,10 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         if(getMaxBlood() == 0)
             return;
 
-        if(getBlood() < getMaxBlood() && bloodGainTimer < BLOOD_GAIN_RATE)
+        if(getBlood() < getMaxBlood() && bloodGainTimer < BloodConstants.BLOOD_GAIN_RATE)
             bloodGainTimer++;
 
-        if(bloodGainTimer >= BLOOD_GAIN_RATE) {
+        if(bloodGainTimer >= BloodConstants.BLOOD_GAIN_RATE) {
             currentBlood++;
             bloodGainTimer = 0;
             BLEntityComponents.BLOOD_COMPONENT.sync(holder);

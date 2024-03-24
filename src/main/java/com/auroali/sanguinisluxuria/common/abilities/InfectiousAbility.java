@@ -49,6 +49,8 @@ public class InfectiousAbility extends SimpleVampireAbility implements SyncableV
     @Override
     public void handle(LivingEntity entity, InfectiousData data) {
         List<Vec3f> colours = data.colours;
+        if(colours.isEmpty())
+            return;
         Box box = data.target.getBoundingBox();
         Random rand = data.target.getRandom();
         int max = 22;
