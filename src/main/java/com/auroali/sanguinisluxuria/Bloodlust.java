@@ -27,16 +27,23 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.VillagerProfession;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,22 +104,7 @@ public class Bloodlust implements ModInitializer {
 			}
 		});
 
-		ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
-			if(!VampireHelper.isVampire(entity)
-					&& entity.getType().isIn(BLTags.Entities.HAS_BLOOD)
-					&& entity.getType().isIn(BLTags.Entities.CAN_DROP_BLOOD)
-			) {
-				BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-				if(blood.getBlood() < blood.getMaxBlood())
-					return;
-
-				BlockState state = entity.world.getBlockState(entity.getBlockPos());
-				BlockState newState = BLBlocks.BLOOD_SPLATTER.getDefaultState();
-				if(!state.isIn(BLTags.Blocks.BLOOD_SPLATTER_REPLACEABLE) || !newState.canPlaceAt(entity.world, entity.getBlockPos()))
-					return;
-				entity.world.setBlockState(entity.getBlockPos(), newState);
-			}
-		});
+		ServerLivingEntityEvents.AFTER_DEATH.register(Bloodlust::dropBlood);
 
 		EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, pos, vanilla) -> {
 			if(VampireHelper.isVampire(player)) {
@@ -140,6 +132,41 @@ public class Bloodlust implements ModInitializer {
 
 		FluidVariantAttributes.register(BLFluids.BLOOD_STILL, BLFluids.BLOOD_ATTRIBUTE_HANDLER);
 		FluidVariantAttributes.register(BLFluids.BLOOD_FLOWING, BLFluids.BLOOD_ATTRIBUTE_HANDLER);
+	}
+
+	private static void dropBlood(LivingEntity entity, DamageSource source) {
+		if(!VampireHelper.isVampire(entity)
+				&& entity.getType().isIn(BLTags.Entities.HAS_BLOOD)
+				&& entity.getType().isIn(BLTags.Entities.CAN_DROP_BLOOD)
+		) {
+			BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+			if(blood.getBlood() < blood.getMaxBlood())
+				return;
+
+			BlockState state = entity.world.getBlockState(entity.getBlockPos());
+			BlockState belowState = entity.world.getBlockState(entity.getBlockPos().down());
+			if(tryFillCauldron(entity.world, entity.getBlockPos(), state) || tryFillCauldron(entity.world, entity.getBlockPos().down(), belowState))
+				return;
+
+			BlockState newState = BLBlocks.BLOOD_SPLATTER.getDefaultState();
+			if(!state.isIn(BLTags.Blocks.BLOOD_SPLATTER_REPLACEABLE) || !newState.canPlaceAt(entity.world, entity.getBlockPos()))
+				return;
+			entity.world.setBlockState(entity.getBlockPos(), newState);
+		}
+	}
+
+	private static boolean tryFillCauldron(World world, BlockPos pos, BlockState state) {
+		if(state.isOf(BLBlocks.BLOOD_CAULDRON) && state.get(LeveledCauldronBlock.LEVEL) < LeveledCauldronBlock.MAX_LEVEL) {
+			world.setBlockState(pos, state.with(LeveledCauldronBlock.LEVEL, state.get(LeveledCauldronBlock.LEVEL) + 1));
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
+			return true;
+		}
+		if(state.isOf(Blocks.CAULDRON)) {
+			world.setBlockState(pos, BLBlocks.BLOOD_CAULDRON.getDefaultState());
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
+			return true;
+		}
+		return false;
 	}
 
 	private void syncComponentsOnWorldChange(ServerPlayerEntity entity, ServerWorld serverWorld, ServerWorld serverWorld1) {
