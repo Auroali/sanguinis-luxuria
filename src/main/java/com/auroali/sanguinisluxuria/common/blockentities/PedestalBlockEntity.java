@@ -12,10 +12,12 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlockEntity extends BlockEntity {
     SimpleInventory inv = new SimpleInventory(ItemStack.EMPTY);
+    int spinTicks = 0;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.PEDESTAL, pos, state);
@@ -25,8 +27,16 @@ public class PedestalBlockEntity extends BlockEntity {
         });
     }
 
+    public static void tickClient(World world, BlockPos pos, BlockState state, PedestalBlockEntity entity) {
+        entity.spinTicks++;
+    }
+
     public ItemStack getItem() {
         return inv.getStack(0);
+    }
+
+    public int getItemAge() {
+        return spinTicks;
     }
 
     public void setItem(ItemStack stack) {

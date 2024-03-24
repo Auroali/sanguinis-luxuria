@@ -46,9 +46,9 @@ public class PedestalBlockRenderer implements BlockEntityRenderer<PedestalBlockE
         matrices.push();
         random.setSeed(entity.getItem().isEmpty() ? 187 : Item.getRawId(entity.getItem().getItem()) + entity.getItem().getDamage());
         matrices.translate(0.5, 0.8, 0.5);
-        float bobbing = MathHelper.sin((entity.getWorld().getTime() + tickDelta) / 10.0F) * 0.1F + 0.1F;
+        float bobbing = MathHelper.sin((entity.getItemAge() + tickDelta) / 10.0F) * 0.1F + 0.1F;
         //matrices.translate(0, bobbing, 0);
-        float rotation = (entity.getWorld().getTime() + tickDelta) / 20.0f;
+        float rotation = (entity.getItemAge() + tickDelta) / 20.0f;
         matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(rotation));
 
         BakedModel model = itemRenderer.getModel(entity.getItem(), entity.getWorld(), null, entity.getPos().hashCode());
@@ -86,7 +86,7 @@ public class PedestalBlockRenderer implements BlockEntityRenderer<PedestalBlockE
                     .renderItem(entity.getItem(), ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, model);
             matrices.pop();
             if (!hasDepth) {
-                matrices.translate((double)(0.0F * xGroundScale), (double)(0.0F * yGroundScale), (double)(0.09375F * zGroundScale));
+                matrices.translate((0.0F * xGroundScale), (0.0F * yGroundScale), (0.09375F * zGroundScale));
             }
         }
         matrices.pop();
