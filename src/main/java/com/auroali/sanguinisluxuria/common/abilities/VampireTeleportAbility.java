@@ -13,6 +13,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.event.GameEvent;
 
@@ -112,15 +113,19 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
 
     @Override
     public void handle(LivingEntity entity, TeleportData data) {
-        int dist = (int) data.to.distanceTo(data.from);
-        double yOffset = entity.getEyeHeight(entity.getPose()) / 2;
+        int dist = (int) data.to.distanceTo(data.from) * 2;
+        double eyeYOffset = entity.getEyeHeight(entity.getPose()) / 2;
+        Random rand = entity.getRandom();
         for(int i = 0; i < dist; i++) {
-            Vec3d pos = data.from.lerp(data.to, (float) i / dist).add(0, yOffset, 0);
+            Vec3d pos = data.from.lerp(data.to, (float) i / dist).add(0, eyeYOffset, 0);
+            double xOffset = rand.nextGaussian() * 0.2;
+            double yOffset = rand.nextGaussian() * 0.2;
+            double zOffset = rand.nextGaussian() * 0.2;
             entity.world.addParticle(
                     DustParticleEffect.DEFAULT,
-                    pos.getX(),
-                    pos.getY(),
-                    pos.getZ(),
+                    pos.getX() + xOffset,
+                    pos.getY() + yOffset,
+                    pos.getZ() + zOffset,
                     0,
                     0,
                     0
