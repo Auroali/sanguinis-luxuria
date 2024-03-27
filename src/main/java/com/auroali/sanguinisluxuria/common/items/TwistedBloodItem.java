@@ -36,7 +36,7 @@ public class TwistedBloodItem extends Item {
             if(vampire.getLevel() >= getMinLevel() && vampire.getLevel() < getMaxLevel())
                 vampire.setLevel(vampire.getLevel() + 1);
         }
-        else if(!world.isClient) BloodStorageItem.applyNonVampireEffects(user);
+        else if(!world.isClient) DrinkableBloodStorageItem.applyNonVampireEffects(user);
 
         return new ItemStack(Items.GLASS_BOTTLE);
     }

@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 
 import java.util.Iterator;
 
-public class BloodStorageItem extends Item {
+public abstract class BloodStorageItem extends Item {
     final int maxBlood;
     Item emptyItem = null;
 
@@ -43,6 +43,9 @@ public class BloodStorageItem extends Item {
         super(settings);
         this.maxBlood = maxBlood;
     }
+
+    public abstract boolean canFill();
+    public abstract boolean canDrain();
 
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
@@ -59,52 +62,8 @@ public class BloodStorageItem extends Item {
         if(entity == null)
             return false;
 
-        return !getBloodStorageItemInHand(entity, Hand.OFF_HAND).isEmpty() || !getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty();
-    }
-
-    @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        if (user instanceof ServerPlayerEntity serverPlayerEntity) {
-            Criteria.CONSUME_ITEM.trigger(serverPlayerEntity, stack);
-            serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
-        }
-
-        if(!world.isClient) {
-            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(user);
-            int bloodToAdd = Math.min(blood.getMaxBlood() - blood.getBlood(), getStoredBlood(stack));
-            if(bloodToAdd == 0)
-                return stack;
-
-            if(!VampireHelper.isVampire(user)) {
-                applyNonVampireEffects(user);
-                // i know i could use a food component but this seems like it gives more control
-                if(user instanceof ServerPlayerEntity e && e.getRandom().nextInt(2) == 0)
-                    e.getHungerManager().add(1, 0);
-            } else if(VampireHelper.isVampire(user))
-                bloodToAdd = BLEntityComponents.BLOOD_COMPONENT.get(user).addBlood(bloodToAdd);
-
-            if(!(user instanceof PlayerEntity entity && entity.isCreative()))
-                setStoredBlood(stack, getStoredBlood(stack) - bloodToAdd);
-            if(getStoredBlood(stack) == 0 && emptyItem != null)
-                return new ItemStack(emptyItem, stack.getCount());
-        }
-
-
-        return stack;
-    }
-
-    public static void applyNonVampireEffects(LivingEntity user) {
-        if(user.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) || user.world.isClient)
-            return;
-
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 2));
-        if(user.getRandom().nextInt(2) == 0)
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 120, 0));
-        if(user.getRandom().nextInt(4) == 0)
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
-
-        int bloodSicknessLevel = user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS) == null ? 0 : user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1;
-        user.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, bloodSicknessLevel));
+        return (!getBloodStorageItemInHand(entity, Hand.OFF_HAND).isEmpty() && canBeFilled(getBloodStorageItemInHand(entity, Hand.OFF_HAND)))
+                || (!getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty() && canBeFilled(getBloodStorageItemInHand(entity, Hand.MAIN_HAND)));
     }
 
     /**
@@ -126,13 +85,6 @@ public class BloodStorageItem extends Item {
         int storedBlood = getStoredBlood(stack);
         int maxBlood = getMaxBlood(stack);
         return storedBlood / (float) maxBlood;
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if(getStoredBlood(user.getStackInHand(hand)) == 0)
-            return TypedActionResult.pass(user.getStackInHand(hand));
-        return ItemUsage.consumeHeldItem(world, user, hand);
     }
 
     /**
@@ -173,19 +125,12 @@ public class BloodStorageItem extends Item {
         return stack.getOrCreateNbt().getInt("StoredBlood");
     }
 
-    @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.DRINK;
+    public static boolean canBeFilled(ItemStack stack) {
+        return stack.getItem() instanceof BloodStorageItem item && item.canFill();
     }
 
-    @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return 40;
-    }
-
-    @Override
-    public SoundEvent getDrinkSound() {
-        return BLSounds.DRAIN_BLOOD;
+    public static boolean canBeDrained(ItemStack stack) {
+        return stack.getItem() instanceof BloodStorageItem item && item.canDrain();
     }
 
     private static ItemStack getBloodStorageItemInHand(LivingEntity entity, Hand hand) {
@@ -209,7 +154,7 @@ public class BloodStorageItem extends Item {
             hand = Hand.MAIN_HAND;
         }
 
-        if(stack.isEmpty() || getStoredBlood(stack) + amount > getMaxBlood(stack))
+        if(stack.isEmpty() || !canBeFilled(stack) || getStoredBlood(stack) + amount > getMaxBlood(stack))
             return false;
 
         setStoredBlood(stack, getStoredBlood(stack) + amount);
@@ -290,7 +235,7 @@ public class BloodStorageItem extends Item {
             long insertableAmount = Math.min(maxAmount, getMaxStoredFluid() - getStoredFluid());
 
             // Can't insert if the item is not emptyItem anymore.
-            if (!context.getItemVariant().isOf(emptyItem)) return 0;
+            if (!context.getItemVariant().isOf(emptyItem) || !item.canFill()) return 0;
 
             // Make sure that the fluid and amount match.
             if (resource.isOf(BLFluids.BLOOD_STILL) && insertableAmount != 0) {
@@ -311,7 +256,7 @@ public class BloodStorageItem extends Item {
             StoragePreconditions.notBlankNotNegative(resource, maxAmount);
 
             // If the context's item is not fullItem anymore, can't extract!
-            if (!context.getItemVariant().isOf(item)) return 0;
+            if (!context.getItemVariant().isOf(item) || !item.canDrain()) return 0;
 
             long storedAmount = Math.min(getStoredFluid(), maxAmount);
             // Make sure that the fluid and the amount match.

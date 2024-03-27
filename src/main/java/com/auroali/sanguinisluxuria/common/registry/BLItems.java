@@ -3,10 +3,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.BloodConstants;
-import com.auroali.sanguinisluxuria.common.items.BlessedBloodItem;
-import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.items.MaskItem;
-import com.auroali.sanguinisluxuria.common.items.TwistedBloodItem;
+import com.auroali.sanguinisluxuria.common.items.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -17,11 +14,11 @@ public class BLItems {
     public static final MaskItem MASK_1 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
     public static final MaskItem MASK_2 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
     public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1));
-    public static final BloodStorageItem BLOOD_BAG = new BloodStorageItem(
+    public static final BloodStorageItem BLOOD_BAG = new DrinkableBloodStorageItem(
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1),
             10 * BloodConstants.BLOOD_PER_BOTTLE
     );
-    public static final BloodStorageItem BLOOD_BOTTLE = new BloodStorageItem(
+    public static final BloodStorageItem BLOOD_BOTTLE = new DrinkableBloodStorageItem(
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
             BloodConstants.BLOOD_PER_BOTTLE
     ).emptyItem(Items.GLASS_BOTTLE);
