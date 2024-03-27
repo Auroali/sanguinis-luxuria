@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.client;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.BloodlustClient;
+import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
@@ -55,13 +56,15 @@ public class BLHud {
 
         int bloodBarX = (width - 14) / 2;
         int bloodBarY = height / 2 + 5;
-        DrawableHelper.drawTexture(stack, fangX, fangY, 0, 0, 26, 9, 256, 256);
+        if(!VampireHelper.isMasked(client.player))
+            DrawableHelper.drawTexture(stack, fangX, fangY, 0, 0, 26, 9, 256, 256);
         DrawableHelper.drawTexture(stack, bloodBarX, bloodBarY, 0, 17, 14, 3, 256, 256);
 
         RenderSystem.disableBlend();
 
         DrawableHelper.drawTexture(stack, bloodBarX + 1, bloodBarY, 15, 17, (int) (bloodPercent * 13), 3, 256, 256);
-        DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - percent)), 0, 9 + (int) (9 * (1 - percent)), 26, (int) (9 * percent), 256, 256);
+        if(!VampireHelper.isMasked(client.player))
+            DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - percent)), 0, 9 + (int) (9 * (1 - percent)), 26, (int) (9 * percent), 256, 256);
 
 //        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, width / 2 + 10, height / 2 - 6, 0xFF040000);
 //        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, currentBloodX2, height / 2 - 6, 0xFFDF0000);
