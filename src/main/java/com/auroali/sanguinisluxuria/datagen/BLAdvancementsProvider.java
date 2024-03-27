@@ -2,9 +2,7 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.Bloodlust;
-import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
-import com.auroali.sanguinisluxuria.common.advancements.ResetAbilitiesCriterion;
-import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
+import com.auroali.sanguinisluxuria.common.advancements.*;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
@@ -17,6 +15,8 @@ import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityEffectPredicate;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -62,6 +62,22 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
                 ))
                 .build(BLResources.id("blood_sickness"));
 
+        Advancement infectOther = Advancement.Builder
+                .create()
+                .display(
+                        Items.WITHER_ROSE,
+                        Text.translatable(title("infect_other")),
+                        Text.translatable(desc("infect_other")),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .parent(bloodSickness)
+                .criterion("give_blood_sickness", InfectEntityCriterion.Conditions.create())
+                .build(BLResources.id("infect_other"));
+
         Advancement drinkTwistedBlood = Advancement.Builder
                 .create()
                 .display(
@@ -94,6 +110,38 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
                 .criterion("unlock_ability", UnlockAbilityCriterion.Conditions.create())
                 .build(BLResources.id("unlock_ability"));
 
+        Advancement transferEffects = Advancement.Builder
+                .create()
+                .display(
+                        PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.POISON),
+                        Text.translatable(title("transfer_effects")),
+                        Text.translatable(desc("transfer_effects")),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .parent(unlockAnyAbility)
+                .criterion("transfer_effects", TransferEffectsCriterion.Conditions.create())
+                .build(BLResources.id("transfer_effects"));
+
+        Advancement transferMoreEffects = Advancement.Builder
+                .create()
+                .display(
+                        PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.POISON),
+                        Text.translatable(title("transfer_more_effects")),
+                        Text.translatable(desc("transfer_more_effects")),
+                        null,
+                        AdvancementFrame.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .parent(transferEffects)
+                .criterion("transfer_effects", TransferEffectsCriterion.Conditions.create(4))
+                .build(BLResources.id("transfer_more_effects"));
+
         Advancement resetAbilities = Advancement.Builder
                 .create()
                 .display(
@@ -115,6 +163,9 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
         consumer.accept(drinkTwistedBlood);
         consumer.accept(unlockAnyAbility);
         consumer.accept(resetAbilities);
+        consumer.accept(infectOther);
+        consumer.accept(transferEffects);
+        consumer.accept(transferMoreEffects);
     }
 
     public static String title(String name) {

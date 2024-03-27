@@ -1,6 +1,9 @@
-// 1.19.2	2024-03-24T16:14:21.532002919	Advancements
+// 1.19.2	2024-03-26T22:23:47.360828605	Advancements
+417afc4ff0a9a0272778d3109bfc39595ccd7cb3 data/sanguinisluxuria/advancements/infect_other.json
 71272de8a75ec7209a94c910b8fa31f237ace52e data/sanguinisluxuria/advancements/drink_twisted_blood.json
+4ba4550b92026d5cdc907c35bf845eb7556e2b8f data/sanguinisluxuria/advancements/transfer_more_effects.json
 dc6d7bf5ba096debdfcf5848dab77b0ded3118e6 data/sanguinisluxuria/advancements/reset_abilities.json
 c3083a6595d4f05780525398e9533820a8bde37a data/sanguinisluxuria/advancements/unlock_ability.json
 668c67df57bce1ef8e211ba8e19a25679872eeb1 data/sanguinisluxuria/advancements/become_vampire.json
+5127188c24b0b4693b74cb5521d71eb7c8dc7a17 data/sanguinisluxuria/advancements/transfer_effects.json
 868264c174b0d51d2bf3fedd8d035ce31d4b3435 data/sanguinisluxuria/advancements/blood_sickness.json

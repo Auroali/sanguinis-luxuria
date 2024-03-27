@@ -20,6 +20,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -82,6 +83,7 @@ public class PlayerVampireComponent implements VampireComponent {
                 a.onUnVampire(holder, this);
             }
         }
+        abilities.setShouldSync(true);
         BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
@@ -119,9 +121,12 @@ public class PlayerVampireComponent implements VampireComponent {
         if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
             addToxicBloodEffects();
 
-        // allow conversion of entities with weakness 2
-        if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS) && entity.getStatusEffect(StatusEffects.WEAKNESS).getAmplifier() > 0)
+        // allow conversion of entities with weakness
+        if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS)) {
+            if(holder instanceof ServerPlayerEntity player)
+                BLAdvancementCriterion.INFECT_ENTITY.trigger(player);
             addBloodSickness(target);
+        }
 
         // villagers have a 50% chance to wake up when having their blood drained
         // it also adds negative reputation to the player
@@ -168,6 +173,10 @@ public class PlayerVampireComponent implements VampireComponent {
     private void transferPotionEffectsTo(LivingEntity entity) {
         for(StatusEffectInstance instance : holder.getStatusEffects()) {
             entity.addStatusEffect(instance);
+        }
+
+        if(holder instanceof ServerPlayerEntity player) {
+            BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, player.getStatusEffects().size());
         }
 
         holder.clearStatusEffects();

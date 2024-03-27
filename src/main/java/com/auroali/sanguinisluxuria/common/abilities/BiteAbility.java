@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.abilities;
 
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
@@ -12,6 +13,7 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
@@ -57,6 +59,11 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
             for(StatusEffectInstance effect : entity.getStatusEffects()) {
                 target.addStatusEffect(effect);
             }
+
+            if(entity instanceof ServerPlayerEntity player) {
+                BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, player.getStatusEffects().size());
+            }
+
             entity.clearStatusEffects();
         }
         component.getAbilties().setCooldown(this, 220);

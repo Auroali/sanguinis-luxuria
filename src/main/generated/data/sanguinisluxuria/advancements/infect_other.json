@@ -1,0 +1,29 @@
+{
+  "parent": "sanguinisluxuria:blood_sickness",
+  "criteria": {
+    "give_blood_sickness": {
+      "conditions": {},
+      "trigger": "sanguinisluxuria:infect_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.infect_other.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:wither_rose"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.infect_other.title"
+    }
+  },
+  "requirements": [
+    [
+      "give_blood_sickness"
+    ]
+  ]
+}

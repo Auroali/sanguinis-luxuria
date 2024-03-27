@@ -1,0 +1,32 @@
+{
+  "parent": "sanguinisluxuria:unlock_ability",
+  "criteria": {
+    "transfer_effects": {
+      "conditions": {
+        "min_effects": 1
+      },
+      "trigger": "sanguinisluxuria:transfer_effects"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.transfer_effects.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"minecraft:poison\"}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.transfer_effects.title"
+    }
+  },
+  "requirements": [
+    [
+      "transfer_effects"
+    ]
+  ]
+}

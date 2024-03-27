@@ -1,0 +1,32 @@
+{
+  "parent": "sanguinisluxuria:transfer_effects",
+  "criteria": {
+    "transfer_effects": {
+      "conditions": {
+        "min_effects": 4
+      },
+      "trigger": "sanguinisluxuria:transfer_effects"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.transfer_more_effects.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"minecraft:poison\"}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.transfer_more_effects.title"
+    }
+  },
+  "requirements": [
+    [
+      "transfer_effects"
+    ]
+  ]
+}

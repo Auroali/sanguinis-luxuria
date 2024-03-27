@@ -126,14 +126,27 @@ public class BLLangProvider extends FabricLanguageProvider {
     public static void generateAdvancements(TranslationBuilder translationBuilder) {
         translationBuilder.add(BLAdvancementsProvider.title("become_vampire"), "Bloodlust");
         translationBuilder.add(BLAdvancementsProvider.desc("become_vampire"), "Transform into a vampire after drinking enough blood");
+
         translationBuilder.add(BLAdvancementsProvider.title("drink_twisted_blood"), "Consumption");
         translationBuilder.add(BLAdvancementsProvider.desc("drink_twisted_blood"), "Drink twisted blood");
+
         translationBuilder.add(BLAdvancementsProvider.title("blood_sickness"), "Feeling Ill");
         translationBuilder.add(BLAdvancementsProvider.desc("blood_sickness"), "Get blood sickness from drinking blood");
+
         translationBuilder.add(BLAdvancementsProvider.title("unlock_ability"), "Abilities");
         translationBuilder.add(BLAdvancementsProvider.desc("unlock_ability"), "Allocate a skill point to an ability");
+
         translationBuilder.add(BLAdvancementsProvider.title("reset_abilities"), "Clean Slate");
         translationBuilder.add(BLAdvancementsProvider.desc("reset_abilities"), "Convert unlocked abilities back into skill points using blessed blood");
+
+        translationBuilder.add(BLAdvancementsProvider.title("transfer_effects"), "Infectious");
+        translationBuilder.add(BLAdvancementsProvider.desc("transfer_effects"), "Transfer a potion effect while draining blood");
+
+        translationBuilder.add(BLAdvancementsProvider.title("transfer_more_effects"), "Alchemist");
+        translationBuilder.add(BLAdvancementsProvider.desc("transfer_more_effects"), "Transfer 4 potions effects at once");
+
+        translationBuilder.add(BLAdvancementsProvider.title("infect_other"), "It Spreads");
+        translationBuilder.add(BLAdvancementsProvider.desc("infect_other"), "Inflict blood sickness on something with Weakness");
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {
