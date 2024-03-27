@@ -1,13 +1,8 @@
 package com.auroali.sanguinisluxuria.common.items;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.BloodConstants;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
-import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLFluids;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -17,21 +12,15 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.impl.transfer.TransferApiImpl;
-import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.stat.Stats;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
 
 import java.util.Iterator;
 
@@ -76,15 +65,17 @@ public abstract class BloodStorageItem extends Item {
         return this;
     }
 
+    public static float getFillPercent(ItemStack stack) {
+        return (float) getStoredBlood(stack) / getMaxBlood(stack);
+    }
+
     /**
      * The model predicate to use with ModelPredicateProviderRegistry
      * @see net.minecraft.client.item.ModelPredicateProviderRegistry
      */
     @SuppressWarnings("unused")
     public static float modelPredicate(ItemStack stack, ClientWorld world, LivingEntity entity, int seed) {
-        int storedBlood = getStoredBlood(stack);
-        int maxBlood = getMaxBlood(stack);
-        return storedBlood / (float) maxBlood;
+        return getFillPercent(stack);
     }
 
     /**
@@ -185,8 +176,7 @@ public abstract class BloodStorageItem extends Item {
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        int t = Math.round(getStoredBlood(stack) * 13.f / getMaxBlood(stack));
-        return Math.round(getStoredBlood(stack) * 13.f / getMaxBlood(stack));
+        return Math.round(13.f * getFillPercent(stack));
     }
 
     @Override
@@ -277,7 +267,8 @@ public abstract class BloodStorageItem extends Item {
 
         @Override
         public boolean isResourceBlank() {
-            return !context.getItemVariant().isOf(item) || (context.getItemVariant().getNbt() == null || context.getItemVariant().getNbt().getInt("StoredBlood") == 0);
+            ItemVariant variant = context.getItemVariant();
+            return !variant.isOf(item) || (!variant.hasNbt() || variant.getNbt().getInt("StoredBlood") == 0);
         }
 
         @Override

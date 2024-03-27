@@ -89,14 +89,6 @@ public class Bloodlust implements ModInitializer {
 
 		registerNetworkHandlers();
 
-//		UseItemCallback.EVENT.register((player, world, hand) -> {
-//			ItemStack stack = player.getStackInHand(hand);
-//			if(VampireHelper.isVampire(player) && stack.isFood() && ! stack.isIn(BLTags.Items.VAMPIRE_EDIBLE))
-//				return TypedActionResult.fail(stack);
-//
-//			return TypedActionResult.pass(stack);
-//		});
-
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
 			if(VampireHelper.isVampire(newPlayer)) {
 				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(newPlayer);

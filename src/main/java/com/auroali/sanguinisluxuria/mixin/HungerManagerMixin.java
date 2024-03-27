@@ -62,7 +62,7 @@ public class HungerManagerMixin {
     @ModifyConstant(method = "update", constant = @Constant(intValue = 18))
     public int sanguinisluxuria$modifyMinHealth(int constant) {
         if(VampireHelper.isVampire(sanguinisluxuria$hmTrackedPlayer))
-            return 15;
+            return 8;
         return constant;
     }
 

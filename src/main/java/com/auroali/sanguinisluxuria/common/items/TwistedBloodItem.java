@@ -45,7 +45,7 @@ public class TwistedBloodItem extends Item {
         return 0;
     }
     public static int getMaxLevel() {
-        return 6;
+        return 7;
     }
 
     @Override
