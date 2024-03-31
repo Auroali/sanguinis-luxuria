@@ -57,7 +57,7 @@ public class VampireVillagerEntity extends HostileEntity {
 
         if(world.isClient && vampire.isDown()) {
             Box box = getBoundingBox();
-            int max = 15;
+            int max = 3;
             for (int i = 0; i < max; i++) {
                 double x = box.minX + random.nextDouble() * box.getXLength();
                 double y = box.minY + random.nextDouble() * box.getYLength();
@@ -77,7 +77,8 @@ public class VampireVillagerEntity extends HostileEntity {
 
     @Override
     public float getMovementSpeed() {
-        return super.getMovementSpeed();
+        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        return vampire.isDown() ? 0.5f * super.getMovementSpeed() : super.getMovementSpeed();
     }
 
     @Override
