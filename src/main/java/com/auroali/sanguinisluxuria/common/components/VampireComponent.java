@@ -13,8 +13,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 
 public interface VampireComponent extends Component, AutoSyncedComponent, ServerTickingComponent {
-    int BLOOD_TIMER_LENGTH = 25;
-
     /**
      * @return if the component holder is a vampire
      */
@@ -65,11 +63,34 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      */
     int getTimeInSun();
 
+    /**
+     * Gets the ability container for this component, which tracks unlocked abilities,
+     * ability cooldowns and what abilities are bound to keys
+     * @return this component's ability container
+     */
     VampireAbilityContainer getAbilties();
 
+    /**
+     * @return the amount of skill points this component has
+     */
     int getSkillPoints();
-    void setSkillPoints(int i);
+
+    /**
+     * Sets this component's skill points
+     * @param i the amount of skill points to set
+     */
+    void setSkillPoints(int points);
+
+    /**
+     * Sets this component's level <br>
+     * This also updates the amount of available skill points
+     * @param level the new level
+     */
     void setLevel(int level);
+
+    /**
+     * @return this component's level
+     */
     int getLevel();
 
     void unlockAbility(VampireAbility ability);
@@ -113,10 +134,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @return whether the source is effective and damage should be increased
      */
     static boolean isEffectiveAgainstVampires(DamageSource source) {
-        if(source.isFire())
-            return true;
-
-        if(source.isMagic())
+        if(source.isFire() || source.isMagic())
             return true;
 
         if(source.getAttacker() instanceof LivingEntity entity) {

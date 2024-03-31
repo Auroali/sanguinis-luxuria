@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.abilities.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
@@ -319,7 +320,7 @@ public class PlayerVampireComponent implements VampireComponent {
                     0.5f,
                     1.0f
             );
-        if(bloodDrainTimer >= BLOOD_TIMER_LENGTH) {
+        if(bloodDrainTimer >= BloodConstants.BLOOD_DRAIN_TIME) {
             drainBloodFrom(target);
             bloodDrainTimer = 0;
         }
