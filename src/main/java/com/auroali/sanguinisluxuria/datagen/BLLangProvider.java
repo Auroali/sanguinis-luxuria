@@ -83,6 +83,9 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItems.BLESSED_BLOOD, "Blessed Blood Bottle");
         translationBuilder.add(BLBlocks.PEDESTAL, "Pedestal");
         translationBuilder.add(BLBlocks.SKILL_UPGRADER, "Altar");
+        translationBuilder.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG, "Vampire Villager Spawn Egg");
+
+        translationBuilder.add(BLEntities.VAMPIRE_VILLAGER, "Vampire Villager");
 
         translationBuilder.add("sanguinisluxuria.config.category.abilities", "Abilities");
         translationBuilder.add("sanguinisluxuria.config.option.skill_points_per_level", "Skill Points Per Level");
