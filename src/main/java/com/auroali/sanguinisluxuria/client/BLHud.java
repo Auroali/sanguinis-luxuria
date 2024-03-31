@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.BloodlustClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
+import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -48,7 +49,7 @@ public class BLHud {
 
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(((EntityHitResult) client.crosshairTarget).getEntity());
 
-        double percent = (double) vampire.getBloodDrainTimer() / VampireComponent.BLOOD_TIMER_LENGTH;
+        double percent = (double) vampire.getBloodDrainTimer() / BloodConstants.BLOOD_DRAIN_TIME;
         double bloodPercent = (double) blood.getBlood() / blood.getMaxBlood();
 
         int fangX = (width - 26) / 2;
