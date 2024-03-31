@@ -57,13 +57,13 @@ public class VampireVillagerEntity extends HostileEntity {
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(2, new AvoidSunlightGoal(this));
-        this.goalSelector.add(3, new EscapeSunlightGoal(this, 1.0));
+        this.goalSelector.add(1, new AvoidSunlightGoal(this));
+        this.goalSelector.add(2, new EscapeSunlightGoal(this, 1.0));
         this.goalSelector.add(8, new LookAroundGoal(this));
         this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(3, new VampireAttackGoal(this, 1.0f, false));
-        this.goalSelector.add(1, new TeleportWhenOutOfRangeGoal(this));
+        this.goalSelector.add(2, new TeleportWhenOutOfRangeGoal(this));
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, PlayerEntity.class, true));

@@ -28,7 +28,7 @@ public class BLEntities {
                 .register(VAMPIRE_VILLAGER, VampireVillagerEntity.createMobAttributes()
                         .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
                         .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
-                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.4)
+                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
                 );
     }
 }
