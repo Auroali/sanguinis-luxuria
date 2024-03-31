@@ -32,6 +32,7 @@ import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.brain.sensor.VillagerHostilesSensor;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -78,6 +79,7 @@ public class Bloodlust implements ModInitializer {
 		BLVampireAbilities.register();
 		BLAdvancementCriterion.register();
 		BLEnchantments.register();
+		BLEntities.register();
 
 		ArgumentTypeRegistry.registerArgumentType(
 				BLResources.VAMPIRE_ABILITY_ARGUMENT_ID,

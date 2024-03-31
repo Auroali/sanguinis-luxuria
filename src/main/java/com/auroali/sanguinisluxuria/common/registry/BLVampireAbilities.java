@@ -66,7 +66,7 @@ public class BLVampireAbilities {
             6
     );
 
-    public static final VampireAbility TELEPORT = new VampireTeleportAbility(
+    public static final VampireTeleportAbility TELEPORT = new VampireTeleportAbility(
             () -> new ItemStack(Items.ENDER_PEARL),
             null
     );

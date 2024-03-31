@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.client.BLHud;
 import com.auroali.sanguinisluxuria.client.render.PedestalBlockRenderer;
+import com.auroali.sanguinisluxuria.client.render.VampireVillagerRenderer;
 import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
@@ -15,6 +16,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -63,6 +65,8 @@ public class BloodlustClient implements ClientModInitializer {
     public void onInitializeClient() {
         registerBindings();
 
+        BLModelLayers.register();
+
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_1, BLItems.MASK_1);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
@@ -73,6 +77,8 @@ public class BloodlustClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.BLOOD_SPLATTER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.PEDESTAL, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.SKILL_UPGRADER, RenderLayer.getCutout());
+
+        EntityRendererRegistry.register(BLEntities.VAMPIRE_VILLAGER, VampireVillagerRenderer::new);
 
         BlockEntityRendererFactories.register(BLBlockEntities.PEDESTAL, ctx -> new PedestalBlockRenderer(ctx.getItemRenderer()));
 

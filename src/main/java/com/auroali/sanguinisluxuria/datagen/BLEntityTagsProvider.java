@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.datagen;
 
+import com.auroali.sanguinisluxuria.common.registry.BLEntities;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -49,6 +50,7 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.ZOGLIN)
                 .add(EntityType.ZOMBIFIED_PIGLIN)
                 .add(EntityType.ENDERMAN)
+                .add(BLEntities.VAMPIRE_VILLAGER)
                 .addOptional(new Identifier("ratsmischief", "rat"))
                 .addOptional(new Identifier("spectrum", "egg_laying_wooly_pig"))
                 .addOptional(new Identifier("spectrum", "kindling"));

@@ -6,11 +6,12 @@
     "client.InGameHudMixin"
   ],
   "mixins": [
+    "MeleeAttackGoalAccessor",
     "HungerManagerMixin",
     "IronGolemEntityMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin",
     "PersistentProjectileEntityAccessor",
+    "PlayerEntityMixin",
     "ServerPlayerEntityMixin",
     "ServerWorldMixin",
     "StatusEffectMixin",

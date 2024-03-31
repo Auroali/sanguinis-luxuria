@@ -69,6 +69,8 @@ public class BLResources {
     public static final Identifier BLEEDING_ID = id("bleeding");
     public static final Identifier BLEEDING_SOUND = id("bleeding");
     public static final Identifier INFECT_ENTITY_ID = id("infect_entity");
+    public static final Identifier VAMPIRE_VILLAGER = id("vampire_villager");
+    public static final Identifier VAMPIRE_VILLAGER_TEXTURE = id("textures/entity/vampire_villager.png");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

@@ -35,6 +35,7 @@
     "minecraft:zoglin",
     "minecraft:zombified_piglin",
     "minecraft:enderman",
+    "sanguinisluxuria:vampire_villager",
     {
       "id": "ratsmischief:rat",
       "required": false

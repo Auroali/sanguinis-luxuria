@@ -125,7 +125,7 @@ public class PlayerVampireComponent implements VampireComponent {
         if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS)) {
             if(holder instanceof ServerPlayerEntity player)
                 BLAdvancementCriterion.INFECT_ENTITY.trigger(player);
-            addBloodSickness(target);
+            addBloodSickness(entity);
         }
 
         // villagers have a 50% chance to wake up when having their blood drained
