@@ -50,7 +50,7 @@ public class VampireVillagerEntity extends HostileEntity {
         if(blood.getBlood() > 1 && getHealth() < getMaxHealth() && bloodDrainTimer == 0 && blood.drainBlood()) {
             setHealth(getHealth() + 1);
             playSound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 1.0f, 1.0f);
-            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME;
+            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 4;
         }
     }
 
@@ -76,7 +76,7 @@ public class VampireVillagerEntity extends HostileEntity {
         if(target instanceof LivingEntity entity && target.getType().isIn(BLTags.Entities.HAS_BLOOD) && bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
             vampire.drainBloodFrom(entity);
             playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
-            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME;
+            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 4;
             return true;
         }
         return super.tryAttack(target);
