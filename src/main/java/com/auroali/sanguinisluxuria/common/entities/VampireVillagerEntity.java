@@ -13,17 +13,15 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.mob.SkeletonEntity;
-import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +35,9 @@ public class VampireVillagerEntity extends HostileEntity {
     @Override
     public void tickMovement() {
         this.updateDespawnCounter();
+        if(this.isAffectedByDaylight()) {
+            this.setOnFireFor(8);
+        }
         super.tickMovement();
     }
 
@@ -47,17 +48,44 @@ public class VampireVillagerEntity extends HostileEntity {
             bloodDrainTimer--;
 
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
+        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
         if(blood.getBlood() > 1 && getHealth() < getMaxHealth() && bloodDrainTimer == 0 && blood.drainBlood()) {
             setHealth(getHealth() + 1);
             playSound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 1.0f, 1.0f);
             bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 4;
         }
+
+        if(world.isClient && vampire.isDown()) {
+            Box box = getBoundingBox();
+            int max = 15;
+            for (int i = 0; i < max; i++) {
+                double x = box.minX + random.nextDouble() * box.getXLength();
+                double y = box.minY + random.nextDouble() * box.getYLength();
+                double z = box.minZ + random.nextDouble() * box.getZLength();
+                world.addParticle(
+                        DustParticleEffect.DEFAULT,
+                        x,
+                        y,
+                        z,
+                        0,
+                        0,
+                        0
+                );
+            }
+        }
+    }
+
+    @Override
+    public float getMovementSpeed() {
+        return super.getMovementSpeed();
     }
 
     @Override
     protected void initGoals() {
         super.initGoals();
+
         this.goalSelector.add(1, new AvoidSunlightGoal(this));
+        this.goalSelector.add(4, new SwimGoal(this));
         this.goalSelector.add(2, new EscapeSunlightGoal(this, 1.0));
         this.goalSelector.add(8, new LookAroundGoal(this));
         this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8));
