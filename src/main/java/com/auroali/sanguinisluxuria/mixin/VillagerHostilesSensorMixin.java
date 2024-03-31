@@ -26,7 +26,7 @@ public class VillagerHostilesSensorMixin {
             return;
         }
 
-        if(villager.squaredDistanceTo(target) < 25) {
+        if(villager.squaredDistanceTo(target) < 36 * target.getAttackDistanceScalingFactor(villager)) {
             cir.setReturnValue(true);
             return;
         }
