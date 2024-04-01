@@ -1,14 +1,19 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
+import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
+import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
+import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.registry.Registry;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -62,6 +67,15 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
     @Override
     public void setIsVampire(boolean isVampire) {
         T entity = conversionType.create(holder.world);
+        if(entity == null) {
+            Bloodlust.LOGGER.error("Could not perform conversion for entity {}!", Registry.ENTITY_TYPE.getId(holder.getType()));
+            return;
+        }
+        if(holder.getType().isIn(BLTags.Entities.HAS_BLOOD) && conversionType.isIn(BLTags.Entities.HAS_BLOOD)) {
+            BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(holder);
+            BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+            newBlood.setBlood(Math.min(newBlood.getMaxBlood(), component.getBlood()));
+        }
         entity.setPosition(holder.getX(), holder.getY(), holder.getZ());
         entity.setYaw(holder.getYaw());
         entity.setPitch(holder.getPitch());

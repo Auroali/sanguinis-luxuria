@@ -119,7 +119,7 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         if(maxBlood == -1)
             initializeBloodValues();
 
-        if(getMaxBlood() == 0)
+        if(getMaxBlood() == 0 || VampireHelper.isVampire(holder))
             return;
 
         if(getBlood() < getMaxBlood() && bloodGainTimer < BloodConstants.BLOOD_GAIN_RATE)
