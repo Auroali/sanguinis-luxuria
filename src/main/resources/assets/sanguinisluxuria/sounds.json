@@ -38,5 +38,11 @@
     ],
     "subtitle": "subtitles.sanguinisluxuria.bleeding"
 
+  },
+  "entity_converted_to_vampire": {
+    "sounds": [
+      "mob/zombie/unfect"
+    ],
+    "subtitle": "subtitles.sanguinisluxuria.entity_converted_to_vampire"
   }
 }

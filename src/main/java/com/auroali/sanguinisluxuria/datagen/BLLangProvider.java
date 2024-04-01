@@ -33,6 +33,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("subtitles.sanguinisluxuria.drain_blood", "Vampire feeding");
         translationBuilder.add("subtitles.sanguinisluxuria.altar_beats", "Altar beats");
         translationBuilder.add("subtitles.sanguinisluxuria.bleeding", "Something bleeds");
+        translationBuilder.add("subtitles.sanguinisluxuria.entity_converted_to_vampire", "Something transforms");
 
         translationBuilder.add("fluids.sanguinisluxuria.blood", "Blood");
 

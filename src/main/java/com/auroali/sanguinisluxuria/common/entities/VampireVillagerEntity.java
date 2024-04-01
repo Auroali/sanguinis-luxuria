@@ -6,7 +6,6 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.goals.TeleportWhenOutOfRangeGoal;
 import com.auroali.sanguinisluxuria.common.entities.goals.VampireAttackGoal;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -108,7 +107,6 @@ public class VampireVillagerEntity extends HostileEntity {
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
         if(target instanceof LivingEntity entity && target.getType().isIn(BLTags.Entities.HAS_BLOOD) && bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
             vampire.drainBloodFrom(entity);
-            playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
             bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
             return true;
         }
