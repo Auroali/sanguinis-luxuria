@@ -8,9 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
 
 public class BLTags {
-
     public static class Blocks {
 
         public static final TagKey<Block> BLOOD_SPLATTER_REPLACEABLE = TagKey.of(Registry.BLOCK_KEY, BLResources.BLOOD_SPLATTER_REPLACEABLE);;
@@ -32,5 +32,9 @@ public class BLTags {
     }
     public static class VampireAbilities {
         public static final TagKey<VampireAbility> TELEPORT_RANGE = TagKey.of(BLRegistry.VAMPIRE_ABILITIES_KEY, BLResources.TELEPORT_RANGE_TAG_ID);
+    }
+
+    public static class Biomes {
+        public static final TagKey<Biome> VAMPIRE_VILLAGER_SPAWN = TagKey.of(Registry.BIOME_KEY, BLResources.VAMPIRE_VILLAGER_SPAWN);
     }
 }

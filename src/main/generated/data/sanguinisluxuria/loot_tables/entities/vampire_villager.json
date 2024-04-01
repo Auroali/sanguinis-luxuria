@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "sanguinisluxuria:mask_1"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{StoredBlood:1}"
+            }
+          ],
+          "name": "sanguinisluxuria:blood_bottle"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

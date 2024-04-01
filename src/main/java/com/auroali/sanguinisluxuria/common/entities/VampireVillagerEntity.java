@@ -13,7 +13,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -52,7 +52,7 @@ public class VampireVillagerEntity extends HostileEntity {
         if(blood.getBlood() > 1 && getHealth() < getMaxHealth() && bloodDrainTimer == 0 && blood.drainBlood()) {
             setHealth(getHealth() + 1);
             playSound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 1.0f, 1.0f);
-            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 4;
+            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
         }
 
         if(world.isClient && vampire.isDown()) {
@@ -96,6 +96,10 @@ public class VampireVillagerEntity extends HostileEntity {
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.goalSelector.add(6, new ActiveTargetGoal<>(this, LivingEntity.class, true, e -> {
+            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
+            return e.getType().isIn(BLTags.Entities.HAS_BLOOD) && ((double) blood.getBlood() / blood.getMaxBlood()) < 0.4;
+        }));
     }
 
     @Override
@@ -105,7 +109,7 @@ public class VampireVillagerEntity extends HostileEntity {
         if(target instanceof LivingEntity entity && target.getType().isIn(BLTags.Entities.HAS_BLOOD) && bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
             vampire.drainBloodFrom(entity);
             playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
-            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 4;
+            bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
             return true;
         }
         return super.tryAttack(target);

@@ -2,11 +2,10 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.entities.VampireVillagerEntity;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.attribute.DefaultAttributeRegistry;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.util.registry.Registry;
 
@@ -21,6 +20,7 @@ public class BLEntities {
         Registry.register(Registry.ENTITY_TYPE, BLResources.VAMPIRE_VILLAGER, VAMPIRE_VILLAGER);
 
         registerAttributes();
+        registerSpawns();
     }
 
     public static void registerAttributes() {
@@ -30,5 +30,9 @@ public class BLEntities {
                         .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
                         .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
                 );
+    }
+
+    public static void registerSpawns() {
+        BiomeModifications.addSpawn(b -> b.getBiomeRegistryEntry().isIn(BLTags.Biomes.VAMPIRE_VILLAGER_SPAWN), SpawnGroup.MONSTER, VAMPIRE_VILLAGER, 3, 1, 1);
     }
 }
