@@ -71,16 +71,16 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
             Bloodlust.LOGGER.error("Could not perform conversion for entity {}!", Registry.ENTITY_TYPE.getId(holder.getType()));
             return;
         }
-        if(holder.getType().isIn(BLTags.Entities.HAS_BLOOD) && conversionType.isIn(BLTags.Entities.HAS_BLOOD)) {
-            BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(holder);
-            BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-            newBlood.setBlood(Math.min(newBlood.getMaxBlood(), component.getBlood()));
-        }
         entity.setPosition(holder.getX(), holder.getY(), holder.getZ());
         entity.setYaw(holder.getYaw());
         entity.setPitch(holder.getPitch());
         conversionHandler.accept(entity);
         holder.world.spawnEntity(entity);
+        if(holder.getType().isIn(BLTags.Entities.HAS_BLOOD) && conversionType.isIn(BLTags.Entities.HAS_BLOOD)) {
+            BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(holder);
+            BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+            newBlood.setBlood(Math.min(newBlood.getMaxBlood(), component.getBlood()));
+        }
         holder.world.playSound(null, holder.getX(), holder.getY(), holder.getZ(), BLSounds.VAMPIRE_CONVERT, holder.getSoundCategory(), 1.0f, 1.0f);
         holder.remove(Entity.RemovalReason.DISCARDED);
     }
