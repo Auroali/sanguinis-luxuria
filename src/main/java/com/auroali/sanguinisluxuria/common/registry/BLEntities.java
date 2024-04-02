@@ -25,9 +25,10 @@ public class BLEntities {
 
     public static void registerAttributes() {
         FabricDefaultAttributeRegistry
-                .register(VAMPIRE_VILLAGER, VampireVillagerEntity.createMobAttributes()
+                .register(VAMPIRE_VILLAGER, VampireVillagerEntity.createHostileAttributes()
                         .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
-                        .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
+                        .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7)
+                        .add(EntityAttributes.GENERIC_ARMOR, 2)
                         .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
                 );
     }
