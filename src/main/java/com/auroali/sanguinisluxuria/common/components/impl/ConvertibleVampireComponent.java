@@ -86,24 +86,21 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
                 c.initializeBloodValues();
             newBlood.setBlood(Math.min(newBlood.getMaxBlood(), component.getBlood()));
         }
+
+        entity.setCustomName(holder.getCustomName());
+
         holder.world.playSound(null, holder.getX(), holder.getY(), holder.getZ(), BLSounds.VAMPIRE_CONVERT, holder.getSoundCategory(), 1.0f, 1.0f);
         holder.remove(Entity.RemovalReason.DISCARDED);
     }
 
     @Override
-    public void drainBloodFrom(LivingEntity entity) {
-
-    }
+    public void drainBloodFrom(LivingEntity entity) {}
 
     @Override
-    public void tryStartSuckingBlood() {
-
-    }
+    public void tryStartSuckingBlood() {}
 
     @Override
-    public void stopSuckingBlood() {
-
-    }
+    public void stopSuckingBlood() {}
 
     @Override
     public int getBloodDrainTimer() {
@@ -131,14 +128,10 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
     }
 
     @Override
-    public void setSkillPoints(int points) {
-
-    }
+    public void setSkillPoints(int points) {}
 
     @Override
-    public void setLevel(int level) {
-
-    }
+    public void setLevel(int level) {}
 
     @Override
     public int getLevel() {
@@ -146,9 +139,7 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
     }
 
     @Override
-    public void unlockAbility(VampireAbility ability) {
-
-    }
+    public void unlockAbility(VampireAbility ability) {}
 
     @Override
     public boolean isDown() {
@@ -156,22 +147,14 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
     }
 
     @Override
-    public void setDowned(boolean down) {
-
-    }
+    public void setDowned(boolean down) {}
 
     @Override
-    public void serverTick() {
-
-    }
+    public void serverTick() {}
 
     @Override
-    public void readFromNbt(NbtCompound tag) {
-
-    }
+    public void readFromNbt(NbtCompound tag) {}
 
     @Override
-    public void writeToNbt(NbtCompound tag) {
-
-    }
+    public void writeToNbt(NbtCompound tag) {}
 }
