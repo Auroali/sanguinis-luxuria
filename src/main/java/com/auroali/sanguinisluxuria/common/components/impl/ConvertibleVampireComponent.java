@@ -66,6 +66,8 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
 
     @Override
     public void setIsVampire(boolean isVampire) {
+        if(!isVampire)
+            return;
         T entity = conversionType.create(holder.world);
         if(entity == null) {
             Bloodlust.LOGGER.error("Could not perform conversion for entity {}!", Registry.ENTITY_TYPE.getId(holder.getType()));
@@ -79,6 +81,9 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
         if(holder.getType().isIn(BLTags.Entities.HAS_BLOOD) && conversionType.isIn(BLTags.Entities.HAS_BLOOD)) {
             BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(holder);
             BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+            // we do this as otherwise the values we set will be overridden
+            if(newBlood instanceof EntityBloodComponent c)
+                c.initializeBloodValues();
             newBlood.setBlood(Math.min(newBlood.getMaxBlood(), component.getBlood()));
         }
         holder.world.playSound(null, holder.getX(), holder.getY(), holder.getZ(), BLSounds.VAMPIRE_CONVERT, holder.getSoundCategory(), 1.0f, 1.0f);
