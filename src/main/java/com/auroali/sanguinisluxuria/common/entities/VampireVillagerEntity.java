@@ -49,7 +49,7 @@ public class VampireVillagerEntity extends HostileEntity {
 
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
-        if(blood.getBlood() > 1 && getHealth() < getMaxHealth() && bloodDrainTimer == 0 && blood.drainBlood()) {
+        if(canHealWithBlood()) {
             setHealth(getHealth() + 1);
             bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
         }
@@ -72,6 +72,13 @@ public class VampireVillagerEntity extends HostileEntity {
                 );
             }
         }
+    }
+
+    protected boolean canHealWithBlood() {
+        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
+        // only heal when healing wouldnt completely drain blood, health is less than max health, and blood could be drained
+        // also prioritize draining blood when targeting an entity and health is above 50%
+        return blood.getBlood() > 1 && getHealth() < getMaxHealth() && (this.getTarget() == null || this.getHealth() / this.getMaxHealth() < 0.5f) && blood.drainBlood();
     }
 
     @Override
