@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.registry.Registry;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -22,19 +23,19 @@ import java.util.function.Function;
  * Component designed to handle conversion between two entities upon turning into a vampire <br>
  * An example of this would be Villagers turning into Vampire Villagers
  */
-public class ConvertibleVampireComponent<T extends LivingEntity> implements VampireComponent {
+public class ConvertibleVampireComponent<U extends LivingEntity, T extends LivingEntity> implements VampireComponent {
     EntityType<T> conversionType;
-    Consumer<T> conversionHandler;
-    LivingEntity holder;
+    BiConsumer<U, T> conversionHandler;
+    U holder;
 
-    public ConvertibleVampireComponent(LivingEntity holder, EntityType<T> conversionType, Consumer<T> conversionHandler) {
+    public ConvertibleVampireComponent(U holder, EntityType<T> conversionType, BiConsumer<U, T> conversionHandler) {
         this.holder = holder;
         this.conversionType = conversionType;
         this.conversionHandler = conversionHandler;
     }
 
-    public ConvertibleVampireComponent(LivingEntity holder, EntityType<T> conversionType) {
-        this(holder, conversionType, e -> {});
+    public ConvertibleVampireComponent(U holder, EntityType<T> conversionType) {
+        this(holder, conversionType, (f, t) -> {});
     }
 
     /**
@@ -55,7 +56,7 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
      * @return the factory
      * @param <T> the entity class
      */
-    public static <T extends LivingEntity> Function<LivingEntity, ConvertibleVampireComponent<T>> create(EntityType<T> type, Consumer<T> conversionHandler) {
+    public static <U extends LivingEntity, T extends LivingEntity> ComponentFactory<U, ? extends VampireComponent> create(EntityType<T> type, BiConsumer<U, T> conversionHandler) {
         return e -> new ConvertibleVampireComponent<>(e, type, conversionHandler);
     }
 
@@ -76,8 +77,7 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
         entity.setPosition(holder.getX(), holder.getY(), holder.getZ());
         entity.setYaw(holder.getYaw());
         entity.setPitch(holder.getPitch());
-        conversionHandler.accept(entity);
-        holder.world.spawnEntity(entity);
+
         if(holder.getType().isIn(BLTags.Entities.HAS_BLOOD) && conversionType.isIn(BLTags.Entities.HAS_BLOOD)) {
             BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(holder);
             BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
@@ -88,6 +88,10 @@ public class ConvertibleVampireComponent<T extends LivingEntity> implements Vamp
         }
 
         entity.setCustomName(holder.getCustomName());
+
+        conversionHandler.accept(holder, entity);
+
+        holder.world.spawnEntity(entity);
 
         holder.world.playSound(null, holder.getX(), holder.getY(), holder.getZ(), BLSounds.VAMPIRE_CONVERT, holder.getSoundCategory(), 1.0f, 1.0f);
         holder.remove(Entity.RemovalReason.DISCARDED);
