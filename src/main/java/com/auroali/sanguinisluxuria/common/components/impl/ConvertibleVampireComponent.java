@@ -51,7 +51,7 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
     /**
      * Creates a factory for a ConvertibleVampireComponent of the specified type
      * @param type the entity type to convert to
-     * @param conversionHandler a consumer that accepts the newly created entity upon conversion, right before it spawns in.
+     * @param conversionHandler a bi consumer that accepts the original entity and the newly created entity upon conversion, right before it spawns in.
      *                          Can be used for handling custom conversion logic, such as copying certain properties over to the new entity
      * @return the factory
      * @param <T> the entity class
