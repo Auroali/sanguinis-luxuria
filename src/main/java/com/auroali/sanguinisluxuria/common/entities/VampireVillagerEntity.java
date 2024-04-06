@@ -109,6 +109,7 @@ public class VampireVillagerEntity extends HostileEntity {
             vampire.drainBloodFrom(entity);
             playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
             bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
+            this.onAttacking(target);
             return true;
         }
         return super.tryAttack(target);
