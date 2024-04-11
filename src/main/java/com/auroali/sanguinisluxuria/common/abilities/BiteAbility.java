@@ -109,7 +109,6 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
 
     @Override
     public void handle(LivingEntity entity, LivingEntity data) {
-        List<Vec3f> colours = List.of(DustParticleEffect.RED);
         Box box = data.getBoundingBox();
         Random rand = data.getRandom();
         int max = 15;
@@ -117,9 +116,8 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
             double x = box.minX + rand.nextDouble() * box.getXLength();
             double y = box.minY + rand.nextDouble() * box.getYLength();
             double z = box.minZ + rand.nextDouble() * box.getZLength();
-            Vec3f colour = colours.get(rand.nextInt(colours.size()));
             data.world.addParticle(
-                    new DustParticleEffect(colour, 1.0f),
+                    DustParticleEffect.DEFAULT,
                     x,
                     y,
                     z,
