@@ -10,12 +10,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
@@ -50,18 +48,34 @@ public class InGameHudMixin {
             RenderSystem.setShaderTexture(0, InGameHud.GUI_ICONS_TEXTURE);
     }
 
-    @Redirect(method = "renderVignetteOverlay", at = @At(
-            value = "FIELD",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;vignetteDarkness:F"
-    ))
-    public float sanguinisluxuria$showSunTimeProgress(InGameHud hud) {
+    @ModifyVariable(method = "renderVignetteOverlay", at = @At(
+            value = "STORE"
+    ), ordinal = 1)
+    public float sanguinisluxuria$showSunTimeProgress(float g) {
         PlayerEntity entity = MinecraftClient.getInstance().player;
         if(VampireHelper.isVampire(entity)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
             if(vampire.getTimeInSun() == 0)
-                return hud.vignetteDarkness;
+                return g;
             return (float) vampire.getTimeInSun() / vampire.getMaxTimeInSun();
         }
-        return hud.vignetteDarkness;
+        return g;
+    }
+
+    @Inject(method = "renderVignetteOverlay", at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V",
+            shift = At.Shift.AFTER,
+            ordinal = 1
+    ))
+    public void sanguinisluxuria$modifyVignetteColourInSun(Entity entity, CallbackInfo ci) {
+        PlayerEntity player = MinecraftClient.getInstance().player;
+        if(VampireHelper.isVampire(player)) {
+            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+            if (vampire.getTimeInSun() != 0) {
+                float multiplier = (float) vampire.getTimeInSun() / vampire.getMaxTimeInSun();
+                RenderSystem.setShaderColor(0.0f, multiplier * 0.75f, multiplier, 0.0f);
+            }
+        }
     }
 }
