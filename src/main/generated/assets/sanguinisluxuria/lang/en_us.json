@@ -31,6 +31,7 @@
   "death.attack.sanguinisluxuria.blood_drain_by_entity.item": "%1$s had their blood drained by %2$s",
   "death.attack.sanguinisluxuria.drain_blood": "%1$s had their blood drained",
   "death.attack.sanguinisluxuria.drain_blood.player": "%1$s had their blood drained whilst fighting %2$s",
+  "effect.sanguinisluxuria.bleeding": "Bleeding",
   "effect.sanguinisluxuria.blessed_blood": "Blessed Blood",
   "effect.sanguinisluxuria.blessed_water": "Blessed Water",
   "effect.sanguinisluxuria.blood_sickness": "Blood Sickness",
