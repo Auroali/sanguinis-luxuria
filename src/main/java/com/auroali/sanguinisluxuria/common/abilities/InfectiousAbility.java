@@ -22,7 +22,7 @@ public class InfectiousAbility extends SimpleVampireAbility implements SyncableV
     }
 
     @Override
-    public void writePacket(PacketByteBuf buf, LivingEntity entity, InfectiousData data) {
+    public void writePacket(PacketByteBuf buf, World world, InfectiousData data) {
         buf.writeVarInt(data.target.getId());
         buf.writeVarInt(data.colours.size());
         for(Vec3f vec : data.colours) {
