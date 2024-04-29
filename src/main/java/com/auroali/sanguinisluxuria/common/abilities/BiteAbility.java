@@ -3,7 +3,6 @@ package com.auroali.sanguinisluxuria.common.abilities;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
@@ -14,16 +13,13 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class BiteAbility extends VampireAbility implements SyncableVampireAbility<LivingEntity> {

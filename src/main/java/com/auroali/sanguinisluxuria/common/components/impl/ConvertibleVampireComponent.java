@@ -16,8 +16,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.registry.Registry;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Component designed to handle conversion between two entities upon turning into a vampire <br>
