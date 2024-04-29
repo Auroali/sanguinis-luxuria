@@ -19,6 +19,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
+import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
@@ -87,13 +88,13 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
     }
 
     @Override
-    public void writePacket(PacketByteBuf buf, LivingEntity entity, LivingEntity data) {
+    public void writePacket(PacketByteBuf buf, World world, LivingEntity data) {
         buf.writeVarInt(data.getId());
     }
 
     @Override
-    public LivingEntity readPacket(PacketByteBuf buf, LivingEntity entity) {
-        return (LivingEntity) entity.world.getEntityById(buf.readVarInt());
+    public LivingEntity readPacket(PacketByteBuf buf, World world) {
+        return (LivingEntity) world.getEntityById(buf.readVarInt());
     }
 
     @Override

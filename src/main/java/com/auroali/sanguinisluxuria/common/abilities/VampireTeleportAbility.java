@@ -21,6 +21,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
+import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.function.Supplier;
@@ -108,7 +109,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
     }
 
     @Override
-    public void writePacket(PacketByteBuf buf, LivingEntity entity, TeleportData data) {
+    public void writePacket(PacketByteBuf buf, World world, TeleportData data) {
         buf.writeDouble(data.from.x);
         buf.writeDouble(data.from.y);
         buf.writeDouble(data.from.z);
@@ -118,7 +119,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
     }
 
     @Override
-    public TeleportData readPacket(PacketByteBuf buf, LivingEntity entity) {
+    public TeleportData readPacket(PacketByteBuf buf, World world) {
         double fromX = buf.readDouble();
         double fromY = buf.readDouble();
         double fromZ = buf.readDouble();

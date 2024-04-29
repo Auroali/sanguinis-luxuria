@@ -8,12 +8,19 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+/**
+ * Represents a VampireAbility that can send data of type <code>T</code> to the client
+ * <br> To use, you must implement writePacket, readPacket, and handle.
+ * <br> To send data to the client you must call <code>SyncableVampireComponent#sync</code> and provide data of the correct type.
+ * @param <T> the type of data to be sent to the client. Can be anything, as long as it can be written to and read from a packet
+ */
 public interface SyncableVampireAbility<T> {
-    default void writePacket(PacketByteBuf buf, LivingEntity entity, T data) {}
-    default T readPacket(PacketByteBuf buf, LivingEntity entity) { return null; }
+    default void writePacket(PacketByteBuf buf, World world, T data) {}
+    default T readPacket(PacketByteBuf buf, World entity) { return null; }
     default void sync(LivingEntity entity, T data) {
         if(!VampireAbility.class.isAssignableFrom(this.getClass()))
             throw new IllegalStateException("SyncableVampireAbility must be implemented on a VampireAbility!");
@@ -28,7 +35,7 @@ public interface SyncableVampireAbility<T> {
             ServerPlayNetworking.send(p, BLResources.ABILITY_SYNC_CHANNEL, buf);
     }
     default void handlePacket(LivingEntity entity, PacketByteBuf buf, Consumer<Runnable> executor) {
-        T data = readPacket(buf, entity);
+        T data = readPacket(buf, entity.getWorld());
         executor.accept(() -> handle(entity, data));
     }
     void handle(LivingEntity entity, T data);

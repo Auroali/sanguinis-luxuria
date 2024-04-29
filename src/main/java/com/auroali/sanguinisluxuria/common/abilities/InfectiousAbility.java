@@ -8,6 +8,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +33,7 @@ public class InfectiousAbility extends SimpleVampireAbility implements SyncableV
     }
 
     @Override
-    public InfectiousData readPacket(PacketByteBuf buf, LivingEntity entity) {
+    public InfectiousData readPacket(PacketByteBuf buf, World world) {
         int id = buf.readVarInt();
         int size = buf.readVarInt();
         List<Vec3f> list = Arrays.asList(new Vec3f[size]);
@@ -42,7 +43,7 @@ public class InfectiousAbility extends SimpleVampireAbility implements SyncableV
             float b = buf.readFloat();
             list.set(i, new Vec3f(r, g, b));
         }
-        LivingEntity target = (LivingEntity) entity.getWorld().getEntityById(id);
+        LivingEntity target = (LivingEntity) world.getEntityById(id);
         return new InfectiousData(target, list);
     }
 
