@@ -75,6 +75,7 @@ public class VampireAbilitiesScreen extends Screen {
     public void renderAbilityWidgetTooltip(MatrixStack matrices, int mouseX, int mouseY, VampireAbilityContainer container, VampireAbilityWidget widget) {
         ArrayList<Text> text = new ArrayList<>();
         text.add(Text.translatable(widget.ability.getTranslationKey()));
+        text.add(Text.translatable(widget.ability.getDescTranslationKey()));
 
         if(!container.hasAbility(widget.ability))
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.required_skill_points", widget.ability.getRequiredSkillPoints())

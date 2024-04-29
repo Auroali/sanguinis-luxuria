@@ -21,6 +21,7 @@ public abstract class VampireAbility {
     private final List<VampireAbilityCondition> conditions = new ArrayList<>();
     private int skillPoints;
     private String transKey;
+    private String descTransKey;
     private final RegistryEntry.Reference<VampireAbility> holder = BLRegistry.VAMPIRE_ABILITIES.createEntry(this);
     public VampireAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         this.icon = icon;
@@ -107,6 +108,11 @@ public abstract class VampireAbility {
         }
         return transKey == null ? "" : transKey;
     }
+
+    public String getDescTranslationKey() {
+        return descTransKey == null ? descTransKey = getTranslationKey() + ".desc" : descTransKey;
+    }
+
 
     /**
      * Gets the amount of skill points required to unlock this ability

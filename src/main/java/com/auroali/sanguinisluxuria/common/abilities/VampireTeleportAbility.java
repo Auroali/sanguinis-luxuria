@@ -2,9 +2,14 @@ package com.auroali.sanguinisluxuria.common.abilities;
 
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
+import com.auroali.sanguinisluxuria.config.BLConfig;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DustParticleEffect;
@@ -12,6 +17,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
@@ -59,11 +65,25 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         entity.teleport(newPos.getX(), newPos.getY(), newPos.getZ());
         entity.world.emitGameEvent(GameEvent.TELEPORT, start, GameEvent.Emitter.of(entity));
         entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        TrinketsApi.getTrinketComponent(entity).ifPresent(c -> {
+            if(c.isEquipped(BLItems.PENDANT_OF_PIERCING))
+                damageEntitiesBetween(entity, start, newPos);
+        });
+
 
         sync(entity, new TeleportData(start, entity.getPos()));
 
         component.getAbilties().setCooldown(this, getCooldown(component.getAbilties()));
         return true;
+    }
+
+    public void damageEntitiesBetween(LivingEntity entity, Vec3d start, Vec3d end) {
+        Box box = new Box(start, end);
+        entity.getWorld().getOtherEntities(entity, box, e -> e.isLiving() && e.isAlive())
+                .forEach(e -> {
+                    if(e.damage(BLDamageSources.teleport(entity), 4) && entity instanceof PlayerEntity player)
+                        player.addExhaustion(0.25f / BLConfig.INSTANCE.vampireExhaustionMultiplier);
+                });
     }
 
     public double getRange(VampireAbilityContainer container) {

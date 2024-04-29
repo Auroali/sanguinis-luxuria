@@ -40,4 +40,9 @@ public class BLDamageSources {
         return new EntityDamageSource("sanguinisluxuria.bite", entity)
                 .setBypassesArmor();
     }
+
+    public static DamageSource teleport(LivingEntity entity) {
+        return new EntityDamageSource("sanguinisluxuria.teleport", entity)
+                .setBypassesArmor();
+    }
 }

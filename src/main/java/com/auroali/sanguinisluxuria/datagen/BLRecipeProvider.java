@@ -1,9 +1,11 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
+import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
@@ -70,6 +72,13 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(Items.SUNFLOWER)
                 .input(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION))
                 .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))
+                .offerTo(exporter);
+        AltarRecipeJsonBuilder.create(BLItems.PENDANT_OF_PIERCING)
+                .input(BLItems.TWISTED_BLOOD)
+                .input(Items.ARROW)
+                .input(Items.GOLD_INGOT)
+                .input(Items.STRING)
+                .criterion("unlock_abilities", UnlockAbilityCriterion.Conditions.create(BLVampireAbilities.TELEPORT))
                 .offerTo(exporter);
     }
 }

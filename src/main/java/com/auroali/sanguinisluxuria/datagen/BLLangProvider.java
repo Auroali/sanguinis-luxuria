@@ -54,6 +54,9 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("death.attack.sanguinisluxuria.bite", "%1$s was bit by %2$s");
         translationBuilder.add("death.attack.sanguinisluxuria.bite.item", "%1$s was bit by %2$s");
 
+        translationBuilder.add("death.attack.sanguinisluxuria.teleport", "%1$s was pierced by %2$s");
+        translationBuilder.add("death.attack.sanguinisluxuria.teleport.item", "%1$s was pierced by %2$s using %3$s");
+
         translationBuilder.add("death.attack.sanguinisluxuria.blessed_water", "%1$s was burned by blessed water");
         translationBuilder.add("death.attack.sanguinisluxuria.blessed_water.player", "%1$s was burned by blessed water whilst fighting %2$s");
         translationBuilder.add("death.attack.sanguinisluxuria.blessed_water_entity", "%1$s was burned by %2$s using blessed water");
@@ -105,25 +108,54 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLBlocks.BLOOD_CAULDRON, "Blood Cauldron");
         translationBuilder.add(BLBlocks.BLOOD_SPLATTER, "Blood");
 
+        translationBuilder.add(BLItems.PENDANT_OF_PIERCING, "Pendant of Piercing");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.TIPPED_ARROW, "Arrow of Blessed Water");
 
         generateAbilityKey(translationBuilder, BLVampireAbilities.HEALTH_1, "Increased Health");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.HEALTH_1, "Increases your maximum health");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.HEALTH_2, "Increased Health");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.HEALTH_2, "Increases your maximum health");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_1, "Increased Strength");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_1, "Increases your base damage");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_2, "Increased Strength");
-        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT, "Teleport");
-        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_1, "Decreased Teleport Cooldown");
-        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_2, "Decreased Teleport Cooldown");
-        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_1, "Increased Teleport Range");
-        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_2, "Increased Teleport Range");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.VAMPIRE_STRENGTH_2, "Increases your base damage");
+
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT, "Blink");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TELEPORT, "Moves you forward a short distance");
+
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_1, "Decreased Blink Cooldown");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_1, "Reduces the cooldown for blink");
+
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_2, "Decreased Blink Cooldown");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TELEPORT_COOLDOWN_2, "Reduces the cooldown for blink");
+
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_1, "Increased Blink Range");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_1, "Increases the range of blink");
+
+        generateAbilityKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_2, "Increased Blink Range");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TELEPORT_RANGE_2, "Increases the range of blink");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.MORE_BLOOD, "Blood Efficiency");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.MORE_BLOOD, "Increases the amount of blood gained");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.TRANSFER_EFFECTS, "Infectious");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TRANSFER_EFFECTS, "Transfers potion effects upon draining something's blood");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.BITE, "Bite");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.BITE, "Deals damage that bypasses armor and inflicts bleeding");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.SUN_PROTECTION, "Sun Resistance");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.SUN_PROTECTION, "Increases the amount of time you can spend in the sun");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.DAMAGE_REDUCTION, "Resistance");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.DAMAGE_REDUCTION, "Reduces damage taken from most sources");
 
         generateAdvancements(translationBuilder);
     }
@@ -162,5 +194,9 @@ public class BLLangProvider extends FabricLanguageProvider {
 
     public static void generateAbilityKey(TranslationBuilder builder, VampireAbility ability, String entry) {
         builder.add(ability.getTranslationKey(), entry);
+    }
+
+    public static void generateAbilityDescKey(TranslationBuilder builder, VampireAbility ability, String entry) {
+        builder.add(ability.getDescTranslationKey(), entry);
     }
 }

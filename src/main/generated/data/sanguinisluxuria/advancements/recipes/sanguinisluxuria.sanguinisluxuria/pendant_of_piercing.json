@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "sanguinisluxuria:pendant_of_piercing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "unlock_abilities": {
+      "conditions": {
+        "ability": "sanguinisluxuria:teleport"
+      },
+      "trigger": "sanguinisluxuria:unlock_ability"
+    }
+  },
+  "requirements": [
+    [
+      "unlock_abilities",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "sanguinisluxuria:pendant_of_piercing"
+    ]
+  }
+}
