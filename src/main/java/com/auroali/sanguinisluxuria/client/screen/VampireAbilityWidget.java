@@ -212,12 +212,9 @@ public class VampireAbilityWidget extends DrawableHelper implements Comparable<V
             return false;
         }
 
-        for(VampireAbility other : vampire.getAbilties()) {
-            if(ability.incompatibleWith(other)) {
-                entity.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BASS, SoundCategory.PLAYERS, 1.0f, 1.0f);
-                return false;
-            }
-        }
+        if(VampireHelper.hasIncompatibleAbility(vampire.getAbilties(), ability))
+            return false;
+
         entity.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);

@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.abilities;
 
+import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
@@ -56,15 +57,7 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
         sync(entity, target);
         if(component.getAbilties().hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
             BLVampireAbilities.TRANSFER_EFFECTS.sync(entity, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
-            for(StatusEffectInstance effect : entity.getStatusEffects()) {
-                target.addStatusEffect(effect);
-            }
-
-            if(entity instanceof ServerPlayerEntity player) {
-                BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, player.getStatusEffects().size());
-            }
-
-            entity.clearStatusEffects();
+            VampireHelper.transferStatusEffects(entity, target);
         }
         component.getAbilties().setCooldown(this, 220);
         return true;

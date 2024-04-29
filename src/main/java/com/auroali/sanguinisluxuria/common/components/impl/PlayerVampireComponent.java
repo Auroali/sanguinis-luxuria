@@ -114,18 +114,18 @@ public class PlayerVampireComponent implements VampireComponent {
         // if the potion transfer ability is unlocked, transfer potion effects to the target
         if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
             BLVampireAbilities.TRANSFER_EFFECTS.sync(entity, InfectiousAbility.InfectiousData.create(entity, holder.getStatusEffects()));
-            transferPotionEffectsTo(entity);
+            VampireHelper.transferStatusEffects(holder, target);
         }
 
         // apply any negative effects for toxic blood
         if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
-            addToxicBloodEffects();
+            VampireHelper.addToxicBloodEffects(holder);
 
         // allow conversion of entities with weakness
         if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS)) {
             if(holder instanceof ServerPlayerEntity player)
                 BLAdvancementCriterion.INFECT_ENTITY.trigger(player);
-            addBloodSickness(entity);
+            VampireHelper.incrementBloodSickness(entity);
         }
 
         // villagers have a 50% chance to wake up when having their blood drained
@@ -168,33 +168,6 @@ public class PlayerVampireComponent implements VampireComponent {
                 break;
             }
         }
-    }
-
-    private void transferPotionEffectsTo(LivingEntity entity) {
-        for(StatusEffectInstance instance : holder.getStatusEffects()) {
-            entity.addStatusEffect(instance);
-        }
-
-        if(holder instanceof ServerPlayerEntity player) {
-            BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, player.getStatusEffects().size());
-        }
-
-        holder.clearStatusEffects();
-    }
-
-    private void addBloodSickness(LivingEntity target) {
-        int level = target.hasStatusEffect(BLStatusEffects.BLOOD_SICKNESS)
-                ? target.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1
-                : 0;
-
-        target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, level));
-    }
-
-    private void addToxicBloodEffects() {
-        holder.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 3));
-        holder.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 0));
-        if(holder.getRandom().nextDouble() > 0.75)
-            holder.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
     }
 
     @Override

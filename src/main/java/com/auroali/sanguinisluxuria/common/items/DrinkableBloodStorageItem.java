@@ -67,8 +67,7 @@ public class DrinkableBloodStorageItem extends BloodStorageItem
         if(user.getRandom().nextInt(4) == 0)
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
 
-        int bloodSicknessLevel = user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS) == null ? 0 : user.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1;
-        user.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, bloodSicknessLevel));
+        VampireHelper.incrementBloodSickness(user);
     }
 
     @Override
