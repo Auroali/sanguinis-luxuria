@@ -294,7 +294,10 @@ public class PlayerVampireComponent implements VampireComponent {
                     0.5f,
                     1.0f
             );
-        if(bloodDrainTimer >= BloodConstants.BLOOD_DRAIN_TIME) {
+
+        // need to implement faster draining with bleeding
+        int timeToDrain = BloodConstants.BLOOD_DRAIN_TIME;
+        if(bloodDrainTimer >= timeToDrain) {
             drainBloodFrom(target);
             bloodDrainTimer = 0;
         }

@@ -16,6 +16,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
@@ -47,9 +48,13 @@ public class BLHud {
         );
 
 
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(((EntityHitResult) client.crosshairTarget).getEntity());
+        Entity targetedEntity = ((EntityHitResult) client.crosshairTarget).getEntity();
+        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(targetedEntity);
 
-        double percent = (double) vampire.getBloodDrainTimer() / BloodConstants.BLOOD_DRAIN_TIME;
+        int timeToDrain = BloodConstants.BLOOD_DRAIN_TIME;
+        // need to implement faster draining with bleeding
+
+        double drainPercent = (double) vampire.getBloodDrainTimer() / timeToDrain;
         double bloodPercent = (double) blood.getBlood() / blood.getMaxBlood();
 
         int fangX = (width - 26) / 2;
@@ -65,7 +70,7 @@ public class BLHud {
 
         DrawableHelper.drawTexture(stack, bloodBarX + 1, bloodBarY, 15, 17, (int) (bloodPercent * 13), 3, 256, 256);
         if(!VampireHelper.isMasked(client.player))
-            DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - percent)), 0, 9 + (int) (9 * (1 - percent)), 26, (int) (9 * percent), 256, 256);
+            DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - drainPercent)), 0, 9 + (int) (9 * (1 - drainPercent)), 26, (int) (9 * drainPercent), 256, 256);
 
 //        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, width / 2 + 10, height / 2 - 6, 0xFF040000);
 //        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, currentBloodX2, height / 2 - 6, 0xFFDF0000);
