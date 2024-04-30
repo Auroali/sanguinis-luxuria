@@ -82,8 +82,8 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         Box box = new Box(start, end);
         entity.getWorld().getOtherEntities(entity, box, e -> e.isLiving() && e.isAlive())
                 .forEach(e -> {
-                    if(e.damage(BLDamageSources.teleport(entity), 4) && entity instanceof PlayerEntity player)
-                        player.addExhaustion(0.25f / BLConfig.INSTANCE.vampireExhaustionMultiplier);
+                    if(e.getBoundingBox().intersects(start, end) && e.damage(BLDamageSources.teleport(entity), 4) && entity instanceof PlayerEntity player)
+                        player.addExhaustion(0.45f / BLConfig.INSTANCE.vampireExhaustionMultiplier);
                 });
     }
 

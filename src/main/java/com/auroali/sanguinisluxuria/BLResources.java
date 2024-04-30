@@ -10,7 +10,6 @@ public class BLResources {
     public static final Identifier VAMPIRE_COMPONENT_ID = id("vampire");
     public static final Identifier KEYBIND_CHANNEL = id("keys");
     public static final Identifier ICONS = id("textures/gui/icons.png");
-    public static final Identifier VAMPIRE_FOOD_ID = id("vampire_edible");
     public static final Identifier MASK_ONE_ID = id("mask_1");
     public static final Identifier MASK_TWO_ID = id("mask_2");
     public static final Identifier MASK_THREE_ID = id("mask_3");
@@ -75,6 +74,7 @@ public class BLResources {
     public static final Identifier VAMPIRE_VILLAGER_SPAWN = id("vampire_villager_spawn");
     public static final Identifier VAMPIRE_CONVERT_SOUND = id("entity_converted_to_vampire");
     public static final Identifier PENDANT_OF_PIERCING = id("pendant_of_piercing");
+    public static final Identifier UNBECOME_VAMPIRE_CRITERION_ID = id("unbecome_vampire");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

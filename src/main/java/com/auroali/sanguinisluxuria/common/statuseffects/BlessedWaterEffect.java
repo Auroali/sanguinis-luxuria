@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import org.jetbrains.annotations.Nullable;
 
 public class BlessedWaterEffect extends StatusEffect {
@@ -19,7 +20,7 @@ public class BlessedWaterEffect extends StatusEffect {
     @Override
     public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
         super.applyInstantEffect(source, attacker, target, amplifier, proximity);
-        if(!target.isUndead() && !VampireHelper.isVampire(target)) {
+        if(!target.isUndead() && (!VampireHelper.isVampire(target) || target.hasStatusEffect(StatusEffects.WEAKNESS))) {
             target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_PROTECTION, 3600, 0));
             return;
         }
