@@ -110,6 +110,7 @@ public class PlayerVampireComponent implements VampireComponent {
             holder.getHungerManager().add(bloodMultiplier, 0);
 
         setDowned(false);
+        holder.world.emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
         if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
