@@ -65,6 +65,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLStatusEffects.BLOOD_SICKNESS, "Blood Sickness");
         translationBuilder.add(BLStatusEffects.BLESSED_WATER, "Blessed Water");
         translationBuilder.add(BLStatusEffects.BLOOD_PROTECTION, "Blessed Blood");
+        translationBuilder.add(BLStatusEffects.BLEEDING, "Bleeding");
 
         translationBuilder.add("argument.sanguinisluxuria.id.invalid", "'%s' is not a valid id!");
 

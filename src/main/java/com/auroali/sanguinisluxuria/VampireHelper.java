@@ -15,7 +15,7 @@ public class VampireHelper {
      * @return whether the entity is a vampire
      */
     public static boolean isVampire(Entity entity) {
-        return BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity) && BLEntityComponents.VAMPIRE_COMPONENT.get(entity).isVampire();
+        return entity != null && BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity) && BLEntityComponents.VAMPIRE_COMPONENT.get(entity).isVampire();
     }
 
     /**
