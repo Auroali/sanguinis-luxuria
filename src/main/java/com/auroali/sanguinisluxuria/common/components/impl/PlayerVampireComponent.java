@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.BloodConstants;
+import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.abilities.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
@@ -105,9 +106,9 @@ public class PlayerVampireComponent implements VampireComponent {
             bloodMultiplier = 2;
 
         if(!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
-            holder.getHungerManager().add(bloodMultiplier * 2, 0.05f);
+            ((VampireHungerManager)holder.getHungerManager()).addHunger(bloodMultiplier * 2, 0.05f);
         else
-            holder.getHungerManager().add(bloodMultiplier, 0);
+            ((VampireHungerManager)holder.getHungerManager()).addHunger(bloodMultiplier, 0);
 
         setDowned(false);
         holder.world.emitGameEvent(holder, GameEvent.DRINK, holder.getPos());

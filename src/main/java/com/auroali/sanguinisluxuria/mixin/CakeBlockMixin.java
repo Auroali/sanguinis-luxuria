@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -29,8 +30,9 @@ public class CakeBlockMixin {
 
     @Redirect(method = "tryEat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
     private static void sanguinisluxuria$preventCakeEat(HungerManager instance, int food, float saturationModifier, @Share("player") LocalRef<PlayerEntity> playerShare, @Share("item") LocalRef<Item> item) {
-        if(VampireHelper.isVampire(playerShare.get()) && (item.get() == null || !item.get().getRegistryEntry().isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM)))
-            return;
+        if(VampireHelper.isVampire(playerShare.get()) && item.get() == null && item.get().getRegistryEntry().isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM)) {
+            ((VampireHungerManager)instance).addHunger(food, saturationModifier);
+        }
 
         instance.add(food, saturationModifier);
     }

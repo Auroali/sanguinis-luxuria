@@ -1,20 +1,26 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.config.BLConfig;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HungerManager.class)
-public class HungerManagerMixin {
+public class HungerManagerMixin implements VampireHungerManager {
+    @Shadow private int foodLevel;
+    @Shadow private float saturationLevel;
     @Unique
     public PlayerEntity sanguinisluxuria$hmTrackedPlayer = null;
 
@@ -76,9 +82,34 @@ public class HungerManagerMixin {
         return value;
     }
 
-    @Inject(method = "eat", at = @At("HEAD"), cancellable = true)
-    public void sanguinisluxuria$handleVampireEdibleFood(Item item, ItemStack stack, CallbackInfo ci) {
-        if(VampireHelper.isVampire(sanguinisluxuria$hmTrackedPlayer) && !stack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM))
+    @Inject(method = "eat", at = @At("HEAD"))
+    public void sanguinisluxuria$preSetVampireEdible(Item item, ItemStack stack, CallbackInfo ci, @Share("isInTag") LocalBooleanRef isInTag) {
+        isInTag.set(stack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM));
+    }
+
+    @Redirect(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
+    public void sanguinisluxuria$handleVampireEdibleFood(HungerManager instance, int food, float saturationModifier, @Share("isInTag") LocalBooleanRef isInTag) {
+        if(VampireHelper.isVampire(sanguinisluxuria$hmTrackedPlayer) && isInTag.get())
+            addHunger(food, saturationModifier);
+        else
+            instance.add(food, saturationModifier);
+    }
+
+    @Inject(method = "add", at = @At("HEAD"), cancellable = true)
+    public void sanguinisluxuria$cancelAddIfVampire(int food, float saturationModifier, CallbackInfo ci) {
+        if(VampireHelper.isVampire(sanguinisluxuria$hmTrackedPlayer))
             ci.cancel();
+    }
+    @Unique
+    @Override
+    public void setPlayer(PlayerEntity player) {
+        this.sanguinisluxuria$hmTrackedPlayer = player;
+    }
+
+    @Unique
+    @Override
+    public void addHunger(int food, float saturationModifier) {
+        this.foodLevel = Math.min(food + this.foodLevel, 20);
+        this.saturationLevel = Math.min(this.saturationLevel + (float)food * saturationModifier * 2.0F, (float)this.foodLevel);
     }
 }
