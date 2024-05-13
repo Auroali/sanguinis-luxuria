@@ -90,5 +90,7 @@ public class BLModelProvider extends FabricModelProvider {
         itemModelGenerator.register(BLItems.BLESSED_BLOOD, Models.GENERATED);
 
         itemModelGenerator.register(BLItems.PENDANT_OF_PIERCING, Models.GENERATED);
+
+        itemModelGenerator.register(BLItems.PENDANT_OF_TRANSFUSION, Models.GENERATED);
     }
 }

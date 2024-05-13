@@ -105,10 +105,12 @@ public class PlayerVampireComponent implements VampireComponent {
         if(!VampireHelper.isVampire(entity) && abilities.hasAbility(BLVampireAbilities.MORE_BLOOD))
             bloodMultiplier = 2;
 
-        if(!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
-            ((VampireHungerManager)holder.getHungerManager()).addHunger(bloodMultiplier * 2, 0.05f);
-        else
-            ((VampireHungerManager)holder.getHungerManager()).addHunger(bloodMultiplier, 0);
+        if(!VampireHelper.shouldFillHeldItemOnDrain(holder) || !BloodStorageItem.tryAddBloodToItemInHand(holder, bloodMultiplier)) {
+            if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+                ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier * 2, 0.05f);
+            else
+                ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier, 0);
+        }
 
         setDowned(false);
         holder.world.emitGameEvent(holder, GameEvent.DRINK, holder.getPos());

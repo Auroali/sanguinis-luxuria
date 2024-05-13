@@ -109,6 +109,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLBlocks.BLOOD_SPLATTER, "Blood");
 
         translationBuilder.add(BLItems.PENDANT_OF_PIERCING, "Pendant of Piercing");
+        translationBuilder.add(BLItems.PENDANT_OF_TRANSFUSION, "Pendant of Transfusion");
 
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
