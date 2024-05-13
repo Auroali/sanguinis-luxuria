@@ -8,7 +8,9 @@ import com.auroali.sanguinisluxuria.common.statuseffects.BloodSicknessEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
+import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.util.registry.Registry;
 
 public class BLStatusEffects {
@@ -18,6 +20,7 @@ public class BLStatusEffects {
     public static final StatusEffect BLEEDING = new BleedingEffect(StatusEffectCategory.HARMFUL, 0xFF6C0000);
 
     public static final Potion BLESSED_WATER_POTION = new Potion(new StatusEffectInstance(BLESSED_WATER, 0, 0));
+    public static final Potion BLESSED_WATER_POTION_TWO = new Potion(new StatusEffectInstance(BLESSED_WATER, 0, 1));
 
     public static void register() {
         Registry.register(Registry.STATUS_EFFECT, BLResources.BLOOD_SICKNESS_ID, BLOOD_SICKNESS);
@@ -26,5 +29,7 @@ public class BLStatusEffects {
         Registry.register(Registry.STATUS_EFFECT, BLResources.BLEEDING_ID, BLEEDING);
 
         Registry.register(Registry.POTION, BLResources.BLESSED_WATER_ID, BLESSED_WATER_POTION);
+        Registry.register(Registry.POTION, BLResources.BLESSED_WATER_TWO_ID, BLESSED_WATER_POTION_TWO);
+        BrewingRecipeRegistry.registerPotionRecipe(BLESSED_WATER_POTION, Items.GLOWSTONE_DUST, BLESSED_WATER_POTION_TWO);
     }
 }

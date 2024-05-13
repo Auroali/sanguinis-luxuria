@@ -115,6 +115,11 @@ public class BLLangProvider extends FabricLanguageProvider {
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.TIPPED_ARROW, "Arrow of Blessed Water");
 
+        generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION_TWO, Items.POTION, "Potion of Blessed Water");
+        generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION_TWO, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
+        generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION_TWO, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");
+        generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION_TWO, Items.TIPPED_ARROW, "Arrow of Blessed Water");
+
         generateAbilityKey(translationBuilder, BLVampireAbilities.HEALTH_1, "Increased Health");
         generateAbilityDescKey(translationBuilder, BLVampireAbilities.HEALTH_1, "Increases your maximum health");
 
