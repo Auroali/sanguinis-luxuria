@@ -105,6 +105,11 @@ public class BLVampireAbilities {
             VAMPIRE_STRENGTH_2
     );
 
+    public static final VampireAbility DOWNED_RESISTANCE = new SimpleVampireAbility(
+            () -> new ItemStack(Items.SHIELD),
+            DAMAGE_REDUCTION
+    );
+
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
@@ -120,5 +125,6 @@ public class BLVampireAbilities {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.BITE_ID, BITE);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.SUN_PROTECTION_ID, SUN_PROTECTION);
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.DAMAGE_REDUCTION_ID, DAMAGE_REDUCTION);
+        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.DOWNED_RESISTANCE_ID, DOWNED_RESISTANCE);
     }
 }

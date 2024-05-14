@@ -78,6 +78,10 @@ public abstract class LivingEntityMixin extends Entity {
         instance.setHealth(Math.min(instance.getMaxHealth(), (float) blood.getBlood()));
         vampire.setDowned(true);
         blood.setBlood(0);
+        if(vampire.getAbilties().hasAbility(BLVampireAbilities.DOWNED_RESISTANCE) && !vampire.getAbilties().isOnCooldown(BLVampireAbilities.DOWNED_RESISTANCE)) {
+            instance.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 200, 4));
+            vampire.getAbilties().setCooldown(BLVampireAbilities.DOWNED_RESISTANCE, 6000);
+        }
         return true;
     }
 

@@ -97,6 +97,8 @@
   "vampire_ability.sanguinisluxuria.bite.desc": "Deals damage that bypasses armor and inflicts bleeding",
   "vampire_ability.sanguinisluxuria.damage_reduction": "Resistance",
   "vampire_ability.sanguinisluxuria.damage_reduction.desc": "Reduces damage taken from most sources",
+  "vampire_ability.sanguinisluxuria.downed_resistance": "Death Shield",
+  "vampire_ability.sanguinisluxuria.downed_resistance.desc": "Blocks most damage after being downed, then goes on a 5 minute cooldown",
   "vampire_ability.sanguinisluxuria.health_1": "Increased Health",
   "vampire_ability.sanguinisluxuria.health_1.desc": "Increases your maximum health",
   "vampire_ability.sanguinisluxuria.health_2": "Increased Health",
