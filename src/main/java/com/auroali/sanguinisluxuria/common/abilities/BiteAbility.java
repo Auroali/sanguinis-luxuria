@@ -38,7 +38,7 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
 
     @Override
     public boolean activate(LivingEntity entity, VampireComponent component) {
-        if(component.getAbilties().isOnCooldown(this))
+        if(component.getAbilties().isOnCooldown(this) || VampireHelper.isMasked(entity))
             return false;
 
         HitResult result = getTarget(entity);
