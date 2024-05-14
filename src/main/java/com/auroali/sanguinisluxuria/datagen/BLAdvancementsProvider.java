@@ -47,11 +47,11 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
         Advancement unbecomeVampire = Advancement.Builder
                 .create()
                 .display(
-                        BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), 1),
+                        BloodStorageItem.setStoredBlood(new ItemStack(Items.GLASS_BOTTLE), 1),
                         Text.translatable(title("unbecome_vampire")),
                         Text.translatable(desc("unbecome_vampire")),
                         null,
-                        AdvancementFrame.CHALLENGE,
+                        AdvancementFrame.TASK,
                         true,
                         true,
                         false

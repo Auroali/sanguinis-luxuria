@@ -11,10 +11,10 @@
     "description": {
       "translate": "advancements.sanguinisluxuria.unbecome_vampire.description"
     },
-    "frame": "challenge",
+    "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "sanguinisluxuria:blood_bottle",
+      "item": "minecraft:glass_bottle",
       "nbt": "{StoredBlood:1}"
     },
     "show_toast": true,
