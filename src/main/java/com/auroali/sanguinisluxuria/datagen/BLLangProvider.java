@@ -190,6 +190,9 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(BLAdvancementsProvider.title("infect_other"), "It Spreads");
         translationBuilder.add(BLAdvancementsProvider.desc("infect_other"), "Inflict blood sickness on something with Weakness");
+
+        translationBuilder.add(BLAdvancementsProvider.title("unbecome_vampire"), "Humanity");
+        translationBuilder.add(BLAdvancementsProvider.desc("unbecome_vampire"), "Become human again after drinking Blessed Water with weakness");
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {

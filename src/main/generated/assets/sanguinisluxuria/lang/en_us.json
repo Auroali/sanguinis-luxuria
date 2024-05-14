@@ -13,6 +13,8 @@
   "advancements.sanguinisluxuria.transfer_effects.title": "Infectious",
   "advancements.sanguinisluxuria.transfer_more_effects.description": "Transfer 4 potions effects at once",
   "advancements.sanguinisluxuria.transfer_more_effects.title": "Alchemist",
+  "advancements.sanguinisluxuria.unbecome_vampire.description": "Become human again after drinking Blessed Water with weakness",
+  "advancements.sanguinisluxuria.unbecome_vampire.title": "Humanity",
   "advancements.sanguinisluxuria.unlock_ability.description": "Allocate a skill point to an ability",
   "advancements.sanguinisluxuria.unlock_ability.title": "Abilities",
   "argument.sanguinisluxuria.id.invalid": "'%s' is not a valid id!",

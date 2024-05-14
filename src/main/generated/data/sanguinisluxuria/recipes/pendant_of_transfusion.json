@@ -1,0 +1,22 @@
+{
+  "type": "sanguinisluxuria:altar_recipe",
+  "input": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:twisted_blood_bottle"
+    }
+  ],
+  "minLevel": 0,
+  "result": {
+    "item": "sanguinisluxuria:pendant_of_transfusion"
+  },
+  "ticksToProcess": 300
+}

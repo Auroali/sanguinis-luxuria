@@ -44,6 +44,22 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
                 )
                 .criterion("convert", BecomeVampireCriterion.Conditions.create())
                 .build(BLResources.id("become_vampire"));
+        Advancement unbecomeVampire = Advancement.Builder
+                .create()
+                .display(
+                        BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), 1),
+                        Text.translatable(title("unbecome_vampire")),
+                        Text.translatable(desc("unbecome_vampire")),
+                        null,
+                        AdvancementFrame.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .parent(becomeVampire)
+                .criterion("unconvert", UnbecomeVampireCriterion.Conditions.create())
+                .build(BLResources.id("unbecome_vampire"));
+
         Advancement bloodSickness = Advancement.Builder
                 .create()
                 .display(
@@ -54,7 +70,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
                         AdvancementFrame.TASK,
                         true,
                         true,
-                        true
+                        false
                 )
                 .parent(becomeVampire)
                 .criterion("get_blood_sickness", EffectsChangedCriterion.Conditions.create(
@@ -166,6 +182,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
         consumer.accept(infectOther);
         consumer.accept(transferEffects);
         consumer.accept(transferMoreEffects);
+        consumer.accept(unbecomeVampire);
     }
 
     public static String title(String name) {

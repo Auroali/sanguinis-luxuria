@@ -1,0 +1,30 @@
+{
+  "parent": "sanguinisluxuria:become_vampire",
+  "criteria": {
+    "unconvert": {
+      "conditions": {},
+      "trigger": "sanguinisluxuria:unbecome_vampire"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.unbecome_vampire.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "sanguinisluxuria:blood_bottle",
+      "nbt": "{StoredBlood:1}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.unbecome_vampire.title"
+    }
+  },
+  "requirements": [
+    [
+      "unconvert"
+    ]
+  ]
+}
