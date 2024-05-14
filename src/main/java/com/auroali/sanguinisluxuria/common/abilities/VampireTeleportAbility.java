@@ -64,6 +64,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         BlockPos pos = result.getBlockPos().offset(result.getSide());
         Vec3d newPos = new Vec3d(pos.getX() + 0.5f, result.getPos().getY(), pos.getZ() + 0.5f);
         entity.teleport(newPos.getX(), newPos.getY(), newPos.getZ());
+        entity.fallDistance = 0;
         entity.world.emitGameEvent(GameEvent.TELEPORT, start, GameEvent.Emitter.of(entity));
         entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
         TrinketsApi.getTrinketComponent(entity).ifPresent(c -> {
