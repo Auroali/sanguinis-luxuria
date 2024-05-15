@@ -50,6 +50,7 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.ZOGLIN)
                 .add(EntityType.ZOMBIFIED_PIGLIN)
                 .add(EntityType.ENDERMAN)
+                .add(EntityType.TRADER_LLAMA)
                 .add(BLEntities.VAMPIRE_VILLAGER)
                 .addOptional(new Identifier("ratsmischief", "rat"))
                 .addOptional(new Identifier("spectrum", "egg_laying_wooly_pig"))
