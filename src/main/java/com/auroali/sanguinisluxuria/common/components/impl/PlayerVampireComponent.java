@@ -54,6 +54,7 @@ public class PlayerVampireComponent implements VampireComponent {
     );
 
     private boolean needsSync;
+    public boolean targetHasBleeding;
     private final VampireAbilityContainer abilities = new VampireAbilityContainer();
     private final PlayerEntity holder;
     private boolean isVampire;
@@ -277,6 +278,7 @@ public class PlayerVampireComponent implements VampireComponent {
             return;
         }
 
+        targetHasBleeding = target.hasStatusEffect(BLStatusEffects.BLEEDING);
         bloodDrainTimer++;
 
         target.addStatusEffect(new StatusEffectInstance(
@@ -301,7 +303,7 @@ public class PlayerVampireComponent implements VampireComponent {
             );
 
         // need to implement faster draining with bleeding
-        int timeToDrain = BloodConstants.BLOOD_DRAIN_TIME;
+        int timeToDrain = targetHasBleeding ? BloodConstants.BLOOD_DRAIN_TIME_BLEEDING : BloodConstants.BLOOD_DRAIN_TIME;
         if(bloodDrainTimer >= timeToDrain) {
             drainBloodFrom(target);
             bloodDrainTimer = 0;
@@ -333,6 +335,7 @@ public class PlayerVampireComponent implements VampireComponent {
         buf.writeInt(skillPoints);
         buf.writeInt(level);
         buf.writeBoolean(isDowned);
+        buf.writeBoolean(targetHasBleeding);
         buf.writeBoolean(abilities.needsSync());
         if(abilities.needsSync()) {
             abilities.writePacket(buf);
@@ -348,6 +351,7 @@ public class PlayerVampireComponent implements VampireComponent {
         skillPoints = buf.readInt();
         level = buf.readInt();
         isDowned = buf.readBoolean();
+        targetHasBleeding = buf.readBoolean();
         boolean abilitiesSync = buf.readBoolean();
         if(abilitiesSync)
             abilities.readPacket(buf);

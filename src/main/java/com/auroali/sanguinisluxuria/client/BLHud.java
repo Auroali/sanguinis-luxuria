@@ -10,6 +10,8 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.components.impl.PlayerVampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -17,6 +19,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
@@ -36,6 +39,10 @@ public class BLHud {
 
     }
 
+    private static boolean targetHasBleeding(VampireComponent component, LivingEntity entity) {
+        return component instanceof PlayerVampireComponent p ? p.targetHasBleeding : entity.hasStatusEffect(BLStatusEffects.BLEEDING);
+    }
+
     private static void drawBloodDrainIndicator(MatrixStack stack, MinecraftClient client, VampireComponent vampire, int width, int height) {
         if(!BloodlustClient.isLookingAtValidTarget())
             return;
@@ -52,7 +59,8 @@ public class BLHud {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(targetedEntity);
 
         int timeToDrain = BloodConstants.BLOOD_DRAIN_TIME;
-        // need to implement faster draining with bleeding
+        if(targetedEntity instanceof LivingEntity entity && targetHasBleeding(vampire, entity))
+            timeToDrain = BloodConstants.BLOOD_DRAIN_TIME_BLEEDING;
 
         double drainPercent = (double) vampire.getBloodDrainTimer() / timeToDrain;
         double bloodPercent = (double) blood.getBlood() / blood.getMaxBlood();
@@ -71,9 +79,6 @@ public class BLHud {
         DrawableHelper.drawTexture(stack, bloodBarX + 1, bloodBarY, 15, 17, (int) (bloodPercent * 13), 3, 256, 256);
         if(!VampireHelper.isMasked(client.player))
             DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - drainPercent)), 0, 9 + (int) (9 * (1 - drainPercent)), 26, (int) (9 * drainPercent), 256, 256);
-
-//        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, width / 2 + 10, height / 2 - 6, 0xFF040000);
-//        DrawableHelper.fill(stack, width / 2 - 10, height / 2 - 10, currentBloodX2, height / 2 - 6, 0xFFDF0000);
     }
 
     public static void drawBoundAbilities(MatrixStack matrices, MinecraftClient client, int height, VampireAbilityContainer container) {
