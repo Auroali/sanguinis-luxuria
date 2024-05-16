@@ -53,6 +53,7 @@ public class PlayerVampireComponent implements VampireComponent {
             EntityAttributeModifier.Operation.ADDITION
     );
 
+    private boolean needsSync;
     private final VampireAbilityContainer abilities = new VampireAbilityContainer();
     private final PlayerEntity holder;
     private boolean isVampire;
@@ -202,8 +203,6 @@ public class PlayerVampireComponent implements VampireComponent {
             return;
 
         abilities.tick(holder, this);
-        if(abilities.needsSync())
-            BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
 
         tickSunEffects();
         tickBloodEffects();
@@ -211,6 +210,9 @@ public class PlayerVampireComponent implements VampireComponent {
         if(target != null) {
             tickBloodDrain();
         }
+
+        if(needsSync || abilities.needsSync())
+            BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
     }
 
     private void removeModifiers() {
@@ -243,7 +245,7 @@ public class PlayerVampireComponent implements VampireComponent {
         if(!isAffectedByDaylight()) {
             if(timeInSun > 0) {
                 timeInSun = 0;
-                BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+                needsSync = true;
             }
             return;
         }
@@ -260,7 +262,7 @@ public class PlayerVampireComponent implements VampireComponent {
 
         if(timeInSun < getMaxTimeInSun()) {
             timeInSun++;
-            BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+            needsSync = true;
             return;
         }
 
@@ -271,7 +273,7 @@ public class PlayerVampireComponent implements VampireComponent {
         updateTarget();
         if(target == null) {
             bloodDrainTimer = 0;
-            BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+            needsSync = true;
             return;
         }
 
@@ -305,7 +307,7 @@ public class PlayerVampireComponent implements VampireComponent {
             bloodDrainTimer = 0;
         }
 
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(holder);
+        needsSync = true;
     }
 
     // from MobEntity
@@ -324,6 +326,7 @@ public class PlayerVampireComponent implements VampireComponent {
 
     @Override
     public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
+        needsSync = false;
         buf.writeBoolean(isVampire);
         buf.writeVarInt(bloodDrainTimer);
         buf.writeVarInt(timeInSun);
