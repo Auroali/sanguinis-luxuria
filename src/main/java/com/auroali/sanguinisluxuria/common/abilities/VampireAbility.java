@@ -9,12 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class VampireAbility {
+public class VampireAbility {
     private final VampireAbility parent;
     private final Supplier<ItemStack> icon;
     private final List<Supplier<VampireAbility>> incompatibilities;
@@ -31,12 +32,15 @@ public abstract class VampireAbility {
     }
 
     /**
-     * Called every tick for this ability
-     * @param entity the entity that has the ability
-     * @param component the vampire component of the entity
-     * @param blood the blood component of the entity
+     * Creates a ticker for this ability
      */
-    public abstract void tick(LivingEntity entity, VampireComponent component, BloodComponent blood);
+    public AbilityTicker<?> createTicker() {
+        return null;
+    }
+
+    public <T extends VampireAbility> AbilityTicker<?> checkType(AbilityTicker<T> ticker) {
+        return ticker;
+    }
 
     public RegistryEntry.Reference<VampireAbility> getRegistryEntry() {
         return holder;
@@ -206,5 +210,10 @@ public abstract class VampireAbility {
     @FunctionalInterface
     public interface VampireAbilityCondition {
         boolean test(LivingEntity entity, VampireComponent vampire, VampireAbilityContainer container);
+    }
+
+    @FunctionalInterface
+    public interface AbilityTicker<T extends VampireAbility> {
+        void tick(T ability, World world, LivingEntity entity, VampireComponent component, VampireAbilityContainer container, BloodComponent blood);
     }
 }

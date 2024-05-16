@@ -47,7 +47,7 @@ public class BLVampireAbilities {
             new EntityAttributeModifier(
                     UUID.fromString("a3b13d9b-fc8d-4a02-881b-134c04b41f65"),
                     "sanguinisluxuria.vampire_strength",
-                    0.5,
+                    1,
                     EntityAttributeModifier.Operation.ADDITION
             ),
             6
@@ -60,7 +60,7 @@ public class BLVampireAbilities {
             new EntityAttributeModifier(
                     UUID.fromString("33682391-db06-4c6e-8674-770fa4051870"),
                     "sanguinisluxuria.vampire_strength",
-                    0.5,
+                    1,
                     EntityAttributeModifier.Operation.ADDITION
             ),
             6
@@ -71,17 +71,17 @@ public class BLVampireAbilities {
             null
     );
 
-    public static final VampireAbility TELEPORT_RANGE_1 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+    public static final VampireAbility TELEPORT_RANGE_1 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
             .incompatible(() -> BLVampireAbilities.TELEPORT_COOLDOWN_1);
 
-    public static final VampireAbility TELEPORT_RANGE_2 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_RANGE_1);
+    public static final VampireAbility TELEPORT_RANGE_2 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_RANGE_1);
 
-    public static final VampireAbility TELEPORT_COOLDOWN_1 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+    public static final VampireAbility TELEPORT_COOLDOWN_1 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
             .incompatible(() -> BLVampireAbilities.TELEPORT_RANGE_1);
 
-    public static final VampireAbility TELEPORT_COOLDOWN_2 = new SimpleVampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_COOLDOWN_1);
+    public static final VampireAbility TELEPORT_COOLDOWN_2 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_COOLDOWN_1);
 
-    public static final VampireAbility MORE_BLOOD = new SimpleVampireAbility(
+    public static final VampireAbility MORE_BLOOD = new VampireAbility(
             () -> BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BLItems.BLOOD_BOTTLE.getMaxBlood()),
             HEALTH_1
     ).incompatible(() -> BLVampireAbilities.BITE);
@@ -96,16 +96,16 @@ public class BLVampireAbilities {
             VAMPIRE_STRENGTH_2
     ).incompatible(() -> BLVampireAbilities.MORE_BLOOD);
 
-    public static final VampireAbility SUN_PROTECTION = new SimpleVampireAbility(
+    public static final VampireAbility SUN_PROTECTION = new VampireAbility(
             () -> new ItemStack(Items.LEATHER_HELMET),
             HEALTH_2
     );
-    public static final VampireAbility DAMAGE_REDUCTION = new SimpleVampireAbility(
+    public static final VampireAbility DAMAGE_REDUCTION = new VampireAbility(
             () -> new ItemStack(Items.IRON_CHESTPLATE),
             VAMPIRE_STRENGTH_2
     );
 
-    public static final VampireAbility DOWNED_RESISTANCE = new SimpleVampireAbility(
+    public static final VampireAbility DOWNED_RESISTANCE = new VampireAbility(
             () -> new ItemStack(Items.SHIELD),
             DAMAGE_REDUCTION
     );

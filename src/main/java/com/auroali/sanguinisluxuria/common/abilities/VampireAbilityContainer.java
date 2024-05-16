@@ -16,15 +16,13 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VampireAbilityContainer implements Iterable<VampireAbility> {
     private final Set<VampireAbility> abilities;
     private final Map<VampireAbility, AbilityCooldown> cooldowns;
     private final VampireAbility[] abilityBindings = new VampireAbility[3];
+    private final Object2ObjectOpenHashMap<VampireAbility, VampireAbility.AbilityTicker> tickers = new Object2ObjectOpenHashMap<>();
     private boolean shouldSync;
 
     public VampireAbilityContainer() {
@@ -32,11 +30,10 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         cooldowns = new Object2ObjectOpenHashMap<>();
     }
 
+    @SuppressWarnings("unchecked")
     public void tick(LivingEntity entity, VampireComponent vampire) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-        for(VampireAbility ability : abilities) {
-            ability.tick(entity, vampire, blood);
-        }
+        tickers.object2ObjectEntrySet().fastForEach(p -> p.getValue().tick(p.getKey(), entity.world, entity, vampire, this, blood));
         cooldowns.entrySet().removeIf(e -> {
             setShouldSync(true);
             return e.getKey().canTickCooldown(entity, vampire) && e.getValue().ticks-- == 0;
@@ -46,6 +43,9 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
     public void addAbility(VampireAbility ability) {
         setShouldSync(true);
         this.abilities.add(ability);
+        VampireAbility.AbilityTicker<?> ticker = ability.createTicker();
+        if(ticker != null)
+            tickers.put(ability, ticker);
     }
 
     public void removeAbility(VampireAbility ability) {
@@ -56,6 +56,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         }
         cooldowns.remove(ability);
         this.abilities.remove(ability);
+        tickers.remove(ability);
     }
 
     public VampireAbility getBoundAbility(int slot) {
@@ -181,6 +182,9 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
                     }
 
                     abilities.add(ability);
+                    VampireAbility.AbilityTicker<?> ticker = ability.createTicker();
+                    if(ticker != null)
+                        tickers.put(ability, ticker);
                 });
         for(int i = 0; i < Math.min(abilitySlotsTag.size(), abilityBindings.length); i++) {
             String idStr = abilitySlotsTag.getString(i);
@@ -324,5 +328,4 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
             this.maxTicks = maxTicks;
         }
     }
-
 }

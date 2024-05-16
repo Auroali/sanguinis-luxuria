@@ -29,9 +29,6 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
     }
 
     @Override
-    public void tick(LivingEntity entity, VampireComponent component, BloodComponent blood) {}
-
-    @Override
     public boolean isKeybindable() {
         return true;
     }

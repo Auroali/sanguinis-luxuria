@@ -32,11 +32,6 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
     }
 
     @Override
-    public void tick(LivingEntity entity, VampireComponent component, BloodComponent blood) {
-
-    }
-
-    @Override
     public boolean isKeybindable() {
         return true;
     }

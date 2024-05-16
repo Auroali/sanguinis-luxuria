@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class InfectiousAbility extends SimpleVampireAbility implements SyncableVampireAbility<InfectiousAbility.InfectiousData> {
+public class InfectiousAbility extends VampireAbility implements SyncableVampireAbility<InfectiousAbility.InfectiousData> {
     public InfectiousAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         super(icon, parent);
     }
