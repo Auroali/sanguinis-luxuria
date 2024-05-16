@@ -1,8 +1,10 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.config.BLConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,6 +30,14 @@ public class StatusEffectMixin {
             StatusEffect effect = (StatusEffect) (Object) this;
             if(effect == StatusEffects.INSTANT_HEALTH || effect == StatusEffects.INSTANT_DAMAGE)
                 ci.cancel();
+        }
+    }
+
+    @Inject(method = "applyUpdateEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", ordinal = 0), cancellable = true)
+    public void sanguinisluxuria$preventPoisonFromKilling(LivingEntity entity, int amplifier, CallbackInfo ci) {
+        if(VampireHelper.isVampire(entity)) {
+            entity.damage(DamageSource.MAGIC, 1.0F / BLConfig.INSTANCE.vampireDamageMultiplier);
+            ci.cancel();
         }
     }
 }
