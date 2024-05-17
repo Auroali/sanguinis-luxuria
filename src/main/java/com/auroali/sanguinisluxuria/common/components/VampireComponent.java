@@ -115,12 +115,12 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @see BLConfig#vampireDamageMultiplier
      */
     static float calculateDamage(float amount, DamageSource source) {
-        if(source.getAttacker() instanceof LivingEntity entity) {
-            ItemStack stack = entity.getMainHandStack();
-            int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
-            if(level > 0)
-                return amount + (level * (BLConfig.INSTANCE.vampireDamageMultiplier / Enchantments.SMITE.getMaxLevel()));
-        }
+//        if(source.getAttacker() instanceof LivingEntity entity) {
+//            ItemStack stack = entity.getMainHandStack();
+//            int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
+//            if(level > 0)
+//                return amount + (level * (BLConfig.INSTANCE.vampireDamageMultiplier / Enchantments.SMITE.getMaxLevel()));
+//        }
 
         if(isEffectiveAgainstVampires(source))
             return amount * BLConfig.INSTANCE.vampireDamageMultiplier;

@@ -8,6 +8,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -93,5 +94,11 @@ public abstract class LivingEntityMixin extends Entity {
         StatusEffect statusEffect = effect.getEffectType();
         if(statusEffect == StatusEffects.INSTANT_DAMAGE || statusEffect == StatusEffects.INSTANT_HEALTH)
             cir.setReturnValue(false);
+    }
+
+    @Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)
+    public void sanguinisluxuria$modifyVampireGroup(CallbackInfoReturnable<EntityGroup> cir) {
+        if(VampireHelper.isVampire(this))
+            cir.setReturnValue(EntityGroup.UNDEAD);
     }
 }
