@@ -6,8 +6,11 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Heightmap;
 
 public class BLEntities {
     public static final EntityType<VampireVillagerEntity> VAMPIRE_VILLAGER = EntityType.Builder
@@ -34,6 +37,7 @@ public class BLEntities {
     }
 
     public static void registerSpawns() {
+        SpawnRestriction.register(VAMPIRE_VILLAGER, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
         BiomeModifications.addSpawn(b -> b.getBiomeRegistryEntry().isIn(BLTags.Biomes.VAMPIRE_VILLAGER_SPAWN), SpawnGroup.MONSTER, VAMPIRE_VILLAGER, 3, 1, 1);
     }
 }
