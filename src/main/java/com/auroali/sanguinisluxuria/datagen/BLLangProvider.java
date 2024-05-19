@@ -113,6 +113,8 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(BLEnchantments.SERRATED, "Serrated");
 
+        translationBuilder.add(BLEntities.VAMPIRE_MERCHANT, "Vampiric Merchant");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");

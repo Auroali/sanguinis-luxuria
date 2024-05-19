@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.client.BLHud;
 import com.auroali.sanguinisluxuria.client.render.PedestalBlockRenderer;
+import com.auroali.sanguinisluxuria.client.render.VampireMerchantRenderer;
 import com.auroali.sanguinisluxuria.client.render.VampireVillagerRenderer;
 import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
@@ -79,6 +80,7 @@ public class BloodlustClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.SKILL_UPGRADER, RenderLayer.getCutout());
 
         EntityRendererRegistry.register(BLEntities.VAMPIRE_VILLAGER, VampireVillagerRenderer::new);
+        EntityRendererRegistry.register(BLEntities.VAMPIRE_MERCHANT, VampireMerchantRenderer::new);
 
         BlockEntityRendererFactories.register(BLBlockEntities.PEDESTAL, ctx -> new PedestalBlockRenderer(ctx.getItemRenderer()));
 

@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
 import com.auroali.sanguinisluxuria.common.entities.VampireVillagerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -18,9 +19,16 @@ public class BLEntities {
             .maxTrackingRange(10)
             .setDimensions(0.6F, 1.95F)
             .build(BLResources.VAMPIRE_VILLAGER.toString());
+    public static final EntityType<VampireMerchant> VAMPIRE_MERCHANT = EntityType.Builder
+            .create(VampireMerchant::new, SpawnGroup.MONSTER)
+            .maxTrackingRange(10)
+            .setDimensions(0.6F, 1.95F)
+            .build(BLResources.VAMPIRE_MERCHANT.toString());
+
 
     public static void register() {
         Registry.register(Registry.ENTITY_TYPE, BLResources.VAMPIRE_VILLAGER, VAMPIRE_VILLAGER);
+        Registry.register(Registry.ENTITY_TYPE, BLResources.VAMPIRE_MERCHANT, VAMPIRE_MERCHANT);
 
         registerAttributes();
         registerSpawns();
@@ -31,6 +39,13 @@ public class BLEntities {
                 .register(VAMPIRE_VILLAGER, VampireVillagerEntity.createHostileAttributes()
                         .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
                         .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7)
+                        .add(EntityAttributes.GENERIC_ARMOR, 2)
+                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
+                );
+        FabricDefaultAttributeRegistry
+                .register(VAMPIRE_MERCHANT, VampireVillagerEntity.createHostileAttributes()
+                        .add(EntityAttributes.GENERIC_MAX_HEALTH, 25)
+                        .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
                         .add(EntityAttributes.GENERIC_ARMOR, 2)
                         .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
                 );
