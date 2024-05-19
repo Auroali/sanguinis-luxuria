@@ -84,7 +84,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(Items.GLASS_BOTTLE)
                 .input(Items.GLASS_BOTTLE)
                 .input(Items.IRON_INGOT)
-                .input(BLItems.TWISTED_BLOOD)
+                .input(Items.STRING)
                 .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))
                 .offerTo(exporter);
     }
