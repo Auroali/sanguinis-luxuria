@@ -96,7 +96,7 @@
   "subtitles.sanguinisluxuria.drain_blood": "Vampire feeding",
   "subtitles.sanguinisluxuria.entity_converted_to_vampire": "Something transforms",
   "vampire_ability.sanguinisluxuria.bite": "Bite",
-  "vampire_ability.sanguinisluxuria.bite.desc": "Deals damage that bypasses armor and inflicts bleeding",
+  "vampire_ability.sanguinisluxuria.bite.desc": "Deals damage and inflicts bleeding",
   "vampire_ability.sanguinisluxuria.damage_reduction": "Resistance",
   "vampire_ability.sanguinisluxuria.damage_reduction.desc": "Reduces damage taken from most sources",
   "vampire_ability.sanguinisluxuria.downed_resistance": "Death Protection",
@@ -122,7 +122,7 @@
   "vampire_ability.sanguinisluxuria.teleport_range_2": "Increased Blink Range",
   "vampire_ability.sanguinisluxuria.teleport_range_2.desc": "Increases the range of blink",
   "vampire_ability.sanguinisluxuria.transfer_effects": "Infectious",
-  "vampire_ability.sanguinisluxuria.transfer_effects.desc": "Transfers potion effects upon draining something's blood",
+  "vampire_ability.sanguinisluxuria.transfer_effects.desc": "Allows transferring potion effects",
   "vampire_ability.sanguinisluxuria.vampire_strength_2": "Increased Strength",
   "vampire_ability.sanguinisluxuria.vampire_strength_2.desc": "Increases your base damage"
 }
