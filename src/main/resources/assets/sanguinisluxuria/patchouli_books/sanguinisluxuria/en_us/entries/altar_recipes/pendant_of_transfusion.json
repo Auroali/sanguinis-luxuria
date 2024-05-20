@@ -2,7 +2,7 @@
   "name": "Pendant of Transfusion",
   "icon": "sanguinisluxuria:pendant_of_transfusion",
   "category": "sanguinisluxuria:altar_recipes",
-  "advancement": "sanguinisluxuria:drink_twisted_blood",
+  "advancement": "sanguinisluxuria:become_vampire",
   "pages": [
     {
       "type": "patchouli:text",
