@@ -106,7 +106,7 @@ public class BLVampireAbilities {
     );
 
     public static final VampireAbility DOWNED_RESISTANCE = new VampireAbility(
-            () -> new ItemStack(Items.SHIELD),
+            () -> new ItemStack(Items.DIAMOND_CHESTPLATE),
             DAMAGE_REDUCTION
     );
 

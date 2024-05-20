@@ -167,8 +167,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityKey(translationBuilder, BLVampireAbilities.DAMAGE_REDUCTION, "Resistance");
         generateAbilityDescKey(translationBuilder, BLVampireAbilities.DAMAGE_REDUCTION, "Reduces damage taken from most sources");
 
-        generateAbilityKey(translationBuilder, BLVampireAbilities.DOWNED_RESISTANCE, "Death Shield");
-        generateAbilityDescKey(translationBuilder, BLVampireAbilities.DOWNED_RESISTANCE, "Blocks most damage after being downed, then goes on a 5 minute cooldown");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.DOWNED_RESISTANCE, "Death Protection");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.DOWNED_RESISTANCE, "Blocks most damage after being downed");
 
         generateAdvancements(translationBuilder);
     }
