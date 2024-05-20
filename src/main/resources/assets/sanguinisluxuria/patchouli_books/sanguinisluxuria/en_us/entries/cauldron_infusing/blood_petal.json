@@ -2,7 +2,6 @@
   "name": "Blood Petal",
   "icon": "sanguinisluxuria:blood_petal",
   "category": "sanguinisluxuria:cauldron_infusing",
-  "advancement": "sanguinisluxuria:become_vampire",
   "pages": [
     {
       "type": "patchouli:text",
