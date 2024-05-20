@@ -2,16 +2,23 @@
   "type": "sanguinisluxuria:altar_recipe",
   "input": [
     {
-      "item": "sanguinisluxuria:blood_bottle"
+      "base": {
+        "item": "sanguinisluxuria:blood_bottle"
+      },
+      "fabric:type": "fabric:nbt",
+      "nbt": {
+        "StoredBlood": 2
+      },
+      "strict": false
     },
     {
       "item": "minecraft:nether_wart"
     },
     {
-      "item": "minecraft:wither_rose"
+      "item": "minecraft:fermented_spider_eye"
     },
     {
-      "item": "minecraft:twisting_vines"
+      "item": "sanguinisluxuria:blood_petal"
     }
   ],
   "minLevel": 0,

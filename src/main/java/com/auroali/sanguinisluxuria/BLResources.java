@@ -81,6 +81,7 @@ public class BLResources {
     public static final Identifier DOWNED_RESISTANCE_ID = id("downed_resistance");
     public static final Identifier SERRATED_ID = id("serrated");
     public static final Identifier VAMPIRE_MERCHANT = id("vampire_merchant");
+    public static final Identifier BLOOD_PETAL_ID = id("blood_petal");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

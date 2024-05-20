@@ -1,7 +1,10 @@
 package com.auroali.sanguinisluxuria.datagen;
 
+import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
 import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
+import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
@@ -9,6 +12,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
@@ -37,10 +41,10 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .criterion("has_log", conditionsFromTag(ItemTags.LOGS))
                 .offerTo(exporter);
         AltarRecipeJsonBuilder.create(BLItems.TWISTED_BLOOD)
-                .input(BLItems.BLOOD_BOTTLE)
+                .input(BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BloodConstants.BLOOD_PER_BOTTLE))
                 .input(Items.NETHER_WART)
-                .input(Items.WITHER_ROSE)
-                .input(Items.TWISTING_VINES)
+                .input(Items.FERMENTED_SPIDER_EYE)
+                .input(BLItems.BLOOD_PETAL)
                 .criterion("is_vampire", BecomeVampireCriterion.Conditions.create())
                 .offerTo(exporter);
         AltarRecipeJsonBuilder.create(BLItems.BLOOD_BAG)
@@ -86,6 +90,9 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(Items.IRON_INGOT)
                 .input(Items.STRING)
                 .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))
+                .offerTo(exporter);
+        BloodCauldronRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.FLOWERS), BLItems.BLOOD_PETAL)
+                .criterion("become_vampire", BecomeVampireCriterion.Conditions.create())
                 .offerTo(exporter);
     }
 }

@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
+import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.registry.Registry;
 
@@ -12,8 +13,15 @@ public class BLRecipeTypes {
             return BLResources.ALTAR_RECIPE_ID.toString();
         }
     };
+    public static final RecipeType<BloodCauldronRecipe> BLOOD_CAULDRON_TYPE = new RecipeType<BloodCauldronRecipe>() {
+        @Override
+        public String toString() {
+            return BLResources.BLOOD_CAULDRON_ID.toString();
+        }
+    };
 
     public static void register() {
         Registry.register(Registry.RECIPE_TYPE, BLResources.ALTAR_RECIPE_ID, ALTAR_RECIPE);
+        Registry.register(Registry.RECIPE_TYPE, BLResources.BLOOD_CAULDRON_ID, BLOOD_CAULDRON_TYPE);
     }
 }

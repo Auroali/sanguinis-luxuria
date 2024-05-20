@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Blood can be twisted through the altar, into something more... potent.$(br2)Drinking twisted blood will increase your level by one, and grant one skill point. Skill points can be assigned by pressing $(#a51e12)$(l)$(k:key.sanguinisluxuria.open_abilities)$()"
+      "text": "Blood can be twisted through the altar, into something more... potent.$(br2)Drinking twisted blood will grant one skill point. Skill points can be assigned by pressing $(#a51e12)$(l)$(k:key.sanguinisluxuria.open_abilities)$()"
     },
     {
       "type": "sanguinisluxuria:altar_4by4",

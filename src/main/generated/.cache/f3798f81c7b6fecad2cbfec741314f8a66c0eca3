@@ -1,4 +1,4 @@
-// 1.19.2	2024-05-20T13:51:24.121249359	Models
+// 1.19.2	2024-05-20T16:13:06.604824041	Models
 22eccfe91464ea67d7237ea269f01b83bdf4a835 assets/sanguinisluxuria/blockstates/blood_cauldron.json
 273ed2c74f7c4bf5d531935d7d91c71be193ac73 assets/sanguinisluxuria/models/item/mask_1.json
 4011cef21efa8d8cf51904edca5ac905a28084e8 assets/sanguinisluxuria/models/item/blood_bag_3.json
@@ -16,6 +16,7 @@ ebf40e2e8dcd0c1fbd35a0d6b4a2cb71968e2df0 assets/sanguinisluxuria/models/block/bl
 aa7d1c0ad6e435427f77ce33f083c973d70d4f15 assets/sanguinisluxuria/blockstates/pedestal.json
 ec5a82a7cd43de3bcbeee1e00178173c036bc7aa assets/sanguinisluxuria/models/item/pedestal.json
 a347c2701e6437bd119c8d425ed52f9c0652d114 assets/sanguinisluxuria/blockstates/altar.json
+145a47ac5b0bcac03ebd700c8b6fc2e81b2eb741 assets/sanguinisluxuria/models/item/blood_petal.json
 cc65376c9ff293c4f2a30d1df9246cb9d3611832 assets/sanguinisluxuria/models/item/blood_bag_2.json
 ebeb94ef2985e056d6157b510afd5fe5b48b020a assets/sanguinisluxuria/models/item/blood_bottle_2.json
 9ba3774628a6964a6dd4fa4d1b2947d09d9c0a7e assets/sanguinisluxuria/models/block/blood_cauldron_level1.json

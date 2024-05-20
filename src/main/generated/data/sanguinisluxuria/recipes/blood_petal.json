@@ -1,0 +1,9 @@
+{
+  "type": "sanguinisluxuria:blood_cauldron",
+  "input": {
+    "tag": "minecraft:flowers"
+  },
+  "result": {
+    "item": "sanguinisluxuria:blood_petal"
+  }
+}
