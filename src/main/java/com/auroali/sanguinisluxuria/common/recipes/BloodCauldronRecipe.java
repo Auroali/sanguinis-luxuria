@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
@@ -40,6 +41,11 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
     @Override
     public ItemStack getOutput() {
         return result;
+    }
+
+    @Override
+    public DefaultedList<Ingredient> getIngredients() {
+        return DefaultedList.copyOf(Ingredient.EMPTY, ingredient);
     }
 
     @Override

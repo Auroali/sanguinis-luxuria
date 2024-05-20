@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "type": "patchouli:image",
+      "image": "sanguinisluxuria:textures/gui/patchouli_icons.png",
+      "x": 24,
+      "y": 9,
+      "u": 0,
+      "v": 43,
+      "width": 63,
+      "height": 24
+    },
+    {
+      "type": "patchouli:item",
+      "x": 28,
+      "y": 13,
+      "item": "#item1"
+    },
+    {
+      "type": "patchouli:item",
+      "x": 67,
+      "y": 13,
+      "item": "#output",
+      "link_recipe": true
+    },
+    {
+      "type": "patchouli:text",
+      "text": "#text",
+      "y": 58
+    }
+  ],
+  "processor": "com.auroali.sanguinisluxuria.compat.patchouli.BloodCauldronProcessor"
+}

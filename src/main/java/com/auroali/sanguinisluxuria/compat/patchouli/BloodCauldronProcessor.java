@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.compat.patchouli;
 
 import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
+import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
@@ -11,13 +12,13 @@ import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 
-public class AltarRecipeProcessor implements IComponentProcessor {
-    private AltarRecipe recipe;
+public class BloodCauldronProcessor implements IComponentProcessor {
+    private BloodCauldronRecipe recipe;
     @Override
     public void setup(IVariableProvider variables) {
         String id = variables.get("recipe").asString();
         RecipeManager manager = MinecraftClient.getInstance().world.getRecipeManager();
-        recipe = (AltarRecipe) manager.get(new Identifier(id)).orElseThrow(IllegalArgumentException::new);
+        recipe = (BloodCauldronRecipe) manager.get(new Identifier(id)).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
@@ -32,9 +33,6 @@ public class AltarRecipeProcessor implements IComponentProcessor {
         }
         if(key.equals("output"))
             return IVariable.from(recipe.getOutput());
-        if(key.equals("time")) {
-            return IVariable.from(Text.of("%ds".formatted(recipe.getProcessingTicks() / 20)));
-        }
         return null;
     }
 }

@@ -36,7 +36,8 @@
       "type": "patchouli:item",
       "x": 78,
       "y": 23,
-      "item": "#output"
+      "item": "#output",
+      "link_recipe": true
     },
     {
       "type": "patchouli:text",

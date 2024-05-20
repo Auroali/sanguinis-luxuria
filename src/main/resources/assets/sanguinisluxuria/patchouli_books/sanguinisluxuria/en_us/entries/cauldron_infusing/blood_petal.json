@@ -1,0 +1,16 @@
+{
+  "name": "Blood Petal",
+  "icon": "sanguinisluxuria:blood_petal",
+  "category": "sanguinisluxuria:cauldron_infusing",
+  "advancement": "sanguinisluxuria:become_vampire",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "It would seem that drenching a flower in blood destroys all but a single petal. The petal left behind is transformed, infused with blood."
+    },
+    {
+      "type": "sanguinisluxuria:cauldron_infusing",
+      "recipe": "sanguinisluxuria:blood_petal"
+    }
+  ]
+}
