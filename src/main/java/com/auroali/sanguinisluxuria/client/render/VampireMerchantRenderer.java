@@ -16,6 +16,6 @@ public class VampireMerchantRenderer extends MobEntityRenderer<VampireMerchant, 
 
     @Override
     public Identifier getTexture(VampireMerchant entity) {
-        return BLResources.VAMPIRE_VILLAGER_TEXTURE;
+        return BLResources.VAMPIRE_MERCHANT_TEXTURE;
     }
 }

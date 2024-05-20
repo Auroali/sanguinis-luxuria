@@ -52,6 +52,7 @@ public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
                 .add(EntityType.ENDERMAN)
                 .add(EntityType.TRADER_LLAMA)
                 .add(BLEntities.VAMPIRE_VILLAGER)
+                .add(BLEntities.VAMPIRE_MERCHANT)
                 .addOptional(new Identifier("ratsmischief", "rat"))
                 .addOptional(new Identifier("spectrum", "egg_laying_wooly_pig"))
                 .addOptional(new Identifier("spectrum", "kindling"));

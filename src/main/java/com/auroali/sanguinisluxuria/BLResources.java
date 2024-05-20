@@ -70,6 +70,7 @@ public class BLResources {
     public static final Identifier INFECT_ENTITY_ID = id("infect_entity");
     public static final Identifier VAMPIRE_VILLAGER = id("vampire_villager");
     public static final Identifier VAMPIRE_VILLAGER_TEXTURE = id("textures/entity/vampire_villager.png");
+    public static final Identifier VAMPIRE_MERCHANT_TEXTURE = id("textures/entity/vampire_merchant.png");
     public static final Identifier VAMPIRE_VILLAGER_SPAWN_EGG = id("vampire_villager_spawn_egg");
     public static final Identifier VAMPIRE_VILLAGER_SPAWN = id("vampire_villager_spawn");
     public static final Identifier VAMPIRE_CONVERT_SOUND = id("entity_converted_to_vampire");

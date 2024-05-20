@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.components;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.components.impl.*;
+import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
 import com.auroali.sanguinisluxuria.common.entities.VampireVillagerEntity;
 import com.auroali.sanguinisluxuria.common.registry.BLEntities;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
@@ -30,5 +31,6 @@ public class BLEntityComponents implements EntityComponentInitializer {
         registry.registerFor(TridentEntity.class, BLOOD_TRANSFER_COMPONENT, BloodTransferComponent::new);
         registry.registerFor(VampireVillagerEntity.class, VAMPIRE_COMPONENT, e -> new EntityVampireComponent<>(e, BLVampireAbilities.TELEPORT));
         registry.registerFor(VillagerEntity.class, VAMPIRE_COMPONENT, ConvertibleVampireComponent.create(BLEntities.VAMPIRE_VILLAGER));
+        registry.registerFor(VampireMerchant.class, VAMPIRE_COMPONENT, e -> new EntityVampireComponent<>(e));
     }
 }

@@ -37,6 +37,7 @@
     "minecraft:enderman",
     "minecraft:trader_llama",
     "sanguinisluxuria:vampire_villager",
+    "sanguinisluxuria:vampire_merchant",
     {
       "id": "ratsmischief:rat",
       "required": false
