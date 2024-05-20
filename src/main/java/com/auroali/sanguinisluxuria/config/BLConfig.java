@@ -32,6 +32,7 @@ public class BLConfig {
     public float vampireExhaustionMultiplier = 0.15f;
     public float blessedWaterDamage = 5f;
     public int skillPointsPerLevel = 1;
+    public float piercingExhaustion = 0.45f;
 
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
@@ -69,7 +70,15 @@ public class BLConfig {
                                         .binding(1, () -> this.skillPointsPerLevel, f -> this.skillPointsPerLevel = f)
                                         .controller(IntegerFieldController::new)
                                         .build()
-                                ).build()
+                                )
+                                .option(Option.createBuilder(Float.class)
+                                        .name(Text.translatable("sanguinisluxuria.config.option.blink_piercing_exhaustion"))
+                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.blink_piercing_exhaustion.desc"))
+                                        .binding(.45f, () -> this.piercingExhaustion, f -> this.piercingExhaustion = f)
+                                        .controller(FloatFieldController::new)
+                                        .build()
+                                )
+                                .build()
                         ).build()
                 )
                 .save(INSTANCE::save)
@@ -87,6 +96,7 @@ public class BLConfig {
                 .up()
                 .category("abilities")
                 .writeValue("skillPointsPerLevel", skillPointsPerLevel, JsonObject::addProperty)
+                .writeValue("blinkPiercingExhaustion", piercingExhaustion, JsonObject::addProperty)
                 .up();
 
 
@@ -118,6 +128,7 @@ public class BLConfig {
                 .up()
                 .category("abilities")
                 .readValue("skillPointsPerLevel", v -> skillPointsPerLevel = v, skillPointsPerLevel, JsonElement::getAsInt)
+                .readValue("blinkPiercingExhaustion", v -> piercingExhaustion = v, piercingExhaustion, JsonElement::getAsFloat)
                 .up()
                 .saveIfNeeded(this::save);
     }

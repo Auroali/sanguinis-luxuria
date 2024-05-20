@@ -83,6 +83,8 @@
   "sanguinisluxuria.config.category.gameplay": "Gameplay",
   "sanguinisluxuria.config.option.blessed_water_damage": "Blessed Water Damage",
   "sanguinisluxuria.config.option.blessed_water_damage.desc": "The base amount of damage blessed water does against vampires and undead entities",
+  "sanguinisluxuria.config.option.blink_piercing_exhaustion": "Blink Piercing Exhaustion",
+  "sanguinisluxuria.config.option.blink_piercing_exhaustion.desc": "The amount of exhaustion per entity pierced when using the Pendant of Piercing",
   "sanguinisluxuria.config.option.skill_points_per_level": "Skill Points Per Level",
   "sanguinisluxuria.config.option.skill_points_per_level.desc": "How many skill points are gained per level",
   "sanguinisluxuria.config.option.vampire_damage_multiplier": "Damage Multiplier",

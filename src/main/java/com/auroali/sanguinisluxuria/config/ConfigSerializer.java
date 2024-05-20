@@ -60,7 +60,7 @@ public class ConfigSerializer {
             } catch (Exception e) {
                 Bloodlust.LOGGER.error("An error occurred whilst reading config key {}/{}. Falling back to default value.", getFullCategoryName(), name, e);
             }
-        }
+        } else Bloodlust.LOGGER.warn("Missing config key {}/{}, using default", getFullCategoryName(), name);
         ConfigSerializer root = getRoot();
         if(root != null)
             root.shouldResaveConfig = true;
