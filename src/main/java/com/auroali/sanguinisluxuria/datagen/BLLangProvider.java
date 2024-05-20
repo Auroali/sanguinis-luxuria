@@ -156,10 +156,10 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityDescKey(translationBuilder, BLVampireAbilities.MORE_BLOOD, "Increases the amount of blood gained");
 
         generateAbilityKey(translationBuilder, BLVampireAbilities.TRANSFER_EFFECTS, "Infectious");
-        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TRANSFER_EFFECTS, "Transfers potion effects upon draining something's blood");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.TRANSFER_EFFECTS, "Allows transferring potion effects");
 
         generateAbilityKey(translationBuilder, BLVampireAbilities.BITE, "Bite");
-        generateAbilityDescKey(translationBuilder, BLVampireAbilities.BITE, "Deals damage that bypasses armor and inflicts bleeding");
+        generateAbilityDescKey(translationBuilder, BLVampireAbilities.BITE, "Deals damage and inflicts bleeding");
 
         generateAbilityKey(translationBuilder, BLVampireAbilities.SUN_PROTECTION, "Sun Resistance");
         generateAbilityDescKey(translationBuilder, BLVampireAbilities.SUN_PROTECTION, "Increases the amount of time you can spend in the sun");
