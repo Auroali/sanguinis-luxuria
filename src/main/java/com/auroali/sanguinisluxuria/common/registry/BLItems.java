@@ -42,7 +42,7 @@ public class BLItems {
         Registry.register(Registry.ITEM, BLResources.BLOOD_PETAL_ID, BLOOD_PETAL);
 
         // blocks
-        Registry.register(Registry.ITEM, BLResources.SKILL_UPGRADER_ID, new BlockItem(BLBlocks.SKILL_UPGRADER, new FabricItemSettings()
+        Registry.register(Registry.ITEM, BLResources.ALTAR_ID, new BlockItem(BLBlocks.ALTAR, new FabricItemSettings()
                 .group(Bloodlust.BLOODLUST_TAB))
         );
         Registry.register(Registry.ITEM, BLResources.PEDESTAL_ID, new BlockItem(BLBlocks.PEDESTAL, new FabricItemSettings()

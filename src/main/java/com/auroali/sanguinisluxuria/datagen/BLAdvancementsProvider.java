@@ -113,7 +113,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
         Advancement unlockAnyAbility = Advancement.Builder
                 .create()
                 .display(
-                        BLBlocks.SKILL_UPGRADER,
+                        BLBlocks.ALTAR,
                         Text.translatable(title("unlock_ability")),
                         Text.translatable(desc("unlock_ability")),
                         null,

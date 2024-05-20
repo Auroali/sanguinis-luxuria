@@ -12,7 +12,7 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     protected void generateBlockLootTables() {
-        addDrop(BLBlocks.SKILL_UPGRADER);
+        addDrop(BLBlocks.ALTAR);
         addDrop(BLBlocks.PEDESTAL);
         addDrop(BLBlocks.BLOOD_CAULDRON, Items.CAULDRON);
     }

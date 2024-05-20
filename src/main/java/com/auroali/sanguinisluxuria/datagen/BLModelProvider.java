@@ -62,7 +62,7 @@ public class BLModelProvider extends FabricModelProvider {
                                 blockStateModelGenerator.modelCollector)
                         ));
         blockStateModelGenerator.blockStateCollector
-                .accept(VariantsBlockStateSupplier.create(BLBlocks.SKILL_UPGRADER)
+                .accept(VariantsBlockStateSupplier.create(BLBlocks.ALTAR)
                         .coordinate(BlockStateVariantMap.create(SkillUpgraderBlock.ACTIVE)
                                 .register(false, BlockStateVariant.create()
                                         .put(VariantSettings.MODEL, BLResources.id("block/altar")))

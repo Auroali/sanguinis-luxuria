@@ -44,7 +44,7 @@ public class BLResources {
     public static final Identifier TELEPORT_RANGE_TAG_ID = id("teleport_range_increase");
     public static final Identifier VAMPIRE_STRENGTH_2_ID = id("vampire_strength_2");
     public static final Identifier BECOME_VAMPIRE_CRITERION_ID = id("become_vampire");
-    public static final Identifier SKILL_UPGRADER_ID = id("altar");
+    public static final Identifier ALTAR_ID = id("altar");
     public static final Identifier MORE_BLOOD_ID = id("more_blood");
     public static final Identifier ALTAR_RECIPE_ID = id("altar_recipe");
     public static final Identifier TWISTED_BLOOD_ID = id("twisted_blood_bottle");

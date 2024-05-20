@@ -4,7 +4,6 @@ import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
 import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
@@ -12,7 +11,6 @@ import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
@@ -54,7 +52,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(Items.GLASS)
                 .criterion("has_twisted_blood", conditionsFromItem(BLItems.TWISTED_BLOOD))
                 .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(BLBlocks.SKILL_UPGRADER)
+        ShapedRecipeJsonBuilder.create(BLBlocks.ALTAR)
                 .pattern("lbl")
                 .pattern("sss")
                 .input('b', BLItems.BLOOD_BOTTLE)

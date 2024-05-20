@@ -87,7 +87,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItems.TWISTED_BLOOD, "Twisted Blood Bottle");
         translationBuilder.add(BLItems.BLESSED_BLOOD, "Blessed Blood Bottle");
         translationBuilder.add(BLBlocks.PEDESTAL, "Pedestal");
-        translationBuilder.add(BLBlocks.SKILL_UPGRADER, "Altar");
+        translationBuilder.add(BLBlocks.ALTAR, "Altar");
         translationBuilder.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG, "Vampire Villager Spawn Egg");
 
         translationBuilder.add(BLEntities.VAMPIRE_VILLAGER, "Vampire Villager");

@@ -23,7 +23,7 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
                 .add(Blocks.CAVE_AIR)
                 .add(Blocks.VOID_AIR);
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(BLBlocks.SKILL_UPGRADER)
+                .add(BLBlocks.ALTAR)
                 .add(BLBlocks.PEDESTAL);
         getOrCreateTagBuilder(BlockTags.CAULDRONS)
                 .add(BLBlocks.BLOOD_CAULDRON);
