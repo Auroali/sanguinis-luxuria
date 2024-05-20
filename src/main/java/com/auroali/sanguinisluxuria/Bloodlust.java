@@ -33,6 +33,7 @@ import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.AutomaticItemPlacementContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -42,6 +43,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
@@ -130,7 +132,7 @@ public class Bloodlust implements ModInitializer {
 	private static void dropBlood(LivingEntity entity, DamageSource source) {
 		if(!VampireHelper.isVampire(entity)
 				&& entity.getType().isIn(BLTags.Entities.HAS_BLOOD)
-				&& entity.getType().isIn(BLTags.Entities.CAN_DROP_BLOOD)
+				&& (entity.getType().isIn(BLTags.Entities.CAN_DROP_BLOOD) || entity.hasStatusEffect(BLStatusEffects.BLEEDING))
 		) {
 			BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
 			if(blood.getBlood() < blood.getMaxBlood())
@@ -142,8 +144,9 @@ public class Bloodlust implements ModInitializer {
 				return;
 
 			BlockState newState = BLBlocks.BLOOD_SPLATTER.getDefaultState();
-			if(!state.isIn(BLTags.Blocks.BLOOD_SPLATTER_REPLACEABLE) || !newState.canPlaceAt(entity.world, entity.getBlockPos()))
+			if(!state.canReplace(new AutomaticItemPlacementContext(entity.world, entity.getBlockPos(), Direction.DOWN, ItemStack.EMPTY, Direction.UP)) || !newState.canPlaceAt(entity.world, entity.getBlockPos()))
 				return;
+
 			entity.world.setBlockState(entity.getBlockPos(), newState);
 		}
 	}

@@ -13,7 +13,7 @@ import net.minecraft.world.biome.Biome;
 public class BLTags {
     public static class Blocks {
 
-        public static final TagKey<Block> BLOOD_SPLATTER_REPLACEABLE = TagKey.of(Registry.BLOCK_KEY, BLResources.BLOOD_SPLATTER_REPLACEABLE);;
+        //public static final TagKey<Block> BLOOD_SPLATTER_REPLACEABLE = TagKey.of(Registry.BLOCK_KEY, BLResources.BLOOD_SPLATTER_REPLACEABLE);;
     }
 
     public static class Entities {

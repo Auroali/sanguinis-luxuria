@@ -16,12 +16,6 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
 
     @Override
     protected void generateTags() {
-        getOrCreateTagBuilder(BLTags.Blocks.BLOOD_SPLATTER_REPLACEABLE)
-                .add(Blocks.GRASS)
-                .add(Blocks.TALL_GRASS)
-                .add(Blocks.AIR)
-                .add(Blocks.CAVE_AIR)
-                .add(Blocks.VOID_AIR);
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(BLBlocks.ALTAR)
                 .add(BLBlocks.PEDESTAL);
