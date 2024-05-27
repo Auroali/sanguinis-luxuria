@@ -7,7 +7,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.events.AllowBloodDrainEvent;
+import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import net.minecraft.entity.EntityInteraction;
@@ -62,7 +62,7 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     public void drainBloodFrom(LivingEntity entity) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
         BloodComponent holderBlood = BLEntityComponents.BLOOD_COMPONENT.get(holder);
-        if(!blood.hasBlood() || !AllowBloodDrainEvent.EVENT.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
+        if(!blood.hasBlood() || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
             return;
 
         // damage the vampire and cancel filling up hunger if the target has blood protection
@@ -76,11 +76,13 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
         if(!VampireHelper.isVampire(entity) && abilities.hasAbility(BLVampireAbilities.MORE_BLOOD))
             bloodMultiplier = 2;
 
-        if(!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+        if(!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD)) {
             holderBlood.addBlood(bloodMultiplier * 2);
-        else
+            BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier * 2);
+        } else {
             holderBlood.addBlood(bloodMultiplier);
-
+            BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier);
+        }
         setDowned(false);
         holder.world.emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
 

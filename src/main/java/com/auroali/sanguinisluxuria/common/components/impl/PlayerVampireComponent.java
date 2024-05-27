@@ -9,8 +9,8 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.events.AllowBloodDrainEvent;
 import com.auroali.sanguinisluxuria.common.events.AllowVampireChangeEvent;
+import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
@@ -98,7 +98,7 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void drainBloodFrom(LivingEntity entity) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-        if(!blood.hasBlood() || !AllowBloodDrainEvent.EVENT.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
+        if(!blood.hasBlood() || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
             return;
 
         // damage the vampire and cancel filling up hunger if the target has blood protection
@@ -113,10 +113,13 @@ public class PlayerVampireComponent implements VampireComponent {
             bloodMultiplier = 2;
 
         if(!VampireHelper.shouldFillHeldItemOnDrain(holder) || !BloodStorageItem.tryAddBloodToItemInHand(holder, bloodMultiplier)) {
-            if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+            if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD)) {
                 ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier * 2, 0.05f);
-            else
+                BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier * 2);
+            } else {
                 ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier, 0);
+                BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier);
+            }
         }
 
         setDowned(false);
