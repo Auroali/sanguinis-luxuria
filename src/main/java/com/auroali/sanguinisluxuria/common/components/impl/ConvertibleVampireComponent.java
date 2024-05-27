@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.events.AllowVampireChangeEvent;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
@@ -65,7 +66,7 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
 
     @Override
     public void setIsVampire(boolean isVampire) {
-        if(!isVampire)
+        if(!isVampire || !AllowVampireChangeEvent.EVENT.invoker().onChanged(holder, this, isVampire))
             return;
         T entity = conversionType.create(holder.world);
         if(entity == null) {

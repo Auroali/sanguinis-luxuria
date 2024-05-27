@@ -9,6 +9,8 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.events.AllowBloodDrainEvent;
+import com.auroali.sanguinisluxuria.common.events.AllowVampireChangeEvent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
@@ -76,6 +78,9 @@ public class PlayerVampireComponent implements VampireComponent {
 
     @Override
     public void setIsVampire(boolean isVampire) {
+        if(!AllowVampireChangeEvent.EVENT.invoker().onChanged(holder, this, isVampire))
+            return;
+
         this.isVampire = isVampire;
         if(!isVampire) {
             removeModifiers();
@@ -93,7 +98,7 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void drainBloodFrom(LivingEntity entity) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-        if(!blood.hasBlood() || !blood.drainBlood(holder))
+        if(!blood.hasBlood() || !AllowBloodDrainEvent.EVENT.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
             return;
 
         // damage the vampire and cancel filling up hunger if the target has blood protection
