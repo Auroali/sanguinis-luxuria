@@ -34,5 +34,7 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
                 .add(BLItems.MASK_1)
                 .add(BLItems.MASK_2)
                 .add(BLItems.MASK_3);
+        getOrCreateTagBuilder(BLTags.Items.SILVER_INGOTS)
+                .add(BLItems.SILVER_INGOT);
     }
 }

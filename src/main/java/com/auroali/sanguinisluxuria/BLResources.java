@@ -82,6 +82,17 @@ public class BLResources {
     public static final Identifier SERRATED_ID = id("serrated");
     public static final Identifier VAMPIRE_MERCHANT = id("vampire_merchant");
     public static final Identifier BLOOD_PETAL_ID = id("blood_petal");
+    public static final Identifier SILVER_INGOT_ID = id("silver_ingot");
+    public static final Identifier SILVER_BLOCK_ID = id("silver_block");
+    public static final Identifier RAW_SILVER_ID = id("raw_silver");
+    public static final Identifier SILVER_ORE_ID = id("silver_ore");
+    public static final Identifier DEEPSLATE_SILVER_ORE_ID = id("deepslate_silver_ore");
+    public static final Identifier SILVER_SHOVEL_ID = id("silver_shovel");
+    public static final Identifier SILVER_PICKAXE_ID = id("silver_pickaxe");
+    public static final Identifier SILVER_SWORD_ID = id("silver_sword");
+    public static final Identifier SILVER_AXE_ID = id("silver_axe");
+    public static final Identifier SILVER_HOE_ID = id("silver_hoe");
+    public static final Identifier BLESSED_DAMAGE_ID = id("blessed_damage");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

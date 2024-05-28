@@ -120,6 +120,19 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(BLItems.BLOOD_PETAL, "Blood Petal");
 
+        translationBuilder.add(BLItems.SILVER_INGOT, "Silver Ingot");
+        translationBuilder.add(BLBlocks.SILVER_BLOCK, "Silver Block");
+        translationBuilder.add(BLItems.RAW_SILVER, "Raw Silver");
+        translationBuilder.add(BLBlocks.SILVER_ORE, "Silver Ore");
+        translationBuilder.add(BLBlocks.DEEPSLATE_SILVER_ORE, "Deepslate Silver Ore");
+        translationBuilder.add(BLItems.SILVER_SWORD, "Silver Sword");
+        translationBuilder.add(BLItems.SILVER_AXE, "Silver Axe");
+        translationBuilder.add(BLItems.SILVER_PICKAXE, "Silver Pickaxe");
+        translationBuilder.add(BLItems.SILVER_SHOVEL, "Silver Shovel");
+        translationBuilder.add(BLItems.SILVER_HOE, "Silver Hoe");
+
+        translationBuilder.add(BLEntityAttributes.BLESSED_DAMAGE.getTranslationKey(), "Blessed Damage");
+
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
         generatePotionKey(translationBuilder, BLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");

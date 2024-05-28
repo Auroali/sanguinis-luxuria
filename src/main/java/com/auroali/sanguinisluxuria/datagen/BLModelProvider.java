@@ -72,6 +72,9 @@ public class BLModelProvider extends FabricModelProvider {
                 );
         blockStateModelGenerator.blockStateCollector
                 .accept(BlockStateModelGenerator.createSingletonBlockState(BLBlocks.PEDESTAL, BLResources.id("block/pedestal")));
+        blockStateModelGenerator.registerSingleton(BLBlocks.SILVER_BLOCK, TextureMap.all(BLBlocks.SILVER_BLOCK), Models.CUBE_ALL);
+        blockStateModelGenerator.registerSingleton(BLBlocks.SILVER_ORE, TexturedModel.CUBE_ALL);
+        blockStateModelGenerator.registerSingleton(BLBlocks.DEEPSLATE_SILVER_ORE, TexturedModel.CUBE_ALL);
     }
 
     @Override
@@ -79,20 +82,21 @@ public class BLModelProvider extends FabricModelProvider {
         itemModelGenerator.register(BLItems.MASK_1, BLModels.MASK);
         itemModelGenerator.register(BLItems.MASK_2, BLModels.MASK);
         itemModelGenerator.register(BLItems.MASK_3, BLModels.MASK);
-
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_1", Models.GENERATED);
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_2", Models.GENERATED);
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_3", Models.GENERATED);
-
         itemModelGenerator.register(BLItems.BLOOD_BOTTLE, "_2", Models.GENERATED);
         itemModelGenerator.register(BLItems.TWISTED_BLOOD, Models.GENERATED);
-
         itemModelGenerator.register(BLItems.BLESSED_BLOOD, Models.GENERATED);
-
         itemModelGenerator.register(BLItems.PENDANT_OF_PIERCING, Models.GENERATED);
-
         itemModelGenerator.register(BLItems.PENDANT_OF_TRANSFUSION, Models.GENERATED);
-
         itemModelGenerator.register(BLItems.BLOOD_PETAL, Models.GENERATED);
+        itemModelGenerator.register(BLItems.SILVER_INGOT, Models.GENERATED);
+        itemModelGenerator.register(BLItems.RAW_SILVER, Models.GENERATED);
+        itemModelGenerator.register(BLItems.SILVER_SWORD, Models.HANDHELD);
+        itemModelGenerator.register(BLItems.SILVER_AXE, Models.HANDHELD);
+        itemModelGenerator.register(BLItems.SILVER_PICKAXE, Models.HANDHELD);
+        itemModelGenerator.register(BLItems.SILVER_SHOVEL, Models.HANDHELD);
+        itemModelGenerator.register(BLItems.SILVER_HOE, Models.HANDHELD);
     }
 }

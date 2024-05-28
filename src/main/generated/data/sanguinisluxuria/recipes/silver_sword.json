@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "I": {
+      "tag": "c:silver_ingots"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "I",
+    "I",
+    "S"
+  ],
+  "result": {
+    "item": "sanguinisluxuria:silver_sword"
+  }
+}

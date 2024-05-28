@@ -1,16 +1,16 @@
 package com.auroali.sanguinisluxuria.datagen;
 
+import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
 import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
-import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
+import com.auroali.sanguinisluxuria.common.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
+import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
@@ -92,5 +92,52 @@ public class BLRecipeProvider extends FabricRecipeProvider {
         BloodCauldronRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.FLOWERS), BLItems.BLOOD_PETAL)
                 .criterion("become_vampire", BecomeVampireCriterion.Conditions.create())
                 .offerTo(exporter);
+        CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(BLItems.RAW_SILVER), BLItems.SILVER_INGOT, 0.35f, 200)
+                .criterion("has_item", conditionsFromItem(BLItems.RAW_SILVER))
+                .offerTo(exporter, BLResources.id("smelting/silver_ingot"));
+        CookingRecipeJsonBuilder.createBlasting(Ingredient.ofItems(BLItems.RAW_SILVER), BLItems.SILVER_INGOT, 0.35f, 100)
+                .criterion("has_item", conditionsFromItem(BLItems.RAW_SILVER))
+                .offerTo(exporter, BLResources.id("blasting/silver_ingot"));
+        ShapedRecipeJsonBuilder.create(BLItems.SILVER_SWORD)
+                .pattern("I")
+                .pattern("I")
+                .pattern("S")
+                .input('I', BLTags.Items.SILVER_INGOTS)
+                .input('S', Items.STICK)
+                .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(BLItems.SILVER_PICKAXE)
+                .pattern("III")
+                .pattern(" S ")
+                .pattern(" S ")
+                .input('I', BLTags.Items.SILVER_INGOTS)
+                .input('S', Items.STICK)
+                .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(BLItems.SILVER_AXE)
+                .pattern("II")
+                .pattern("IS")
+                .pattern(" S")
+                .input('I', BLTags.Items.SILVER_INGOTS)
+                .input('S', Items.STICK)
+                .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(BLItems.SILVER_SHOVEL)
+                .pattern("I")
+                .pattern("S")
+                .pattern("S")
+                .input('I', BLTags.Items.SILVER_INGOTS)
+                .input('S', Items.STICK)
+                .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(BLItems.SILVER_HOE)
+                .pattern("II")
+                .pattern(" S")
+                .pattern(" S")
+                .input('I', BLTags.Items.SILVER_INGOTS)
+                .input('S', Items.STICK)
+                .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
+                .offerTo(exporter);
+        // todo: other recipes
     }
 }

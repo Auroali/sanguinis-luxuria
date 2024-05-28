@@ -25,6 +25,9 @@ public class BLBlocks {
     public static final Block BLOOD_CAULDRON = new BloodCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON));
     public static final Block ALTAR = new SkillUpgraderBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(1.5F, 6.0F));
     public static final Block PEDESTAL = new PedestalBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(1.5F, 6.0F));
+    public static final Block SILVER_BLOCK = new Block(FabricBlockSettings.copy(Blocks.IRON_BLOCK).sounds(BlockSoundGroup.NETHERITE));
+    public static final Block SILVER_ORE = new Block(FabricBlockSettings.copy(Blocks.IRON_ORE));
+    public static final Block DEEPSLATE_SILVER_ORE = new Block(FabricBlockSettings.copy(Blocks.DEEPSLATE_IRON_ORE));
 
     public static void register() {
         Registry.register(Registry.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
@@ -32,5 +35,8 @@ public class BLBlocks {
         Registry.register(Registry.BLOCK, BLResources.PEDESTAL_ID, PEDESTAL);
         //Registry.register(Registry.BLOCK, BLResources.BLOOD_STILL, BLOOD);
         Registry.register(Registry.BLOCK, BLResources.BLOOD_CAULDRON_ID, BLOOD_CAULDRON);
+        Registry.register(Registry.BLOCK, BLResources.SILVER_BLOCK_ID, SILVER_BLOCK);
+        Registry.register(Registry.BLOCK, BLResources.SILVER_ORE_ID, SILVER_ORE);
+        Registry.register(Registry.BLOCK, BLResources.DEEPSLATE_SILVER_ORE_ID, DEEPSLATE_SILVER_ORE);
     }
 }

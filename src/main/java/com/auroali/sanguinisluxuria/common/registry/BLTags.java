@@ -30,6 +30,7 @@ public class BLTags {
         public static final TagKey<Item> NECKLACE_TRINKETS = TagKey.of(Registry.ITEM_KEY, new Identifier("trinkets", "chest/necklace"));
         public static final TagKey<Item> SUN_BLOCKING_HELMETS = TagKey.of(Registry.ITEM_KEY, BLResources.SUN_BLOCKING_HELMETS);
         public static final TagKey<Item> VAMPIRE_MASKS = TagKey.of(Registry.ITEM_KEY, BLResources.VAMPIRE_MASKS_ID);
+        public static final TagKey<Item> SILVER_INGOTS = TagKey.of(Registry.ITEM_KEY, new Identifier("c", "silver_ingots"));
     }
     public static class VampireAbilities {
         public static final TagKey<VampireAbility> TELEPORT_RANGE = TagKey.of(BLRegistry.VAMPIRE_ABILITIES_KEY, BLResources.TELEPORT_RANGE_TAG_ID);

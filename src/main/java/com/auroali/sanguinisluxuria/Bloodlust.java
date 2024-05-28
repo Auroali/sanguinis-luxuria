@@ -68,6 +68,7 @@ public class Bloodlust implements ModInitializer {
 		BLRegistry.init();
 		BLConfig.INSTANCE.load();
 
+		BLEntityAttributes.register();
 		BLCauldronBehaviours.register();
 		BLFluids.register();
 		BLBlocks.register();

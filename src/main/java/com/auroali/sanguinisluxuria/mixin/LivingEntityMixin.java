@@ -4,6 +4,8 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -11,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -29,6 +32,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class LivingEntityMixin extends Entity {
     @Shadow protected abstract boolean tryUseTotem(DamageSource source);
 
+    @Shadow public abstract boolean isUndead();
+
+    @Shadow public abstract void setOnGround(boolean onGround);
+
+    @Shadow public abstract boolean damage(DamageSource source, float amount);
+
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -42,13 +51,17 @@ public abstract class LivingEntityMixin extends Entity {
             value = "HEAD"
     ), argsOnly = true)
     public float sanguinisluxuria$actuallyIncreaseDamage(float amount, @Share("source") LocalRef<DamageSource> source) {
+        float blessedDamageMod = 0.0f;
+        if(this.isUndead() && source.get().getAttacker() instanceof LivingEntity entity) {
+            blessedDamageMod += (float) entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE);
+        }
         if(VampireHelper.isVampire(this)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
             if(!VampireComponent.isEffectiveAgainstVampires(source.get()) && vampire.getAbilties().hasAbility(BLVampireAbilities.DAMAGE_REDUCTION))
                 amount *= 0.85f;
-            return VampireComponent.calculateDamage(amount, source.get());
+            return blessedDamageMod + VampireComponent.calculateDamage(amount, source.get());
         }
-        return amount;
+        return blessedDamageMod + amount;
     }
 
     @Inject(method = "applyDamage", at = @At(
@@ -100,5 +113,10 @@ public abstract class LivingEntityMixin extends Entity {
     public void sanguinisluxuria$modifyVampireGroup(CallbackInfoReturnable<EntityGroup> cir) {
         if(VampireHelper.isVampire(this))
             cir.setReturnValue(EntityGroup.UNDEAD);
+    }
+
+    @Inject(method = "createLivingAttributes", at = @At("RETURN"))
+    private static void sanguinisluxuria$addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
+        cir.getReturnValue().add(BLEntityAttributes.BLESSED_DAMAGE);
     }
 }
