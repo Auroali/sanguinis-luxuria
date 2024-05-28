@@ -4,8 +4,10 @@ import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.util.registry.Registry;
 
 public class BLItemTagsProvider extends FabricTagProvider<Item> {
@@ -36,5 +38,15 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
                 .add(BLItems.MASK_3);
         getOrCreateTagBuilder(BLTags.Items.SILVER_INGOTS)
                 .add(BLItems.SILVER_INGOT);
+        getOrCreateTagBuilder(ConventionalItemTags.PICKAXES)
+                .add(BLItems.SILVER_PICKAXE);
+        getOrCreateTagBuilder(ConventionalItemTags.AXES)
+                .add(BLItems.SILVER_AXE);
+        getOrCreateTagBuilder(ConventionalItemTags.SWORDS)
+                .add(BLItems.SILVER_SWORD);
+        getOrCreateTagBuilder(ConventionalItemTags.HOES)
+                .add(BLItems.SILVER_HOE);
+        getOrCreateTagBuilder(ConventionalItemTags.SHOVELS)
+                .add(BLItems.SILVER_SHOVEL);
     }
 }
