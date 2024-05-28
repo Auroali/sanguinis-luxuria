@@ -138,6 +138,5 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input('S', Items.STICK)
                 .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
                 .offerTo(exporter);
-        // todo: other recipes
     }
 }
