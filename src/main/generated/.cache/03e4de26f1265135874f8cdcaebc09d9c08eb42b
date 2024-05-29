@@ -1,9 +1,10 @@
-// 1.19.2	2024-05-28T19:59:37.480632288	Tags for minecraft:item
+// 1.19.2	2024-05-29T00:10:38.361228433	Tags for minecraft:item
 69e797885d92007ca6205470e9993c9f3d8ad1e2 data/c/tags/items/pickaxes.json
 6d684fce31ed676aeaa54e1c92a9fa648b6f16e7 data/c/tags/items/shovels.json
 3d81f29b664ba8ac540a85e97eabcbec26ed6a9c data/sanguinisluxuria/tags/items/sun_blocking_helmets.json
 6833b2e755c0a03d2b0802c9b489a4a58776efc6 data/c/tags/items/axes.json
 facafd2526c364a82c85495552558d6c38405d42 data/c/tags/items/silver_ingots.json
+d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/items/ores.json
 629f75843c82691375ef6b0fe17524c2599abffc data/trinkets/tags/items/head/face.json
 629f75843c82691375ef6b0fe17524c2599abffc data/sanguinisluxuria/tags/items/vampire_masks.json
 145394fa5265be8766e5f0506ac3c8c96a5f208e data/trinkets/tags/items/chest/necklace.json

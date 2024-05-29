@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "sanguinisluxuria:altar",
-    "sanguinisluxuria:pedestal",
     "sanguinisluxuria:silver_ore",
     "sanguinisluxuria:deepslate_silver_ore",
     "sanguinisluxuria:silver_block"

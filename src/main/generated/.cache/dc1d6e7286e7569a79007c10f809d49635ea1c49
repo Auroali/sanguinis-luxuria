@@ -1,4 +1,7 @@
-// 1.19.2	2024-05-28T19:59:37.521647998	Block Loot Tables
+// 1.19.2	2024-05-29T00:10:38.363446266	Block Loot Tables
 6bffc1b40b0af0791492ebe972ef62468c35d70d data/sanguinisluxuria/loot_tables/blocks/pedestal.json
+87e906dd4ae3f8d6b7f64229595351543afff960 data/sanguinisluxuria/loot_tables/blocks/silver_block.json
 ec2172578c4274d4a92cbffdeb1969d9444f05e1 data/sanguinisluxuria/loot_tables/blocks/altar.json
+60e383e41556e63e23da54104b981b78e11129fb data/sanguinisluxuria/loot_tables/blocks/silver_ore.json
+b4079b187138f35230fdc243e8faefa814eae896 data/sanguinisluxuria/loot_tables/blocks/deepslate_silver_ore.json
 548d115eeb79b74d3fbe03951bdc179110ed6f8a data/sanguinisluxuria/loot_tables/blocks/blood_cauldron.json

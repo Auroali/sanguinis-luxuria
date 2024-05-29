@@ -8,9 +8,10 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.HoeItem;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;
 
-public class BlessedPickaxeItem extends HoeItem {
+public class BlessedPickaxeItem extends PickaxeItem {
 
     private final ImmutableMultimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 

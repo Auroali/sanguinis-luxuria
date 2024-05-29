@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.components;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
+import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -47,7 +48,8 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     /**
      * Gets the current blood draining progress
      * @return the amount of time blood has been draining for, in ticks
-     * @see VampireComponent#BLOOD_TIMER_LENGTH
+     * @see com.auroali.sanguinisluxuria.common.BloodConstants#BLOOD_DRAIN_TIME
+     * @see com.auroali.sanguinisluxuria.common.BloodConstants#BLOOD_DRAIN_TIME_BLEEDING
      */
     int getBloodDrainTimer();
 
@@ -77,7 +79,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     /**
      * Sets this component's skill points
-     * @param i the amount of skill points to set
+     * @param points the amount of skill points to set
      */
     void setSkillPoints(int points);
 
@@ -141,6 +143,10 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
             ItemStack stack = entity.getMainHandStack();
             int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
             return level > 0;
+        }
+
+        if(source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE) > 0) {
+            return true;
         }
 
         return false;
