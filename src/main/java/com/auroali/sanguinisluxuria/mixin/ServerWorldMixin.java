@@ -1,6 +1,8 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalLongRef;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -13,12 +15,11 @@ import net.minecraft.world.dimension.DimensionType;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 @Mixin(ServerWorld.class)
@@ -26,26 +27,24 @@ public abstract class ServerWorldMixin extends World {
     @Shadow @Final
     List<ServerPlayerEntity> players;
 
+    @Shadow public abstract void setTimeOfDay(long timeOfDay);
+
     protected ServerWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, RegistryEntry<DimensionType> dimension, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long seed, int maxChainedNeighborUpdates) {
         super(properties, registryRef, dimension, profiler, isClient, debugWorld, seed, maxChainedNeighborUpdates);
     }
 
-    @ModifyVariable(method = "tick",
-            at = @At("STORE")
+    @Inject(method = "tick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/MutableWorldProperties;getTimeOfDay()J")
     )
-    public long sanguinisluxuria$modifySleep(long l) {
+    public void sanguinisluxuria$modifySleep(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("newTime") LocalLongRef newTime) {
         if(this.isDay() && this.players.stream().filter(VampireHelper::isVampire).anyMatch(PlayerEntity::isSleeping)) {
-            return properties.getTimeOfDay() + 13000;
+            long time = properties.getTimeOfDay() + 13000;
+            newTime.set(time - time % 13000);
         }
-        return l;
     }
 
-    @ModifyConstant(method = "tick",
-            constant = @Constant(longValue = 24000L, ordinal = 1)
-    )
-    public long sanguinisluxuria$modifyTime(long constant) {
-        if(isDay() && this.players.stream().filter(VampireHelper::isVampire).anyMatch(PlayerEntity::isSleeping))
-            return 13000;
-        return constant;
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
+    public void sanguinisluxuria$setTimeOfDay(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("newTime") LocalLongRef newTime) {
+        setTimeOfDay(newTime.get());
     }
 }
