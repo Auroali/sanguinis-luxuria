@@ -10,10 +10,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
-import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeJsonProvider;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
@@ -137,6 +134,14 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input('I', BLTags.Items.SILVER_INGOTS)
                 .input('S', Items.STICK)
                 .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
+                .offerTo(exporter);
+        ShapelessRecipeJsonBuilder.create(BLItems.SILVER_INGOT, 9)
+                .input(BLBlocks.SILVER_BLOCK)
+                .criterion("has_silver", conditionsFromItem(BLBlocks.SILVER_BLOCK))
+                .offerTo(exporter);
+        ShapelessRecipeJsonBuilder.create(BLBlocks.SILVER_BLOCK)
+                .input(BLItems.SILVER_INGOT, 9)
+                .criterion("has_silver", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
                 .offerTo(exporter);
     }
 }

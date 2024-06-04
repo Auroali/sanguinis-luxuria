@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    }
+  ],
+  "result": {
+    "item": "sanguinisluxuria:silver_block"
+  }
+}
