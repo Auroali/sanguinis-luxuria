@@ -28,7 +28,7 @@ public class BlessedPickaxeItem extends PickaxeItem {
         );
         builder.put(
                 BLEntityAttributes.BLESSED_DAMAGE,
-                new EntityAttributeModifier(BLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", 4.0f, EntityAttributeModifier.Operation.ADDITION)
+                new EntityAttributeModifier(BLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", 1.0f, EntityAttributeModifier.Operation.ADDITION)
         );
         this.attributeModifiers = builder.build();
     }
