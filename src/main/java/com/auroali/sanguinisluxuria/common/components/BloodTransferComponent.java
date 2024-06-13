@@ -19,16 +19,25 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
     Entity latchedEntity = null;
     UUID latchedEntityId = null;
     PersistentProjectileEntity holder;
-    int bloodTransferLevel = 0;
+    int bloodTransferLevel = -1;
 
     public BloodTransferComponent(PersistentProjectileEntity entity) {
         this.holder = entity;
     }
 
     public int getBloodTransferLevel() {
+        if(bloodTransferLevel != -1)
+            return bloodTransferLevel;
+
+        bloodTransferLevel = 0;
         if(holder.world.isClient)
             return bloodTransferLevel;
-        return EnchantmentHelper.getLevel(BLEnchantments.BLOOD_DRAIN, ((PersistentProjectileEntityAccessor)holder).sanguinisluxuria$asItemStack());
+        bloodTransferLevel = EnchantmentHelper.getLevel(BLEnchantments.BLOOD_DRAIN, ((PersistentProjectileEntityAccessor)holder).sanguinisluxuria$asItemStack());
+        return bloodTransferLevel;
+    }
+
+    public void setBloodTransferLevel(int level) {
+        this.bloodTransferLevel = level;
     }
 
     public Entity getLatchedEntity() {
