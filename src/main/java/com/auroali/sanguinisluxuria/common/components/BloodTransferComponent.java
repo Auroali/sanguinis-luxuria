@@ -38,6 +38,8 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
 
     public void setBloodTransferLevel(int level) {
         this.bloodTransferLevel = level;
+        if(!holder.world.isClient)
+            BLEntityComponents.BLOOD_TRANSFER_COMPONENT.sync(holder);
     }
 
     public Entity getLatchedEntity() {
