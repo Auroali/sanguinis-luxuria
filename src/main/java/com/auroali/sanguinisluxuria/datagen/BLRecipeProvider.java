@@ -143,5 +143,13 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(BLItems.SILVER_INGOT, 9)
                 .criterion("has_silver", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
                 .offerTo(exporter);
+        ShapelessRecipeJsonBuilder.create(BLItems.RAW_SILVER, 9)
+                .input(BLBlocks.RAW_SILVER_BLOCK)
+                .criterion("has_silver", conditionsFromItem(BLItems.RAW_SILVER))
+                .offerTo(exporter);
+        ShapelessRecipeJsonBuilder.create(BLBlocks.RAW_SILVER_BLOCK)
+                .input(BLItems.RAW_SILVER, 9)
+                .criterion("has_silver", conditionsFromItem(BLItems.RAW_SILVER))
+                .offerTo(exporter);
     }
 }

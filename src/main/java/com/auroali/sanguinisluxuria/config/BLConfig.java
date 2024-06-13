@@ -9,6 +9,7 @@ import dev.isxander.yacl.api.ConfigCategory;
 import dev.isxander.yacl.api.Option;
 import dev.isxander.yacl.api.OptionGroup;
 import dev.isxander.yacl.api.YetAnotherConfigLib;
+import dev.isxander.yacl.gui.controllers.BooleanController;
 import dev.isxander.yacl.gui.controllers.string.number.FloatFieldController;
 import dev.isxander.yacl.gui.controllers.string.number.IntegerFieldController;
 import net.fabricmc.loader.api.FabricLoader;
@@ -33,6 +34,7 @@ public class BLConfig {
     public float blessedWaterDamage = 5f;
     public int skillPointsPerLevel = 1;
     public float piercingExhaustion = 0.45f;
+    public boolean generateSilverOre = true;
 
     public Screen generateScreen(Screen screen) {
         return YetAnotherConfigLib.createBuilder()
@@ -81,6 +83,20 @@ public class BLConfig {
                                 .build()
                         ).build()
                 )
+                .category(ConfigCategory.createBuilder()
+                        .name(Text.translatable("sanguinisluxuria.config.category.worldgen"))
+                        .group(OptionGroup.createBuilder()
+                                .option(Option.createBuilder(Boolean.class)
+                                        .name(Text.translatable("sanguinisluxuria.config.option.generate_silver_ore"))
+                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.generate_silver_ore.desc"))
+                                        .binding(true, () -> this.generateSilverOre, v -> this.generateSilverOre = v)
+                                        .controller(BooleanController::new)
+                                        .build()
+                                )
+                                .build()
+                        )
+                        .build()
+                )
                 .save(INSTANCE::save)
                 .build()
                 .generateScreen(screen);
@@ -97,6 +113,9 @@ public class BLConfig {
                 .category("abilities")
                 .writeValue("skillPointsPerLevel", skillPointsPerLevel, JsonObject::addProperty)
                 .writeValue("blinkPiercingExhaustion", piercingExhaustion, JsonObject::addProperty)
+                .up()
+                .category("worldgen")
+                .writeValue("generateSilverOre", generateSilverOre, JsonObject::addProperty)
                 .up();
 
 
@@ -129,6 +148,9 @@ public class BLConfig {
                 .category("abilities")
                 .readValue("skillPointsPerLevel", v -> skillPointsPerLevel = v, skillPointsPerLevel, JsonElement::getAsInt)
                 .readValue("blinkPiercingExhaustion", v -> piercingExhaustion = v, piercingExhaustion, JsonElement::getAsFloat)
+                .up()
+                .category("worldgen")
+                .readValue("generateSilverOre", v -> generateSilverOre = v, generateSilverOre, JsonElement::getAsBoolean)
                 .up()
                 .saveIfNeeded(this::save);
     }

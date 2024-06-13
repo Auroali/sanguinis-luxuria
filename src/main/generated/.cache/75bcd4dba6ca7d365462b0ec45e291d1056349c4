@@ -1,5 +1,5 @@
-// 1.19.2	2024-06-04T14:36:32.487328537	Tags for minecraft:block
+// 1.19.2	2024-06-13T15:25:05.993392966	Tags for minecraft:block
 3834d12c6b786b3d3a1eb209fb685d1dfd849abf data/minecraft/tags/blocks/cauldrons.json
-74fad5abbf30349a7b274bc3d02b75f6f79850c7 data/minecraft/tags/blocks/mineable/pickaxe.json
-5b89072632930b623de2f102edce376db3bd9df1 data/minecraft/tags/blocks/needs_stone_tool.json
+87b1e2b7bc6bf46f34b0c8318d19721505fc1431 data/minecraft/tags/blocks/mineable/pickaxe.json
+0828bb42b778c355bdf4bf1906ca564eb4a4d5ee data/minecraft/tags/blocks/needs_stone_tool.json
 d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/blocks/ores.json

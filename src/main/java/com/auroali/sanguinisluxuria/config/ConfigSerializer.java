@@ -79,6 +79,10 @@ public class ConfigSerializer {
     }
 
     public void saveIfNeeded(Runnable runnable) {
+        if(getRoot() != null)
+            throw new IllegalStateException("Cannot save config on non-root node! Expected '/', got '%s'!".formatted(getFullCategoryName()));
+        if(runnable == null)
+            throw new NullPointerException("Cannot save config with null runnable!");
         if(shouldResaveConfig)
             runnable.run();
     }

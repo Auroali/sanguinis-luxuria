@@ -28,6 +28,7 @@ public class BLBlocks {
     public static final Block SILVER_BLOCK = new Block(FabricBlockSettings.copy(Blocks.IRON_BLOCK).sounds(BlockSoundGroup.NETHERITE));
     public static final Block SILVER_ORE = new Block(FabricBlockSettings.copy(Blocks.IRON_ORE));
     public static final Block DEEPSLATE_SILVER_ORE = new Block(FabricBlockSettings.copy(Blocks.DEEPSLATE_IRON_ORE));
+    public static final Block RAW_SILVER_BLOCK = new Block(FabricBlockSettings.copy(Blocks.RAW_COPPER_BLOCK));
 
     public static void register() {
         Registry.register(Registry.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
@@ -38,5 +39,6 @@ public class BLBlocks {
         Registry.register(Registry.BLOCK, BLResources.SILVER_BLOCK_ID, SILVER_BLOCK);
         Registry.register(Registry.BLOCK, BLResources.SILVER_ORE_ID, SILVER_ORE);
         Registry.register(Registry.BLOCK, BLResources.DEEPSLATE_SILVER_ORE_ID, DEEPSLATE_SILVER_ORE);
+        Registry.register(Registry.BLOCK, BLResources.RAW_SILVER_BLOCK_ID, RAW_SILVER_BLOCK);
     }
 }

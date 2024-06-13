@@ -139,14 +139,14 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         if(source.isFire() || source.isMagic())
             return true;
 
+        if(source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE) > 0) {
+            return true;
+        }
+
         if(source.getAttacker() instanceof LivingEntity entity) {
             ItemStack stack = entity.getMainHandStack();
             int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
             return level > 0;
-        }
-
-        if(source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE) > 0) {
-            return true;
         }
 
         return false;

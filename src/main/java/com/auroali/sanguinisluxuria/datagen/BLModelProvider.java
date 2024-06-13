@@ -75,6 +75,7 @@ public class BLModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerSingleton(BLBlocks.SILVER_BLOCK, TextureMap.all(BLBlocks.SILVER_BLOCK), Models.CUBE_ALL);
         blockStateModelGenerator.registerSingleton(BLBlocks.SILVER_ORE, TexturedModel.CUBE_ALL);
         blockStateModelGenerator.registerSingleton(BLBlocks.DEEPSLATE_SILVER_ORE, TexturedModel.CUBE_ALL);
+        blockStateModelGenerator.registerSingleton(BLBlocks.RAW_SILVER_BLOCK, TexturedModel.CUBE_ALL);
     }
 
     @Override

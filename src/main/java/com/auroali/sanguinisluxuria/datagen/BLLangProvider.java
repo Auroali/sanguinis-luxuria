@@ -45,6 +45,12 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("sanguinisluxuria.config.option.vampire_exhaustion_multiplier.desc", "How much exhaustion is multiplied by for vampires");
         translationBuilder.add("sanguinisluxuria.config.option.blessed_water_damage", "Blessed Water Damage");
         translationBuilder.add("sanguinisluxuria.config.option.blessed_water_damage.desc", "The base amount of damage blessed water does against vampires and undead entities");
+        translationBuilder.add("sanguinisluxuria.config.category.abilities", "Abilities");
+        translationBuilder.add("sanguinisluxuria.config.option.skill_points_per_level", "Skill Points Per Level");
+        translationBuilder.add("sanguinisluxuria.config.option.skill_points_per_level.desc", "How many skill points are gained per level");
+        translationBuilder.add("sanguinisluxuria.config.category.worldgen", "Worldgen");
+        translationBuilder.add("sanguinisluxuria.config.option.generate_silver_ore", "Generate Silver Ore");
+        translationBuilder.add("sanguinisluxuria.config.option.generate_silver_ore.desc", "If silver ore should generate naturally in the world");
 
         translationBuilder.add("death.attack.%s".formatted(BLDamageSources.BLOOD_DRAIN.name), "%1$s had their blood drained");
         translationBuilder.add("death.attack.%s.player".formatted(BLDamageSources.BLOOD_DRAIN.name), "%1$s had their blood drained whilst fighting %2$s");
@@ -92,10 +98,6 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(BLEntities.VAMPIRE_VILLAGER, "Vampire Villager");
 
-        translationBuilder.add("sanguinisluxuria.config.category.abilities", "Abilities");
-        translationBuilder.add("sanguinisluxuria.config.option.skill_points_per_level", "Skill Points Per Level");
-        translationBuilder.add("sanguinisluxuria.config.option.skill_points_per_level.desc", "How many skill points are gained per level");
-
         translationBuilder.add("item.sanguinisluxuria.book", "Sanguinis Luxuria");
         translationBuilder.add("sanguinisluxuria.landing", "A book of vampires.");
 
@@ -125,6 +127,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItems.RAW_SILVER, "Raw Silver");
         translationBuilder.add(BLBlocks.SILVER_ORE, "Silver Ore");
         translationBuilder.add(BLBlocks.DEEPSLATE_SILVER_ORE, "Deepslate Silver Ore");
+        translationBuilder.add(BLBlocks.RAW_SILVER_BLOCK, "Block of Raw Silver");
         translationBuilder.add(BLItems.SILVER_SWORD, "Silver Sword");
         translationBuilder.add(BLItems.SILVER_AXE, "Silver Axe");
         translationBuilder.add(BLItems.SILVER_PICKAXE, "Silver Pickaxe");

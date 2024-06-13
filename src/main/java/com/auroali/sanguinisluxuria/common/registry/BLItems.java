@@ -72,5 +72,8 @@ public class BLItems {
         Registry.register(Registry.ITEM, BLResources.DEEPSLATE_SILVER_ORE_ID, new BlockItem(BLBlocks.DEEPSLATE_SILVER_ORE, new FabricItemSettings()
                 .group(Bloodlust.BLOODLUST_TAB))
         );
+        Registry.register(Registry.ITEM, BLResources.RAW_SILVER_BLOCK_ID, new BlockItem(BLBlocks.RAW_SILVER_BLOCK, new FabricItemSettings()
+                .group(Bloodlust.BLOODLUST_TAB))
+        );
     }
 }

@@ -57,5 +57,6 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
                                 )
                         )));
         addDrop(BLBlocks.SILVER_BLOCK);
+        addDrop(BLBlocks.RAW_SILVER_BLOCK);
     }
 }
