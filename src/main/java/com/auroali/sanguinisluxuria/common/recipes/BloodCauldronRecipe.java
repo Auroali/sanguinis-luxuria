@@ -4,7 +4,6 @@ import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;

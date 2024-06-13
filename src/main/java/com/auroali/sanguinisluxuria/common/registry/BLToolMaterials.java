@@ -2,10 +2,8 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.google.common.base.Suppliers;
 import net.fabricmc.yarn.constants.MiningLevels;
-import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.util.Util;
 
 import java.util.function.Supplier;
 

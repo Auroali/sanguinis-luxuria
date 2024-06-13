@@ -3,7 +3,6 @@ package com.auroali.sanguinisluxuria.common.registry;
 import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.google.common.collect.ImmutableMap;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.village.TradeOffer;

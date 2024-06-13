@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.client.render;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
-import com.auroali.sanguinisluxuria.common.entities.VampireVillagerEntity;
 import com.auroali.sanguinisluxuria.common.registry.BLModelLayers;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;

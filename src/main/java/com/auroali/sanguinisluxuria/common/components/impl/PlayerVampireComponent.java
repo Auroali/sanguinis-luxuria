@@ -275,7 +275,7 @@ public class PlayerVampireComponent implements VampireComponent {
             return;
         }
 
-        holder.setOnFireFor(8);
+        holder.setOnFireFor(6);
     }
 
     private void tickBloodDrain() {

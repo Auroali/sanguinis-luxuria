@@ -4,7 +4,6 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.llamalad7.mixinextras.sugar.Share;

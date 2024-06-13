@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.common.registry.BLCauldronBehaviours;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
