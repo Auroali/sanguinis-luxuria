@@ -33,7 +33,7 @@ public class BLConfig {
     public float vampireExhaustionMultiplier = 0.15f;
     public float blessedWaterDamage = 5f;
     public int skillPointsPerLevel = 1;
-    public float piercingExhaustion = 0.45f;
+    public float piercingExhaustion = 2f;
     public boolean generateSilverOre = true;
 
     public Screen generateScreen(Screen screen) {
@@ -76,7 +76,7 @@ public class BLConfig {
                                 .option(Option.createBuilder(Float.class)
                                         .name(Text.translatable("sanguinisluxuria.config.option.blink_piercing_exhaustion"))
                                         .tooltip(Text.translatable("sanguinisluxuria.config.option.blink_piercing_exhaustion.desc"))
-                                        .binding(.45f, () -> this.piercingExhaustion, f -> this.piercingExhaustion = f)
+                                        .binding(2f, () -> this.piercingExhaustion, f -> this.piercingExhaustion = f)
                                         .controller(FloatFieldController::new)
                                         .build()
                                 )
