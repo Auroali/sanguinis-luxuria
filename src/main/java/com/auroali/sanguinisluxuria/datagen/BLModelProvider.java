@@ -5,12 +5,13 @@ import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.data.client.*;
 
 public class BLModelProvider extends FabricModelProvider {
-    public BLModelProvider(FabricDataGenerator dataGenerator) {
+    public BLModelProvider(FabricDataOutput dataGenerator) {
         super(dataGenerator);
     }
 

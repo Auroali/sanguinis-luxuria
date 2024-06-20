@@ -10,6 +10,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.NarratorManager;
@@ -39,40 +40,38 @@ public class VampireAbilitiesScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
         VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(client.player);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, BLResources.ABILITIES_BG);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         int panelX = (width - 252) / 2;
         int panelY = (height - 147) / 2;
 
-        drawTexture(matrices, panelX + 9, panelY + 18, 0, 0, 234, 113);
+        context.drawTexture(BLResources.ABILITIES_BG, panelX + 9, panelY + 18, 0, 0, 234, 113);
 
         int centerX = width / 2;
         int centerY = height / 2;
 
-        enableScissor(panelX + 9, panelY + 18, panelX + 242, panelY + 131);
-        abilities.forEach(a -> a.render(matrices, component.getAbilties(), (int) (centerX + scrollX), (int) (centerY + scrollY), mouseX, mouseY));
-        disableScissor();
+        context.enableScissor(panelX + 9, panelY + 18, panelX + 242, panelY + 131);
+        abilities.forEach(a -> a.render(context, component.getAbilties(), (int) (centerX + scrollX), (int) (centerY + scrollY), mouseX, mouseY));
+        context.disableScissor();
 
         RenderSystem.enableBlend();
         RenderSystem.disableDepthTest();
-        RenderSystem.setShaderTexture(0, BLResources.ABILITIES_SCREEN);
-        drawTexture(matrices, panelX, panelY, 0, 0, 252, 148);
+        context.drawTexture(BLResources.ABILITIES_SCREEN, panelX, panelY, 0, 0, 252, 148);
         RenderSystem.disableBlend();
 
-        textRenderer.draw(matrices, Text.translatable("gui.sanguinisluxuria.abilities"), panelX + 8, panelY + 6, 4210752);
-        textRenderer.draw(matrices, Text.translatable("gui.sanguinisluxuria.skill_points", component.getSkillPoints()), panelX + 8, panelY + 134, 4210752);
+        context.drawText(client.textRenderer, Text.translatable("gui.sanguinisluxuria.abilities"), panelX + 8, panelY + 6, 4210752, false);
+        context.drawText(client.textRenderer, Text.translatable("gui.sanguinisluxuria.skill_points", component.getSkillPoints()), panelX + 8, panelY + 134, 4210752, false);
 
         for(VampireAbilityWidget ability : abilities) {
             if(ability.isMouseOver(mouseX, mouseY, (int) (centerX + scrollX), (int) (centerY + scrollY))) {
-                renderAbilityWidgetTooltip(matrices, mouseX, mouseY, component.getAbilties(), ability);
+                renderAbilityWidgetTooltip(context, mouseX, mouseY, component.getAbilties(), ability);
             }
         }
     }
 
-    public void renderAbilityWidgetTooltip(MatrixStack matrices, int mouseX, int mouseY, VampireAbilityContainer container, VampireAbilityWidget widget) {
+    public void renderAbilityWidgetTooltip(DrawContext context, int mouseX, int mouseY, VampireAbilityContainer container, VampireAbilityWidget widget) {
         ArrayList<Text> text = new ArrayList<>();
         text.add(Text.translatable(widget.ability.getTranslationKey()));
         text.add(Text.translatable(widget.ability.getDescTranslationKey()));
@@ -99,7 +98,7 @@ public class VampireAbilitiesScreen extends Screen {
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.bind_prompt").formatted(Formatting.GRAY, Formatting.ITALIC));
         else if(widget.ability.isKeybindable())
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.bound", getTextForSlot(slot)).formatted(Formatting.GRAY, Formatting.ITALIC));
-        renderTooltip(matrices, text, mouseX, mouseY);
+        context.drawTooltip(client.textRenderer, text, mouseX, mouseY);
     }
 
     public static Text getTextForSlot(int slot) {

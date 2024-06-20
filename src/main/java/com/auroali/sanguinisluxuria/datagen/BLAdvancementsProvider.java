@@ -8,6 +8,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
@@ -24,7 +25,7 @@ import net.minecraft.util.Identifier;
 import java.util.function.Consumer;
 
 public class BLAdvancementsProvider extends FabricAdvancementProvider {
-    public BLAdvancementsProvider(FabricDataGenerator dataGenerator) {
+    public BLAdvancementsProvider(FabricDataOutput dataGenerator) {
         super(dataGenerator);
     }
 

@@ -36,7 +36,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
     @SuppressWarnings("unchecked")
     public void tick(LivingEntity entity, VampireComponent vampire) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-        tickers.object2ObjectEntrySet().fastForEach(p -> p.getValue().tick(p.getKey(), entity.world, entity, vampire, this, blood));
+        tickers.object2ObjectEntrySet().fastForEach(p -> p.getValue().tick(p.getKey(), entity.getWorld(), entity, vampire, this, blood));
         cooldowns.entrySet().removeIf(e -> {
             setShouldSync(true);
             return e.getKey().canTickCooldown(entity, vampire) && e.getValue().ticks-- == 0;

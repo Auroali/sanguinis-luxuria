@@ -40,16 +40,16 @@
 		"sanguinisluxuria.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.7",
-		"minecraft": "~1.19.2",
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
 		"java": ">=17",
 		"fabric-api": "*",
-		"trinkets": ">=3.4",
-		"reach-entity-attributes": ">=2.3.0",
-		"cardinal-components-entity": "~5.0.2",
-		"yet-another-config-lib": ">=2",
-		"maxhealthfix": ">=8.0.1",
-		"patchouli": ">=1.19.2-77-FABRIC"
+		"trinkets": ">=3.7",
+		"reach-entity-attributes": ">=2.4.0",
+		"cardinal-components-entity": "~5.2.2",
+		"yet_another_config_lib_v3": ">=3.5",
+		"maxhealthfix": ">=12.0.3",
+		"patchouli": ">=1.20.1-84-FABRIC"
 	},
 	"custom": {
 		"cardinal-components": [

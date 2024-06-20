@@ -23,7 +23,7 @@ public class BloodProtectionEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(entity, amplifier);
-        if(entity.world.isClient || !VampireHelper.isVampire(entity))
+        if(entity.getWorld().isClient || !VampireHelper.isVampire(entity))
             return;
 
         int duration = entity.getStatusEffect(this).getDuration();

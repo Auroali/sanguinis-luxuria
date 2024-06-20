@@ -27,7 +27,7 @@ public abstract class WanderingTraderMixin extends MerchantEntity {
     public void sanguinisluxuria$preventUnmaskedVampiresFromTrading(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if(VampireHelper.isVampire(player) && !VampireHelper.isMasked(player)) {
             player.incrementStat(Stats.TALKED_TO_VILLAGER);
-            cir.setReturnValue(ActionResult.success(player.world.isClient));
+            cir.setReturnValue(ActionResult.success(player.getWorld().isClient));
         }
     }
 

@@ -27,7 +27,7 @@ public interface SyncableVampireAbility<T> {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeVarInt(entity.getId());
         buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, (VampireAbility)this);
-        writePacket(buf, entity.world, data);
+        writePacket(buf, entity.getWorld(), data);
         PlayerLookup.tracking(entity).forEach(p ->
             ServerPlayNetworking.send(p, BLResources.ABILITY_SYNC_CHANNEL, buf)
         );

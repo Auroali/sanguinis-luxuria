@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.statuseffects;
 
+import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
@@ -30,7 +31,7 @@ public class BlessedWaterEffect extends StatusEffect {
         if(source != null)
             target.damage(BLDamageSources.blessedWater(source, attacker), damage);
         else
-            target.damage(BLDamageSources.BLESSED_WATER, damage);
+            target.damage(BLDamageSources.get(target.getWorld(), BLResources.BLESSED_WATER_DAMAGE_KEY), damage);
     }
 
     @Override

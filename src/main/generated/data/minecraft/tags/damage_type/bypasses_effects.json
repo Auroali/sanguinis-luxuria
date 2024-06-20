@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "sanguinisluxuria:blessed_water",
+      "required": false
+    }
+  ]
+}

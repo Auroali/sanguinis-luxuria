@@ -19,11 +19,11 @@ public abstract class VillagerEntityMixin {
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$preventUnmaskedVampiresFromTrading(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if(VampireHelper.isVampire(player) && !VampireHelper.isMasked(player)) {
-            if(hand == Hand.MAIN_HAND && !player.world.isClient)
+            if(hand == Hand.MAIN_HAND && !player.getWorld().isClient)
                 sayNo();
 
             player.incrementStat(Stats.TALKED_TO_VILLAGER);
-            cir.setReturnValue(ActionResult.success(player.world.isClient));
+            cir.setReturnValue(ActionResult.success(player.getWorld().isClient));
         }
     }
 }

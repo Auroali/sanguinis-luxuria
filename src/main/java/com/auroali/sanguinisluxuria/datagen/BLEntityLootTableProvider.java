@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -19,8 +20,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class BLEntityLootTableProvider extends SimpleFabricLootTableProvider {
-    public BLEntityLootTableProvider(FabricDataGenerator dataGenerator, LootContextType lootContextType) {
-        super(dataGenerator, lootContextType);
+    public BLEntityLootTableProvider(FabricDataOutput dataGenerator) {
+        super(dataGenerator, LootContextTypes.ENTITY);
     }
 
     @Override

@@ -84,7 +84,7 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
             BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier);
         }
         setDowned(false);
-        holder.world.emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
+        holder.getWorld().emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
         if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
@@ -105,7 +105,7 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
 
         // villagers have a 50% chance to wake up when having their blood drained
         // it also adds negative reputation to the player
-        if(entity.world instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
+        if(entity.getWorld() instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
             serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
             if(holder.getRandom().nextDouble() > 0.5f)
                 entity.wakeUp();

@@ -5,13 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import dev.isxander.yacl.api.ConfigCategory;
-import dev.isxander.yacl.api.Option;
-import dev.isxander.yacl.api.OptionGroup;
-import dev.isxander.yacl.api.YetAnotherConfigLib;
-import dev.isxander.yacl.gui.controllers.BooleanController;
-import dev.isxander.yacl.gui.controllers.string.number.FloatFieldController;
-import dev.isxander.yacl.gui.controllers.string.number.IntegerFieldController;
+import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
+import dev.isxander.yacl3.api.controller.FloatFieldControllerBuilder;
+import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -42,23 +39,23 @@ public class BLConfig {
                 .category(ConfigCategory.createBuilder()
                         .name(Text.translatable("sanguinisluxuria.config.category.gameplay"))
                         .group(OptionGroup.createBuilder()
-                                .option(Option.createBuilder(Float.class)
+                                .option(Option.<Float>createBuilder()
                                         .name(Text.translatable("sanguinisluxuria.config.option.vampire_damage_multiplier"))
-                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.vampire_damage_multiplier.desc"))
+                                        .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.vampire_damage_multiplier.desc")))
                                         .binding(1.5f, () -> this.vampireDamageMultiplier, f -> this.vampireDamageMultiplier = f)
-                                        .controller(FloatFieldController::new)
+                                        .controller(FloatFieldControllerBuilder::create)
                                         .build()
-                                ).option(Option.createBuilder(Float.class)
+                                ).option(Option.<Float>createBuilder()
                                         .name(Text.translatable("sanguinisluxuria.config.option.vampire_exhaustion_multiplier"))
-                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.vampire_exhaustion_multiplier.desc"))
+                                        .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.vampire_exhaustion_multiplier.desc")))
                                         .binding(0.15f, () -> this.vampireExhaustionMultiplier, f -> this.vampireExhaustionMultiplier = f)
-                                        .controller(FloatFieldController::new)
+                                        .controller(FloatFieldControllerBuilder::create)
                                         .build()
-                                ).option(Option.createBuilder(Float.class)
+                                ).option(Option.<Float>createBuilder()
                                         .name(Text.translatable("sanguinisluxuria.config.option.blessed_water_damage"))
-                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.blessed_water_damage.desc"))
+                                        .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.blessed_water_damage.desc")))
                                         .binding(5f, () -> this.blessedWaterDamage, f -> this.blessedWaterDamage = f)
-                                        .controller(FloatFieldController::new)
+                                        .controller(FloatFieldControllerBuilder::create)
                                         .build()
                                 ).build()
                         ).build()
@@ -66,18 +63,18 @@ public class BLConfig {
                 .category(ConfigCategory.createBuilder()
                         .name(Text.translatable("sanguinisluxuria.config.category.abilities"))
                         .group(OptionGroup.createBuilder()
-                                .option(Option.createBuilder(Integer.class)
+                                .option(Option.<Integer>createBuilder()
                                         .name(Text.translatable("sanguinisluxuria.config.option.skill_points_per_level"))
-                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.skill_points_per_level.desc"))
+                                        .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.skill_points_per_level.desc")))
                                         .binding(1, () -> this.skillPointsPerLevel, f -> this.skillPointsPerLevel = f)
-                                        .controller(IntegerFieldController::new)
+                                        .controller(IntegerFieldControllerBuilder::create)
                                         .build()
                                 )
-                                .option(Option.createBuilder(Float.class)
+                                .option(Option.<Float>createBuilder()
                                         .name(Text.translatable("sanguinisluxuria.config.option.blink_piercing_exhaustion"))
-                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.blink_piercing_exhaustion.desc"))
+                                        .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.blink_piercing_exhaustion.desc")))
                                         .binding(2f, () -> this.piercingExhaustion, f -> this.piercingExhaustion = f)
-                                        .controller(FloatFieldController::new)
+                                        .controller(FloatFieldControllerBuilder::create)
                                         .build()
                                 )
                                 .build()
@@ -86,11 +83,11 @@ public class BLConfig {
                 .category(ConfigCategory.createBuilder()
                         .name(Text.translatable("sanguinisluxuria.config.category.worldgen"))
                         .group(OptionGroup.createBuilder()
-                                .option(Option.createBuilder(Boolean.class)
+                                .option(Option.<Boolean>createBuilder()
                                         .name(Text.translatable("sanguinisluxuria.config.option.generate_silver_ore"))
-                                        .tooltip(Text.translatable("sanguinisluxuria.config.option.generate_silver_ore.desc"))
+                                        .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.generate_silver_ore.desc")))
                                         .binding(true, () -> this.generateSilverOre, v -> this.generateSilverOre = v)
-                                        .controller(BooleanController::new)
+                                        .controller(BooleanControllerBuilder::create)
                                         .build()
                                 )
                                 .build()

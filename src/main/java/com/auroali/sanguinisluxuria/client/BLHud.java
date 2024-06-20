@@ -15,7 +15,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
@@ -27,15 +27,13 @@ import net.minecraft.util.hit.EntityHitResult;
 public class BLHud {
     private static final AbilityIconHolder[] CACHED_ICONS = new AbilityIconHolder[3];
 
-    public static void render(MatrixStack stack, float deltaTick) {
+    public static void render(DrawContext context, float deltaTick) {
         MinecraftClient client = MinecraftClient.getInstance();
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(client.player);
         if(!vampire.isVampire())
             return;
-        int width = client.getWindow().getScaledWidth();
-        int height = client.getWindow().getScaledHeight();
-        drawBloodDrainIndicator(stack, client, vampire, width, height);
-        drawBoundAbilities(stack, client, height, vampire.getAbilties());
+        drawBloodDrainIndicator(context, client, vampire, context.getScaledWindowWidth(), context.getScaledWindowHeight());
+        drawBoundAbilities(context, client, context.getScaledWindowHeight(), vampire.getAbilties());
 
     }
 
@@ -43,12 +41,11 @@ public class BLHud {
         return component instanceof PlayerVampireComponent p ? p.targetHasBleeding : entity.hasStatusEffect(BLStatusEffects.BLEEDING);
     }
 
-    private static void drawBloodDrainIndicator(MatrixStack stack, MinecraftClient client, VampireComponent vampire, int width, int height) {
+    private static void drawBloodDrainIndicator(DrawContext context, MinecraftClient client, VampireComponent vampire, int width, int height) {
         if(!BloodlustClient.isLookingAtValidTarget())
             return;
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, BLResources.ICONS);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.enableBlend();
         RenderSystem.blendFuncSeparate(
                 GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO
@@ -71,17 +68,17 @@ public class BLHud {
         int bloodBarX = (width - 14) / 2;
         int bloodBarY = height / 2 + 5;
         if(!VampireHelper.isMasked(client.player))
-            DrawableHelper.drawTexture(stack, fangX, fangY, 0, 0, 26, 9, 256, 256);
-        DrawableHelper.drawTexture(stack, bloodBarX, bloodBarY, 0, 17, 14, 3, 256, 256);
+            context.drawTexture(BLResources.ICONS, fangX, fangY, 0, 0, 26, 9, 256, 256);
+        context.drawTexture(BLResources.ICONS, bloodBarX, bloodBarY, 0, 17, 14, 3, 256, 256);
 
         RenderSystem.disableBlend();
 
-        DrawableHelper.drawTexture(stack, bloodBarX + 1, bloodBarY, 15, 17, (int) (bloodPercent * 13), 3, 256, 256);
+        context.drawTexture(BLResources.ICONS, bloodBarX + 1, bloodBarY, 15, 17, (int) (bloodPercent * 13), 3, 256, 256);
         if(!VampireHelper.isMasked(client.player))
-            DrawableHelper.drawTexture(stack, fangX, fangY + (int) (9 * (1 - drainPercent)), 0, 9 + (int) (9 * (1 - drainPercent)), 26, (int) (9 * drainPercent), 256, 256);
+            context.drawTexture(BLResources.ICONS, fangX, fangY + (int) (9 * (1 - drainPercent)), 0, 9 + (int) (9 * (1 - drainPercent)), 26, (int) (9 * drainPercent), 256, 256);
     }
 
-    public static void drawBoundAbilities(MatrixStack matrices, MinecraftClient client, int height, VampireAbilityContainer container) {
+    public static void drawBoundAbilities(DrawContext context, MinecraftClient client, int height, VampireAbilityContainer container) {
         int x = 16;
         for(int i = 0; i < 3; i++) {
             VampireAbility ability = container.getBoundAbility(i);
@@ -91,12 +88,13 @@ public class BLHud {
             ItemStack stack = getOrCreateIcon(i, ability);
             Text text = VampireAbilitiesScreen.getTextForSlot(i);
             float offset = (16 - client.textRenderer.getWidth(text)) / 2.0f;
-            client.textRenderer.drawWithShadow(matrices, text, x + offset, height - client.textRenderer.fontHeight, -1);
-            client.getItemRenderer().renderInGui(stack, x, height - 16 - client.textRenderer.fontHeight);
+
+            context.drawTextWithShadow(client.textRenderer, text, (int) (x + offset), height - client.textRenderer.fontHeight, -1);
+            context.drawItem(stack, x, height - 16 - client.textRenderer.fontHeight);
             if(container.isOnCooldown(ability)) {
                 double progress = (double) container.getCooldown(ability) / container.getMaxCooldown(ability);
                 RenderSystem.disableDepthTest();
-                DrawableHelper.fill(matrices, x, height - client.textRenderer.fontHeight, x + 16, height - (int) (16 * progress) - client.textRenderer.fontHeight, 0x7AFFFFFF);
+                context.fill(x, height - client.textRenderer.fontHeight, x + 16, height - (int) (16 * progress) - client.textRenderer.fontHeight, 0x7AFFFFFF);
             }
             x += 22;
         }

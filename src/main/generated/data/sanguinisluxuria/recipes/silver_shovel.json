@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "I": {
       "tag": "c:silver_ingots"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "sanguinisluxuria:silver_shovel"
-  }
+  },
+  "show_notification": true
 }

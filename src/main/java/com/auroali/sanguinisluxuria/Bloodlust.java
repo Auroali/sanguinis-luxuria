@@ -11,13 +11,13 @@ import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
@@ -55,13 +55,6 @@ public class Bloodlust implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final String MODID = "sanguinisluxuria";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-	public static final ItemGroup BLOODLUST_TAB = FabricItemGroupBuilder.create(BLResources.ITEM_GROUP_ID)
-			.icon(() -> {
-				ItemStack stack = new ItemStack(BLItems.BLOOD_BOTTLE);
-				BloodStorageItem.setStoredBlood(stack, BLItems.BLOOD_BOTTLE.getMaxBlood());
-				return stack;
-			})
-			.build();
 
 	@Override
 	public void onInitialize() {
@@ -76,6 +69,7 @@ public class Bloodlust implements ModInitializer {
 		BLRecipeSerializers.register();
 		BLRecipeTypes.register();
 		BLItems.register();
+		BLItemGroups.register();
 		BLSounds.register();
 		BLStatusEffects.register();
 		BLVampireAbilities.register();
@@ -140,16 +134,16 @@ public class Bloodlust implements ModInitializer {
 			if(blood.getBlood() < blood.getMaxBlood())
 				return;
 
-			BlockState state = entity.world.getBlockState(entity.getBlockPos());
-			BlockState belowState = entity.world.getBlockState(entity.getBlockPos().down());
-			if(tryFillCauldron(entity.world, entity.getBlockPos(), state) || tryFillCauldron(entity.world, entity.getBlockPos().down(), belowState))
+			BlockState state = entity.getWorld().getBlockState(entity.getBlockPos());
+			BlockState belowState = entity.getWorld().getBlockState(entity.getBlockPos().down());
+			if(tryFillCauldron(entity.getWorld(), entity.getBlockPos(), state) || tryFillCauldron(entity.getWorld(), entity.getBlockPos().down(), belowState))
 				return;
 
 			BlockState newState = BLBlocks.BLOOD_SPLATTER.getDefaultState();
-			if(!state.canReplace(new AutomaticItemPlacementContext(entity.world, entity.getBlockPos(), Direction.DOWN, ItemStack.EMPTY, Direction.UP)) || !newState.canPlaceAt(entity.world, entity.getBlockPos()))
+			if(!state.canReplace(new AutomaticItemPlacementContext(entity.getWorld(), entity.getBlockPos(), Direction.DOWN, ItemStack.EMPTY, Direction.UP)) || !newState.canPlaceAt(entity.getWorld(), entity.getBlockPos()))
 				return;
 
-			entity.world.setBlockState(entity.getBlockPos(), newState);
+			entity.getWorld().setBlockState(entity.getBlockPos(), newState);
 		}
 	}
 

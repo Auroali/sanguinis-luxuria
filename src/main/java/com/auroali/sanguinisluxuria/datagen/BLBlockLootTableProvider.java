@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
@@ -19,12 +20,12 @@ import net.minecraft.predicate.item.EnchantmentPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 
 public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
-    public BLBlockLootTableProvider(FabricDataGenerator dataGenerator) {
+    public BLBlockLootTableProvider(FabricDataOutput dataGenerator) {
         super(dataGenerator);
     }
 
     @Override
-    protected void generateBlockLootTables() {
+    public void generate() {
         addDrop(BLBlocks.ALTAR);
         addDrop(BLBlocks.PEDESTAL);
         addDrop(BLBlocks.BLOOD_CAULDRON, Items.CAULDRON);

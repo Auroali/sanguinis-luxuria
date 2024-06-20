@@ -116,7 +116,7 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
             }
 
             DefaultedList<ItemStack> outputs = DefaultedList.of();
-            outputs.add(entity.recipe.craft(inv));
+            outputs.add(entity.recipe.craft(inv, world.getRegistryManager()));
             outputs.addAll(entity.recipe.getRemainder(inv).stream().filter(i -> !i.isEmpty()).toList());
 
             for(ItemStack stack : outputs) {

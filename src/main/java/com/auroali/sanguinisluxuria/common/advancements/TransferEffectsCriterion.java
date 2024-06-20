@@ -7,13 +7,14 @@ import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class TransferEffectsCriterion extends AbstractCriterion<TransferEffectsCriterion.Conditions> {
     @Override
-    protected TransferEffectsCriterion.Conditions conditionsFromJson(JsonObject obj, EntityPredicate.Extended playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        return new Conditions(EntityPredicate.Extended.EMPTY, obj.has("min_effects") ? obj.get("min_effects").getAsInt() : 1);
+    protected TransferEffectsCriterion.Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+        return new Conditions(LootContextPredicate.EMPTY, obj.has("min_effects") ? obj.get("min_effects").getAsInt() : 1);
     }
 
     @Override
@@ -27,18 +28,18 @@ public class TransferEffectsCriterion extends AbstractCriterion<TransferEffectsC
 
     public static class Conditions extends AbstractCriterionConditions {
         final int minCount;
-        public Conditions(EntityPredicate.Extended entity, int minCount) {
+        public Conditions(LootContextPredicate entity, int minCount) {
             super(BLResources.TRANSFER_EFFECTS_ID, entity);
             this.minCount = minCount;
         }
 
         public static Conditions create() {
-            return new Conditions(EntityPredicate.Extended.EMPTY, 1);
+            return new Conditions(LootContextPredicate.EMPTY, 1);
         }
 
 
         public static Conditions create(int minCount) {
-            return new Conditions(EntityPredicate.Extended.EMPTY, minCount);
+            return new Conditions(LootContextPredicate.EMPTY, minCount);
         }
 
         @Override

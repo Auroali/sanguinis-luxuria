@@ -21,7 +21,7 @@ public class BleedingEffect extends StatusEffect {
 
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
         if(blood.drainBlood())
-            entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), BLSounds.BLEEDING, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), BLSounds.BLEEDING, SoundCategory.NEUTRAL, 1.0f, 1.0f);
     }
 
     @Override

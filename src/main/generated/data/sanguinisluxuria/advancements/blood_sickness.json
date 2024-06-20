@@ -29,5 +29,6 @@
     [
       "get_blood_sickness"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

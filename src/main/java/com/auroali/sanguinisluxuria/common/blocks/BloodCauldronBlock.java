@@ -38,7 +38,7 @@ public class BloodCauldronBlock extends LeveledCauldronBlock {
 
         world.getRecipeManager().getFirstMatch(BLRecipeTypes.BLOOD_CAULDRON_TYPE, new SimpleInventory(stack), world)
                 .ifPresent(recipe -> {
-                    ItemStack result = recipe.craft(new SimpleInventory(stack));
+                    ItemStack result = recipe.craft(new SimpleInventory(stack), world.getRegistryManager());
                     stack.decrement(1);
                     if(item.getStack().isEmpty())
                         item.remove(Entity.RemovalReason.DISCARDED);

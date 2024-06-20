@@ -42,7 +42,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
         Entity latched = bloodTransfer.getLatchedEntity();
         if(bloodDrainLevel != 0 && latched != null && latched.isAlive() && !latched.isRemoved()) {
             if(!this.isOwnerAlive()) {
-                if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
+                if (!this.getWorld().isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
                 this.discard();
@@ -70,7 +70,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             setVelocity(Vec3d.ZERO);
 
             int timeToDrain = latched instanceof LivingEntity e && e.hasStatusEffect(BLStatusEffects.BLEEDING) ? 20 : 40;
-            if(sanguinisluxuria$latchedTicks % timeToDrain == 0 && !world.isClient && blood.drainBlood()) {
+            if(sanguinisluxuria$latchedTicks % timeToDrain == 0 && !getWorld().isClient && blood.drainBlood()) {
                 if(!(owner instanceof LivingEntity entity && BloodStorageItem.tryAddBloodToItemInHand(entity, 1)) && vampire.isVampire()) {
                     ownerBlood.addBlood(1);
                 }

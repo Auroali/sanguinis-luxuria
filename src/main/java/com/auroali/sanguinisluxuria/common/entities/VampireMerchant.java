@@ -32,7 +32,7 @@ public class VampireMerchant extends MerchantEntity {
     protected void afterUsing(TradeOffer offer) {
         if (offer.shouldRewardPlayerExperience()) {
             int i = 3 + this.random.nextInt(4);
-            this.world.spawnEntity(new ExperienceOrbEntity(this.world, this.getX(), this.getY() + 0.5, this.getZ(), i));
+            this.getWorld().spawnEntity(new ExperienceOrbEntity(this.getWorld(), this.getX(), this.getY() + 0.5, this.getZ(), i));
         }
     }
 
@@ -45,13 +45,13 @@ public class VampireMerchant extends MerchantEntity {
             }
 
             if (!this.getOffers().isEmpty()) {
-                if (!this.world.isClient) {
+                if (!this.getWorld().isClient) {
                     this.setCustomer(player);
                     this.sendOffers(player, this.getDisplayName(), 1);
                 }
 
             }
-            return ActionResult.success(this.world.isClient);
+            return ActionResult.success(this.getWorld().isClient);
         } else {
             return super.interactMob(player, hand);
         }
@@ -66,7 +66,7 @@ public class VampireMerchant extends MerchantEntity {
         for(TradeOffer tradeOffer : this.getOffers()) {
             tradeOffer.resetUses();
         }
-        this.lastRestockTime = this.world.getTime();
+        this.lastRestockTime = this.getWorld().getTime();
         ++this.restocksToday;
     }
 
@@ -81,14 +81,14 @@ public class VampireMerchant extends MerchantEntity {
     }
 
     private boolean canRestock() {
-        return this.restocksToday == 0 || this.restocksToday < 2 && this.world.getTime() > this.lastRestockTime + 2400L;
+        return this.restocksToday == 0 || this.restocksToday < 2 && this.getWorld().getTime() > this.lastRestockTime + 2400L;
     }
 
     public boolean shouldRestock() {
         long nextRestockTime = this.lastRestockTime + 12000L;
-        long currentTime = this.world.getTime();
+        long currentTime = this.getWorld().getTime();
         boolean restockPossible = currentTime > nextRestockTime;
-        long timeOfDay = this.world.getTimeOfDay();
+        long timeOfDay = this.getWorld().getTimeOfDay();
         if (this.lastRestockCheckTime > 0L) {
             long o = this.lastRestockCheckTime / 24000L;
             long p = timeOfDay / 24000L;

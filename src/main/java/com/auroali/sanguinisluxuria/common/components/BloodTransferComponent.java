@@ -30,7 +30,7 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
             return bloodTransferLevel;
 
         bloodTransferLevel = 0;
-        if(holder.world.isClient)
+        if(holder.getWorld().isClient)
             return bloodTransferLevel;
         bloodTransferLevel = EnchantmentHelper.getLevel(BLEnchantments.BLOOD_DRAIN, ((PersistentProjectileEntityAccessor)holder).sanguinisluxuria$asItemStack());
         return bloodTransferLevel;
@@ -38,7 +38,7 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
 
     public void setBloodTransferLevel(int level) {
         this.bloodTransferLevel = level;
-        if(!holder.world.isClient)
+        if(!holder.getWorld().isClient)
             BLEntityComponents.BLOOD_TRANSFER_COMPONENT.sync(holder);
     }
 
@@ -90,7 +90,7 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
     public void applySyncPacket(PacketByteBuf buf) {
         bloodTransferLevel = buf.readVarInt();
         if(buf.isReadable())
-            latchedEntity = holder.world.getEntityById(buf.readVarInt());
+            latchedEntity = holder.getWorld().getEntityById(buf.readVarInt());
         else
             latchedEntity = null;
     }

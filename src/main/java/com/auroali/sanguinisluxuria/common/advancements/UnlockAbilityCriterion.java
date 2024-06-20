@@ -9,12 +9,13 @@ import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class UnlockAbilityCriterion extends AbstractCriterion<UnlockAbilityCriterion.Conditions> {
     @Override
-    protected UnlockAbilityCriterion.Conditions conditionsFromJson(JsonObject obj, EntityPredicate.Extended playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+    protected UnlockAbilityCriterion.Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         VampireAbility ability = null;
         if(obj.has("ability")) {
             Identifier identifier = Identifier.tryParse(obj.get("ability").getAsString());
@@ -36,17 +37,17 @@ public class UnlockAbilityCriterion extends AbstractCriterion<UnlockAbilityCrite
     public static class Conditions extends AbstractCriterionConditions {
         VampireAbility ability;
 
-        public Conditions(EntityPredicate.Extended entity, VampireAbility ability) {
+        public Conditions(LootContextPredicate entity, VampireAbility ability) {
             super(BLResources.UNLOCK_VAMPIRE_ABILITY_ID, entity);
             this.ability = ability;
         }
 
         public static Conditions create() {
-            return new Conditions(EntityPredicate.Extended.EMPTY, null);
+            return new Conditions(LootContextPredicate.EMPTY, null);
         }
 
         public static Conditions create(VampireAbility ability) {
-            return new Conditions(EntityPredicate.Extended.EMPTY, ability);
+            return new Conditions(LootContextPredicate.EMPTY, ability);
         }
 
         public boolean matches(VampireAbility ability) {

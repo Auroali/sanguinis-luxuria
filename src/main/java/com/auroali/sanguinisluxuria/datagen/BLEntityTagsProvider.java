@@ -3,18 +3,23 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.common.registry.BLEntities;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+
+import java.util.concurrent.CompletableFuture;
 
 public class BLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
-    public BLEntityTagsProvider(FabricDataGenerator dataGenerator) {
-        super(dataGenerator, Registry.ENTITY_TYPE);
+    public BLEntityTagsProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, RegistryKeys.ENTITY_TYPE, registriesFuture);
     }
 
     @Override
-    protected void generateTags() {
+    protected void configure(RegistryWrapper.WrapperLookup arg) {
         getOrCreateTagBuilder(BLTags.Entities.HAS_BLOOD)
                 .add(EntityType.SHEEP)
                 .add(EntityType.COW)

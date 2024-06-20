@@ -41,7 +41,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
             return false;
 
         Vec3d start = entity.getPos();
-        BlockHitResult result = entity.world.raycast(new RaycastContext(
+        BlockHitResult result = entity.getWorld().raycast(new RaycastContext(
                 entity.getEyePos(),
                 entity.getEyePos().add(entity.getRotationVector().multiply(getRange(component.getAbilties()))),
                 RaycastContext.ShapeType.COLLIDER,
@@ -59,8 +59,8 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         Vec3d newPos = new Vec3d(pos.getX() + 0.5f, result.getPos().getY(), pos.getZ() + 0.5f);
         entity.teleport(newPos.getX(), newPos.getY(), newPos.getZ());
         entity.fallDistance = 0;
-        entity.world.emitGameEvent(GameEvent.TELEPORT, start, GameEvent.Emitter.of(entity));
-        entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        entity.getWorld().emitGameEvent(GameEvent.TELEPORT, start, GameEvent.Emitter.of(entity));
+        entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
         TrinketsApi.getTrinketComponent(entity).ifPresent(c -> {
             if(c.isEquipped(BLItems.PENDANT_OF_PIERCING))
                 damageEntitiesBetween(entity, start, newPos);
@@ -137,7 +137,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
             double xOffset = rand.nextGaussian() * 0.2;
             double yOffset = rand.nextGaussian() * 0.2;
             double zOffset = rand.nextGaussian() * 0.2;
-            entity.world.addParticle(
+            entity.getWorld().addParticle(
                     DustParticleEffect.DEFAULT,
                     pos.getX() + xOffset,
                     pos.getY() + yOffset,

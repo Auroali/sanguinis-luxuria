@@ -11,11 +11,14 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
+import org.joml.Vector3f;
 
 public class MaskItem extends TrinketItem implements TrinketRenderer {
     public MaskItem(Settings settings) {
@@ -28,15 +31,16 @@ public class MaskItem extends TrinketItem implements TrinketRenderer {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
         if(entity instanceof AbstractClientPlayerEntity player) {
             TrinketRenderer.translateToFace(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, player, headYaw, headPitch);
-            matrices.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(MathHelper.PI));
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotation(MathHelper.PI));
             matrices.translate(0, 0.25, 0.3);
             renderer.renderItem(
                 stack,
-                ModelTransformation.Mode.HEAD,
+                ModelTransformationMode.HEAD,
                 light,
                 OverlayTexture.DEFAULT_UV,
                 matrices,
                 vertexConsumers,
+                entity.getWorld(),
                 0
             );
         }

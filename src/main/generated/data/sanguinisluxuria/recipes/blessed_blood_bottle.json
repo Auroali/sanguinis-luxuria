@@ -1,5 +1,6 @@
 {
   "type": "sanguinisluxuria:altar_recipe",
+  "category": "misc",
   "input": [
     {
       "item": "sanguinisluxuria:twisted_blood_bottle"
@@ -11,10 +12,10 @@
       "item": "minecraft:sunflower"
     },
     {
+      "fabric:type": "fabric:nbt",
       "base": {
         "item": "minecraft:potion"
       },
-      "fabric:type": "fabric:nbt",
       "nbt": {
         "Potion": "sanguinisluxuria:blessed_water"
       },

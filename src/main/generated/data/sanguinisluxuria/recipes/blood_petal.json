@@ -1,5 +1,6 @@
 {
   "type": "sanguinisluxuria:blood_cauldron",
+  "category": "misc",
   "input": {
     "tag": "minecraft:flowers"
   },

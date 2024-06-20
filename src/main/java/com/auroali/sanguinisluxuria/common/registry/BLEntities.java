@@ -10,7 +10,8 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.world.Heightmap;
 
 public class BLEntities {
@@ -27,8 +28,8 @@ public class BLEntities {
 
 
     public static void register() {
-        Registry.register(Registry.ENTITY_TYPE, BLResources.VAMPIRE_VILLAGER, VAMPIRE_VILLAGER);
-        Registry.register(Registry.ENTITY_TYPE, BLResources.VAMPIRE_MERCHANT, VAMPIRE_MERCHANT);
+        Registry.register(Registries.ENTITY_TYPE, BLResources.VAMPIRE_VILLAGER, VAMPIRE_VILLAGER);
+        Registry.register(Registries.ENTITY_TYPE, BLResources.VAMPIRE_MERCHANT, VAMPIRE_MERCHANT);
 
         registerAttributes();
         registerSpawns();

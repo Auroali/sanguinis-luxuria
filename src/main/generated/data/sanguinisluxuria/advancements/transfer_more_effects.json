@@ -28,5 +28,6 @@
     [
       "transfer_effects"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

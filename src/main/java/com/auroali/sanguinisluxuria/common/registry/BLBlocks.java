@@ -8,13 +8,15 @@ import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.DyeColor;
 
 public class BLBlocks {
     public static final Block BLOOD_SPLATTER = new BloodSplatterBlock(
-            FabricBlockSettings.of(Material.DECORATION)
+            FabricBlockSettings.create(/*Materials.DECORATION*/)
+                    .mapColor(DyeColor.RED)
                     .breakInstantly()
                     .noCollision()
                     .ticksRandomly()
@@ -23,22 +25,22 @@ public class BLBlocks {
 
     //public static final FluidBlock BLOOD = new FluidBlock(BLFluids.BLOOD_STILL, FabricBlockSettings.of(Material.LAVA));
     public static final Block BLOOD_CAULDRON = new BloodCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON));
-    public static final Block ALTAR = new SkillUpgraderBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(1.5F, 6.0F));
-    public static final Block PEDESTAL = new PedestalBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(1.5F, 6.0F));
+    public static final Block ALTAR = new SkillUpgraderBlock(FabricBlockSettings.create().mapColor(DyeColor.BLACK).requiresTool().strength(1.5F, 6.0F));
+    public static final Block PEDESTAL = new PedestalBlock(FabricBlockSettings.create().mapColor(DyeColor.BLACK).requiresTool().strength(1.5F, 6.0F));
     public static final Block SILVER_BLOCK = new Block(FabricBlockSettings.copy(Blocks.IRON_BLOCK).sounds(BlockSoundGroup.NETHERITE));
     public static final Block SILVER_ORE = new Block(FabricBlockSettings.copy(Blocks.IRON_ORE));
     public static final Block DEEPSLATE_SILVER_ORE = new Block(FabricBlockSettings.copy(Blocks.DEEPSLATE_IRON_ORE));
     public static final Block RAW_SILVER_BLOCK = new Block(FabricBlockSettings.copy(Blocks.RAW_COPPER_BLOCK));
 
     public static void register() {
-        Registry.register(Registry.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
-        Registry.register(Registry.BLOCK, BLResources.ALTAR_ID, ALTAR);
-        Registry.register(Registry.BLOCK, BLResources.PEDESTAL_ID, PEDESTAL);
+        Registry.register(Registries.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
+        Registry.register(Registries.BLOCK, BLResources.ALTAR_ID, ALTAR);
+        Registry.register(Registries.BLOCK, BLResources.PEDESTAL_ID, PEDESTAL);
         //Registry.register(Registry.BLOCK, BLResources.BLOOD_STILL, BLOOD);
-        Registry.register(Registry.BLOCK, BLResources.BLOOD_CAULDRON_ID, BLOOD_CAULDRON);
-        Registry.register(Registry.BLOCK, BLResources.SILVER_BLOCK_ID, SILVER_BLOCK);
-        Registry.register(Registry.BLOCK, BLResources.SILVER_ORE_ID, SILVER_ORE);
-        Registry.register(Registry.BLOCK, BLResources.DEEPSLATE_SILVER_ORE_ID, DEEPSLATE_SILVER_ORE);
-        Registry.register(Registry.BLOCK, BLResources.RAW_SILVER_BLOCK_ID, RAW_SILVER_BLOCK);
+        Registry.register(Registries.BLOCK, BLResources.BLOOD_CAULDRON_ID, BLOOD_CAULDRON);
+        Registry.register(Registries.BLOCK, BLResources.SILVER_BLOCK_ID, SILVER_BLOCK);
+        Registry.register(Registries.BLOCK, BLResources.SILVER_ORE_ID, SILVER_ORE);
+        Registry.register(Registries.BLOCK, BLResources.DEEPSLATE_SILVER_ORE_ID, DEEPSLATE_SILVER_ORE);
+        Registry.register(Registries.BLOCK, BLResources.RAW_SILVER_BLOCK_ID, RAW_SILVER_BLOCK);
     }
 }

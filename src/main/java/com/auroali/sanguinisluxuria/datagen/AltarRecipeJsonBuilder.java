@@ -10,22 +10,26 @@ import net.minecraft.advancement.CriterionMerger;
 import net.minecraft.advancement.criterion.CriterionConditions;
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.RecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.tag.TagKey;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
+public class AltarRecipeJsonBuilder extends RecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     private final Item output;
     private final int outputCount;
     private String group;
@@ -34,14 +38,20 @@ public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     private int ticksToProcess = 300;
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final Advancement.Builder advancementBuilder = Advancement.Builder.create();
+    private final RecipeCategory category;
 
-    AltarRecipeJsonBuilder(Item output, int outputCount) {
+    AltarRecipeJsonBuilder(RecipeCategory category, Item output, int outputCount) {
         this.output = output;
         this.outputCount = outputCount;
+        this.category = category;
     }
 
-    public static AltarRecipeJsonBuilder create(ItemConvertible output) {
-        return new AltarRecipeJsonBuilder(output.asItem(), 1);
+    public static AltarRecipeJsonBuilder create(RecipeCategory category, ItemConvertible output) {
+        return new AltarRecipeJsonBuilder(category, output.asItem(), 1);
+    }
+
+    public static AltarRecipeJsonBuilder create(RecipeCategory category, ItemConvertible output, int count) {
+        return new AltarRecipeJsonBuilder(category, output.asItem(), count);
     }
 
     public AltarRecipeJsonBuilder input(ItemConvertible item) {
@@ -120,7 +130,8 @@ public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         exporter.accept(
                 new Provider(
                         recipeId,
-                        new Identifier(recipeId.getNamespace(), "recipes/" + this.output.getGroup().getName() + "/" + recipeId.getPath()),
+                        recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/"),
+                        getCraftingCategory(this.category),
                         this
                 )
         );
@@ -137,8 +148,9 @@ public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
         private final Advancement.Builder advancementBuilder;
         private final Identifier id;
         private final Identifier advancementId;
+        private final CraftingRecipeCategory category;
 
-        public Provider(Identifier recipeId, Identifier advancementId, AltarRecipeJsonBuilder builder) {
+        public Provider(Identifier recipeId, Identifier advancementId, CraftingRecipeCategory category, AltarRecipeJsonBuilder builder) {
             this.outputCount = builder.outputCount;
             this.output = builder.output;
             this.advancementBuilder = builder.advancementBuilder;
@@ -149,10 +161,12 @@ public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
             this.ticksToProcess = builder.ticksToProcess;
             this.id = recipeId;
             this.advancementId = advancementId;
+            this.category = category;
         }
 
         @Override
         public void serialize(JsonObject json) {
+            json.addProperty("category", category.asString());
             JsonArray ingredientsJson = new JsonArray();
             for(Ingredient i : ingredients) {
                 ingredientsJson.add(i.toJson());
@@ -170,7 +184,7 @@ public class AltarRecipeJsonBuilder implements CraftingRecipeJsonBuilder {
             }
 
             JsonObject result = new JsonObject();
-            result.addProperty("item", Registry.ITEM.getId(this.output).toString());
+            result.addProperty("item", Registries.ITEM.getId(this.output).toString());
             if (this.outputCount > 1) {
                 result.addProperty("count", this.outputCount);
             }

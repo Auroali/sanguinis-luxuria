@@ -3,9 +3,9 @@ package com.auroali.sanguinisluxuria.common.registry;
 import com.auroali.sanguinisluxuria.BLResources;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-
 import java.util.UUID;
 
 public class BLEntityAttributes {
@@ -13,7 +13,7 @@ public class BLEntityAttributes {
     public static final EntityAttribute BLESSED_DAMAGE = new ClampedEntityAttribute(transFromId(BLResources.BLESSED_DAMAGE_ID), 0.0f, 0.0, 2048);
 
     public static void register() {
-        Registry.register(Registry.ATTRIBUTE, BLResources.BLESSED_DAMAGE_ID, BLESSED_DAMAGE);
+        Registry.register(Registries.ATTRIBUTE, BLResources.BLESSED_DAMAGE_ID, BLESSED_DAMAGE);
 
     }
 

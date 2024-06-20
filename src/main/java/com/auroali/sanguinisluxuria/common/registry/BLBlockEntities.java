@@ -4,7 +4,8 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
 import com.auroali.sanguinisluxuria.common.blockentities.SkillUpgraderBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public class BLBlockEntities {
     public static final BlockEntityType<SkillUpgraderBlockEntity> SKILL_UPGRADER = BlockEntityType.Builder.create(
@@ -15,7 +16,7 @@ public class BLBlockEntities {
     ).build(null);
 
     public static void register() {
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, BLResources.ALTAR_ID, SKILL_UPGRADER);
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, BLResources.PEDESTAL_ID, PEDESTAL);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, BLResources.ALTAR_ID, SKILL_UPGRADER);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, BLResources.PEDESTAL_ID, PEDESTAL);
     }
 }

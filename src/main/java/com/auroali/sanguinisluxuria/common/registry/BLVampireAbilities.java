@@ -9,8 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
-import net.minecraft.util.registry.Registry;
-
+import net.minecraft.registry.Registry;
 import java.util.UUID;
 
 public class BLVampireAbilities {

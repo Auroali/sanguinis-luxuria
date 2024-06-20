@@ -8,16 +8,18 @@ import net.minecraft.loot.context.LootContextTypes;
 public class BloodlustDataGenerator implements DataGeneratorEntrypoint {
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-		fabricDataGenerator.addProvider(new BLLangProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLEntityTagsProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLItemTagsProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLModelProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLRecipeProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLBlockTagsProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLBiomeTagsProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLVampireAbiltyTagsProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLAdvancementsProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLBlockLootTableProvider(fabricDataGenerator));
-		fabricDataGenerator.addProvider(new BLEntityLootTableProvider(fabricDataGenerator, LootContextTypes.ENTITY));
+		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
+		pack.addProvider(BLLangProvider::new);
+		pack.addProvider(BLEntityTagsProvider::new);
+		pack.addProvider(BLItemTagsProvider::new);
+		pack.addProvider(BLModelProvider::new);
+		pack.addProvider(BLRecipeProvider::new);
+		pack.addProvider(BLBlockTagsProvider::new);
+		pack.addProvider(BLBiomeTagsProvider::new);
+		pack.addProvider(BLVampireAbiltyTagsProvider::new);
+		pack.addProvider(BLAdvancementsProvider::new);
+		pack.addProvider(BLBlockLootTableProvider::new);
+		pack.addProvider(BLEntityLootTableProvider::new);
+		pack.addProvider(BLDamageTagsProvider::new);
 	}
 }

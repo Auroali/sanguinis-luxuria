@@ -17,12 +17,13 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 public class BloodFluid extends FlowableFluid {
     @Override
-    protected boolean isInfinite() {
+    protected boolean isInfinite(World world) {
         return false;
     }
 

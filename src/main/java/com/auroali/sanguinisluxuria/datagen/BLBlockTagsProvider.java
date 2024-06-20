@@ -2,19 +2,25 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.minecraft.block.Block;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BlockTags;
+
+import java.util.concurrent.CompletableFuture;
 
 public class BLBlockTagsProvider extends FabricTagProvider<Block> {
-    public BLBlockTagsProvider(FabricDataGenerator dataGenerator) {
-        super(dataGenerator, Registry.BLOCK);
+    public BLBlockTagsProvider(FabricDataOutput dataGenerator, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(dataGenerator, RegistryKeys.BLOCK, registriesFuture);
     }
 
     @Override
-    protected void generateTags() {
+    protected void configure(RegistryWrapper.WrapperLookup args) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(BLBlocks.ALTAR)
                 .add(BLBlocks.PEDESTAL)

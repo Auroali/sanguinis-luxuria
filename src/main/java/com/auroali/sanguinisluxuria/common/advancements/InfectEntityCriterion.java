@@ -6,13 +6,14 @@ import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class InfectEntityCriterion extends AbstractCriterion<InfectEntityCriterion.Conditions> {
     @Override
-    protected InfectEntityCriterion.Conditions conditionsFromJson(JsonObject obj, EntityPredicate.Extended playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        return new Conditions(EntityPredicate.Extended.EMPTY);
+    protected InfectEntityCriterion.Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+        return new Conditions(LootContextPredicate.EMPTY);
     }
 
     @Override
@@ -26,12 +27,12 @@ public class InfectEntityCriterion extends AbstractCriterion<InfectEntityCriteri
 
     public static class Conditions extends AbstractCriterionConditions {
 
-        public Conditions(EntityPredicate.Extended entity) {
+        public Conditions(LootContextPredicate entity) {
             super(BLResources.INFECT_ENTITY_ID, entity);
         }
 
         public static Conditions create() {
-            return new Conditions(EntityPredicate.Extended.EMPTY);
+            return new Conditions(LootContextPredicate.EMPTY);
         }
     }
 }

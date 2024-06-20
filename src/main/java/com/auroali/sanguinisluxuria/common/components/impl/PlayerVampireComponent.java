@@ -123,7 +123,7 @@ public class PlayerVampireComponent implements VampireComponent {
         }
 
         setDowned(false);
-        holder.world.emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
+        holder.getWorld().emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
         if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
@@ -144,7 +144,7 @@ public class PlayerVampireComponent implements VampireComponent {
 
         // villagers have a 50% chance to wake up when having their blood drained
         // it also adds negative reputation to the player
-        if(entity.world instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
+        if(entity.getWorld() instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
             serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
             if(holder.getRandom().nextDouble() > 0.5f)
                 entity.wakeUp();
@@ -299,7 +299,7 @@ public class PlayerVampireComponent implements VampireComponent {
         ));
 
         if(bloodDrainTimer % 4 == 0)
-            holder.world.playSound(
+            holder.getWorld().playSound(
                     null,
                     holder.getX(),
                     holder.getY(),
@@ -322,13 +322,13 @@ public class PlayerVampireComponent implements VampireComponent {
 
     // from MobEntity
     private boolean isAffectedByDaylight() {
-        if (holder.world.isDay() && !holder.world.isClient) {
+        if (holder.getWorld().isDay() && !holder.getWorld().isClient) {
             float f = holder.getBrightnessAtEyes();
-            BlockPos blockPos = new BlockPos(holder.getX(), holder.getEyeY(), holder.getZ());
+            BlockPos blockPos = BlockPos.ofFloored(holder.getX(), holder.getEyeY(), holder.getZ());
             boolean bl = holder.isWet() || holder.inPowderSnow || holder.wasInPowderSnow;
             return f > 0.5F
                     && !bl
-                    && holder.world.isSkyVisible(blockPos);
+                    && holder.getWorld().isSkyVisible(blockPos);
         }
 
         return false;
@@ -498,7 +498,7 @@ public class PlayerVampireComponent implements VampireComponent {
         Vec3d start = holder.getEyePos();
         Vec3d end = start.add(holder.getRotationVector().multiply(reachDistance));
 
-        HitResult result = holder.world.raycast(new RaycastContext(
+        HitResult result = holder.getWorld().raycast(new RaycastContext(
                 start, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, holder
         ));
 

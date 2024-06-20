@@ -14,7 +14,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
 
 import java.util.function.BiConsumer;
 
@@ -68,9 +70,9 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
     public void setIsVampire(boolean isVampire) {
         if(!isVampire || !AllowVampireChangeEvent.EVENT.invoker().onChanged(holder, this, isVampire))
             return;
-        T entity = conversionType.create(holder.world);
+        T entity = conversionType.create(holder.getWorld());
         if(entity == null) {
-            Bloodlust.LOGGER.error("Could not perform conversion for entity {}!", Registry.ENTITY_TYPE.getId(holder.getType()));
+            Bloodlust.LOGGER.error("Could not perform conversion for entity {}!", Registries.ENTITY_TYPE.getId(holder.getType()));
             return;
         }
         entity.setPosition(holder.getX(), holder.getY(), holder.getZ());
@@ -90,9 +92,9 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
 
         conversionHandler.accept(holder, entity);
 
-        holder.world.spawnEntity(entity);
+        holder.getWorld().spawnEntity(entity);
 
-        holder.world.playSound(null, holder.getX(), holder.getY(), holder.getZ(), BLSounds.VAMPIRE_CONVERT, holder.getSoundCategory(), 1.0f, 1.0f);
+        holder.getWorld().playSound(null, holder.getX(), holder.getY(), holder.getZ(), BLSounds.VAMPIRE_CONVERT, holder.getSoundCategory(), 1.0f, 1.0f);
         holder.remove(Entity.RemovalReason.DISCARDED);
     }
 

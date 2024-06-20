@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
+import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -97,7 +98,7 @@ public class EntityBloodComponent implements BloodComponent, ServerTickingCompon
         currentBlood = 0;
         BLEntityComponents.BLOOD_COMPONENT.sync(holder);
         if(drainer == null)
-            holder.damage(BLDamageSources.BLOOD_DRAIN, Float.MAX_VALUE);
+            holder.damage(BLDamageSources.get(holder.getWorld(), BLResources.BLOOD_DRAIN_DAMAGE_KEY), Float.MAX_VALUE);
         else
             holder.damage(BLDamageSources.bloodDrain(drainer), Float.MAX_VALUE);
         return true;

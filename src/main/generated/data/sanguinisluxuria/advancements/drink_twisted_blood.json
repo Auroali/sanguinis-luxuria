@@ -31,5 +31,6 @@
     [
       "drink_twisted_blood"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

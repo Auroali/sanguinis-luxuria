@@ -1,5 +1,8 @@
 package com.auroali.sanguinisluxuria;
 
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 public class BLResources {
@@ -94,6 +97,10 @@ public class BLResources {
     public static final Identifier SILVER_HOE_ID = id("silver_hoe");
     public static final Identifier BLESSED_DAMAGE_ID = id("blessed_damage");
     public static final Identifier RAW_SILVER_BLOCK_ID = id("raw_silver_block");
+    public static final RegistryKey<DamageType> BLOOD_DRAIN_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blood_drain"));
+    public static final RegistryKey<DamageType> BLESSED_WATER_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blessed_water"));
+    public static final RegistryKey<DamageType> BITE_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("bite"));
+    public static final RegistryKey<DamageType> TELEPORT_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blink_piercing"));
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

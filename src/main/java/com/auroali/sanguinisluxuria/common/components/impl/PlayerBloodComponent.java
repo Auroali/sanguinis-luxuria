@@ -26,7 +26,7 @@ public class PlayerBloodComponent implements BloodComponent {
 
     @Override
     public int getBlood() {
-        if(holder.world.isClient) {
+        if(holder.getWorld().isClient) {
             return blood;
         }
         return holder.getHungerManager().getFoodLevel();

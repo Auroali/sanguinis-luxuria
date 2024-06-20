@@ -54,14 +54,14 @@ public class VampireVillagerEntity extends HostileEntity {
             bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
         }
 
-        if(world.isClient && vampire.isDown()) {
+        if(getWorld().isClient && vampire.isDown()) {
             Box box = getBoundingBox();
             int max = 3;
             for (int i = 0; i < max; i++) {
                 double x = box.minX + random.nextDouble() * box.getXLength();
                 double y = box.minY + random.nextDouble() * box.getYLength();
                 double z = box.minZ + random.nextDouble() * box.getZLength();
-                world.addParticle(
+                getWorld().addParticle(
                         DustParticleEffect.DEFAULT,
                         x,
                         y,

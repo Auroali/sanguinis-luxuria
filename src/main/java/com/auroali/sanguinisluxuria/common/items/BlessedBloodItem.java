@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.items;
 
+import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -37,7 +38,7 @@ public class BlessedBloodItem extends Item {
 
         if (!world.isClient && VampireHelper.isVampire(user)) {
             if(!(user instanceof PlayerEntity player && player.isCreative())) {
-                user.damage(BLDamageSources.BLESSED_BLOOD, 19);
+                user.damage(BLDamageSources.get(world, BLResources.BLESSED_WATER_DAMAGE_KEY), 19);
                 if (!user.isAlive())
                     return new ItemStack(Items.GLASS_BOTTLE);
             }

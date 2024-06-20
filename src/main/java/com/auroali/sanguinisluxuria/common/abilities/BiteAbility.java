@@ -61,7 +61,7 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
         Vec3d start = entity.getEyePos();
         Vec3d end = start.add(entity.getRotationVector().multiply(reachDistance));
 
-        HitResult result = entity.world.raycast(new RaycastContext(
+        HitResult result = entity.getWorld().raycast(new RaycastContext(
                 start, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, entity
         ));
 
@@ -102,7 +102,7 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
             double x = box.minX + rand.nextDouble() * box.getXLength();
             double y = box.minY + rand.nextDouble() * box.getYLength();
             double z = box.minZ + rand.nextDouble() * box.getZLength();
-            data.world.addParticle(
+            data.getWorld().addParticle(
                     DustParticleEffect.DEFAULT,
                     x,
                     y,

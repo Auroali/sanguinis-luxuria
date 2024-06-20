@@ -26,7 +26,7 @@ public class BloodSicknessEffect extends StatusEffect {
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(entity, amplifier);
         int duration = entity.getStatusEffect(this).getDuration();
-        if(entity.world.isClient)
+        if(entity.getWorld().isClient)
             return;
 
         if(amplifier > 2 && entity.getRandom().nextInt(200) == 0)

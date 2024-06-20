@@ -12,10 +12,9 @@ import it.unimi.dsi.fastutil.ints.IntComparators;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
@@ -25,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VampireAbilityWidget extends DrawableHelper implements Comparable<VampireAbilityWidget> {
+public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
     public static final int WIDTH = 19;
     public static final int HEIGHT = 19;
 
@@ -72,16 +71,15 @@ public class VampireAbilityWidget extends DrawableHelper implements Comparable<V
         }
     }
 
-    public void render(MatrixStack matrices, VampireAbilityContainer container, int offsetX, int offsetY, int mouseX, int mouseY) {
+    public void render(DrawContext context, VampireAbilityContainer container, int offsetX, int offsetY, int mouseX, int mouseY) {
         if(hidden)
             return;
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, BLResources.ICONS);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
 
-        drawLines(matrices, container, offsetX, offsetY);
-        drawTexture(
-                matrices,
+        drawLines(context, container, offsetX, offsetY);
+        context.drawTexture(
+                BLResources.ICONS,
                 offsetX + x,
                 offsetY + y,
                 0,
@@ -91,16 +89,15 @@ public class VampireAbilityWidget extends DrawableHelper implements Comparable<V
                 256,
                 256
         );
-        MinecraftClient.getInstance().getItemRenderer()
-                .renderInGui(
-                        icon,
-                        getX() + offsetX + 1,
-                        getY() + offsetY + 1
-                );
+        context.drawItem(
+                icon,
+                getX() + offsetX + 1,
+                getY() + offsetY + 1
+        );
         RenderSystem.disableDepthTest();
     }
 
-    public void drawLines(MatrixStack stack, VampireAbilityContainer container, int offsetX, int offsetY) {
+    public void drawLines(DrawContext context, VampireAbilityContainer container, int offsetX, int offsetY) {
         if(children.isEmpty())
             return;
 
@@ -113,8 +110,8 @@ public class VampireAbilityWidget extends DrawableHelper implements Comparable<V
 
         int yOff = offsetY + (children.get(0).getY() - y + 16) / 2;
 
-        fill(stack, offsetX + childrenMinX + WIDTH / 2 - 1, y + yOff - 1, offsetX + childrenMaxX + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
-        fill(stack, offsetX + x + WIDTH / 2 - 1, offsetY + y + 16, offsetX + x + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
+        context.fill(offsetX + childrenMinX + WIDTH / 2 - 1, y + yOff - 1, offsetX + childrenMaxX + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
+        context.fill(offsetX + x + WIDTH / 2 - 1, offsetY + y + 16, offsetX + x + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
         children.stream().sorted().forEach(w -> {
             int colour = -1;
             if(VampireHelper.hasIncompatibleAbility(MinecraftClient.getInstance().player, w.ability) || !container.hasAbility(ability)) {
@@ -124,10 +121,10 @@ public class VampireAbilityWidget extends DrawableHelper implements Comparable<V
                 colour = 0xFFFF6E11;
             }
             int childYOff = (w.getY() - y) / 4;
-            fill(stack, offsetX + w.getX() + WIDTH / 2 - 1, offsetY + w.getY() - childYOff + 2, offsetX + w.getX() + WIDTH / 2 + 2, offsetY + w.getY(), 0xFF000000);
-            drawVerticalLine(stack, offsetX + w.getX() + WIDTH / 2, offsetY + w.getY() - childYOff, offsetY + w.getY(), colour);
-            drawVerticalLine(stack, offsetX + x + WIDTH / 2, offsetY + y, y + yOff, colour);
-            drawHorizontalLine(stack,offsetX + w.getX() + WIDTH / 2, offsetX + x + WIDTH / 2, y + yOff, colour);
+            context.fill(offsetX + w.getX() + WIDTH / 2 - 1, offsetY + w.getY() - childYOff + 2, offsetX + w.getX() + WIDTH / 2 + 2, offsetY + w.getY(), 0xFF000000);
+            context.drawVerticalLine(offsetX + w.getX() + WIDTH / 2, offsetY + w.getY() - childYOff, offsetY + w.getY(), colour);
+            context.drawVerticalLine(offsetX + x + WIDTH / 2, offsetY + y, y + yOff, colour);
+            context.drawHorizontalLine(offsetX + w.getX() + WIDTH / 2, offsetX + x + WIDTH / 2, y + yOff, colour);
         });
     }
 
@@ -208,7 +205,7 @@ public class VampireAbilityWidget extends DrawableHelper implements Comparable<V
 
     private boolean tryUnlock(VampireComponent vampire, ClientPlayerEntity entity) {
         if (vampire.getSkillPoints() < ability.getRequiredSkillPoints() || vampire.getAbilties().hasAbility(ability) || !vampire.getAbilties().hasAbility(ability.getParent())) {
-            entity.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BASS, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            entity.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(), SoundCategory.PLAYERS, 1.0f, 1.0f);
             return false;
         }
 

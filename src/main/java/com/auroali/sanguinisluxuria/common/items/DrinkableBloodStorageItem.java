@@ -58,7 +58,7 @@ public class DrinkableBloodStorageItem extends BloodStorageItem
     }
 
     public static void applyNonVampireEffects(LivingEntity user) {
-        if(user.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) || user.world.isClient)
+        if(user.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) || user.getWorld().isClient)
             return;
 
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 2));

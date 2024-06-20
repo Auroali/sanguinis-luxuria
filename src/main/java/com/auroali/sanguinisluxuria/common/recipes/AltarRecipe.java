@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -46,8 +47,9 @@ public class AltarRecipe implements Recipe<AltarInventory> {
         return false;
     }
 
+
     @Override
-    public ItemStack craft(AltarInventory inventory) {
+    public ItemStack craft(AltarInventory inventory, DynamicRegistryManager registryManager) {
         return output.copy();
     }
 
@@ -56,8 +58,9 @@ public class AltarRecipe implements Recipe<AltarInventory> {
         return false;
     }
 
+
     @Override
-    public ItemStack getOutput() {
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
         return output;
     }
 

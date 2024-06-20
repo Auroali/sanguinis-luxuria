@@ -1,5 +1,6 @@
 {
   "type": "sanguinisluxuria:altar_recipe",
+  "category": "equipment",
   "input": [
     {
       "item": "minecraft:glass_bottle"

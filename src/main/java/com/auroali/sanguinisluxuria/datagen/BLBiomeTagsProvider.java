@@ -2,18 +2,23 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 
-public class BLBiomeTagsProvider extends FabricTagProvider.DynamicRegistryTagProvider<Biome> {
-    public BLBiomeTagsProvider(FabricDataGenerator dataGenerator) {
-        super(dataGenerator, Registry.BIOME_KEY);
+import java.util.concurrent.CompletableFuture;
+
+public class BLBiomeTagsProvider extends FabricTagProvider<Biome> {
+    public BLBiomeTagsProvider(FabricDataOutput dataGenerator, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(dataGenerator, RegistryKeys.BIOME, registriesFuture);
     }
 
     @Override
-    protected void generateTags() {
+    protected void configure(RegistryWrapper.WrapperLookup args) {
         getOrCreateTagBuilder(BLTags.Biomes.VAMPIRE_VILLAGER_SPAWN)
                 .add(BiomeKeys.DARK_FOREST);
     }

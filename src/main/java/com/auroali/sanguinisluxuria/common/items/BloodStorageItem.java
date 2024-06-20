@@ -22,7 +22,10 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public abstract class BloodStorageItem extends Item {
     final int maxBlood;
@@ -36,15 +39,13 @@ public abstract class BloodStorageItem extends Item {
     public abstract boolean canFill();
     public abstract boolean canDrain();
 
-    @Override
-    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        if(this.emptyItem == null)
-            super.appendStacks(group, stacks);
-        if(isIn(group)) {
-            ItemStack stack = new ItemStack(this);
-            setStoredBlood(stack, getMaxBlood());
-            stacks.add(stack);
-        }
+
+    public Collection<ItemStack> generateGroupEntries() {
+        List<ItemStack> stacks = new ArrayList<>();
+        if (this.emptyItem == null)
+            stacks.add(new ItemStack(this));
+        stacks.add(setStoredBlood(new ItemStack(this), getMaxBlood()));
+        return stacks;
     }
 
     public static boolean isHoldingBloodFillableItem(LivingEntity entity) {

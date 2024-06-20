@@ -3,20 +3,25 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
+
+import java.util.concurrent.CompletableFuture;
 
 public class BLItemTagsProvider extends FabricTagProvider<Item> {
-    public BLItemTagsProvider(FabricDataGenerator dataGenerator) {
-        super(dataGenerator, Registry.ITEM);
+    public BLItemTagsProvider(FabricDataOutput dataGenerator, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(dataGenerator, RegistryKeys.ITEM, registriesFuture);
     }
 
     @Override
-    protected void generateTags() {
+    protected void configure(RegistryWrapper.WrapperLookup arg) {
         getOrCreateTagBuilder(BLTags.Items.FACE_TRINKETS)
                 .add(BLItems.MASK_1)
                 .add(BLItems.MASK_2)
@@ -38,15 +43,15 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
                 .add(BLItems.MASK_3);
         getOrCreateTagBuilder(BLTags.Items.SILVER_INGOTS)
                 .add(BLItems.SILVER_INGOT);
-        getOrCreateTagBuilder(ConventionalItemTags.PICKAXES)
+        getOrCreateTagBuilder(ItemTags.PICKAXES)
                 .add(BLItems.SILVER_PICKAXE);
-        getOrCreateTagBuilder(ConventionalItemTags.AXES)
+        getOrCreateTagBuilder(ItemTags.AXES)
                 .add(BLItems.SILVER_AXE);
-        getOrCreateTagBuilder(ConventionalItemTags.SWORDS)
+        getOrCreateTagBuilder(ItemTags.SWORDS)
                 .add(BLItems.SILVER_SWORD);
-        getOrCreateTagBuilder(ConventionalItemTags.HOES)
+        getOrCreateTagBuilder(ItemTags.HOES)
                 .add(BLItems.SILVER_HOE);
-        getOrCreateTagBuilder(ConventionalItemTags.SHOVELS)
+        getOrCreateTagBuilder(ItemTags.SHOVELS)
                 .add(BLItems.SILVER_SHOVEL);
         getOrCreateTagBuilder(ConventionalItemTags.ORES)
                 .add(BLBlocks.SILVER_ORE.asItem())
