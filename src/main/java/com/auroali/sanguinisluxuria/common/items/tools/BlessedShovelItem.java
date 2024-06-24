@@ -13,7 +13,7 @@ import net.minecraft.item.ToolMaterial;
 public class BlessedShovelItem extends ShovelItem {
     private final ImmutableMultimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-    public BlessedShovelItem(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
+    public BlessedShovelItem(ToolMaterial material, float attackDamage, float attackSpeed, float blessedDamage, Settings settings) {
         super(material, attackDamage, attackSpeed, settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(
@@ -26,7 +26,7 @@ public class BlessedShovelItem extends ShovelItem {
         );
         builder.put(
                 BLEntityAttributes.BLESSED_DAMAGE,
-                new EntityAttributeModifier(BLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", 1.0f, EntityAttributeModifier.Operation.ADDITION)
+                new EntityAttributeModifier(BLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", blessedDamage, EntityAttributeModifier.Operation.ADDITION)
         );
         this.attributeModifiers = builder.build();
     }

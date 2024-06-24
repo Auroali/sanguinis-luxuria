@@ -32,11 +32,11 @@ public class BLItems {
     public static final Item BLOOD_PETAL = new Item(new FabricItemSettings());
     public static final Item SILVER_INGOT = new Item(new FabricItemSettings());
     public static final Item RAW_SILVER = new Item(new FabricItemSettings());
-    public static final Item SILVER_SWORD = new BlessedSwordItem(BLToolMaterials.SILVER, 3, -2.4f, new FabricItemSettings());
-    public static final Item SILVER_PICKAXE = new BlessedPickaxeItem(BLToolMaterials.SILVER, 1, -2.8f, new FabricItemSettings());
-    public static final Item SILVER_AXE = new BlessedAxeItem(BLToolMaterials.SILVER, 6, -3.1f, new FabricItemSettings());
-    public static final Item SILVER_SHOVEL = new BlessedShovelItem(BLToolMaterials.SILVER, 1.5f, -3.f, new FabricItemSettings());
-    public static final Item SILVER_HOE = new BlessedHoeItem(BLToolMaterials.SILVER, -2, -1.f, new FabricItemSettings());
+    public static final Item SILVER_SWORD = new BlessedSwordItem(BLToolMaterials.SILVER, 3, -2.4f, 3, new FabricItemSettings());
+    public static final Item SILVER_PICKAXE = new BlessedPickaxeItem(BLToolMaterials.SILVER, 1, -2.8f, 2, new FabricItemSettings());
+    public static final Item SILVER_AXE = new BlessedAxeItem(BLToolMaterials.SILVER, 6, -3.1f, 2, new FabricItemSettings());
+    public static final Item SILVER_SHOVEL = new BlessedShovelItem(BLToolMaterials.SILVER, 1.5f, -3.f, 2, new FabricItemSettings());
+    public static final Item SILVER_HOE = new BlessedHoeItem(BLToolMaterials.SILVER, -2, -1.f, 2, new FabricItemSettings());
 
     public static void register() {
         Registry.register(Registries.ITEM, BLResources.MASK_ONE_ID, MASK_1);

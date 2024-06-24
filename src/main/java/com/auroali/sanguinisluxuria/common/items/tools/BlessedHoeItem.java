@@ -14,7 +14,7 @@ public class BlessedHoeItem extends HoeItem {
 
     private final ImmutableMultimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-    public BlessedHoeItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
+    public BlessedHoeItem(ToolMaterial material, int attackDamage, float attackSpeed, float blessedDamage, Settings settings) {
         super(material, attackDamage, attackSpeed, settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(
@@ -27,7 +27,7 @@ public class BlessedHoeItem extends HoeItem {
         );
         builder.put(
                 BLEntityAttributes.BLESSED_DAMAGE,
-                new EntityAttributeModifier(BLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", 1.0f, EntityAttributeModifier.Operation.ADDITION)
+                new EntityAttributeModifier(BLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", blessedDamage, EntityAttributeModifier.Operation.ADDITION)
         );
         this.attributeModifiers = builder.build();
     }

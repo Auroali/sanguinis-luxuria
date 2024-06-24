@@ -8,7 +8,7 @@ import net.minecraft.recipe.Ingredient;
 import java.util.function.Supplier;
 
 public enum BLToolMaterials implements ToolMaterial {
-    SILVER(MiningLevels.IRON, 240, 6.0F, 2.0F, 16, () -> Ingredient.ofItems(BLItems.SILVER_INGOT));
+    SILVER(MiningLevels.IRON, 240, 5.25F, 1.0F, 16, () -> Ingredient.fromTag(BLTags.Items.SILVER_INGOTS));
     private final int miningLevel;
     private final int durability;
     private final int enchantibility;
