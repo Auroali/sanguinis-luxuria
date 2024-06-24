@@ -6,7 +6,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistry;
+import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.ints.IntComparators;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -214,7 +214,7 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
 
         entity.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
         PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);
+        buf.writeRegistryValue(BLRegistries.VAMPIRE_ABILITIES, ability);
         buf.writeBoolean(false);
         ClientPlayNetworking.send(BLResources.SKILL_TREE_CHANNEL, buf);
         return true;

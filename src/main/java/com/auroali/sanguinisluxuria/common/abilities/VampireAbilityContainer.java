@@ -4,7 +4,7 @@ import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistry;
+import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.entity.LivingEntity;
@@ -126,7 +126,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         NbtList abilitySlotsTag = new NbtList();
         NbtList cooldownsTag = new NbtList();
         for(VampireAbility ability : abilities) {
-            Identifier id = BLRegistry.VAMPIRE_ABILITIES.getId(ability);
+            Identifier id = BLRegistries.VAMPIRE_ABILITIES.getId(ability);
             if(id == null) {
                 Bloodlust.LOGGER.warn("Could not find id for an ability!");
                 continue;
@@ -138,7 +138,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
                 abilitySlotsTag.add(NbtString.of("empty"));
                 continue;
             }
-            Identifier id = BLRegistry.VAMPIRE_ABILITIES.getId(ability);
+            Identifier id = BLRegistries.VAMPIRE_ABILITIES.getId(ability);
             if(id == null) {
                 Bloodlust.LOGGER.warn("Could not find id for an ability!");
                 continue;
@@ -147,7 +147,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         }
 
         cooldowns.forEach((ability, cooldown) -> {
-            Identifier id = BLRegistry.VAMPIRE_ABILITIES.getId(ability);
+            Identifier id = BLRegistries.VAMPIRE_ABILITIES.getId(ability);
             if(id == null) {
                 Bloodlust.LOGGER.warn("Could not find id for an ability!");
                 return;
@@ -178,7 +178,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
                         return;
                     }
 
-                    VampireAbility ability = BLRegistry.VAMPIRE_ABILITIES.get(id);
+                    VampireAbility ability = BLRegistries.VAMPIRE_ABILITIES.get(id);
                     if(ability == null) {
                         Bloodlust.LOGGER.warn("Could not get ability for {}", id);
                         return;
@@ -200,7 +200,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
                 continue;
             }
 
-            VampireAbility ability = BLRegistry.VAMPIRE_ABILITIES.get(id);
+            VampireAbility ability = BLRegistries.VAMPIRE_ABILITIES.get(id);
             if(ability == null) {
                 Bloodlust.LOGGER.warn("Could not get ability for {}", id);
                 continue;
@@ -220,7 +220,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
                 continue;
             }
 
-            VampireAbility ability = BLRegistry.VAMPIRE_ABILITIES.get(id);
+            VampireAbility ability = BLRegistries.VAMPIRE_ABILITIES.get(id);
             if(ability == null) {
                 Bloodlust.LOGGER.warn("Could not get ability for {}", id);
                 continue;
@@ -235,7 +235,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         // write unlocked abilities
         buf.writeInt(abilities.size());
         for(VampireAbility ability : abilities) {
-            buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);
+            buf.writeRegistryValue(BLRegistries.VAMPIRE_ABILITIES, ability);
         }
 
         // write bound abilities
@@ -250,13 +250,13 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
                 continue;
 
             buf.writeVarInt(i);
-            buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, abilityBindings[i]);
+            buf.writeRegistryValue(BLRegistries.VAMPIRE_ABILITIES, abilityBindings[i]);
         }
 
         // write cooldowns
         buf.writeVarInt(cooldowns.size());
         cooldowns.forEach((ability, cooldown) -> {
-            buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, ability);
+            buf.writeRegistryValue(BLRegistries.VAMPIRE_ABILITIES, ability);
             buf.writeVarInt(cooldown.ticks);
             buf.writeVarInt(cooldown.maxTicks);
         });
@@ -267,7 +267,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         abilities.clear();
         int size = buf.readInt();
         for(int i = 0; i < size; i++) {
-            VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+            VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
             if (ability == null) {
                 Bloodlust.LOGGER.warn("Could not read ability from packet!");
                 continue;
@@ -281,7 +281,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         Arrays.fill(abilityBindings, null);
         for(int i = 0; i < size; i++) {
             int slot = buf.readVarInt();
-            VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+            VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
             if (ability == null) {
                 Bloodlust.LOGGER.warn("Could not read ability from packet!");
                 continue;
@@ -294,7 +294,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         size = buf.readVarInt();
         cooldowns.clear();
         for(int i = 0; i < size; i++) {
-            VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+            VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
             int ticks = buf.readVarInt();
             int maxTicks = buf.readVarInt();
             if (ability == null) {

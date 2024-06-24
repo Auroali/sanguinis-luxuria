@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
@@ -34,7 +33,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.AutomaticItemPlacementContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -58,7 +56,7 @@ public class Bloodlust implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		BLRegistry.init();
+		BLRegistries.init();
 		BLConfig.INSTANCE.load();
 
 		BLEntityAttributes.register();
@@ -191,7 +189,7 @@ public class Bloodlust implements ModInitializer {
 		});
 
 		ServerPlayNetworking.registerGlobalReceiver(BLResources.SKILL_TREE_CHANNEL, (server, player, handler, buf, responseSender) -> {
-			VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+			VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
 			boolean isAbilityBind = buf.readBoolean();
 			int abilitySlot = isAbilityBind ? buf.readInt() : 0;
 			server.execute(() -> {

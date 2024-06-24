@@ -98,7 +98,7 @@ public class BloodlustClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(BLResources.ABILITY_SYNC_CHANNEL, (client, handler, buf, responseSender) -> {
             int id = buf.readVarInt();
-            VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
+            VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
             if(client.world != null && client.world.getEntityById(id) instanceof LivingEntity entity && ability instanceof SyncableVampireAbility<?> s)
                 s.handlePacket(entity, buf, client::execute);
         });

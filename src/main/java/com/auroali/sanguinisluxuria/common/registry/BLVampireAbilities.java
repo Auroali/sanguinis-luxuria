@@ -110,20 +110,20 @@ public class BLVampireAbilities {
     );
 
     public static void register() {
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_1_ID, VAMPIRE_STRENGTH_1);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_2_ID, VAMPIRE_STRENGTH_2);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_ID, TELEPORT);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_1_ID, TELEPORT_RANGE_1);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_2_ID, TELEPORT_RANGE_2);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_1_ID, TELEPORT_COOLDOWN_1);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_2_ID, TELEPORT_COOLDOWN_2);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.MORE_BLOOD_ID, MORE_BLOOD);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.TRANSFER_EFFECTS_ID, TRANSFER_EFFECTS);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.BITE_ID, BITE);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.SUN_PROTECTION_ID, SUN_PROTECTION);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.DAMAGE_REDUCTION_ID, DAMAGE_REDUCTION);
-        Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.DOWNED_RESISTANCE_ID, DOWNED_RESISTANCE);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_2_ID, HEALTH_2);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_1_ID, VAMPIRE_STRENGTH_1);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.VAMPIRE_STRENGTH_2_ID, VAMPIRE_STRENGTH_2);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.TELEPORT_ID, TELEPORT);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_1_ID, TELEPORT_RANGE_1);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.TELEPORT_RANGE_2_ID, TELEPORT_RANGE_2);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_1_ID, TELEPORT_COOLDOWN_1);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.TELEPORT_COOLDOWN_2_ID, TELEPORT_COOLDOWN_2);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.MORE_BLOOD_ID, MORE_BLOOD);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.TRANSFER_EFFECTS_ID, TRANSFER_EFFECTS);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.BITE_ID, BITE);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.SUN_PROTECTION_ID, SUN_PROTECTION);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.DAMAGE_REDUCTION_ID, DAMAGE_REDUCTION);
+        Registry.register(BLRegistries.VAMPIRE_ABILITIES, BLResources.DOWNED_RESISTANCE_ID, DOWNED_RESISTANCE);
     }
 }

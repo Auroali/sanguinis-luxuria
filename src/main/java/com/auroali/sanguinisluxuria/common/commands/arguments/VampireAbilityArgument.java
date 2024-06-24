@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.commands.arguments;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistry;
+import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -27,7 +27,7 @@ public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
     public VampireAbility parse(StringReader reader) throws CommandSyntaxException {
         int cursor = reader.getCursor();
         Identifier id = Identifier.fromCommandInput(reader);
-        VampireAbility ability = BLRegistry.VAMPIRE_ABILITIES.get(id);
+        VampireAbility ability = BLRegistries.VAMPIRE_ABILITIES.get(id);
         if(ability == null) {
             reader.setCursor(cursor);
             throw ID_INVALID_EXCEPTION.createWithContext(reader, id);
@@ -43,7 +43,7 @@ public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
             parse(stringReader);
             return Suggestions.empty();
         } catch (Exception ignored) {}
-        return CommandSource.suggestIdentifiers(BLRegistry.VAMPIRE_ABILITIES.getIds(), builder.createOffset(stringReader.getCursor()));
+        return CommandSource.suggestIdentifiers(BLRegistries.VAMPIRE_ABILITIES.getIds(), builder.createOffset(stringReader.getCursor()));
     }
 
     @Override

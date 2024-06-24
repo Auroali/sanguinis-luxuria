@@ -6,7 +6,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistry;
+import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -14,7 +14,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.NarratorManager;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -31,7 +30,7 @@ public class VampireAbilitiesScreen extends Screen {
     public VampireAbilitiesScreen() {
         super(NarratorManager.EMPTY);
         abilities = new ArrayList<>();
-        for (VampireAbility ability : BLRegistry.VAMPIRE_ABILITIES) {
+        for (VampireAbility ability : BLRegistries.VAMPIRE_ABILITIES) {
             abilities.add(new VampireAbilityWidget(ability, null));
         }
 
@@ -134,7 +133,7 @@ public class VampireAbilitiesScreen extends Screen {
 
     private void sendBindPacket(int i) {
         PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeRegistryValue(BLRegistry.VAMPIRE_ABILITIES, bindingWidget.ability);
+        buf.writeRegistryValue(BLRegistries.VAMPIRE_ABILITIES, bindingWidget.ability);
         buf.writeBoolean(true);
         buf.writeInt(i);
         bindingWidget = null;

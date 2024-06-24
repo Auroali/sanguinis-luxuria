@@ -3,7 +3,7 @@ package com.auroali.sanguinisluxuria.common.abilities;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistry;
+import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -23,7 +23,7 @@ public class VampireAbility {
     private int skillPoints;
     private String transKey;
     private String descTransKey;
-    private final RegistryEntry.Reference<VampireAbility> holder = BLRegistry.VAMPIRE_ABILITIES.createEntry(this);
+    private final RegistryEntry.Reference<VampireAbility> holder = BLRegistries.VAMPIRE_ABILITIES.createEntry(this);
     public VampireAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         this.icon = icon;
         this.parent = parent;
