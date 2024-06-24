@@ -77,7 +77,7 @@ public class InGameHudMixin {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
             if (vampire.getTimeInSun() != 0) {
                 float multiplier = (float) vampire.getTimeInSun() / vampire.getMaxTimeInSun();
-                RenderSystem.setShaderColor(0.0f, multiplier * 0.75f, multiplier, 0.0f);
+                RenderSystem.setShaderColor(multiplier * 0.6f, multiplier * 0.95f, multiplier, 0.0f);
             }
         }
     }
