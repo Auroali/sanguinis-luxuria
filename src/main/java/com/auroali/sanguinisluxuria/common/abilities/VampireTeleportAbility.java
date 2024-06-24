@@ -83,13 +83,9 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
     }
 
     public double getRange(VampireAbilityContainer container) {
-        double range = 8;
-        for(VampireAbility ability : container) {
-            if(ability.isIn(BLTags.VampireAbilities.TELEPORT_RANGE))
-                range += 4;
-        }
-        return range;
+        return 8 + container.getAbilitiesIn(BLTags.VampireAbilities.TELEPORT_RANGE).size() * 4;
     }
+
     public int getCooldown(VampireAbilityContainer container) {
         int cooldown = 250;
         if(container.hasAbility(BLVampireAbilities.TELEPORT_COOLDOWN_1))

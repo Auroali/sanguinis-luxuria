@@ -13,18 +13,17 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VampireAbilityContainer implements Iterable<VampireAbility> {
     private final Set<VampireAbility> abilities;
     private final Map<VampireAbility, AbilityCooldown> cooldowns;
     private final VampireAbility[] abilityBindings = new VampireAbility[3];
+    @SuppressWarnings("rawtypes")
     private final Object2ObjectOpenHashMap<VampireAbility, VampireAbility.AbilityTicker> tickers = new Object2ObjectOpenHashMap<>();
     private boolean shouldSync;
 
@@ -121,6 +120,14 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
         return this.abilities.contains(ability);
     }
 
+    public boolean hasAbilityIn(TagKey<VampireAbility> tag) {
+        return this.abilities.stream().anyMatch(a -> a.isIn(tag));
+    }
+
+    public List<VampireAbility> getAbilitiesIn(TagKey<VampireAbility> tag) {
+        return this.abilities.stream().filter(a -> a.isIn(tag)).toList();
+    }
+    
     public void save(NbtCompound compound) {
         NbtList abilityTag = new NbtList();
         NbtList abilitySlotsTag = new NbtList();
