@@ -6,5 +6,5 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 
 public class BLRegistryKeys {
-    public static final RegistryKey<Registry<VampireAbility>> VAMPIRE_ABILITIES_KEY = RegistryKey.ofRegistry(BLResources.VAMPIRE_ABILITY_REGISTRY_ID);
+    public static final RegistryKey<Registry<VampireAbility>> VAMPIRE_ABILITIES = RegistryKey.ofRegistry(BLResources.VAMPIRE_ABILITY_REGISTRY_ID);
 }

@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.BLRegistryKeys;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -12,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class BLVampireAbiltyTagsProvider extends FabricTagProvider<VampireAbility> {
     public BLVampireAbiltyTagsProvider(FabricDataOutput dataGenerator, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(dataGenerator, BLRegistries.VAMPIRE_ABILITIES_KEY, registriesFuture);
+        super(dataGenerator, BLRegistryKeys.VAMPIRE_ABILITIES, registriesFuture);
     }
 
     @Override
