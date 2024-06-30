@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.config;
 
+import com.auroali.configserializer.ConfigSerializer;
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
