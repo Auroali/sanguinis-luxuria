@@ -3,7 +3,8 @@
   "package": "com.auroali.sanguinisluxuria.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "client.InGameHudMixin"
+    "client.InGameHudMixin",
+    "client.LightmapTextureManagerMixin"
   ],
   "mixins": [
     "CakeBlockMixin",
