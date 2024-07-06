@@ -70,8 +70,8 @@ public class BloodlustClient implements ClientModInitializer {
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
 
-        ModelPredicateProviderRegistry.register(BLItems.BLOOD_BAG, BLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, BloodStorageItem::modelPredicate);
-        ModelPredicateProviderRegistry.register(BLItems.BLOOD_BOTTLE, BLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, BloodStorageItem::modelPredicate);
+        BLItems.BLOOD_BAG.registerModelPredicate();
+        BLItems.BLOOD_BOTTLE.registerModelPredicate();
 
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.BLOOD_SPLATTER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.PEDESTAL, RenderLayer.getCutout());
