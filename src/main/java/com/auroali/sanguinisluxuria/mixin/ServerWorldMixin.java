@@ -35,18 +35,19 @@ public abstract class ServerWorldMixin extends World {
         super(properties, registryRef, dimension, profiler, isClient, debugWorld, seed, maxChainedNeighborUpdates);
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V"))
-    public void sanguinisluxuria$modifySleep(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("newTime") LocalLongRef newTime) {
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/MutableWorldProperties;getTimeOfDay()J", ordinal = 0))
+    public void sanguinisluxuria$modifySleep(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("time") LocalLongRef time) {
         if(this.isDay() && this.players.stream().filter(VampireHelper::isVampire).anyMatch(PlayerEntity::isSleeping)) {
-            long time = properties.getTimeOfDay() + 13000;
-            newTime.set(time - time % 13000);
+            time.set(properties.getTimeOfDay());
             hasSetTime.set(true);
         }
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
-    public void sanguinisluxuria$setTimeOfDay(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("newTime") LocalLongRef newTime) {
-        if(hasSetTime.get())
-            setTimeOfDay(newTime.get());
+    public void sanguinisluxuria$setTimeOfDay(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("time") LocalLongRef time) {
+        if(hasSetTime.get()) {
+            long timeOfDay = time.get() + 13000L;
+            setTimeOfDay(timeOfDay - timeOfDay % 13000L);
+        }
     }
 }
