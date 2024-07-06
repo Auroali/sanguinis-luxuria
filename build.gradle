@@ -46,7 +46,7 @@ repositories {
 }
 
 fabricApi {
-	configureDataGeneration()
+	configureDataGeneration(settings -> settings.setModId("sanguinisluxuria"))
 }
 
 dependencies {
