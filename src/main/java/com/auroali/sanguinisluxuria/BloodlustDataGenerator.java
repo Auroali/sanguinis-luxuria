@@ -3,7 +3,6 @@ package com.auroali.sanguinisluxuria;
 import com.auroali.sanguinisluxuria.datagen.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.loot.context.LootContextTypes;
 
 public class BloodlustDataGenerator implements DataGeneratorEntrypoint {
 	@Override

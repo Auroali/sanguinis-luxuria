@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.compat.patchouli;
 
 import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeManager;

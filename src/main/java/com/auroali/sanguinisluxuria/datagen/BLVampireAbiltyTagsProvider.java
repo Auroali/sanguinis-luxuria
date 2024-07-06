@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistryKeys;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
