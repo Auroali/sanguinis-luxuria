@@ -33,7 +33,6 @@ public abstract class WanderingTraderMixin extends MerchantEntity {
 
     @Inject(method = "initGoals", at = @At("RETURN"))
     public void sanguinisluxuria$makeWanderingTradersScaredOfVampires(CallbackInfo ci) {
-        //this.goalSelector.add(1, new FleeEntityGoal<>(this, ZoglinEntity.class, 10.0F, 0.5, 0.5));
         this.goalSelector.add(1, new FleeEntityGoal<>(this, LivingEntity.class, 10.f, 0.5f, 0.5f, e -> VampireHelper.isVampire(e) && !VampireHelper.isMasked(e)));
     }
 }
