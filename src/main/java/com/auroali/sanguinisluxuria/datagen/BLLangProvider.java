@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -116,10 +117,15 @@ public class BLLangProvider extends FabricLanguageProvider {
 
     private static void enchantments(TranslationBuilder translationBuilder) {
         translationBuilder.add(BLEnchantments.SUN_PROTECTION, "Sun Protection");
-        translationBuilder.add(BLEnchantments.SUN_PROTECTION.getTranslationKey() + ".desc", "Increases the amount of time a vampire can stay in the sun");
+        enchantmentDescription(translationBuilder, BLEnchantments.SUN_PROTECTION, "Increases the amount of time a vampire can stay in the sun");
         translationBuilder.add(BLEnchantments.BLOOD_DRAIN, "Blood Transfer");
-        translationBuilder.add(BLEnchantments.BLOOD_DRAIN.getTranslationKey() + ".desc", "Allows a trident to latch on and slowly drain blood from what it hits, filling up either a vampire's blood bar or a held item that can store blood");
+        enchantmentDescription(translationBuilder, BLEnchantments.BLOOD_DRAIN, "Allows a trident to latch on and slowly transfer blood from a target to the thrower");
         translationBuilder.add(BLEnchantments.SERRATED, "Serrated");
+        enchantmentDescription(translationBuilder, BLEnchantments.SERRATED, "Has a chance of inflicting bleeding on targets");
+    }
+
+    private static void enchantmentDescription(TranslationBuilder builder, Enchantment enchantment, String description) {
+        builder.add(enchantment.getTranslationKey() + ".desc", description);
     }
 
     private static void attributes(TranslationBuilder translationBuilder) {
@@ -127,12 +133,12 @@ public class BLLangProvider extends FabricLanguageProvider {
     }
 
     private static void entities(TranslationBuilder translationBuilder) {
-        translationBuilder.add(BLEntities.VAMPIRE_VILLAGER, "Vampire Villager");
+        translationBuilder.add(BLEntities.VAMPIRE_VILLAGER, "Vampiric Villager");
         translationBuilder.add(BLEntities.VAMPIRE_MERCHANT, "Vampiric Merchant");
     }
 
     private static void keybindings(TranslationBuilder translationBuilder) {
-        translationBuilder.add("key.sanguinisluxuria.bite", "Bite");
+        translationBuilder.add("key.sanguinisluxuria.bite", "Drain Blood");
         translationBuilder.add("key.sanguinisluxuria.open_abilities", "Open Abilities");
         translationBuilder.add("key.sanguinisluxuria.ability_1", "Ability 1");
         translationBuilder.add("key.sanguinisluxuria.ability_2", "Ability 2");
