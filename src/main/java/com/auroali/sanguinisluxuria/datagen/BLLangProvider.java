@@ -105,7 +105,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLEnchantments.SUN_PROTECTION.getTranslationKey() + ".desc", "Increases the amount of time a vampire can stay in the sun");
 
         translationBuilder.add(BLEnchantments.BLOOD_DRAIN, "Blood Transfer");
-        translationBuilder.add(BLEnchantments.BLOOD_DRAIN.getTranslationKey() + ".desc", "Allows a trident to latch on and slowly drain blood from what it hits, filling up either a vampire's blood bar or a held item that can store blood");
+        translationBuilder.add(BLEnchantments.BLOOD_DRAIN.getTranslationKey() + ".desc", "Allows a trident to latch on and slowly transfer blood from a target to the thrower");
 
         translationBuilder.add(BLBlocks.BLOOD_CAULDRON, "Blood Cauldron");
         translationBuilder.add(BLBlocks.BLOOD_SPLATTER, "Blood");
@@ -114,6 +114,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItems.PENDANT_OF_TRANSFUSION, "Pendant of Transfusion");
 
         translationBuilder.add(BLEnchantments.SERRATED, "Serrated");
+        translationBuilder.add(BLEnchantments.SERRATED.getTranslationKey() + ".desc", "Has a chance of inflicting bleeding on targets");
 
         translationBuilder.add(BLEntities.VAMPIRE_MERCHANT, "Vampiric Merchant");
 
