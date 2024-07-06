@@ -22,19 +22,19 @@ public class BLItems {
             new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB).maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
             BloodConstants.BLOOD_PER_BOTTLE
     ).emptyItem(Items.GLASS_BOTTLE);
-    public static final Item TWISTED_BLOOD = new TwistedBloodItem(new FabricItemSettings().maxCount(1));
-    public static final Item BLESSED_BLOOD = new BlessedBloodItem(new FabricItemSettings().maxCount(1));
-    public static final Item VAMPIRE_VILLAGER_SPAWN_EGG = new SpawnEggItem(BLEntities.VAMPIRE_VILLAGER, 0xFF1E1C1B, 0xFFF9f8EF, new FabricItemSettings());
-    public static final Item PENDANT_OF_PIERCING = new TrinketItem(new FabricItemSettings().maxCount(1));
-    public static final Item PENDANT_OF_TRANSFUSION = new TrinketItem(new FabricItemSettings().maxCount(1));
-    public static final Item BLOOD_PETAL = new Item(new FabricItemSettings());
-    public static final Item SILVER_INGOT = new Item(new FabricItemSettings());
-    public static final Item RAW_SILVER = new Item(new FabricItemSettings());
-    public static final Item SILVER_SWORD = new BlessedSwordItem(BLToolMaterials.SILVER, 3, -2.4f, 3, new FabricItemSettings());
-    public static final Item SILVER_PICKAXE = new BlessedPickaxeItem(BLToolMaterials.SILVER, 1, -2.8f, 2, new FabricItemSettings());
-    public static final Item SILVER_AXE = new BlessedAxeItem(BLToolMaterials.SILVER, 6, -3.1f, 2, new FabricItemSettings());
-    public static final Item SILVER_SHOVEL = new BlessedShovelItem(BLToolMaterials.SILVER, 1.5f, -3.f, 2, new FabricItemSettings());
-    public static final Item SILVER_HOE = new BlessedHoeItem(BLToolMaterials.SILVER, -2, -1.f, 2, new FabricItemSettings());
+    public static final Item TWISTED_BLOOD = new TwistedBloodItem(new FabricItemSettings().maxCount(1).group(Bloodlust.BLOODLUST_TAB));
+    public static final Item BLESSED_BLOOD = new BlessedBloodItem(new FabricItemSettings().maxCount(1).group(Bloodlust.BLOODLUST_TAB));
+    public static final Item VAMPIRE_VILLAGER_SPAWN_EGG = new SpawnEggItem(BLEntities.VAMPIRE_VILLAGER, 0xFF1E1C1B, 0xFFF9f8EF, new FabricItemSettings().group(ItemGroup.MISC));
+    public static final Item PENDANT_OF_PIERCING = new TrinketItem(new FabricItemSettings().maxCount(1).group(Bloodlust.BLOODLUST_TAB));
+    public static final Item PENDANT_OF_TRANSFUSION = new TrinketItem(new FabricItemSettings().maxCount(1).group(Bloodlust.BLOODLUST_TAB));
+    public static final Item BLOOD_PETAL = new Item(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
+    public static final Item SILVER_INGOT = new Item(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
+    public static final Item RAW_SILVER = new Item(new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
+    public static final Item SILVER_SWORD = new BlessedSwordItem(BLToolMaterials.SILVER, 3, -2.4f, 3, new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
+    public static final Item SILVER_PICKAXE = new BlessedPickaxeItem(BLToolMaterials.SILVER, 1, -2.8f, 2, new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
+    public static final Item SILVER_AXE = new BlessedAxeItem(BLToolMaterials.SILVER, 6, -3.1f, 2, new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
+    public static final Item SILVER_SHOVEL = new BlessedShovelItem(BLToolMaterials.SILVER, 1.5f, -3.f, 2, new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
+    public static final Item SILVER_HOE = new BlessedHoeItem(BLToolMaterials.SILVER, -2, -1.f, 2, new FabricItemSettings().group(Bloodlust.BLOODLUST_TAB));
 
     public static void register() {
         Registry.register(Registry.ITEM, BLResources.MASK_ONE_ID, MASK_1);

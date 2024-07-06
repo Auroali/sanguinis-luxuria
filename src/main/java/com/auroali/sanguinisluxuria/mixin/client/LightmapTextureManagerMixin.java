@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LightmapTextureManagerMixin {
     @Shadow @Final private MinecraftClient client;
 
-    @Inject(method = "update", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/world/ClientWorld;getSkyBrightness(F)F", shift = At.Shift.AFTER))
+    @Inject(method = "update", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/world/ClientWorld;getStarBrightness(F)F", shift = At.Shift.AFTER))
     public void sanguinisluxuria$raiseMinimumSkyBrightness(float delta, CallbackInfo ci, @Local(ordinal = 1) LocalFloatRef brightness) {
         if(VampireHelper.isVampire(client.player))
             brightness.set(Math.max(brightness.get(), 0.46f));
