@@ -101,6 +101,7 @@ public class BLResources {
     public static final RegistryKey<DamageType> BLESSED_WATER_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blessed_water"));
     public static final RegistryKey<DamageType> BITE_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("bite"));
     public static final RegistryKey<DamageType> TELEPORT_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blink_piercing"));
+    public static final Identifier VAMPIRES_WEAK_TO_ID = id("vampires_weak_to");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

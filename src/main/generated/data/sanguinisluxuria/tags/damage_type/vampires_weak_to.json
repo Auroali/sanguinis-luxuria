@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:witch_resistant_to",
+    "#minecraft:is_fire",
+    {
+      "id": "sanguinisluxuria:blessed_water",
+      "required": false
+    }
+  ]
+}

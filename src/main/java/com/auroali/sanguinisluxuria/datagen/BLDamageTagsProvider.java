@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.data.DataOutput;
@@ -34,5 +35,11 @@ public class BLDamageTagsProvider extends FabricTagProvider<DamageType> {
                 .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
                 .addOptional(BLResources.BITE_DAMAGE_KEY);
+        getOrCreateTagBuilder(DamageTypeTags.WITCH_RESISTANT_TO)
+                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
+        getOrCreateTagBuilder(BLTags.DamageTypes.VAMPIRES_WEAK_TO)
+                .forceAddTag(DamageTypeTags.WITCH_RESISTANT_TO)
+                .forceAddTag(DamageTypeTags.IS_FIRE)
+                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
     }
 }

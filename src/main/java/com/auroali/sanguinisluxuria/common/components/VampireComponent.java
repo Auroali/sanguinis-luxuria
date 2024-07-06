@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -120,14 +121,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @see BLConfig#vampireDamageMultiplier
      */
     static float calculateDamage(float amount, DamageSource source) {
-//        if(source.getAttacker() instanceof LivingEntity entity) {
-//            ItemStack stack = entity.getMainHandStack();
-//            int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
-//            if(level > 0)
-//                return amount + (level * (BLConfig.INSTANCE.vampireDamageMultiplier / Enchantments.SMITE.getMaxLevel()));
-//        }
-
-        if(isEffectiveAgainstVampires(source))
+        if(source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
             return amount * BLConfig.INSTANCE.vampireDamageMultiplier;
 
         return amount;
@@ -139,7 +133,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @return whether the source is effective and damage should be increased
      */
     static boolean isEffectiveAgainstVampires(DamageSource source) {
-        if(!source.isOf(BLResources.BITE_DAMAGE_KEY) && source.isIn(DamageTypeTags.IS_FIRE) || source.isOf(DamageTypes.MAGIC) || source.isIn(DamageTypeTags.BYPASSES_ARMOR))
+        if(source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
             return true;
 
         if(source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE) > 0) {
