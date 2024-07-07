@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.events.AllowVampireChangeEvent;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
@@ -81,7 +82,7 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
             BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(holder);
             BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
             // we do this as otherwise the values we set will be overridden
-            if(newBlood instanceof EntityBloodComponent c)
+            if(newBlood instanceof InitializableBloodComponent c)
                 c.initializeBloodValues();
             newBlood.setBlood(Math.min(newBlood.getMaxBlood(), component.getBlood()));
         }
