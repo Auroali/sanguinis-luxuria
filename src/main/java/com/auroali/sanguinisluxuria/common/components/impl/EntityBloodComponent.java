@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
@@ -13,7 +14,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class EntityBloodComponent implements BloodComponent, ServerTickingComponent {
+public class EntityBloodComponent implements InitializableBloodComponent, ServerTickingComponent {
     private final LivingEntity holder;
     private int maxBlood;
     private int currentBlood;
