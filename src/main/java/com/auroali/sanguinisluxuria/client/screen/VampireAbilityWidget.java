@@ -48,13 +48,16 @@ public class VampireAbilityWidget extends DrawableHelper implements Comparable<V
     }
 
     public void resolveParent(List<VampireAbilityWidget> abilities) {
+        if(hidden)
+            return;
         for(VampireAbilityWidget widget : abilities) {
             if(widget.ability == ability.getParent()) {
                 this.parent = widget;
                 this.parent.getChildren().add(this);
-                if(!this.hidden)
+                if(!this.hidden) {
                     this.hidden = parent.hidden;
-                progateHiddenStateToChildren();
+                    progateHiddenStateToChildren();
+                }
                 return;
             }
         }

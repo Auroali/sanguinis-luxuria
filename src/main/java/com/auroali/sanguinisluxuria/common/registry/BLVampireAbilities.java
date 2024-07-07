@@ -108,7 +108,7 @@ public class BLVampireAbilities {
     public static final VampireAbility DOWNED_RESISTANCE = new VampireAbility(
             () -> new ItemStack(Items.DIAMOND_CHESTPLATE),
             DAMAGE_REDUCTION
-    );
+    ).condition((entity, vampire, container) -> false);
 
     public static void register() {
         Registry.register(BLRegistry.VAMPIRE_ABILITIES, BLResources.VAMPIRE_HEALTH_1_ID, HEALTH_1);
