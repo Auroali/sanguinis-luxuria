@@ -8,6 +8,8 @@ import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.network.ActivateAbilityC2S;
+import com.auroali.sanguinisluxuria.common.network.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
@@ -114,28 +116,22 @@ public class BloodlustClient implements ClientModInitializer {
                 client.setScreen(new VampireAbilitiesScreen());
             }
             while(ABILITY_1.wasPressed()) {
-                sendAbilityKeyPress(0);
+                ClientPlayNetworking.send(new ActivateAbilityC2S(0));
             }
             while(ABILITY_2.wasPressed()) {
-                sendAbilityKeyPress(1);
+                ClientPlayNetworking.send(new ActivateAbilityC2S(1));
             }
             if (SUCK_BLOOD.isPressed()) {
                 if (isLookingAtValidTarget() || BloodStorageItem.isHoldingBloodFillableItem(client.player)) {
-                    sendBloodDrainPacket(true);
+                    ClientPlayNetworking.send(new DrainBloodC2S(true));
                     drainingBlood = true;
                 }
             } else if (drainingBlood) {
                 drainingBlood = false;
-                sendBloodDrainPacket(false);
+                ClientPlayNetworking.send(new DrainBloodC2S(false));
             }
         });
 
-    }
-
-    public static void sendAbilityKeyPress(int i) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(i);
-        ClientPlayNetworking.send(BLResources.ABILITY_KEY_CHANNEL, buf);
     }
 
     public static boolean isLookingAtValidTarget() {
@@ -147,11 +143,5 @@ public class BloodlustClient implements ClientModInitializer {
         LivingEntity target = result != null && result.getType() == HitResult.Type.ENTITY && ((EntityHitResult)result).getEntity() instanceof LivingEntity living ? living : null;
 
         return target != null && target.getType().isIn(BLTags.Entities.HAS_BLOOD);
-    }
-
-    public void sendBloodDrainPacket(boolean drain) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBoolean(drain);
-        ClientPlayNetworking.send(BLResources.KEYBIND_CHANNEL, buf);
     }
 }

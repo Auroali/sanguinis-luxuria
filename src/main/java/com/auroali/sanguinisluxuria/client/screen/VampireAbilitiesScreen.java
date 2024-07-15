@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.network.BindAbilityC2S;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -132,12 +133,8 @@ public class VampireAbilitiesScreen extends Screen {
     }
 
     private void sendBindPacket(int i) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeRegistryValue(BLRegistries.VAMPIRE_ABILITIES, bindingWidget.ability);
-        buf.writeBoolean(true);
-        buf.writeInt(i);
+        ClientPlayNetworking.send(new BindAbilityC2S(bindingWidget.ability, i));
         bindingWidget = null;
-        ClientPlayNetworking.send(BLResources.SKILL_TREE_CHANNEL, buf);
     }
 
     @Override

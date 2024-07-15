@@ -62,14 +62,14 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
     }
 
     public VampireAbility getBoundAbility(int slot) {
-        if(abilityBindings.length <= slot)
+        if(slot < 0 || abilityBindings.length <= slot)
             return null;
         setShouldSync(true);
         return abilityBindings[slot];
     }
 
     public void setBoundAbility(VampireAbility ability, int slot) {
-        if(!hasAbility(ability) || abilityBindings.length <= slot)
+        if(!hasAbility(ability) || slot < 0 || abilityBindings.length <= slot)
             return;
         for(int i = 0; i < abilityBindings.length; i++) {
             if (abilityBindings[i] == ability)
@@ -324,6 +324,12 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
     @Override
     public Iterator<VampireAbility> iterator() {
         return abilities.iterator();
+    }
+
+    public void clearBoundAbility(VampireAbility ability) {
+        int binding = getAbilityBinding(ability);
+        if(binding != -1)
+            setBoundAbility(null, binding);
     }
 
     private static class AbilityCooldown {

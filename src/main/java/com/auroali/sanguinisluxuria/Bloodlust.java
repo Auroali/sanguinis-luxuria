@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
 import com.auroali.sanguinisluxuria.common.commands.BloodlustCommand;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
@@ -8,6 +9,7 @@ import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.network.*;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
@@ -174,70 +176,52 @@ public class Bloodlust implements ModInitializer {
 	}
 
 	public static void registerNetworkHandlers() {
-		ServerPlayNetworking.registerGlobalReceiver(BLResources.KEYBIND_CHANNEL, (server, player, handler, buf, responseSender) -> {
-			boolean draining = buf.readBoolean();
-			server.execute(() -> {
-				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-				if(!vampire.isVampire())
-					return;
-
-				if(draining)
-					vampire.tryStartSuckingBlood();
+		ServerPlayNetworking.registerGlobalReceiver(ActivateAbilityC2S.ID, (packet, player, responseSender) -> {
+			if(!VampireHelper.isVampire(player))
+				return;
+			VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+			VampireAbilityContainer container = vampire.getAbilties();
+			VampireAbility ability = container.getBoundAbility(packet.abilitySlot());
+			if(ability != null)
+				ability.activate(player, vampire);
+		});
+		ServerPlayNetworking.registerGlobalReceiver(BindAbilityC2S.ID, (packet, player, responseSender) -> {
+			if(packet.ability() == null || !VampireHelper.isVampire(player))
+				return;
+			VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+			VampireAbilityContainer container = vampire.getAbilties();
+			VampireAbility ability = packet.ability();
+			if(container.hasAbility(ability)) {
+				if(packet.slot() == -1)
+					container.clearBoundAbility(ability);
 				else
-					vampire.stopSuckingBlood();
-			});
+					container.setBoundAbility(ability, packet.slot());
+				BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
+			}
 		});
+		ServerPlayNetworking.registerGlobalReceiver(UnlockAbilityC2S.ID, (packet, player, responseSender) -> {
+			if(packet.ability() == null || !VampireHelper.isVampire(player))
+				return;
+			VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+			VampireAbilityContainer container = vampire.getAbilties();
+			VampireAbility ability = packet.ability();
 
-		ServerPlayNetworking.registerGlobalReceiver(BLResources.SKILL_TREE_CHANNEL, (server, player, handler, buf, responseSender) -> {
-			VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
-			boolean isAbilityBind = buf.readBoolean();
-			int abilitySlot = isAbilityBind ? buf.readInt() : 0;
-			server.execute(() -> {
-				if(ability == null) {
-					LOGGER.warn("Failed to read ability from packet!");
-					return;
-				}
-				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-				if(!isAbilityBind) {
-					if (vampire.getAbilties().hasAbility(ability)
-							|| !vampire.getAbilties().hasAbility(ability.getParent())
-							|| vampire.getSkillPoints() < ability.getRequiredSkillPoints()
-							|| ability.isHidden(player)
-					)
-						return;
-
-					if(VampireHelper.hasIncompatibleAbility(vampire.getAbilties(), ability))
-						return;
-
-					vampire.unlockAbility(ability);
-				} else {
-					if(!vampire.getAbilties().hasAbility(ability))
-						return;
-
-					if(abilitySlot == -1) {
-						int current = vampire.getAbilties().getAbilityBinding(ability);
-						if(current != -1)
-							vampire.getAbilties().setBoundAbility(null, current);
-
-						BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
-						return;
-					}
-					vampire.getAbilties().setBoundAbility(ability, abilitySlot);
-					BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
-				}
-			});
+			if(!container.hasAbility(ability)
+					&& vampire.getSkillPoints() >= ability.getRequiredSkillPoints()
+					&& container.hasAbility(ability.getParent())
+					&& !VampireHelper.hasIncompatibleAbility(container, ability)
+			) {
+				vampire.unlockAbility(ability);
+			}
 		});
-
-		ServerPlayNetworking.registerGlobalReceiver(BLResources.ABILITY_KEY_CHANNEL, (server, player, handler, buf, responseSender) -> {
-			int slot = buf.readInt();
-			server.execute(() -> {
-				VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-				if(!vampire.isVampire())
-					return;
-				VampireAbility ability = vampire.getAbilties().getBoundAbility(slot);
-				if(ability != null)
-					ability.activate(player, vampire);
-			});
+		ServerPlayNetworking.registerGlobalReceiver(DrainBloodC2S.ID, (packet, player, responseSender) -> {
+			if(!VampireHelper.isVampire(player))
+				return;
+			VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+			if(packet.draining())
+				vampire.tryStartSuckingBlood();
+			else
+				vampire.stopSuckingBlood();
 		});
 	}
 }

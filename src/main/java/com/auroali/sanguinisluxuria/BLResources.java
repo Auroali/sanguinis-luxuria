@@ -11,7 +11,6 @@ public class BLResources {
     public static final Identifier TOXIC_BLOOD_ID = id("toxic_blood");
     public static final Identifier BLOOD_COMPONENT_ID = id("blood");
     public static final Identifier VAMPIRE_COMPONENT_ID = id("vampire");
-    public static final Identifier KEYBIND_CHANNEL = id("keys");
     public static final Identifier ICONS = id("textures/gui/icons.png");
     public static final Identifier MASK_ONE_ID = id("mask_1");
     public static final Identifier MASK_TWO_ID = id("mask_2");
@@ -26,7 +25,6 @@ public class BLResources {
     public static final Identifier BLOOD_SICKNESS_ID = id("blood_sickness");
     public static final Identifier BLOOD_SPLATTER_ID = id("blood_splatter");
     public static final Identifier CAN_DROP_BLOOD = id("can_drop_blood");
-    public static final Identifier BLOOD_SPLATTER_REPLACEABLE = id("blood_splatter_replaceable");
     public static final Identifier BLESSED_WATER_ID = id("blessed_water");
     public static final Identifier BLOOD_PROTECTION_ID = id("blessed_blood");
     public static final Identifier VAMPIRE_MASKS_ID = id("vampire_masks");
@@ -35,10 +33,8 @@ public class BLResources {
     public static final Identifier VAMPIRE_ABILITY_ARGUMENT_ID = id("ability_argument");
     public static final Identifier VAMPIRE_HEALTH_2_ID = id("health_2");
     public static final Identifier VAMPIRE_STRENGTH_1_ID = id("strength_1");
-    public static final Identifier SKILL_TREE_CHANNEL = id("skill_trees");
     public static final Identifier ABILITIES_SCREEN = id("textures/gui/abilities.png");
     public static final Identifier ABILITIES_BG = id("textures/gui/abilities_bg.png");
-    public static final Identifier ABILITY_KEY_CHANNEL = id("ability_keys");
     public static final Identifier TELEPORT_ID = id("teleport");
     public static final Identifier TELEPORT_COOLDOWN_1_ID = id("teleport_cooldown_1");
     public static final Identifier TELEPORT_COOLDOWN_2_ID = id("teleport_cooldown_2");
@@ -102,6 +98,10 @@ public class BLResources {
     public static final RegistryKey<DamageType> BITE_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("bite"));
     public static final RegistryKey<DamageType> TELEPORT_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blink_piercing"));
     public static final Identifier VAMPIRES_WEAK_TO_ID = id("vampires_weak_to");
+    public static final Identifier ACTIVATE_ABILITY_C2S = id("activate_ability");
+    public static final Identifier DRAIN_BLOOD_C2S = id("drain_blood");
+    public static final Identifier UNLOCK_ABILITY_C2S = id("unlock_ability");
+    public static final Identifier BIND_ABILITY_C2S = id("bind_ability");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
