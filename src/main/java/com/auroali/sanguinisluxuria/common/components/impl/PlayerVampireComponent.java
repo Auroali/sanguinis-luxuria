@@ -117,7 +117,7 @@ public class PlayerVampireComponent implements VampireComponent {
                 ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier * 2, 0.05f);
                 BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier * 2);
             } else {
-                ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier, 0);
+                ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier, 0.05f);
                 BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier);
             }
         }
