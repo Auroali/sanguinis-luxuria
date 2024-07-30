@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.blockentities;
 
+import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
@@ -10,6 +11,9 @@ import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
@@ -74,6 +79,11 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
             world.updateListeners(p.getPos(), state, state, Block.NOTIFY_LISTENERS);
         });
 
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(pos);
+        buf.writeCollection(pedestals.stream().map(BlockEntity::getPos).toList(), PacketByteBuf::writeBlockPos);
+        PlayerLookup.tracking(this)
+                        .forEach(p -> ServerPlayNetworking.send(p, BLResources.ALTAR_RECIPE_START_S2C, buf));
         this.recipe = recipe;
         this.stacks = collectedStacks;
         this.ticksProcessing = 0;

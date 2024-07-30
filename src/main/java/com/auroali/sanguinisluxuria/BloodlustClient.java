@@ -30,9 +30,16 @@ import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BloodlustClient implements ClientModInitializer {
     public static KeyBinding SUCK_BLOOD = new KeyBinding(
@@ -103,6 +110,32 @@ public class BloodlustClient implements ClientModInitializer {
             VampireAbility ability = buf.readRegistryValue(BLRegistry.VAMPIRE_ABILITIES);
             if(client.world != null && client.world.getEntityById(id) instanceof LivingEntity entity && ability instanceof SyncableVampireAbility<?> s)
                 s.handlePacket(entity, buf, client::execute);
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(BLResources.ALTAR_RECIPE_START_S2C, (client, handler, buf, responseSender) -> {
+            World world = handler.getWorld();
+            int density = 4;
+            BlockPos altarPos = buf.readBlockPos();
+            List<BlockPos> pedestalPositions = buf.readCollection(ArrayList::new, PacketByteBuf::readBlockPos);
+            Vec3d altarPosCentered = new Vec3d(altarPos.getX() + 0.5, altarPos.getY() + 0.5, altarPos.getZ() + 0.5);
+            for(BlockPos pedestalPos : pedestalPositions) {
+                for(int i = 0; i < pedestalPos.getManhattanDistance(altarPos) * density; i++) {
+                    Vec3d pos = new Vec3d(pedestalPos.getX() + 0.5, pedestalPos.getY() + 0.5, pedestalPos.getZ() + 0.5);
+                    Vec3d offset = altarPosCentered.subtract(pos)
+                            .normalize()
+                            .multiply((double) i / density);
+                    pos = pos.add(offset);
+                    world.addParticle(
+                            DustParticleEffect.DEFAULT,
+                            pos.getX() + world.getRandom().nextGaussian() * 0.07,
+                            pos.getY() + world.getRandom().nextGaussian() * 0.07,
+                            pos.getZ() + world.getRandom().nextGaussian() * 0.07,
+                            0,
+                            0,
+                            0
+                    );
+                }
+            }
         });
     }
 
