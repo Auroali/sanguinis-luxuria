@@ -31,7 +31,7 @@ public class BLConfig {
     public float vampireExhaustionMultiplier = 0.15f;
     public float blessedWaterDamage = 5f;
     public int skillPointsPerLevel = 1;
-    public float piercingExhaustion = 2f;
+    public float piercingExhaustion = 2.5f;
     public boolean generateSilverOre = true;
 
     public Screen generateScreen(Screen screen) {

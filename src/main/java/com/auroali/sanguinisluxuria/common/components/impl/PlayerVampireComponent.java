@@ -151,36 +151,7 @@ public class PlayerVampireComponent implements VampireComponent {
         }
 
         if(entity.getType().isIn(BLTags.Entities.TELEPORTS_ON_DRAIN)) {
-            teleportRandomly();
-        }
-    }
-
-    private void teleportRandomly() {
-        World world = holder.getWorld();
-        double x = holder.getX();
-        double y = holder.getY();
-        double z = holder.getZ();
-
-        for(int i = 0; i < 16; ++i) {
-            double newPosX = holder.getX() + (holder.getRandom().nextDouble() - 0.5) * 16.0;
-            double newPosY = MathHelper.clamp(
-                    holder.getY() + (double) (holder.getRandom().nextInt(16) - 8),
-                    world.getBottomY(),
-                    (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1)
-            );
-            double newPosZ = holder.getZ() + (holder.getRandom().nextDouble() - 0.5) * 16.0;
-            if (holder.hasVehicle()) {
-                holder.stopRiding();
-            }
-
-            Vec3d pos = holder.getPos();
-            if (holder.teleport(newPosX, newPosY, newPosZ, true)) {
-                world.emitGameEvent(GameEvent.TELEPORT, pos, GameEvent.Emitter.of(holder));
-                SoundEvent soundEvent = SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                world.playSound(null, x, y, z, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                holder.playSound(soundEvent, 1.0F, 1.0F);
-                break;
-            }
+            VampireHelper.teleportRandomly(holder);
         }
     }
 
