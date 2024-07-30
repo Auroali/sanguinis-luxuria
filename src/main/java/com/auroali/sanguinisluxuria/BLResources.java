@@ -102,6 +102,7 @@ public class BLResources {
     public static final Identifier DRAIN_BLOOD_C2S = id("drain_blood");
     public static final Identifier UNLOCK_ABILITY_C2S = id("unlock_ability");
     public static final Identifier BIND_ABILITY_C2S = id("bind_ability");
+    public static final Identifier ALTAR_RECIPE_START_S2C = id("altar_recipe_start");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

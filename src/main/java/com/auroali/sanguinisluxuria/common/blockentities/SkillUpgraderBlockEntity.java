@@ -5,11 +5,14 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.network.AltarRecipeStartS2C;
 import com.auroali.sanguinisluxuria.common.recipes.AltarInventory;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -74,6 +77,9 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
             world.updateListeners(p.getPos(), state, state, Block.NOTIFY_LISTENERS);
         });
 
+
+        PlayerLookup.tracking(this)
+                        .forEach(p -> ServerPlayNetworking.send(p, new AltarRecipeStartS2C(pos, pedestals.stream().map(BlockEntity::getPos).toList())));
         this.recipe = recipe;
         this.stacks = collectedStacks;
         this.ticksProcessing = 0;
