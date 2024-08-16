@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria.mixin;
 
+import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.BloodTransferComponent;
-import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
@@ -42,7 +42,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
         Entity latched = bloodTransfer.getLatchedEntity();
         if(bloodDrainLevel != 0 && latched != null && latched.isAlive() && !latched.isRemoved()) {
             if(!this.isOwnerAlive()) {
-                if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
+                if (!this.getWorld().isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
                 this.discard();
@@ -58,8 +58,6 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(latched);
             BloodComponent ownerBlood = BLEntityComponents.BLOOD_COMPONENT.get(owner);
 
-            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(owner);
-
             if((latched instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
                 bloodTransfer.setLatchedEntity(null);
                 sanguinisluxuria$latchedTicks = 0;
@@ -70,8 +68,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             setVelocity(Vec3d.ZERO);
 
             int timeToDrain = latched instanceof LivingEntity e && e.hasStatusEffect(BLStatusEffects.BLEEDING) ? 20 : 40;
-            if(sanguinisluxuria$latchedTicks % timeToDrain == 0 && !world.isClient && blood.drainBlood()) {
-                if(!(owner instanceof LivingEntity entity && BloodStorageItem.tryAddBloodToItemInHand(entity, 1)) && vampire.isVampire()) {
+            if(sanguinisluxuria$latchedTicks % timeToDrain == 0 && !getWorld().isClient && blood.drainBlood()) {
+                if(!(owner instanceof LivingEntity entity && BloodStorageItem.tryAddBloodToItemInHand(entity, 1)) && VampireHelper.isVampire(owner)) {
                     ownerBlood.addBlood(1);
                 }
                 playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
