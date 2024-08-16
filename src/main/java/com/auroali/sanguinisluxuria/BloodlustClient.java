@@ -29,6 +29,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.hit.EntityHitResult;
@@ -96,7 +97,6 @@ public class BloodlustClient implements ClientModInitializer {
                 BLResources.BLOOD_STILL_TEXTURE,
                 BLResources.BLOOD_FLOWING_TEXTURE
         ));
-
 //        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
 //            registry.register(BLResources.BLOOD_FLOWING_TEXTURE);
 //            registry.register(BLResources.BLOOD_STILL_TEXTURE);
@@ -111,7 +111,7 @@ public class BloodlustClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(AltarRecipeStartS2C.ID, (packet, player, responseSender) -> {
            World world = player.getWorld();
-           int density = 4;
+           final int density = 4;
            for(BlockPos pedestalPos : packet.pedestals()) {
                for(int i = 0; i < pedestalPos.getManhattanDistance(packet.pos()) * density; i++) {
                    Vec3d pos = pedestalPos.toCenterPos();
