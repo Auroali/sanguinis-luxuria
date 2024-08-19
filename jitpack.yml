@@ -1,2 +1,4 @@
 jdk:
   - openjdk17
+install:
+  - ./gradlew clean -Pgroup=com.github.auroali -Pversion=1.20-9c8522d8d2-1 -xtest runDatagen assemble publishToMavenLocal
