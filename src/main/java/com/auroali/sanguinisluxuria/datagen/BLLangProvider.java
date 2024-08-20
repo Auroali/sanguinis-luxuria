@@ -16,8 +16,6 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class BLLangProvider extends FabricLanguageProvider {
     public BLLangProvider(FabricDataOutput dataGenerator) {

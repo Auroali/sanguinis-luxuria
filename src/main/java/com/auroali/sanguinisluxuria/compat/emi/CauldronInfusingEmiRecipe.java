@@ -1,7 +1,5 @@
 package com.auroali.sanguinisluxuria.compat.emi;
 
-import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
-import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
 import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -24,8 +22,6 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
