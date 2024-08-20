@@ -13,9 +13,9 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
-    private final Ingredient ingredient;
-    private final Identifier id;
-    private final ItemStack result;
+    protected final Ingredient ingredient;
+    protected final Identifier id;
+    protected final ItemStack result;
 
     public BloodCauldronRecipe(Identifier id, Ingredient ingredient, ItemStack result) {
         this.id = id;

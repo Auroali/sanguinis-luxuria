@@ -95,6 +95,7 @@ public class BLResources {
     public static final Identifier BLESSED_DAMAGE_ID = id("blessed_damage");
     public static final Identifier RAW_SILVER_BLOCK_ID = id("raw_silver_block");
     public static final Identifier ALTAR_RECIPE_START_S2C = id("altar_recipe_start");
+    public static final Identifier BLOOD_CAULDRON_FILL_ID = id("blood_cauldron_fill");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

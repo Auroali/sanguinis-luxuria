@@ -150,5 +150,11 @@ public class BLRecipeProvider extends FabricRecipeProvider {
                 .input(BLItems.RAW_SILVER, 9)
                 .criterion("has_silver", conditionsFromItem(BLItems.RAW_SILVER))
                 .offerTo(exporter);
+        BloodCauldronFillRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.ofItems(Items.GLASS_BOTTLE), BLItems.BLOOD_BOTTLE)
+                .criterion("has_item", conditionsFromItem(BLItems.BLOOD_BOTTLE))
+                .offerTo(exporter);
+        BloodCauldronFillRecipeJsonBuilder.create(RecipeCategory.BREWING, BLItems.BLOOD_BAG)
+                .criterion("has_item", conditionsFromItem(BLItems.BLOOD_BAG))
+                .offerTo(exporter);
     }
 }
