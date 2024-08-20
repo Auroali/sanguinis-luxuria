@@ -62,6 +62,10 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
         return BLRecipeTypes.BLOOD_CAULDRON_TYPE;
     }
 
+    public int getCauldronLevel() {
+        return 1;
+    }
+
     public static class Serializer implements RecipeSerializer<BloodCauldronRecipe> {
         @Override
         public BloodCauldronRecipe read(Identifier id, JsonObject json) {

@@ -222,6 +222,24 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(BLAdvancementsProvider.title("unbecome_vampire"), "Humanity");
         translationBuilder.add(BLAdvancementsProvider.desc("unbecome_vampire"), "Become human again after drinking Blessed Water with weakness");
+        tags(translationBuilder);
+        emiTranslations(translationBuilder);
+    }
+
+    private void generateTagTranslation(TranslationBuilder builder, TagKey<?> key, String translation) {
+        String transKey = "tag.%s.%s.%s".formatted(key.registry().getValue().getPath(), key.id().getNamespace(), key.id().getPath().replace("/", "."));
+        builder.add(transKey, translation);
+    }
+
+    private void emiTranslations(TranslationBuilder builder) {
+        builder.add("emi.category.sanguinisluxuria.altar", "Altar");
+        builder.add("emi.category.sanguinisluxuria.blood_cauldron", "Cauldron Infusing");
+    }
+
+    private void tags(TranslationBuilder builder) {
+        generateTagTranslation(builder, BLTags.Items.VAMPIRE_MASKS, "Vampire Masks");
+        generateTagTranslation(builder, BLTags.Items.SUN_BLOCKING_HELMETS, "Sun Blocking Helmets");
+        generateTagTranslation(builder, BLTags.Items.VAMPIRES_GET_HUNGER_FROM, "Vampire Food");
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {
