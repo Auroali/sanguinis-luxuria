@@ -75,7 +75,7 @@ public class AltarEmiRecipe implements EmiRecipe {
 
     @Override
     public int getDisplayHeight() {
-        return 128;
+        return 100;
     }
 
     @Override
