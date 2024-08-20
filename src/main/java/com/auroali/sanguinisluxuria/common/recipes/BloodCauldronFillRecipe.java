@@ -1,70 +1,50 @@
 package com.auroali.sanguinisluxuria.common.recipes;
 
+import com.auroali.sanguinisluxuria.common.BloodConstants;
+import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
-    protected final Ingredient ingredient;
-    protected final Identifier id;
-    protected final ItemStack result;
-
-    public BloodCauldronRecipe(Identifier id, Ingredient ingredient, ItemStack result) {
-        this.id = id;
-        this.ingredient = ingredient;
-        this.result = result;
+public class BloodCauldronFillRecipe extends BloodCauldronRecipe{
+    public BloodCauldronFillRecipe(Identifier id, Ingredient ingredient, ItemStack result) {
+        super(id, ingredient, BloodStorageItem.setStoredBlood(result, Math.min(BloodStorageItem.getMaxBlood(result), BloodConstants.BLOOD_PER_BOTTLE)));
     }
+
     @Override
     public boolean matches(SimpleInventory inventory, World world) {
-        return inventory.size() == 1 && ingredient.test(inventory.getStack(0));
+        ItemStack stack = inventory.getStack(0);
+        return ingredient.test(inventory.getStack(0))
+                && (!BloodStorageItem.canBeFilled(stack) || BloodStorageItem.getMaxBlood(stack) - BloodStorageItem.getStoredBlood(stack) >= BloodConstants.BLOOD_PER_BOTTLE);
     }
 
     @Override
     public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
-        return result.copy();
-    }
+        ItemStack stack = inventory.getStack(0).copy();
+        if(!stack.isOf(result.getItem())) {
+            NbtCompound tag = stack.getNbt();
+            stack = new ItemStack(result.getItem());
+            stack.setNbt(tag);
+        }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return width == 1 && height == 1;
-    }
-
-    @Override
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return result;
-    }
-
-    @Override
-    public DefaultedList<Ingredient> getIngredients() {
-        return DefaultedList.copyOf(Ingredient.EMPTY, ingredient);
-    }
-
-    @Override
-    public Identifier getId() {
-        return id;
+        int currentBlood = BloodStorageItem.getStoredBlood(stack);
+        BloodStorageItem.setStoredBlood(stack, currentBlood + BloodConstants.BLOOD_PER_BOTTLE);
+        return stack;
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BLRecipeSerializers.BLOOD_CAULDRON_SERIALIZER;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return BLRecipeTypes.BLOOD_CAULDRON_TYPE;
-    }
-
-    public int getCauldronLevel() {
-        return 1;
+        return BLRecipeSerializers.BLOOD_CAULDRON_FILL_SERIALIZER;
     }
 
     public static class Serializer implements RecipeSerializer<BloodCauldronRecipe> {
@@ -76,14 +56,14 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
                 throw new JsonParseException("Missing recipe result!");
             Ingredient ingredient = Ingredient.fromJson(json.get("input"));
             ItemStack result = ShapedRecipe.outputFromJson(json.get("result").getAsJsonObject());
-            return new BloodCauldronRecipe(id, ingredient, result);
+            return new BloodCauldronFillRecipe(id, ingredient, result);
         }
 
         @Override
         public BloodCauldronRecipe read(Identifier id, PacketByteBuf buf) {
             Ingredient ingredient = Ingredient.fromPacket(buf);
             ItemStack result = buf.readItemStack();
-            return new BloodCauldronRecipe(id, ingredient, result);
+            return new BloodCauldronFillRecipe(id, ingredient, result);
         }
 
         @Override
