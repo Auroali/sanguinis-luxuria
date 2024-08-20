@@ -1,9 +1,9 @@
-// 1.20.1	2024-08-16T20:01:35.67445746	Sanguinis Luxuria/Model Definitions
+// 1.20.1	2024-08-20T15:18:45.781314635	Sanguinis Luxuria/Model Definitions
 22eccfe91464ea67d7237ea269f01b83bdf4a835 assets/sanguinisluxuria/blockstates/blood_cauldron.json
 273ed2c74f7c4bf5d531935d7d91c71be193ac73 assets/sanguinisluxuria/models/item/mask_1.json
 1a6a0b1bd09b889e2cb6138f48f7b96ed3600769 assets/sanguinisluxuria/models/item/silver_sword.json
-8206c898a333fc36ebe6676c4c0ddb48ca35ffa1 assets/sanguinisluxuria/models/item/deepslate_silver_ore.json
 c03d47abcc30399de8422ceee621450aecb64fcc assets/sanguinisluxuria/models/block/silver_ore.json
+8206c898a333fc36ebe6676c4c0ddb48ca35ffa1 assets/sanguinisluxuria/models/item/deepslate_silver_ore.json
 38ea3e4a60ba4d9ba02823c4a12ab3c9565c6501 assets/sanguinisluxuria/models/block/deepslate_silver_ore.json
 91f01d0feaedcced54534147d78edeb646aea8ae assets/sanguinisluxuria/blockstates/blood_splatter.json
 a1ddda013fb9a6521813d77d0db2b8b34603e67a assets/sanguinisluxuria/models/item/blessed_blood_bottle.json

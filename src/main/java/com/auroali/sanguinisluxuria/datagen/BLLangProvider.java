@@ -13,7 +13,10 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.tag.TagKey;
 
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class BLLangProvider extends FabricLanguageProvider {
@@ -26,6 +29,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItemGroups.SANGUINIS_LUXURIA_TAB, "Sanguinis Luxuria");
         translationBuilder.add("fluids.sanguinisluxuria.blood", "Blood");
         translationBuilder.add("argument.sanguinisluxuria.id.invalid", "'%s' is not a valid id!");
+        tags(translationBuilder);
         subtitles(translationBuilder);
         keybindings(translationBuilder);
         config(translationBuilder);
@@ -40,20 +44,37 @@ public class BLLangProvider extends FabricLanguageProvider {
         abilities(translationBuilder);
         deathMessages(translationBuilder);
         advancements(translationBuilder);
+        emiTranslations(translationBuilder);
+    }
+
+    private void generateTagTranslation(TranslationBuilder builder, TagKey<?> key, String translation) {
+        String transKey = "tag.%s.%s.%s".formatted(key.registry().getValue().getPath(), key.id().getNamespace(), key.id().getPath().replace("/", "."));
+        builder.add(transKey, translation);
+    }
+
+    private void emiTranslations(TranslationBuilder builder) {
+        builder.add("emi.category.sanguinisluxuria.altar", "Altar");
+        builder.add("emi.category.sanguinisluxuria.blood_cauldron", "Cauldron Infusing");
+    }
+
+    private void tags(TranslationBuilder builder) {
+        generateTagTranslation(builder, BLTags.Items.VAMPIRE_MASKS, "Vampire Masks");
+        generateTagTranslation(builder, BLTags.Items.SUN_BLOCKING_HELMETS, "Sun Blocking Helmets");
+        generateTagTranslation(builder, BLTags.Items.VAMPIRES_GET_HUNGER_FROM, "Vampire Food");
     }
 
     private void deathMessages(TranslationBuilder translationBuilder) {
-        Function<RegistryKey<DamageType>, String> death = key -> "death.attack.%s.%s".formatted(key.getValue().getNamespace(), key.getValue().getPath());
-        Function<RegistryKey<DamageType>, String> deathItem = key -> "death.attack.%s.%s.item".formatted(key.getValue().getNamespace(), key.getValue().getPath());
-        Function<RegistryKey<DamageType>, String> deathPlayer = key -> "death.attack.%s.%s.player".formatted(key.getValue().getNamespace(), key.getValue().getPath());
-        translationBuilder.add(death.apply(BLResources.BLESSED_WATER_DAMAGE_KEY), "%s was burned by blessed water");
-        translationBuilder.add(deathPlayer.apply(BLResources.BLESSED_WATER_DAMAGE_KEY), "%s was burned by blessed water whilst trying to escape %s");
-        translationBuilder.add(death.apply(BLResources.BITE_DAMAGE_KEY), "%s was bitten by %s");
-        translationBuilder.add(deathItem.apply(BLResources.BITE_DAMAGE_KEY), "%s was bitten by %s using %s");
-        translationBuilder.add(death.apply(BLResources.BLOOD_DRAIN_DAMAGE_KEY), "%s had their blood drained");
-        translationBuilder.add(deathPlayer.apply(BLResources.BLOOD_DRAIN_DAMAGE_KEY), "%s had their blood drained whilst trying to escape %s");
-        translationBuilder.add(death.apply(BLResources.TELEPORT_DAMAGE_KEY), "%s was pierced by %s");
-        translationBuilder.add(deathItem.apply(BLResources.TELEPORT_DAMAGE_KEY), "%s was pierced by %s using %s");
+        BiConsumer<RegistryKey<DamageType>, String> death = (key, name) -> translationBuilder.add("death.attack.%s.%s".formatted(key.getValue().getNamespace(), key.getValue().getPath()), name);
+        BiConsumer<RegistryKey<DamageType>, String> deathItem = (key, name) -> translationBuilder.add("death.attack.%s.%s.item".formatted(key.getValue().getNamespace(), key.getValue().getPath()), name);
+        BiConsumer<RegistryKey<DamageType>, String> deathPlayer = (key, name) -> translationBuilder.add("death.attack.%s.%s.player".formatted(key.getValue().getNamespace(), key.getValue().getPath()), name);
+        death.accept(BLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water");
+        deathPlayer.accept(BLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water whilst trying to escape %s");
+        death.accept(BLResources.BITE_DAMAGE_KEY, "%s was bitten by %s");
+        deathItem.accept(BLResources.BITE_DAMAGE_KEY, "%s was bitten by %s using %s");
+        death.accept(BLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained");
+        deathPlayer.accept(BLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained whilst trying to escape %s");
+        death.accept(BLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s");
+        deathItem.accept(BLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s using %s");
     }
 
     private static void abilities(TranslationBuilder translationBuilder) {
@@ -164,6 +185,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("gui.sanguinisluxuria.abilities.incompatibilites_entry", "  - %s");
 
         translationBuilder.add("gui.sanguinisluxuria.abilities.required_skill_points", "Requires %d skill point(s)");
+
+        translationBuilder.add("gui.sanguinisluxuria.blood_bottle_tooltip", "%d Blood Bottle(s)");
     }
 
     private static void config(TranslationBuilder translationBuilder) {

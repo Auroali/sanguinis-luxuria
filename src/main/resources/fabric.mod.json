@@ -34,6 +34,9 @@
 		],
 		"appleskin": [
 			"com.auroali.sanguinisluxuria.compat.AppleskinCompat"
+		],
+		"emi": [
+			"com.auroali.sanguinisluxuria.compat.emi.EmiCompat"
 		]
 	},
 	"mixins": [
