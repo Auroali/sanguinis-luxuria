@@ -99,9 +99,17 @@ dependencies {
 
 processResources {
 	inputs.property "version", project.version
+	inputs.property "loader_version", project.loader_version
+	inputs.property "minecraft_version", project.minecraft_version
+	inputs.property "reach_entity_attributes_version", project.reach_entity_attributes_version
+	inputs.property "cca_version", project.cca_version
+	inputs.property "trinkets_version", project.trinkets_version
+	inputs.property "yacl_version", project.yacl_version
+	inputs.property "max_health_fix_version", project.max_health_fix_version
+	inputs.property "patchouli_version", project.patchouli_version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand inputs.properties
 	}
 }
 

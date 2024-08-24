@@ -43,16 +43,17 @@
 		"sanguinisluxuria.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.7",
-		"minecraft": "~1.19.2",
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "~${minecraft_version}",
 		"java": ">=17",
 		"fabric-api": "*",
-		"trinkets": ">=3.4",
-		"reach-entity-attributes": ">=2.3.0",
-		"cardinal-components-entity": "~5.0.2",
-		"yet-another-config-lib": ">=2",
-		"maxhealthfix": ">=8.0.1",
-		"patchouli": ">=1.19.2-77-FABRIC"
+		"trinkets": ">=${trinkets_version}",
+		"reach-entity-attributes": ">=${reach_entity_attributes_version}",
+		"cardinal-components-entity": "~${cca_version}",
+		"yet_another_config_lib_v3": ">=${yacl_version}",
+		"maxhealthfix": ">=${max_health_fix_version}",
+		"patchouli": ">=${patchouli_version}",
+		"configserializer": "~1.0.0"
 	},
 	"custom": {
 		"cardinal-components": [
