@@ -1,6 +1,5 @@
 {
   "type": "sanguinisluxuria:blood_cauldron_fill",
-  "category": "misc",
   "input": {
     "item": "minecraft:glass_bottle"
   },

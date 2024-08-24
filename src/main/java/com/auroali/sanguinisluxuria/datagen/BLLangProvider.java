@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.tag.TagKey;
 
 public class BLLangProvider extends FabricLanguageProvider {
     public BLLangProvider(FabricDataGenerator dataGenerator) {
@@ -193,6 +194,10 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityDescKey(translationBuilder, BLVampireAbilities.DOWNED_RESISTANCE, "Blocks most damage after being downed");
 
         generateAdvancements(translationBuilder);
+        tags(translationBuilder);
+        emiTranslations(translationBuilder);
+
+        translationBuilder.add("gui.sanguinisluxuria.blood_bottle_tooltip", "%d Blood Bottle(s)");
     }
 
     public static void generateAdvancements(TranslationBuilder translationBuilder) {
@@ -222,8 +227,6 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(BLAdvancementsProvider.title("unbecome_vampire"), "Humanity");
         translationBuilder.add(BLAdvancementsProvider.desc("unbecome_vampire"), "Become human again after drinking Blessed Water with weakness");
-        tags(translationBuilder);
-        emiTranslations(translationBuilder);
     }
 
     private void generateTagTranslation(TranslationBuilder builder, TagKey<?> key, String translation) {

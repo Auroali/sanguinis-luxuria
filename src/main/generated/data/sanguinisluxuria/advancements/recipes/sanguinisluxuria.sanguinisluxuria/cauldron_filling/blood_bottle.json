@@ -30,6 +30,5 @@
     "recipes": [
       "sanguinisluxuria:cauldron_filling/blood_bottle"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

@@ -12,7 +12,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -29,7 +28,7 @@ public class BloodCauldronFillRecipe extends BloodCauldronRecipe{
     }
 
     @Override
-    public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(SimpleInventory inventory) {
         ItemStack stack = inventory.getStack(0).copy();
         if(!stack.isOf(result.getItem())) {
             NbtCompound tag = stack.getNbt();
