@@ -81,7 +81,7 @@ public class AltarEmiRecipe implements EmiRecipe {
             int y = 40 + (int) (32 * Math.sin((MathHelper.HALF_PI / 2 + i * 2 * MathHelper.TAU / inputs.size())));
             widgets.addSlot(inputs.get(i), x, y);
         }
-        for(int i = inputs.size() / 2 - 1; i < inputs.size(); i++) {
+        for(int i = inputs.size() / 2; i < inputs.size(); i++) {
             int x = 32 + (int) (32 * Math.cos((i * 2 * MathHelper.TAU / inputs.size())));
             int y = 40 + (int) (32 * Math.sin((i * 2 * MathHelper.TAU / inputs.size())));
             widgets.addSlot(inputs.get(i), x, y);
