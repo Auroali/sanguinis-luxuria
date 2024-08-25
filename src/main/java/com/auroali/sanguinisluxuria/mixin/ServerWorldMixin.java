@@ -46,8 +46,8 @@ public abstract class ServerWorldMixin extends World {
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
     public void sanguinisluxuria$setTimeOfDay(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("time") LocalLongRef time) {
         if(hasSetTime.get()) {
-            long timeOfDay = time.get() + 13000L;
-            setTimeOfDay(timeOfDay - timeOfDay % 13000L);
+            long timeOfDay = time.get() + 24000L;
+            setTimeOfDay((timeOfDay - timeOfDay % 24000L) - 11000L);
         }
     }
 }
