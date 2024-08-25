@@ -1,6 +1,8 @@
 package com.auroali.sanguinisluxuria.compat.emi;
 
+import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
+import com.auroali.sanguinisluxuria.common.recipes.AltarInventory;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -15,6 +17,7 @@ import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -37,6 +40,38 @@ public class AltarEmiRecipe implements EmiRecipe {
         }
         this.inputs = stacks;
         this.outputs = List.of(EmiStack.of(recipe.getOutput()));;
+        setRemainders(stacks, recipe);
+    }
+
+    // https://github.com/emilyploszaj/emi/blob/2ac200302c2e7d551c5e7076ae03f32e4b26933b/xplat/src/main/java/dev/emi/emi/recipe/EmiShapedRecipe.java
+    public static void setRemainders(List<EmiIngredient> input, AltarRecipe recipe) {
+        try {
+            AltarInventory inv = new AltarInventory(input.size());
+            for (int i = 0; i < input.size(); i++) {
+                if (input.get(i).isEmpty()) {
+                    continue;
+                }
+                for (int j = 0; j < input.size(); j++) {
+                    if (j == i) {
+                        continue;
+                    }
+                    if (!input.get(j).isEmpty()) {
+                        inv.setStack(j, input.get(j).getEmiStacks().get(0).getItemStack().copy());
+                    }
+                }
+                List<EmiStack> stacks = input.get(i).getEmiStacks();
+                for (EmiStack stack : stacks) {
+                    inv.setStack(i, stack.getItemStack().copy());
+                    ItemStack remainder = recipe.getRemainder(inv).get(i);
+                    if (!remainder.isEmpty()) {
+                        stack.setRemainder(EmiStack.of(remainder));
+                    }
+                }
+                inv.clear();
+            }
+        } catch (Exception e) {
+            Bloodlust.LOGGER.error("Exception thrown setting remainders for " + recipe.getId(), e);
+        }
     }
 
     @Override
