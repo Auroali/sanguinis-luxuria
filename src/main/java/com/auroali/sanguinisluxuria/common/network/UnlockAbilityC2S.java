@@ -21,6 +21,6 @@ public record UnlockAbilityC2S(VampireAbility ability) implements FabricPacket {
 
     @Override
     public PacketType<?> getType() {
-        return null;
+        return ID;
     }
 }
