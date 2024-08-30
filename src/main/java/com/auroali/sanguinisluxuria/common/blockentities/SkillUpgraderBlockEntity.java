@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blockentities;
 
 import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.BloodlustClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -93,6 +94,8 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
         if(!state.get(SkillUpgraderBlock.ACTIVE)) {
             return;
         }
+
+        BloodlustClient.isAltarActive = true;
 
         Box box = new Box(pos).expand(5);
         for(int i = 0; i < 4; i++) {

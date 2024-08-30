@@ -62,8 +62,9 @@ public class BloodlustClient implements ClientModInitializer {
             "category.sanguinisluxuria.sanguinisluxuria"
     );
 
-    public boolean drainingBlood;
+    public static boolean isAltarActive = false;
 
+    public boolean drainingBlood;
     @Override
     public void onInitializeClient() {
         registerBindings();
