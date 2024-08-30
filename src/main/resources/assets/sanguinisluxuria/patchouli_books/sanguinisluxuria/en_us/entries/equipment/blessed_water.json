@@ -10,7 +10,8 @@
     },
     {
       "type": "patchouli:text",
-      "text": "While it does deal less damage than an Instant Damage or Instant Health potion would, it works on vampires, while the other two do not."
+      "advancement":"sanguinisluxuria:become_vampire",
+      "text": "When drank by a vampire afflicted with weakness, blessed water will grant them blood protection. Once blood protection runs out, said vampire will be turned human again."
     }
   ]
 }

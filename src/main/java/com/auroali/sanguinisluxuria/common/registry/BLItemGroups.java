@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -45,6 +47,15 @@ public class BLItemGroups {
                             entries.add(BLBlocks.DEEPSLATE_SILVER_ORE);
                             entries.add(BLBlocks.ALTAR);
                             entries.add(BLBlocks.PEDESTAL);
+                            entries.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION));
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), BLStatusEffects.BLESSED_WATER_POTION));
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), BLStatusEffects.BLESSED_WATER_POTION));
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.TIPPED_ARROW), BLStatusEffects.BLESSED_WATER_POTION));
+                            entries.add(PotionUtil.setPotion(new ItemStack(Items.TIPPED_ARROW), BLStatusEffects.BLESSED_WATER_POTION_TWO));
                         })
                 .build());
 
