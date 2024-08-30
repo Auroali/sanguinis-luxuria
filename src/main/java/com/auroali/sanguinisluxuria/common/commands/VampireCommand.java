@@ -10,6 +10,7 @@ import net.minecraft.server.command.ServerCommandSource;
 public class VampireCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal("vampire")
+                .requires(ctx -> ctx.hasPermissionLevel(2))
                 .then(CommandManager.argument("isVampire", BoolArgumentType.bool())
                         .executes(ctx -> {
                             if(!ctx.getSource().isExecutedByPlayer())

@@ -12,6 +12,7 @@ import net.minecraft.server.command.ServerCommandSource;
 public class AbilityCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal("ability")
+                .requires(ctx -> ctx.hasPermissionLevel(2))
                 .then(CommandManager.argument("ability", VampireAbilityArgument.argument())
                         .executes(ctx -> {
                             if(!ctx.getSource().isExecutedByPlayer())
