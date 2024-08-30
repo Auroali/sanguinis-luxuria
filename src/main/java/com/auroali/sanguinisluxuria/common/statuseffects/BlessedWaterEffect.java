@@ -21,7 +21,7 @@ public class BlessedWaterEffect extends StatusEffect {
     @Override
     public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
         super.applyInstantEffect(source, attacker, target, amplifier, proximity);
-        if(!target.isUndead() && (!VampireHelper.isVampire(target) || target.hasStatusEffect(StatusEffects.WEAKNESS))) {
+        if(!target.isUndead() || (VampireHelper.isVampire(target) && target.hasStatusEffect(StatusEffects.WEAKNESS))) {
             target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_PROTECTION, 3600, 0));
             return;
         }
