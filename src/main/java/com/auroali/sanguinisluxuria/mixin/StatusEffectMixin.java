@@ -23,15 +23,6 @@ public class StatusEffectMixin {
             ci.cancel();
     }
 
-    @Inject(method = "applyInstantEffect", at = @At("HEAD"), cancellable = true)
-    public void sanguinisluxuria$preventEffectsForVampires(Entity source, Entity attacker, LivingEntity target, int amplifier, double proximity, CallbackInfo ci) {
-        if(VampireHelper.isVampire(target)) {
-            StatusEffect effect = (StatusEffect) (Object) this;
-            if(effect == StatusEffects.INSTANT_HEALTH || effect == StatusEffects.INSTANT_DAMAGE)
-                ci.cancel();
-        }
-    }
-
     @Inject(method = "applyUpdateEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", ordinal = 0), cancellable = true)
     public void sanguinisluxuria$preventPoisonFromKilling(LivingEntity entity, int amplifier, CallbackInfo ci) {
         if(VampireHelper.isVampire(entity)) {

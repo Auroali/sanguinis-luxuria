@@ -96,16 +96,6 @@ public abstract class LivingEntityMixin extends Entity {
         return true;
     }
 
-    @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
-    public void sanguinisluxuria$blockVampireStatusEffects(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
-        if(!VampireHelper.isVampire((LivingEntity)(Object)this))
-            return;
-
-        StatusEffect statusEffect = effect.getEffectType();
-        if(statusEffect == StatusEffects.INSTANT_DAMAGE || statusEffect == StatusEffects.INSTANT_HEALTH)
-            cir.setReturnValue(false);
-    }
-
     @Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$modifyVampireGroup(CallbackInfoReturnable<EntityGroup> cir) {
         if(VampireHelper.isVampire(this))
