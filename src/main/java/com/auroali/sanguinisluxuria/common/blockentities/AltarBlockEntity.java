@@ -3,7 +3,7 @@ package com.auroali.sanguinisluxuria.common.blockentities;
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.BloodlustClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
+import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.network.AltarRecipeStartS2C;
@@ -34,12 +34,12 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkillUpgraderBlockEntity extends BlockEntity {
+public class AltarBlockEntity extends BlockEntity {
     DefaultedList<ItemStack> stacks = DefaultedList.of();
     AltarRecipe recipe = null;
     Identifier recipeId = null;
     int ticksProcessing = 0;
-    public SkillUpgraderBlockEntity(BlockPos pos, BlockState state) {
+    public AltarBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.SKILL_UPGRADER, pos, state);
     }
 
@@ -87,11 +87,11 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
         markDirty();
 
         BlockState state = world.getBlockState(pos);
-        world.setBlockState(pos, state.with(SkillUpgraderBlock.ACTIVE, true));
+        world.setBlockState(pos, state.with(AltarBlock.ACTIVE, true));
     }
 
-    public static void vfxTick(World world, BlockPos pos, BlockState state, SkillUpgraderBlockEntity entity) {
-        if(!state.get(SkillUpgraderBlock.ACTIVE)) {
+    public static void vfxTick(World world, BlockPos pos, BlockState state, AltarBlockEntity entity) {
+        if(!state.get(AltarBlock.ACTIVE)) {
             return;
         }
 
@@ -106,7 +106,7 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
         }
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, SkillUpgraderBlockEntity entity) {
+    public static void tick(World world, BlockPos pos, BlockState state, AltarBlockEntity entity) {
         if(entity.recipeId != null)
             entity.validateRecipe();
 
@@ -137,7 +137,7 @@ public class SkillUpgraderBlockEntity extends BlockEntity {
             entity.stacks.clear();
             entity.ticksProcessing = 0;
             entity.markDirty();
-            world.setBlockState(pos, state.with(SkillUpgraderBlock.ACTIVE, false));
+            world.setBlockState(pos, state.with(AltarBlock.ACTIVE, false));
         }
     }
 

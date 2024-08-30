@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.compat.emi;
 
 import com.auroali.sanguinisluxuria.Bloodlust;
-import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
+import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.recipes.AltarInventory;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
@@ -124,7 +124,7 @@ public class AltarEmiRecipe implements EmiRecipe {
         widgets.addDrawable(30, 52, 16, 16, (drawContext, mouseX, mouseY, delta) -> {
             MatrixStack stack = drawContext.getMatrices();
             MinecraftClient client = MinecraftClient.getInstance();
-            BlockState state = BLBlocks.ALTAR.getDefaultState().with(SkillUpgraderBlock.ACTIVE, true);
+            BlockState state = BLBlocks.ALTAR.getDefaultState().with(AltarBlock.ACTIVE, true);
             BlockRenderManager blockRenderer = client.getBlockRenderManager();
             BakedModel model = blockRenderer.getModel(state);
             VertexConsumer consumer = drawContext.getVertexConsumers().getBuffer(RenderLayers.getBlockLayer(state));

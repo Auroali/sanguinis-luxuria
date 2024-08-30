@@ -4,7 +4,7 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.blocks.BloodCauldronBlock;
 import com.auroali.sanguinisluxuria.common.blocks.BloodSplatterBlock;
 import com.auroali.sanguinisluxuria.common.blocks.PedestalBlock;
-import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
+import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -25,7 +25,7 @@ public class BLBlocks {
 
     //public static final FluidBlock BLOOD = new FluidBlock(BLFluids.BLOOD_STILL, FabricBlockSettings.of(Material.LAVA));
     public static final Block BLOOD_CAULDRON = new BloodCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON));
-    public static final Block ALTAR = new SkillUpgraderBlock(FabricBlockSettings.create().mapColor(DyeColor.BLACK).requiresTool().strength(1.5F, 6.0F));
+    public static final Block ALTAR = new AltarBlock(FabricBlockSettings.create().mapColor(DyeColor.BLACK).requiresTool().strength(1.5F, 6.0F));
     public static final Block PEDESTAL = new PedestalBlock(FabricBlockSettings.create().mapColor(DyeColor.BLACK).requiresTool().strength(1.5F, 6.0F));
     public static final Block SILVER_BLOCK = new Block(FabricBlockSettings.copy(Blocks.IRON_BLOCK).sounds(BlockSoundGroup.NETHERITE));
     public static final Block SILVER_ORE = new Block(FabricBlockSettings.copy(Blocks.IRON_ORE));

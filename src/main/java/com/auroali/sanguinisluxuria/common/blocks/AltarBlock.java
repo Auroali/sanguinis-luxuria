@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
-import com.auroali.sanguinisluxuria.common.blockentities.SkillUpgraderBlockEntity;
+import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
 import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-public class SkillUpgraderBlock extends BlockWithEntity {
+public class AltarBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE = Stream.of(
             Block.createCuboidShape(0, 0, 0, 16, 7, 16),
             Block.createCuboidShape(1, 7, 1, 15, 14, 15),
@@ -31,7 +31,7 @@ public class SkillUpgraderBlock extends BlockWithEntity {
 
     public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
 
-    public SkillUpgraderBlock(Settings settings) {
+    public AltarBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getStateManager().getDefaultState().with(ACTIVE, false));
     }
@@ -43,7 +43,7 @@ public class SkillUpgraderBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        SkillUpgraderBlockEntity altar = world.getBlockEntity(pos) instanceof SkillUpgraderBlockEntity e ? e : null;
+        AltarBlockEntity altar = world.getBlockEntity(pos) instanceof AltarBlockEntity e ? e : null;
         if(altar == null)
             return ActionResult.FAIL;
 
@@ -60,15 +60,15 @@ public class SkillUpgraderBlock extends BlockWithEntity {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new SkillUpgraderBlockEntity(pos, state);
+        return new AltarBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if(world.isClient)
-            return checkType(type, BLBlockEntities.SKILL_UPGRADER, SkillUpgraderBlockEntity::vfxTick);
-        return checkType(type, BLBlockEntities.SKILL_UPGRADER, SkillUpgraderBlockEntity::tick);
+            return checkType(type, BLBlockEntities.SKILL_UPGRADER, AltarBlockEntity::vfxTick);
+        return checkType(type, BLBlockEntities.SKILL_UPGRADER, AltarBlockEntity::tick);
     }
 
     @Override

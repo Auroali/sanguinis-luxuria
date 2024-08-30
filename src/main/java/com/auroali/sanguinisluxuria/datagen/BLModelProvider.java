@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.blocks.SkillUpgraderBlock;
+import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -63,7 +63,7 @@ public class BLModelProvider extends FabricModelProvider {
                         ));
         blockStateModelGenerator.blockStateCollector
                 .accept(VariantsBlockStateSupplier.create(BLBlocks.ALTAR)
-                        .coordinate(BlockStateVariantMap.create(SkillUpgraderBlock.ACTIVE)
+                        .coordinate(BlockStateVariantMap.create(AltarBlock.ACTIVE)
                                 .register(false, BlockStateVariant.create()
                                         .put(VariantSettings.MODEL, BLResources.id("block/altar")))
                                 .register(true, BlockStateVariant.create()
