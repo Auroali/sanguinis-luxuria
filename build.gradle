@@ -88,9 +88,6 @@ dependencies {
 		exclude module: 'fabric-loader'
 	}
 
-	modImplementation "net.darkhax.maxhealthfix:MaxHealthFix-Fabric-${project.minecraft_version}:${project.max_health_fix_version}"
-	include "net.darkhax.maxhealthfix:MaxHealthFix-Fabric-${project.minecraft_version}:${project.max_health_fix_version}"
-
 	modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
 
 	modImplementation "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
@@ -112,7 +109,6 @@ processResources {
 	inputs.property "cca_version", project.cca_version
 	inputs.property "trinkets_version", project.trinkets_version
 	inputs.property "yacl_version", project.yacl_version
-	inputs.property "max_health_fix_version", project.max_health_fix_version
 	inputs.property "patchouli_version", project.patchouli_version
 
 	filesMatching("fabric.mod.json") {
