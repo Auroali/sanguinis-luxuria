@@ -14,57 +14,21 @@ import net.minecraft.registry.Registry;
 import java.util.UUID;
 
 public class BLVampireAbilities {
-    public static final VampireAbility HEALTH_1 = new VampireAttributeModifierAbility(
-            () -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING),
-            null,
-            EntityAttributes.GENERIC_MAX_HEALTH,
-            new EntityAttributeModifier(
-                    UUID.fromString("0970971f-a4e1-41cf-8566-72686979a161"),
-                    "sanguinisluxuria.vampire_health",
-                    2,
-                    EntityAttributeModifier.Operation.ADDITION
-            ),
-            4
-    );
+    public static final VampireAbility HEALTH_1 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING))
+            .addModifier(EntityAttributes.GENERIC_MAX_HEALTH, "0970971f-a4e1-41cf-8566-72686979a161", 2, EntityAttributeModifier.Operation.ADDITION, 4)
+            .build();
 
-    public static final VampireAbility HEALTH_2 = new VampireAttributeModifierAbility(
-            () -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING),
-            HEALTH_1,
-            EntityAttributes.GENERIC_MAX_HEALTH,
-            new EntityAttributeModifier(
-                    UUID.fromString("a3b13d9b-fc8d-4a02-881b-134c04b41f65"),
-                    "sanguinisluxuria.vampire_health",
-                    2,
-                    EntityAttributeModifier.Operation.ADDITION
-            ),
-            4
-    );
+    public static final VampireAbility HEALTH_2 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING), HEALTH_1)
+            .addModifier(EntityAttributes.GENERIC_MAX_HEALTH, "a3b13d9b-fc8d-4a02-881b-134c04b41f65", 2, EntityAttributeModifier.Operation.ADDITION, 4)
+            .build();
 
-    public static final VampireAbility VAMPIRE_STRENGTH_1 = new VampireAttributeModifierAbility(
-            () -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH),
-            null,
-            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-            new EntityAttributeModifier(
-                    UUID.fromString("a3b13d9b-fc8d-4a02-881b-134c04b41f65"),
-                    "sanguinisluxuria.vampire_strength",
-                    1,
-                    EntityAttributeModifier.Operation.ADDITION
-            ),
-            6
-    );
+    public static final VampireAbility VAMPIRE_STRENGTH_1 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH))
+            .addModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "f9efedb8-499f-4738-8414-748348b052f2", 1, EntityAttributeModifier.Operation.ADDITION, 6)
+            .build();
 
-    public static final VampireAbility VAMPIRE_STRENGTH_2 = new VampireAttributeModifierAbility(
-            () -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH),
-            VAMPIRE_STRENGTH_1,
-            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-            new EntityAttributeModifier(
-                    UUID.fromString("33682391-db06-4c6e-8674-770fa4051870"),
-                    "sanguinisluxuria.vampire_strength",
-                    1,
-                    EntityAttributeModifier.Operation.ADDITION
-            ),
-            6
-    );
+    public static final VampireAbility VAMPIRE_STRENGTH_2 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), VAMPIRE_STRENGTH_1)
+            .addModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "33682391-db06-4c6e-8674-770fa4051870", 1, EntityAttributeModifier.Operation.ADDITION, 6)
+            .build();
 
     public static final VampireTeleportAbility TELEPORT = new VampireTeleportAbility(
             () -> new ItemStack(Items.ENDER_PEARL),
