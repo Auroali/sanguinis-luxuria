@@ -44,7 +44,7 @@ public class VampireAttributeModifierAbility extends VampireAbility {
     public static void tick(VampireAttributeModifierAbility ability, World world, LivingEntity entity, VampireComponent component, VampireAbilityContainer container, BloodComponent blood) {
         AttributeContainer attributes = entity.getAttributes();
         if(blood.getBlood() >= ability.minBloodAmount && !attributes.getCustomInstance(ability.targetAttribute).hasModifier(ability.modifier))
-            attributes.getCustomInstance(ability.targetAttribute).addTemporaryModifier(ability.modifier);
+            attributes.getCustomInstance(ability.targetAttribute).addPersistentModifier(ability.modifier);
         else if(blood.getBlood() < ability.minBloodAmount && attributes.getCustomInstance(ability.targetAttribute).hasModifier(ability.modifier))
             attributes.getCustomInstance(ability.targetAttribute).removeModifier(ability.modifier);
     }
