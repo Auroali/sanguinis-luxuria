@@ -51,7 +51,6 @@
 		"reach-entity-attributes": ">=${reach_entity_attributes_version}",
 		"cardinal-components-entity": "~${cca_version}",
 		"yet_another_config_lib_v3": ">=${yacl_version}",
-		"maxhealthfix": ">=${max_health_fix_version}",
 		"patchouli": ">=${patchouli_version}",
 		"configserializer": "~1.0.0"
 	},
