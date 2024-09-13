@@ -25,7 +25,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
     private final VampireAbility[] abilityBindings = new VampireAbility[3];
     @SuppressWarnings("rawtypes")
     private final Object2ObjectOpenHashMap<VampireAbility, VampireAbility.AbilityTicker> tickers = new Object2ObjectOpenHashMap<>();
-    private boolean shouldSync;
+    private boolean shouldSync = true;
 
     public VampireAbilityContainer() {
         abilities = new ObjectOpenHashSet<>();

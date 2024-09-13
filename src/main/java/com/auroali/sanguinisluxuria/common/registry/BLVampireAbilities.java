@@ -14,19 +14,23 @@ import net.minecraft.registry.Registry;
 import java.util.UUID;
 
 public class BLVampireAbilities {
-    public static final VampireAbility HEALTH_1 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING))
+    public static final VampireAbility HEALTH_1 = VampireAttributeModifierAbility
+            .builder(() -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING))
             .addModifier(EntityAttributes.GENERIC_MAX_HEALTH, "0970971f-a4e1-41cf-8566-72686979a161", 2, EntityAttributeModifier.Operation.ADDITION, 4)
             .build();
 
-    public static final VampireAbility HEALTH_2 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING), HEALTH_1)
+    public static final VampireAbility HEALTH_2 = VampireAttributeModifierAbility
+            .builder(() -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING), HEALTH_1)
             .addModifier(EntityAttributes.GENERIC_MAX_HEALTH, "a3b13d9b-fc8d-4a02-881b-134c04b41f65", 2, EntityAttributeModifier.Operation.ADDITION, 4)
             .build();
 
-    public static final VampireAbility VAMPIRE_STRENGTH_1 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH))
+    public static final VampireAbility VAMPIRE_STRENGTH_1 = VampireAttributeModifierAbility
+            .builder(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH))
             .addModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "f9efedb8-499f-4738-8414-748348b052f2", 1, EntityAttributeModifier.Operation.ADDITION, 6)
             .build();
 
-    public static final VampireAbility VAMPIRE_STRENGTH_2 = VampireAttributeModifierAbility.builder(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), VAMPIRE_STRENGTH_1)
+    public static final VampireAbility VAMPIRE_STRENGTH_2 = VampireAttributeModifierAbility
+            .builder(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), VAMPIRE_STRENGTH_1)
             .addModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "33682391-db06-4c6e-8674-770fa4051870", 1, EntityAttributeModifier.Operation.ADDITION, 6)
             .build();
 
@@ -35,15 +39,28 @@ public class BLVampireAbilities {
             null
     );
 
-    public static final VampireAbility TELEPORT_RANGE_1 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+    public static final VampireAbility TELEPORT_RANGE_1 = VampireAttributeModifierAbility
+            .builder(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+            .addModifier(BLEntityAttributes.BLINK_RANGE, "ba1d25c8-5d2f-4cce-852e-684d5c8a09ac", 4, EntityAttributeModifier.Operation.ADDITION)
+            .build()
             .incompatible(() -> BLVampireAbilities.TELEPORT_COOLDOWN_1);
 
-    public static final VampireAbility TELEPORT_RANGE_2 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_RANGE_1);
-
-    public static final VampireAbility TELEPORT_COOLDOWN_1 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+    public static final VampireAbility TELEPORT_RANGE_2 = VampireAttributeModifierAbility
+            .builder(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_RANGE_1)
+            .addModifier(BLEntityAttributes.BLINK_RANGE, "e31eaabb-1ea1-4329-988e-3bf1f50e96e1", 4, EntityAttributeModifier.Operation.ADDITION)
+            .build()
+            .incompatible(() -> BLVampireAbilities.TELEPORT_COOLDOWN_1);
+    public static final VampireAbility TELEPORT_COOLDOWN_1 = VampireAttributeModifierAbility
+            .builder(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT)
+            .addModifier(BLEntityAttributes.BLINK_COOLDOWN, "d4158125-d88c-4473-9e70-006f36cab7f9", -75, EntityAttributeModifier.Operation.ADDITION)
+            .build()
             .incompatible(() -> BLVampireAbilities.TELEPORT_RANGE_1);
 
-    public static final VampireAbility TELEPORT_COOLDOWN_2 = new VampireAbility(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_COOLDOWN_1);
+    public static final VampireAbility TELEPORT_COOLDOWN_2 = VampireAttributeModifierAbility
+            .builder(() -> new ItemStack(Items.ENDER_PEARL), TELEPORT_COOLDOWN_1)
+            .addModifier(BLEntityAttributes.BLINK_COOLDOWN, "50378ac0-be25-4a7a-985b-f51f1c78e1ae", -75, EntityAttributeModifier.Operation.ADDITION)
+            .build()
+            .incompatible(() -> BLVampireAbilities.TELEPORT_RANGE_1);
 
     public static final VampireAbility MORE_BLOOD = new VampireAbility(
             () -> BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BLItems.BLOOD_BOTTLE.getMaxBlood()),

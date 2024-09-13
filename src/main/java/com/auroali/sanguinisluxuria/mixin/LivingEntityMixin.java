@@ -6,6 +6,8 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.entity.Entity;
@@ -17,6 +19,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -72,9 +75,9 @@ public abstract class LivingEntityMixin extends Entity {
         vampire.stopSuckingBlood();
     }
 
-    @Redirect(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tryUseTotem(Lnet/minecraft/entity/damage/DamageSource;)Z"))
-    public boolean sanguinisluxuria$tryPreventDeath(LivingEntity instance, DamageSource source) {
-        if(tryUseTotem(source))
+    @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tryUseTotem(Lnet/minecraft/entity/damage/DamageSource;)Z"))
+    public boolean sanguinisluxuria$tryPreventDeath(LivingEntity instance, DamageSource source, Operation<Boolean> original) {
+        if(original.call(instance, source))
             return true;
 
         if(!VampireHelper.isVampire(instance))
@@ -83,7 +86,7 @@ public abstract class LivingEntityMixin extends Entity {
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(instance);
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(instance);
 
-        if(blood.getBlood() == 0 || VampireComponent.isEffectiveAgainstVampires(source))
+        if(blood.getBlood() == 0 || VampireComponent.isEffectiveAgainstVampires(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
             return false;
 
         instance.setHealth(Math.min(instance.getMaxHealth(), (float) blood.getBlood()));
@@ -104,6 +107,9 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void sanguinisluxuria$addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        cir.getReturnValue().add(BLEntityAttributes.BLESSED_DAMAGE);
+        cir.getReturnValue()
+                .add(BLEntityAttributes.BLESSED_DAMAGE)
+                .add(BLEntityAttributes.BLINK_RANGE, 8)
+                .add(BLEntityAttributes.BLINK_COOLDOWN, 250);
     }
 }

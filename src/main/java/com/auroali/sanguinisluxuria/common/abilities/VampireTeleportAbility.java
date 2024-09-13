@@ -1,10 +1,7 @@
 package com.auroali.sanguinisluxuria.common.abilities;
 
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
-import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
+import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.LivingEntity;
@@ -43,7 +40,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         Vec3d start = entity.getPos();
         BlockHitResult result = entity.getWorld().raycast(new RaycastContext(
                 entity.getEyePos(),
-                entity.getEyePos().add(entity.getRotationVector().multiply(getRange(component.getAbilties()))),
+                entity.getEyePos().add(entity.getRotationVector().multiply(getRange(entity))),
                 RaycastContext.ShapeType.COLLIDER,
                 RaycastContext.FluidHandling.NONE,
                 entity
@@ -69,7 +66,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
 
         sync(entity, new TeleportData(start, entity.getPos()));
 
-        component.getAbilties().setCooldown(this, getCooldown(component.getAbilties()));
+        component.getAbilties().setCooldown(this, getCooldown(entity));
         return true;
     }
 
@@ -82,17 +79,12 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
                 });
     }
 
-    public double getRange(VampireAbilityContainer container) {
-        return 8 + container.getAbilitiesIn(BLTags.VampireAbilities.TELEPORT_RANGE).size() * 4;
+    public double getRange(LivingEntity entity) {
+        return entity.getAttributeValue(BLEntityAttributes.BLINK_RANGE);
     }
 
-    public int getCooldown(VampireAbilityContainer container) {
-        int cooldown = 250;
-        if(container.hasAbility(BLVampireAbilities.TELEPORT_COOLDOWN_1))
-            cooldown -= 75;
-        if(container.hasAbility(BLVampireAbilities.TELEPORT_COOLDOWN_2))
-            cooldown -= 75;
-        return cooldown;
+    public int getCooldown(LivingEntity entity) {
+        return (int) entity.getAttributeValue(BLEntityAttributes.BLINK_COOLDOWN);
     }
     @Override
     public boolean canTickCooldown(LivingEntity entity, VampireComponent vampireComponent) {

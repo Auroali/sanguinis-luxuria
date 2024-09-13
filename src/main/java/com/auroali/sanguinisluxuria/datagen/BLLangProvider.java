@@ -149,6 +149,8 @@ public class BLLangProvider extends FabricLanguageProvider {
 
     private static void attributes(TranslationBuilder translationBuilder) {
         translationBuilder.add(BLEntityAttributes.BLESSED_DAMAGE.getTranslationKey(), "Blessed Damage");
+        translationBuilder.add(BLEntityAttributes.BLINK_COOLDOWN.getTranslationKey(), "Blink Cooldown");
+        translationBuilder.add(BLEntityAttributes.BLINK_RANGE.getTranslationKey(), "Blink Range");
     }
 
     private static void entities(TranslationBuilder translationBuilder) {

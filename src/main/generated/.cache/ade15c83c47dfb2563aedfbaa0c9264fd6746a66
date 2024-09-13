@@ -1,4 +1,4 @@
-// 1.20.1	2024-08-20T16:31:15.030907255	Sanguinis Luxuria/Model Definitions
+// 1.20.1	2024-09-13T19:00:39.941886278	Sanguinis Luxuria/Model Definitions
 22eccfe91464ea67d7237ea269f01b83bdf4a835 assets/sanguinisluxuria/blockstates/blood_cauldron.json
 273ed2c74f7c4bf5d531935d7d91c71be193ac73 assets/sanguinisluxuria/models/item/mask_1.json
 1a6a0b1bd09b889e2cb6138f48f7b96ed3600769 assets/sanguinisluxuria/models/item/silver_sword.json
@@ -34,8 +34,8 @@ f8bdb668675010bb09945c2ef1bb3cfc8425bbe7 assets/sanguinisluxuria/models/item/sil
 07d3b353d2670030e3a8db626fa350c4f57c2128 assets/sanguinisluxuria/models/item/pendant_of_piercing.json
 aa7d1c0ad6e435427f77ce33f083c973d70d4f15 assets/sanguinisluxuria/blockstates/pedestal.json
 41bc21022ac2c07b7313b3fdaa13032d41ab370e assets/sanguinisluxuria/models/item/silver_axe.json
-145a47ac5b0bcac03ebd700c8b6fc2e81b2eb741 assets/sanguinisluxuria/models/item/blood_petal.json
 a347c2701e6437bd119c8d425ed52f9c0652d114 assets/sanguinisluxuria/blockstates/altar.json
+145a47ac5b0bcac03ebd700c8b6fc2e81b2eb741 assets/sanguinisluxuria/models/item/blood_petal.json
 ab96253af46619559d29a3563b9e232fe85bdb14 assets/sanguinisluxuria/models/item/silver_pickaxe.json
 bd72cf180238e6e34c5973f41c5428dcf6b3b3f1 assets/sanguinisluxuria/models/item/mask_3.json
 ebeb94ef2985e056d6157b510afd5fe5b48b020a assets/sanguinisluxuria/models/item/blood_bottle_2.json

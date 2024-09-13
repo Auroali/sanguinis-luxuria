@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria;
 
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -104,6 +105,8 @@ public class BLResources {
     public static final Identifier BIND_ABILITY_C2S = id("bind_ability");
     public static final Identifier ALTAR_RECIPE_START_S2C = id("altar_recipe_start");
     public static final Identifier BLOOD_CAULDRON_FILL_ID = id("blood_cauldron_fill");
+    public static final Identifier BLINK_COOLDOWN_ID = id("blink_cooldown");
+    public static final Identifier BLINK_RANGE_ID = id("blink_range");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

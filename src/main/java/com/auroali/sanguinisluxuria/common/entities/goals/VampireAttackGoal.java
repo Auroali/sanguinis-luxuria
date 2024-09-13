@@ -22,7 +22,7 @@ public class VampireAttackGoal extends MeleeAttackGoal {
             MobEntity mob = ((MeleeAttackGoalAccessor)this).sanguinisluxuria$getMob();
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(mob);
             VampireAbilityContainer container = vampire.getAbilties();
-            double range = Math.pow(BLVampireAbilities.TELEPORT.getRange(container), 2);
+            double range = Math.pow(BLVampireAbilities.TELEPORT.getRange(mob), 2);
             if(!container.isOnCooldown(BLVampireAbilities.TELEPORT) && container.hasAbility(BLVampireAbilities.TELEPORT) && mob.distanceTo(mob.getTarget()) > range)
                 return false;
         }
@@ -36,7 +36,7 @@ public class VampireAttackGoal extends MeleeAttackGoal {
         MobEntity mob = ((MeleeAttackGoalAccessor)this).sanguinisluxuria$getMob();
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(mob);
         VampireAbilityContainer container = vampire.getAbilties();
-        double range = Math.pow(BLVampireAbilities.TELEPORT.getRange(container), 2);
+        double range = Math.pow(BLVampireAbilities.TELEPORT.getRange(mob), 2);
         if (target == null) {
             return false;
         } else if (!target.isAlive()) {
