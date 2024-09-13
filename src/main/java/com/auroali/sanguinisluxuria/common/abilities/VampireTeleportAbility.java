@@ -1,7 +1,9 @@
 package com.auroali.sanguinisluxuria.common.abilities;
 
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.LivingEntity;

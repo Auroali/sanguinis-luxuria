@@ -11,8 +11,6 @@ import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registry;
 
-import java.util.UUID;
-
 public class BLVampireAbilities {
     public static final VampireAbility HEALTH_1 = VampireAttributeModifierAbility
             .builder(() -> PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.HEALING))

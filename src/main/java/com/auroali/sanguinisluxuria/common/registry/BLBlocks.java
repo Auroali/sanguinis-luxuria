@@ -1,10 +1,10 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.blocks.BloodCauldronBlock;
 import com.auroali.sanguinisluxuria.common.blocks.BloodSplatterBlock;
 import com.auroali.sanguinisluxuria.common.blocks.PedestalBlock;
-import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

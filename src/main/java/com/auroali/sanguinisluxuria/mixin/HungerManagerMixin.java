@@ -5,6 +5,8 @@ import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.config.BLConfig;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.entity.player.HungerManager;
@@ -87,12 +89,12 @@ public class HungerManagerMixin implements VampireHungerManager {
         isInTag.set(stack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM));
     }
 
-    @Redirect(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
-    public void sanguinisluxuria$handleVampireEdibleFood(HungerManager instance, int food, float saturationModifier, @Share("isInTag") LocalBooleanRef isInTag) {
+    @WrapOperation(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
+    public void sanguinisluxuria$handleVampireEdibleFood(HungerManager instance, int food, float saturationModifier, Operation<Void> original, @Share("isInTag") LocalBooleanRef isInTag) {
         if(VampireHelper.isVampire(sanguinisluxuria$hmTrackedPlayer) && isInTag.get())
             addHunger(food, saturationModifier);
         else
-            instance.add(food, saturationModifier);
+            original.call(instance, food, saturationModifier);
     }
 
     @Inject(method = "add", at = @At("HEAD"), cancellable = true)
