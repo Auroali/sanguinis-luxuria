@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria;
 
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;

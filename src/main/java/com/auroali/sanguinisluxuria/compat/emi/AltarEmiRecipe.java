@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.compat.emi;
 
 import com.auroali.sanguinisluxuria.Bloodlust;
-import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.recipes.AltarInventory;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
