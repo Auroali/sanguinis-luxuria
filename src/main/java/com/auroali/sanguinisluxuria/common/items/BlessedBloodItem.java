@@ -37,12 +37,6 @@ public class BlessedBloodItem extends Item {
         }
 
         if (!world.isClient && VampireHelper.isVampire(user)) {
-            if(!(user instanceof PlayerEntity player && player.isCreative())) {
-                user.damage(BLDamageSources.get(world, BLResources.BLESSED_WATER_DAMAGE_KEY), 19);
-                if (!user.isAlive())
-                    return new ItemStack(Items.GLASS_BOTTLE);
-            }
-
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
             for(VampireAbility ability : vampire.getAbilties()) {
                 ability.onAbilityRemoved(user, vampire);
@@ -52,6 +46,12 @@ public class BlessedBloodItem extends Item {
             }
 
             vampire.setSkillPoints(vampire.getLevel() * BLConfig.INSTANCE.skillPointsPerLevel);
+
+            if(!(user instanceof PlayerEntity player && player.isCreative())) {
+                user.damage(BLDamageSources.get(world, BLResources.BLESSED_WATER_DAMAGE_KEY), 16 / BLConfig.INSTANCE.vampireDamageMultiplier);
+                if (!user.isAlive())
+                    return new ItemStack(Items.GLASS_BOTTLE);
+            }
         }
 
         return new ItemStack(Items.GLASS_BOTTLE);
