@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.client.BLHud;
-import com.auroali.sanguinisluxuria.client.render.PedestalBlockRenderer;
-import com.auroali.sanguinisluxuria.client.render.VampireMerchantRenderer;
-import com.auroali.sanguinisluxuria.client.render.VampireVillagerRenderer;
+import com.auroali.sanguinisluxuria.client.render.blocks.PedestalBlockRenderer;
+import com.auroali.sanguinisluxuria.client.render.entities.VampireMerchantRenderer;
+import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRenderer;
 import com.auroali.sanguinisluxuria.client.screen.VampireAbilitiesScreen;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;

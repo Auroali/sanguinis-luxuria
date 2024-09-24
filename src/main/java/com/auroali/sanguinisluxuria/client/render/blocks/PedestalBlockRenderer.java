@@ -1,4 +1,4 @@
-package com.auroali.sanguinisluxuria.client.render;
+package com.auroali.sanguinisluxuria.client.render.blocks;
 
 import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
 import net.minecraft.client.render.OverlayTexture;

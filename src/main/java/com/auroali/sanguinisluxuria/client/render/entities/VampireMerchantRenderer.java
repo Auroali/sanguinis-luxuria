@@ -1,4 +1,4 @@
-package com.auroali.sanguinisluxuria.client.render;
+package com.auroali.sanguinisluxuria.client.render.entities;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
