@@ -17,6 +17,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
@@ -74,6 +75,12 @@ public class BloodlustClient implements ClientModInitializer {
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_1, BLItems.MASK_1);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_3, BLItems.MASK_3);
+
+        ModelLoadingPlugin.register(pluginContext -> {
+            pluginContext.addModels(BLResources.MASK_ONE_ID.withPrefixedPath("item/").withSuffixedPath("_inventory"));
+            pluginContext.addModels(BLResources.MASK_TWO_ID.withPrefixedPath("item/").withSuffixedPath("_inventory"));
+            pluginContext.addModels(BLResources.MASK_THREE_ID.withPrefixedPath("item/").withSuffixedPath("_inventory"));
+        });
 
         BLItems.BLOOD_BAG.registerModelPredicate();
         BLItems.BLOOD_BOTTLE.registerModelPredicate();

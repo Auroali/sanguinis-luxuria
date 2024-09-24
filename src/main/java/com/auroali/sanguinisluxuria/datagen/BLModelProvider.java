@@ -83,6 +83,9 @@ public class BLModelProvider extends FabricModelProvider {
         itemModelGenerator.register(BLItems.MASK_1, BLModels.MASK);
         itemModelGenerator.register(BLItems.MASK_2, BLModels.MASK);
         itemModelGenerator.register(BLItems.MASK_3, BLModels.MASK);
+        itemModelGenerator.register(BLItems.MASK_1, "_inventory", Models.GENERATED);
+        itemModelGenerator.register(BLItems.MASK_2, "_inventory", Models.GENERATED);
+        itemModelGenerator.register(BLItems.MASK_3, "_inventory", Models.GENERATED);
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_1", Models.GENERATED);
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_2", Models.GENERATED);
         itemModelGenerator.register(BLItems.BLOOD_BAG, "_3", Models.GENERATED);

@@ -5,6 +5,7 @@
   "client": [
     "client.BossBarHudMixin",
     "client.InGameHudMixin",
+    "client.ItemRendererMixin",
     "client.LightmapTextureManagerMixin"
   ],
   "mixins": [
