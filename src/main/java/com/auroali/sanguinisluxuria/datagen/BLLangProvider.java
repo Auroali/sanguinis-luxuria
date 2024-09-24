@@ -265,13 +265,13 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLAdvancementsProvider.title("reset_abilities"), "Clean Slate");
         translationBuilder.add(BLAdvancementsProvider.desc("reset_abilities"), "Convert unlocked abilities back into skill points using blessed blood");
 
-        translationBuilder.add(BLAdvancementsProvider.title("transfer_effects"), "Infectious");
+        translationBuilder.add(BLAdvancementsProvider.title("transfer_effects"), "No Need for Bottles");
         translationBuilder.add(BLAdvancementsProvider.desc("transfer_effects"), "Transfer a potion effect while draining blood");
 
         translationBuilder.add(BLAdvancementsProvider.title("transfer_more_effects"), "Alchemist");
         translationBuilder.add(BLAdvancementsProvider.desc("transfer_more_effects"), "Transfer 4 potions effects at once");
 
-        translationBuilder.add(BLAdvancementsProvider.title("infect_other"), "It Spreads");
+        translationBuilder.add(BLAdvancementsProvider.title("infect_other"), "Infectious");
         translationBuilder.add(BLAdvancementsProvider.desc("infect_other"), "Inflict blood sickness on something with Weakness");
 
         translationBuilder.add(BLAdvancementsProvider.title("unbecome_vampire"), "Humanity");
