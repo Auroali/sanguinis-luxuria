@@ -15,6 +15,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
 public class BloodCauldronBlock extends LeveledCauldronBlock {
     public BloodCauldronBlock(Settings settings) {
@@ -38,6 +39,8 @@ public class BloodCauldronBlock extends LeveledCauldronBlock {
 
         world.getRecipeManager().getFirstMatch(BLRecipeTypes.BLOOD_CAULDRON_TYPE, new SimpleInventory(stack), world)
                 .ifPresent(recipe -> {
+                    if(level < recipe.getCauldronLevel())
+                        return;
                     ItemStack result = recipe.craft(new SimpleInventory(stack), world.getRegistryManager());
                     stack.decrement(1);
                     if(item.getStack().isEmpty())
@@ -46,7 +49,12 @@ public class BloodCauldronBlock extends LeveledCauldronBlock {
                     ItemEntity newItem = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, result, world.random.nextGaussian() * 0.3, 0.47, world.random.nextGaussian() * 0.3);
                     world.spawnEntity(newItem);
                     world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
-                    decrementFluidLevel(state, world, pos);
+
+                    // drain the cauldron
+                    int newLevel = level - recipe.getCauldronLevel();
+                    BlockState blockState = newLevel == 0 ? Blocks.CAULDRON.getDefaultState() : state.with(LEVEL, newLevel);
+                    world.setBlockState(pos, blockState);
+                    world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(blockState));
                 });
     }
 }
