@@ -50,9 +50,8 @@
 		"trinkets": ">=${trinkets_version}",
 		"reach-entity-attributes": ">=${reach_entity_attributes_version}",
 		"cardinal-components-entity": "~${cca_version}",
-		"yet_another_config_lib_v3": ">=${yacl_version}",
-		"patchouli": ">=${patchouli_version}",
-		"configserializer": "~1.0.0"
+		"yet-another-config-lib": ">=${yacl_version}",
+		"patchouli": ">=${patchouli_version}"
 	},
 	"custom": {
 		"cardinal-components": [
