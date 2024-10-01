@@ -5,7 +5,6 @@ import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.goals.TeleportWhenOutOfRangeGoal;
-import com.auroali.sanguinisluxuria.common.entities.goals.VampireAttackGoal;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.minecraft.entity.Entity;
@@ -97,7 +96,7 @@ public class VampireVillagerEntity extends HostileEntity {
         this.goalSelector.add(8, new LookAroundGoal(this));
         this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 1.0));
-        this.goalSelector.add(3, new VampireAttackGoal(this, 1.0f, false));
+        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.0f, false));
         this.goalSelector.add(2, new TeleportWhenOutOfRangeGoal(this));
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.goalSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
