@@ -7,7 +7,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.VillagerResemblingModel;
 
 public class BLModelLayers {
-    public static EntityModelLayer VAMPIRE_VILLAGER = new EntityModelLayer(BLResources.VAMPIRE_VILLAGER, "main");
+    public static final EntityModelLayer VAMPIRE_VILLAGER = new EntityModelLayer(BLResources.VAMPIRE_VILLAGER, "main");
 
     public static void register() {
         EntityModelLayerRegistry.registerModelLayer(VAMPIRE_VILLAGER, () -> TexturedModelData.of(VillagerResemblingModel.getModelData(), 64, 64));

@@ -37,7 +37,7 @@ public class BLEntityLootTableProvider extends SimpleFabricLootTableProvider {
         );
     }
 
-    public ConditionalLootFunction.Builder createNbtLootFunc(Consumer<NbtCompound> compoundConsumer) {
+    public ConditionalLootFunction.Builder<?> createNbtLootFunc(Consumer<NbtCompound> compoundConsumer) {
         NbtCompound compound = new NbtCompound();
         compoundConsumer.accept(compound);
         return SetNbtLootFunction.builder(compound);

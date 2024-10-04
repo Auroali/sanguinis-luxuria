@@ -31,7 +31,7 @@ public class CakeBlockMixin {
     @WrapOperation(method = "tryEat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
     private static void sanguinisluxuria$preventCakeEat(HungerManager instance, int food, float saturationModifier, Operation<Void> original, @Share("player") LocalRef<PlayerEntity> playerShare, @Share("item") LocalRef<Item> item) {
         if (VampireHelper.isVampire(playerShare.get()) && item.get() == null && item.get().getRegistryEntry().isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM)) {
-            ((VampireHungerManager) instance).addHunger(food, saturationModifier);
+            ((VampireHungerManager) instance).sanguinisluxuria$addHunger(food, saturationModifier);
         }
 
         original.call(instance, food, saturationModifier);

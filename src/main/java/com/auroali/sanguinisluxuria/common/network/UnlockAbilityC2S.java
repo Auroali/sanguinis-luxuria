@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.PacketByteBuf;
 
 public record UnlockAbilityC2S(VampireAbility ability) implements FabricPacket {
-    public static PacketType<UnlockAbilityC2S> ID = PacketType.create(BLResources.UNLOCK_ABILITY_C2S, UnlockAbilityC2S::new);
+    public static final PacketType<UnlockAbilityC2S> ID = PacketType.create(BLResources.UNLOCK_ABILITY_C2S, UnlockAbilityC2S::new);
 
     public UnlockAbilityC2S(PacketByteBuf buf) {
         this(buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES));

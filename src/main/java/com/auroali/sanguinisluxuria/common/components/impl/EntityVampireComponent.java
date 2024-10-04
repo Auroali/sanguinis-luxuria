@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class EntityVampireComponent<T extends LivingEntity> implements VampireComponent {
-    Predicate<T> vampirePredicate;
-    T holder;
-    VampireAbilityContainer abilities = new VampireAbilityContainer();
-    List<VampireAbility> defaultAbilities;
+    final Predicate<T> vampirePredicate;
+    final T holder;
+    final VampireAbilityContainer abilities = new VampireAbilityContainer();
+    final List<VampireAbility> defaultAbilities;
     boolean downed;
 
     public EntityVampireComponent(T holder, Predicate<T> vampirePredicate, VampireAbility... abilities) {

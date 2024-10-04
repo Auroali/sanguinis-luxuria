@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class BloodCauldronFillRecipe extends BloodCauldronRecipe {
     public BloodCauldronFillRecipe(Identifier id, Ingredient ingredient, ItemStack result) {
-        super(id, ingredient, BloodStorageItem.setStoredBlood(result, Math.min(BloodStorageItem.getMaxBlood(result), BloodConstants.BLOOD_PER_BOTTLE)));
+        super(id, 1, ingredient, BloodStorageItem.setStoredBlood(result, Math.min(BloodStorageItem.getMaxBlood(result), BloodConstants.BLOOD_PER_BOTTLE)));
     }
 
     @Override

@@ -34,7 +34,7 @@ public class UnlockAbilityCriterion extends AbstractCriterion<UnlockAbilityCrite
     }
 
     public static class Conditions extends AbstractCriterionConditions {
-        VampireAbility ability;
+        final VampireAbility ability;
 
         public Conditions(LootContextPredicate entity, VampireAbility ability) {
             super(BLResources.UNLOCK_VAMPIRE_ABILITY_ID, entity);

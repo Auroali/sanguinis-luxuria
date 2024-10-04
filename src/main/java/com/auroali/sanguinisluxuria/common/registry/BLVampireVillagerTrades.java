@@ -9,7 +9,7 @@ import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 
 public class BLVampireVillagerTrades {
-    public static ImmutableMap<Integer, TradeOffers.Factory[]> TRADES = new ImmutableMap.Builder<Integer, TradeOffers.Factory[]>()
+    public static final ImmutableMap<Integer, TradeOffers.Factory[]> TRADES = new ImmutableMap.Builder<Integer, TradeOffers.Factory[]>()
       .put(1, new TradeOffers.Factory[]{
         (entity, random) -> new TradeOffer(new ItemStack(Items.EMERALD, 2), ItemStack.EMPTY, BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BloodConstants.BLOOD_PER_BOTTLE), 4, 4, 1),
         new TradeOffers.SellItemFactory(BLItems.MASK_1, 3, 1, 1, 2),

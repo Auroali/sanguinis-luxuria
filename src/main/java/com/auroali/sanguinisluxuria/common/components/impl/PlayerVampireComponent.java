@@ -20,6 +20,7 @@ import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -110,10 +111,10 @@ public class PlayerVampireComponent implements VampireComponent {
 
         if (!VampireHelper.shouldFillHeldItemOnDrain(holder) || !BloodStorageItem.tryAddBloodToItemInHand(holder, bloodMultiplier)) {
             if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD)) {
-                ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier * 2, 0.125f);
+                ((VampireHungerManager) holder.getHungerManager()).sanguinisluxuria$addHunger(bloodMultiplier * 2, 0.125f);
                 BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier * 2);
             } else {
-                ((VampireHungerManager) holder.getHungerManager()).addHunger(bloodMultiplier, 0.125f);
+                ((VampireHungerManager) holder.getHungerManager()).sanguinisluxuria$addHunger(bloodMultiplier, 0.125f);
                 BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier);
             }
         }
@@ -193,8 +194,9 @@ public class PlayerVampireComponent implements VampireComponent {
 
     private void removeModifiers() {
         AttributeContainer attributes = holder.getAttributes();
-        if (attributes.getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).hasModifier(SPEED_ATTRIBUTE))
-            attributes.getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(SPEED_ATTRIBUTE);
+        EntityAttributeInstance speedInstance = attributes.getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        if (speedInstance != null && speedInstance.hasModifier(SPEED_ATTRIBUTE))
+            speedInstance.removeModifier(SPEED_ATTRIBUTE);
     }
 
     private void tickBloodEffects() {
@@ -209,11 +211,11 @@ public class PlayerVampireComponent implements VampireComponent {
               true
             ));
 
-        if (blood.getBlood() > 4 && !holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).hasModifier(SPEED_ATTRIBUTE)) {
-            holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)
-              .addPersistentModifier(SPEED_ATTRIBUTE);
-        } else if (blood.getBlood() <= 4 && holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).hasModifier(SPEED_ATTRIBUTE)) {
-            holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(SPEED_ATTRIBUTE);
+        EntityAttributeInstance speedInstance = holder.getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        if (speedInstance != null && blood.getBlood() > 4 && !speedInstance.hasModifier(SPEED_ATTRIBUTE)) {
+            speedInstance.addPersistentModifier(SPEED_ATTRIBUTE);
+        } else if (speedInstance != null && blood.getBlood() <= 4 && speedInstance.hasModifier(SPEED_ATTRIBUTE)) {
+            speedInstance.removeModifier(SPEED_ATTRIBUTE);
         }
     }
 

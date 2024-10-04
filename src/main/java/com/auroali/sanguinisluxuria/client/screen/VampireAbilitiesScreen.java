@@ -23,7 +23,7 @@ import java.util.List;
 
 public class VampireAbilitiesScreen extends Screen {
     public VampireAbilityWidget bindingWidget;
-    List<VampireAbilityWidget> abilities;
+    final List<VampireAbilityWidget> abilities;
     double scrollX = 0;
     double scrollY = -32;
 

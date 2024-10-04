@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlockEntity extends BlockEntity {
-    SimpleInventory inv = new SimpleInventory(ItemStack.EMPTY);
+    final SimpleInventory inv = new SimpleInventory(ItemStack.EMPTY);
     int spinTicks = 0;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {

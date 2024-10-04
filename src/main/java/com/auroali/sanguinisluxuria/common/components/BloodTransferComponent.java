@@ -18,7 +18,7 @@ import java.util.UUID;
 public class BloodTransferComponent implements Component, AutoSyncedComponent {
     Entity latchedEntity = null;
     UUID latchedEntityId = null;
-    PersistentProjectileEntity holder;
+    final PersistentProjectileEntity holder;
     int bloodTransferLevel = -1;
 
     public BloodTransferComponent(PersistentProjectileEntity entity) {

@@ -67,8 +67,8 @@ public class VampireAttributeModifierAbility extends VampireAbility {
     public static class VampireAttributeModifierAbilityBuilder {
         private final Map<EntityAttribute, VampireAttributeModifier> modifiers = new HashMap<>();
 
-        Supplier<ItemStack> icon;
-        VampireAbility parent;
+        final Supplier<ItemStack> icon;
+        final VampireAbility parent;
 
         protected VampireAttributeModifierAbilityBuilder(Supplier<ItemStack> icon, VampireAbility parent) {
             this.icon = icon;

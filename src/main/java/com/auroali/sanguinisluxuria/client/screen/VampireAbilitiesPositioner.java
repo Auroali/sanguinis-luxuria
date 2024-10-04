@@ -42,7 +42,7 @@ public class VampireAbilitiesPositioner {
         }
     }
 
-    private static void resolveCollisions(List<VampireAbilityWidget> widgets, int columnSpacing) {
+    private static void resolveCollisions(List<VampireAbilityWidget> widgets, @SuppressWarnings("SameParameterValue") int columnSpacing) {
         boolean hasCollisions = true;
         while (hasCollisions) {
             hasCollisions = false;

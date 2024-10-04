@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.PacketByteBuf;
 
 public record BindAbilityC2S(VampireAbility ability, int slot) implements FabricPacket {
-    public static PacketType<BindAbilityC2S> ID = PacketType.create(BLResources.BIND_ABILITY_C2S, BindAbilityC2S::new);
+    public static final PacketType<BindAbilityC2S> ID = PacketType.create(BLResources.BIND_ABILITY_C2S, BindAbilityC2S::new);
 
     public BindAbilityC2S(PacketByteBuf buf) {
         this(buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES), buf.readVarInt());

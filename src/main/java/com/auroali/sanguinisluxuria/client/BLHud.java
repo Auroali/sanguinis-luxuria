@@ -28,6 +28,8 @@ public class BLHud {
 
     public static void render(DrawContext context, float deltaTick) {
         MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null)
+            return;
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(client.player);
         if (!vampire.isVampire())
             return;

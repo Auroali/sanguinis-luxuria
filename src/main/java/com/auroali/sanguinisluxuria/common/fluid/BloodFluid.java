@@ -11,7 +11,6 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.state.StateManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -90,37 +89,6 @@ public class BloodFluid extends FlowableFluid {
     @Override
     public boolean matchesType(Fluid fluid) {
         return fluid == getStill() || fluid == getFlowing();
-    }
-
-
-    public static class BloodFluidStill extends BloodFluid {
-        @Override
-        public int getLevel(FluidState fluidState) {
-            return 8;
-        }
-
-        @Override
-        public boolean isStill(FluidState fluidState) {
-            return true;
-        }
-    }
-
-    public static class BloodFluidFlowing extends BloodFluid {
-        @Override
-        protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
-            super.appendProperties(builder);
-            builder.add(LEVEL);
-        }
-
-        @Override
-        public int getLevel(FluidState fluidState) {
-            return fluidState.get(LEVEL);
-        }
-
-        @Override
-        public boolean isStill(FluidState fluidState) {
-            return false;
-        }
     }
 
     @SuppressWarnings("UnstableApiUsage")

@@ -15,8 +15,8 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
 
 public class PedestalBlockRenderer implements BlockEntityRenderer<PedestalBlockEntity> {
-    ItemRenderer itemRenderer;
-    Random random;
+    final ItemRenderer itemRenderer;
+    final Random random;
 
     public PedestalBlockRenderer(ItemRenderer itemRenderer) {
         this.itemRenderer = itemRenderer;

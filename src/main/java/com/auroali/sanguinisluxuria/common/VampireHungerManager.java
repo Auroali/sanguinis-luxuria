@@ -3,9 +3,9 @@ package com.auroali.sanguinisluxuria.common;
 import net.minecraft.entity.player.PlayerEntity;
 
 public interface VampireHungerManager {
-    default void setPlayer(PlayerEntity player) {
+    default void sanguinisluxuria$setPlayer(PlayerEntity player) {
     }
 
-    default void addHunger(int food, float saturationModifier) {
+    default void sanguinisluxuria$addHunger(int food, float saturationModifier) {
     }
 }

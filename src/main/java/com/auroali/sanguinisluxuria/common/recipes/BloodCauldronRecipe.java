@@ -15,11 +15,13 @@ import net.minecraft.world.World;
 
 public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
     protected final Ingredient ingredient;
+    protected final int level;
     protected final Identifier id;
     protected final ItemStack result;
 
-    public BloodCauldronRecipe(Identifier id, Ingredient ingredient, ItemStack result) {
+    public BloodCauldronRecipe(Identifier id, int level, Ingredient ingredient, ItemStack result) {
         this.id = id;
+        this.level = level;
         this.ingredient = ingredient;
         this.result = result;
     }
@@ -65,7 +67,7 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
     }
 
     public int getCauldronLevel() {
-        return 1;
+        return level;
     }
 
     public static class Serializer implements RecipeSerializer<BloodCauldronRecipe> {
@@ -75,21 +77,26 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
                 throw new JsonParseException("Missing recipe input!");
             if (!json.has("result"))
                 throw new JsonParseException("Missing recipe result!");
+            int level = 1;
+            if (json.has("level"))
+                level = json.get("level").getAsInt();
             Ingredient ingredient = Ingredient.fromJson(json.get("input"));
             ItemStack result = ShapedRecipe.outputFromJson(json.get("result").getAsJsonObject());
-            return new BloodCauldronRecipe(id, ingredient, result);
+            return new BloodCauldronRecipe(id, level, ingredient, result);
         }
 
         @Override
         public BloodCauldronRecipe read(Identifier id, PacketByteBuf buf) {
             Ingredient ingredient = Ingredient.fromPacket(buf);
+            int level = buf.readVarInt();
             ItemStack result = buf.readItemStack();
-            return new BloodCauldronRecipe(id, ingredient, result);
+            return new BloodCauldronRecipe(id, level, ingredient, result);
         }
 
         @Override
         public void write(PacketByteBuf buf, BloodCauldronRecipe recipe) {
             recipe.ingredient.write(buf);
+            buf.writeVarInt(recipe.getCauldronLevel());
             buf.writeItemStack(recipe.result);
         }
     }

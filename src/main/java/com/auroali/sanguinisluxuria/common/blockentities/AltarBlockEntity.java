@@ -163,16 +163,18 @@ public class AltarBlockEntity extends BlockEntity {
     }
 
     private void validateRecipe() {
-        recipe = (AltarRecipe) world.getRecipeManager().get(recipeId).orElse(null);
-
-        if (recipe == null) {
-            stacks.clear();
-            ticksProcessing = 0;
-            recipeId = null;
-            markDirty();
-        } else {
-            recipeId = null;
+        if (world == null || (recipe = (AltarRecipe) world.getRecipeManager().get(recipeId).orElse(null)) == null) {
+            resetRecipeState();
+            return;
         }
+        recipeId = null;
+    }
+
+    void resetRecipeState() {
+        stacks.clear();
+        ticksProcessing = 0;
+        recipeId = null;
+        markDirty();
     }
 
     @Override

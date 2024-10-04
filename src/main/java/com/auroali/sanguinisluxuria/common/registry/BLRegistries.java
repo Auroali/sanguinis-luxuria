@@ -16,7 +16,7 @@ public class BLRegistries {
     ).buildAndRegister();
 
     // called to cause the class the load
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "EmptyMethod"})
     public static void init() {
     }
 }

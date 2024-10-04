@@ -24,6 +24,7 @@ import java.util.function.Consumer;
 
 public class BloodCauldronRecipeJsonBuilder extends RecipeJsonBuilder implements CraftingRecipeJsonBuilder {
     private final Item output;
+    private int level;
     private final int outputCount;
     private String group;
     private final Ingredient ingredient;
@@ -35,6 +36,12 @@ public class BloodCauldronRecipeJsonBuilder extends RecipeJsonBuilder implements
         this.outputCount = outputCount;
         this.ingredient = ingredient;
         this.category = category;
+        this.level = 1;
+    }
+
+    public BloodCauldronRecipeJsonBuilder level(int level) {
+        this.level = level;
+        return this;
     }
 
     public static BloodCauldronRecipeJsonBuilder create(RecipeCategory category, Ingredient ingredient, ItemConvertible output) {
@@ -86,6 +93,7 @@ public class BloodCauldronRecipeJsonBuilder extends RecipeJsonBuilder implements
         final int outputCount;
         final String group;
         public final Ingredient ingredient;
+        public final int level;
         private final Advancement.Builder advancementBuilder;
         private final Identifier id;
         private final Identifier advancementId;
@@ -100,6 +108,7 @@ public class BloodCauldronRecipeJsonBuilder extends RecipeJsonBuilder implements
             this.id = recipeId;
             this.advancementId = advancementId;
             this.category = category;
+            this.level = builder.level;
         }
 
         @Override

@@ -14,7 +14,7 @@ public class BLRecipeTypes {
             return BLResources.ALTAR_RECIPE_ID.toString();
         }
     };
-    public static final RecipeType<BloodCauldronRecipe> BLOOD_CAULDRON_TYPE = new RecipeType<BloodCauldronRecipe>() {
+    public static final RecipeType<BloodCauldronRecipe> BLOOD_CAULDRON_TYPE = new RecipeType<>() {
         @Override
         public String toString() {
             return BLResources.BLOOD_CAULDRON_ID.toString();

@@ -30,8 +30,8 @@ import java.util.List;
 
 public class CauldronInfusingEmiRecipe implements EmiRecipe {
     final BloodCauldronRecipe recipe;
-    List<EmiIngredient> inputs;
-    List<EmiStack> outputs;
+    final List<EmiIngredient> inputs;
+    final List<EmiStack> outputs;
 
     public CauldronInfusingEmiRecipe(BloodCauldronRecipe recipe, MinecraftClient client) {
         this.recipe = recipe;

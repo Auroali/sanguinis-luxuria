@@ -34,8 +34,8 @@ import java.util.List;
 
 public class AltarEmiRecipe implements EmiRecipe {
     final AltarRecipe recipe;
-    List<EmiIngredient> inputs;
-    List<EmiStack> outputs;
+    final List<EmiIngredient> inputs;
+    final List<EmiStack> outputs;
 
     public AltarEmiRecipe(AltarRecipe recipe, MinecraftClient client) {
         this.recipe = recipe;

@@ -41,6 +41,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void sanguinisluxuria$setVampireHungerManagerPlayer(World world, BlockPos pos, float yaw, GameProfile gameProfile, CallbackInfo ci) {
-        ((VampireHungerManager) hungerManager).setPlayer((PlayerEntity) (Object) this);
+        ((VampireHungerManager) hungerManager).sanguinisluxuria$setPlayer((PlayerEntity) (Object) this);
     }
 }

@@ -94,7 +94,7 @@ public class HungerManagerMixin implements VampireHungerManager {
     @WrapOperation(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
     public void sanguinisluxuria$handleVampireEdibleFood(HungerManager instance, int food, float saturationModifier, Operation<Void> original, @Share("isInTag") LocalBooleanRef isInTag) {
         if (VampireHelper.isVampire(sanguinisluxuria$hmTrackedPlayer) && isInTag.get())
-            addHunger(food, saturationModifier);
+            sanguinisluxuria$addHunger(food, saturationModifier);
         else
             original.call(instance, food, saturationModifier);
     }
@@ -107,13 +107,13 @@ public class HungerManagerMixin implements VampireHungerManager {
 
     @Unique
     @Override
-    public void setPlayer(PlayerEntity player) {
+    public void sanguinisluxuria$setPlayer(PlayerEntity player) {
         this.sanguinisluxuria$hmTrackedPlayer = player;
     }
 
     @Unique
     @Override
-    public void addHunger(int food, float saturationModifier) {
+    public void sanguinisluxuria$addHunger(int food, float saturationModifier) {
         this.foodLevel = Math.min(food + this.foodLevel, 20);
         this.saturationLevel = Math.min(this.saturationLevel + (float) food * saturationModifier * 2.0F, (float) this.foodLevel);
     }

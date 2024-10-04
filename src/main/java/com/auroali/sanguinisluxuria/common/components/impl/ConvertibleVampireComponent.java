@@ -24,9 +24,9 @@ import java.util.function.BiConsumer;
  * An example of this would be Villagers turning into Vampire Villagers
  */
 public class ConvertibleVampireComponent<U extends LivingEntity, T extends LivingEntity> implements VampireComponent {
-    EntityType<T> conversionType;
-    BiConsumer<U, T> conversionHandler;
-    U holder;
+    final EntityType<T> conversionType;
+    final BiConsumer<U, T> conversionHandler;
+    final U holder;
 
     public ConvertibleVampireComponent(U holder, EntityType<T> conversionType, BiConsumer<U, T> conversionHandler) {
         this.holder = holder;

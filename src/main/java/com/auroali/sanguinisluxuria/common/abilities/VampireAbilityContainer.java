@@ -334,7 +334,7 @@ public class VampireAbilityContainer implements Iterable<VampireAbility> {
 
     private static class AbilityCooldown {
         int ticks;
-        int maxTicks;
+        final int maxTicks;
 
         public AbilityCooldown(int ticks) {
             this(ticks, ticks);
