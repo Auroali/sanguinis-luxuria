@@ -40,6 +40,8 @@ public class BloodCauldronRecipeJsonBuilder extends RecipeJsonBuilder implements
     }
 
     public BloodCauldronRecipeJsonBuilder level(int level) {
+        if (level < 1 || level > 3)
+            throw new IllegalArgumentException("level must be between 1 and 3!");
         this.level = level;
         return this;
     }
