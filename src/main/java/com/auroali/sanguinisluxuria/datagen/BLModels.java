@@ -10,8 +10,8 @@ import java.util.Optional;
 public class BLModels {
     public static final Model MASK = new Model(Optional.of(BLResources.id("item/mask_base")), Optional.empty(), TextureKey.LAYER0);
     public static final Model REDSTONE_DUST_DOT = new Model(Optional.of(ModelIds.getMinecraftNamespacedBlock("redstone_dust_dot")), Optional.empty(),
-            TextureKey.PARTICLE,
-            BLTextureKeys.LINE,
-            BLTextureKeys.OVERLAY
+      TextureKey.PARTICLE,
+      BLTextureKeys.LINE,
+      BLTextureKeys.OVERLAY
     );
 }

@@ -34,7 +34,7 @@ public class VampireVillagerEntity extends HostileEntity {
     @Override
     public void tickMovement() {
         this.updateDespawnCounter();
-        if(this.isAffectedByDaylight()) {
+        if (this.isAffectedByDaylight()) {
             this.setOnFireFor(8);
         }
         super.tickMovement();
@@ -43,17 +43,17 @@ public class VampireVillagerEntity extends HostileEntity {
     @Override
     public void tick() {
         super.tick();
-        if(bloodDrainTimer > 0)
+        if (bloodDrainTimer > 0)
             bloodDrainTimer--;
 
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
-        if(canHealWithBlood()) {
+        if (canHealWithBlood()) {
             setHealth(getHealth() + 1);
             bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
         }
 
-        if(getWorld().isClient && vampire.isDown()) {
+        if (getWorld().isClient && vampire.isDown()) {
             Box box = getBoundingBox();
             int max = 3;
             for (int i = 0; i < max; i++) {
@@ -61,13 +61,13 @@ public class VampireVillagerEntity extends HostileEntity {
                 double y = box.minY + random.nextDouble() * box.getYLength();
                 double z = box.minZ + random.nextDouble() * box.getZLength();
                 getWorld().addParticle(
-                        DustParticleEffect.DEFAULT,
-                        x,
-                        y,
-                        z,
-                        0,
-                        0,
-                        0
+                  DustParticleEffect.DEFAULT,
+                  x,
+                  y,
+                  z,
+                  0,
+                  0,
+                  0
                 );
             }
         }
@@ -111,7 +111,7 @@ public class VampireVillagerEntity extends HostileEntity {
     public boolean tryAttack(Entity target) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
-        if(target instanceof LivingEntity entity && target.getType().isIn(BLTags.Entities.HAS_BLOOD) && bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
+        if (target instanceof LivingEntity entity && target.getType().isIn(BLTags.Entities.HAS_BLOOD) && bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
             vampire.drainBloodFrom(entity);
             playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
             bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;

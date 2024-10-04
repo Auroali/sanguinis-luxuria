@@ -18,33 +18,35 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
-    @Shadow @Final private static Identifier ICONS;
+    @Shadow
+    @Final
+    private static Identifier ICONS;
 
     @ModifyArg(method = "renderStatusBars", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V"
-    ), slice = @Slice(from =@At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
-            ordinal = 1), to = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 2
+      value = "INVOKE",
+      target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V"
+    ), slice = @Slice(from = @At(
+      value = "INVOKE",
+      target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
+      ordinal = 1), to = @At(
+      value = "INVOKE",
+      target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 2
     )))
     public Identifier sanguinisluxuria$injectHungerIcons(Identifier texture) {
-        if(VampireHelper.isVampire(MinecraftClient.getInstance().player)) {
+        if (VampireHelper.isVampire(MinecraftClient.getInstance().player)) {
             return BLResources.ICONS;
         }
         return texture;
     }
 
     @ModifyVariable(method = "renderVignetteOverlay", at = @At(
-            value = "STORE"
+      value = "STORE"
     ), ordinal = 1)
     public float sanguinisluxuria$showSunTimeProgress(float g) {
         PlayerEntity entity = MinecraftClient.getInstance().player;
-        if(VampireHelper.isVampire(entity)) {
+        if (VampireHelper.isVampire(entity)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
-            if(vampire.getTimeInSun() == 0)
+            if (vampire.getTimeInSun() == 0)
                 return g;
             return (float) vampire.getTimeInSun() / vampire.getMaxTimeInSun();
         }
@@ -52,10 +54,10 @@ public class InGameHudMixin {
     }
 
     @Inject(method = "renderVignetteOverlay", at = @At(
-            value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;setShaderColor(FFFF)V", ordinal = 1, shift = At.Shift.AFTER))
+      value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;setShaderColor(FFFF)V", ordinal = 1, shift = At.Shift.AFTER))
     public void sanguinisluxuria$modifyVignetteColourInSun(DrawContext context, Entity entity, CallbackInfo ci) {
         PlayerEntity player = MinecraftClient.getInstance().player;
-        if(VampireHelper.isVampire(player)) {
+        if (VampireHelper.isVampire(player)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
             if (vampire.getTimeInSun() != 0) {
                 float multiplier = (float) vampire.getTimeInSun() / vampire.getMaxTimeInSun();

@@ -8,11 +8,11 @@ import net.minecraft.registry.SimpleRegistry;
 
 public class BLRegistries {
     public static final Registry<VampireAbility> VAMPIRE_ABILITIES = FabricRegistryBuilder.from(
-            new SimpleRegistry<>(
-                    BLRegistryKeys.VAMPIRE_ABILITIES,
-                    Lifecycle.stable(),
-                    true
-            )
+      new SimpleRegistry<>(
+        BLRegistryKeys.VAMPIRE_ABILITIES,
+        Lifecycle.stable(),
+        true
+      )
     ).buildAndRegister();
 
     // called to cause the class the load

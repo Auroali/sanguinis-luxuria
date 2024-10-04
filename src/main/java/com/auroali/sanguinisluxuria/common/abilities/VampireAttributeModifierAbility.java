@@ -29,10 +29,10 @@ public class VampireAttributeModifierAbility extends VampireAbility {
         AttributeContainer attributes = entity.getAttributes();
         modifiers.forEach((attribute, modifier) -> {
             EntityAttributeInstance instance = attributes.getCustomInstance(attribute);
-            if(instance == null)
+            if (instance == null)
                 return;
 
-            if(instance.hasModifier(modifier.modifier()))
+            if (instance.hasModifier(modifier.modifier()))
                 instance.removeModifier(modifier.modifier());
         });
     }
@@ -46,12 +46,12 @@ public class VampireAttributeModifierAbility extends VampireAbility {
         AttributeContainer attributes = entity.getAttributes();
         ability.modifiers.forEach((attribute, modifier) -> {
             EntityAttributeInstance instance = attributes.getCustomInstance(attribute);
-            if(instance == null)
+            if (instance == null)
                 return;
 
-            if(blood.getBlood() >= modifier.minBloodLevel() && !instance.hasModifier(modifier.modifier()))
+            if (blood.getBlood() >= modifier.minBloodLevel() && !instance.hasModifier(modifier.modifier()))
                 instance.addPersistentModifier(modifier.modifier());
-            if(blood.getBlood() < modifier.minBloodLevel() && instance.hasModifier(modifier.modifier()))
+            if (blood.getBlood() < modifier.minBloodLevel() && instance.hasModifier(modifier.modifier()))
                 instance.removeModifier(modifier.modifier());
         });
     }
@@ -81,13 +81,13 @@ public class VampireAttributeModifierAbility extends VampireAbility {
 
         public VampireAttributeModifierAbilityBuilder addModifier(EntityAttribute attribute, String uuid, double value, EntityAttributeModifier.Operation operation, int minBlood) {
             modifiers.put(attribute, new VampireAttributeModifier(
-                    new EntityAttributeModifier(
-                            UUID.fromString(uuid),
-                            () -> "sanguinisluxuria.vampire_ability",
-                            value,
-                            operation
-                    ),
-                    minBlood
+              new EntityAttributeModifier(
+                UUID.fromString(uuid),
+                () -> "sanguinisluxuria.vampire_ability",
+                value,
+                operation
+              ),
+              minBlood
             ));
             return this;
         }
@@ -96,5 +96,7 @@ public class VampireAttributeModifierAbility extends VampireAbility {
             return new VampireAttributeModifierAbility(icon, parent, modifiers);
         }
     }
-    protected record VampireAttributeModifier(EntityAttributeModifier modifier, int minBloodLevel) {}
+
+    protected record VampireAttributeModifier(EntityAttributeModifier modifier, int minBloodLevel) {
+    }
 }

@@ -22,6 +22,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     /**
      * Sets whether the component holder is a vampire
+     *
      * @param isVampire whether the holder is a vampire
      */
     void setIsVampire(boolean isVampire);
@@ -29,6 +30,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     /**
      * Drains blood from a target entity, filling up the component holder's blood
      * or damaging them if the target has blood protection
+     *
      * @param entity the entity to drain from
      * @see BloodComponent#drainBlood(LivingEntity)
      */
@@ -48,6 +50,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     /**
      * Gets the current blood draining progress
+     *
      * @return the amount of time blood has been draining for, in ticks
      * @see com.auroali.sanguinisluxuria.common.BloodConstants#BLOOD_DRAIN_TIME
      * @see com.auroali.sanguinisluxuria.common.BloodConstants#BLOOD_DRAIN_TIME_BLEEDING
@@ -56,12 +59,14 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     /**
      * Gets the max time that can be spent in the sun before burning
+     *
      * @return the amount of time that can be spent in the sun, in ticks
      */
     int getMaxTimeInSun();
 
     /**
      * Gets the amount of time spent in the sun
+     *
      * @return how long the component holder has been in the sun, in ticks
      */
     int getTimeInSun();
@@ -69,6 +74,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     /**
      * Gets the ability container for this component, which tracks unlocked abilities,
      * ability cooldowns and what abilities are bound to keys
+     *
      * @return this component's ability container
      */
     VampireAbilityContainer getAbilties();
@@ -80,6 +86,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     /**
      * Sets this component's skill points
+     *
      * @param points the amount of skill points to set
      */
     void setSkillPoints(int points);
@@ -87,6 +94,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     /**
      * Sets this component's level <br>
      * This also updates the amount of available skill points
+     *
      * @param level the new level
      */
     void setLevel(int level);
@@ -100,25 +108,28 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     /**
      * Gets the downed state of this component
+     *
      * @return the downed state
      */
     boolean isDown();
 
     /**
      * Sets the 'downed' state of this component
+     *
      * @param down whether downed or not
      */
     void setDowned(boolean down);
 
     /**
      * Calculates the amount of damage taken by a vampire for a given damage source
+     *
      * @param amount the initial amount of damage
      * @param source the damage source
      * @return the amount of damage that should be taken by the vampire
      * @see BLConfig#vampireDamageMultiplier
      */
     static float calculateDamage(float amount, DamageSource source) {
-        if(source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
+        if (source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
             return amount * BLConfig.INSTANCE.vampireDamageMultiplier;
 
         return amount;
@@ -126,18 +137,19 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
     /**
      * Checks if a particular damage source is effective against vampires
+     *
      * @param source the damage source
      * @return whether the source is effective and damage should be increased
      */
     static boolean isEffectiveAgainstVampires(DamageSource source) {
-        if(source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
+        if (source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
             return true;
 
-        if(source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE) > 0) {
+        if (source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE) > 0) {
             return true;
         }
 
-        if(source.getAttacker() instanceof LivingEntity entity) {
+        if (source.getAttacker() instanceof LivingEntity entity) {
             ItemStack stack = entity.getMainHandStack();
             int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
             return level > 0;

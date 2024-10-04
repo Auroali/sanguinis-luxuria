@@ -20,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 9, 12);
+
     public PedestalBlock(Settings settings) {
         super(settings);
     }
@@ -32,20 +33,20 @@ public class PedestalBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         PedestalBlockEntity entity = world.getBlockEntity(pos) instanceof PedestalBlockEntity e ? e : null;
-        if(entity == null)
+        if (entity == null)
             return super.onUse(state, world, pos, player, hand, hit);
 
         ItemStack stack = player.getStackInHand(hand);
-        if(stack.isEmpty() && !entity.getItem().isEmpty()) {
-            if(!world.isClient) {
+        if (stack.isEmpty() && !entity.getItem().isEmpty()) {
+            if (!world.isClient) {
                 player.setStackInHand(hand, entity.getItem());
                 entity.setItem(ItemStack.EMPTY);
             }
             return ActionResult.success(world.isClient);
         }
 
-        if(!stack.isEmpty() && entity.getItem().isEmpty()) {
-            if(!world.isClient) {
+        if (!stack.isEmpty() && entity.getItem().isEmpty()) {
+            if (!world.isClient) {
                 player.setStackInHand(hand, ItemStack.EMPTY);
                 entity.setItem(stack);
             }
@@ -82,7 +83,7 @@ public class PedestalBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        if(world.isClient)
+        if (world.isClient)
             return checkType(type, BLBlockEntities.PEDESTAL, PedestalBlockEntity::tickClient);
         return super.getTicker(world, state, type);
     }

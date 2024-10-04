@@ -27,6 +27,7 @@ public class TransferEffectsCriterion extends AbstractCriterion<TransferEffectsC
 
     public static class Conditions extends AbstractCriterionConditions {
         final int minCount;
+
         public Conditions(LootContextPredicate entity, int minCount) {
             super(BLResources.TRANSFER_EFFECTS_ID, entity);
             this.minCount = minCount;

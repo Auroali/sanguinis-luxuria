@@ -10,7 +10,7 @@ import java.util.Locale;
 public class BloodlustCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal(Bloodlust.MODID.toLowerCase(Locale.ROOT))
-                .then(VampireCommand.register())
-                .then(AbilityCommand.register());
+          .then(VampireCommand.register())
+          .then(AbilityCommand.register());
     }
 }

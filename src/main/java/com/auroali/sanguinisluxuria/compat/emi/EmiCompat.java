@@ -21,6 +21,7 @@ public class EmiCompat implements EmiPlugin {
     public static final EmiStack CAULDRON = EmiStack.of(Items.CAULDRON);
     public static final EmiRecipeCategory ALTAR_RECIPE_CATEGORY = new EmiRecipeCategory(BLResources.ALTAR_ID, ALTAR, new EmiTexture(BLResources.id("textures/gui/emi.png"), 0, 16, 16, 16), EmiRecipeSorting.compareOutputThenInput());
     public static final EmiRecipeCategory BLOOD_CAULDRON_RECIPE_CATEGORY = new EmiRecipeCategory(BLResources.BLOOD_CAULDRON_ID, CAULDRON, new EmiTexture(BLResources.id("textures/gui/emi.png"), 0, 0, 16, 16), EmiRecipeSorting.compareOutputThenInput());
+
     @Override
     public void register(EmiRegistry registry) {
         registry.addCategory(ALTAR_RECIPE_CATEGORY);
@@ -30,10 +31,10 @@ public class EmiCompat implements EmiPlugin {
         registry.addWorkstation(BLOOD_CAULDRON_RECIPE_CATEGORY, CAULDRON);
 
         RecipeManager manager = registry.getRecipeManager();
-        for(AltarRecipe recipe : manager.listAllOfType(BLRecipeTypes.ALTAR_RECIPE)) {
+        for (AltarRecipe recipe : manager.listAllOfType(BLRecipeTypes.ALTAR_RECIPE)) {
             registry.addRecipe(new AltarEmiRecipe(recipe, MinecraftClient.getInstance()));
         }
-        for(BloodCauldronRecipe recipe : manager.listAllOfType(BLRecipeTypes.BLOOD_CAULDRON_TYPE)) {
+        for (BloodCauldronRecipe recipe : manager.listAllOfType(BLRecipeTypes.BLOOD_CAULDRON_TYPE)) {
             registry.addRecipe(new CauldronInfusingEmiRecipe(recipe, MinecraftClient.getInstance()));
         }
     }

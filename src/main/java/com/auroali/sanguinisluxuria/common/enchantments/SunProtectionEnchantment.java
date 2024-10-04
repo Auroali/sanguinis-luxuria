@@ -17,7 +17,7 @@ public class SunProtectionEnchantment extends Enchantment {
 
     @Override
     protected boolean canAccept(Enchantment other) {
-        if(other instanceof ProtectionEnchantment enchantment) {
+        if (other instanceof ProtectionEnchantment enchantment) {
             return enchantment.protectionType == ProtectionEnchantment.Type.FALL;
         }
         return true;

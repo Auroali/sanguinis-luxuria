@@ -23,7 +23,7 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
     public boolean canStart() {
         LivingEntity livingEntity = this.mob.getTarget();
         VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(mob).getAbilties();
-        if(!container.hasAbility(BLVampireAbilities.TELEPORT))
+        if (!container.hasAbility(BLVampireAbilities.TELEPORT))
             return false;
 
         if (livingEntity == null || !mob.getVisibilityCache().canSee(livingEntity) || container.isOnCooldown(BLVampireAbilities.TELEPORT) || livingEntity.getPos().distanceTo(mob.getPos()) < BLVampireAbilities.TELEPORT.getRange(mob)) {

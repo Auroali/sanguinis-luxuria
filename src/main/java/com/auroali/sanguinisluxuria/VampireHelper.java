@@ -26,6 +26,7 @@ import net.minecraft.world.event.GameEvent;
 public class VampireHelper {
     /**
      * Checks whether a living entity is a vampire
+     *
      * @param entity the entity to check
      * @return whether the entity is a vampire
      */
@@ -35,18 +36,20 @@ public class VampireHelper {
 
     /**
      * Checks whether an entity is both a vampire and wearing a carved mask
+     *
      * @param entity the entity to check
      * @return whether the entity is both a vampire and wearing a carved mask
      */
     public static boolean isMasked(LivingEntity entity) {
         return isVampire(entity)
-                && TrinketsApi.getTrinketComponent(entity)
-                .map(c -> c.isEquipped(i -> i.isIn(BLTags.Items.VAMPIRE_MASKS)))
-                .orElse(false);
+          && TrinketsApi.getTrinketComponent(entity)
+          .map(c -> c.isEquipped(i -> i.isIn(BLTags.Items.VAMPIRE_MASKS)))
+          .orElse(false);
     }
 
     /**
      * Checks whether an entity can be converted to a vampire
+     *
      * @param entity the potentially convertible entity
      * @return if the entity can be converted (has a vampire component and is not currently a vampire)
      */
@@ -56,12 +59,13 @@ public class VampireHelper {
 
     /**
      * Checks if an entity has an ability unlocked that is incompatible with the provided ability
-     * @param entity the entity to check
+     *
+     * @param entity  the entity to check
      * @param ability the ability to check for incompatibilities with
      * @return if the entity has an incompatible ability unlocked
      */
     public static boolean hasIncompatibleAbility(LivingEntity entity, VampireAbility ability) {
-        if(!isVampire(entity))
+        if (!isVampire(entity))
             return false;
 
         VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
@@ -71,13 +75,14 @@ public class VampireHelper {
 
     /**
      * Checks if an ability container has an ability unlocked that is incompatible with the provided ability
+     *
      * @param container the ability container to check
-     * @param ability the ability to check for incompatibilities with
+     * @param ability   the ability to check for incompatibilities with
      * @return if the ability container has an incompatible ability unlocked
      */
     public static boolean hasIncompatibleAbility(VampireAbilityContainer container, VampireAbility ability) {
-        for(VampireAbility other : container) {
-            if(ability.incompatibleWith(other)) {
+        for (VampireAbility other : container) {
+            if (ability.incompatibleWith(other)) {
                 return true;
             }
         }
@@ -86,17 +91,19 @@ public class VampireHelper {
 
     /**
      * Adds all the toxic blood status effects to an entity
+     *
      * @param entity the entity to add the effects to
      */
     public static void addToxicBloodEffects(LivingEntity entity) {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 3));
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 0));
-        if(entity.getRandom().nextDouble() > 0.75)
+        if (entity.getRandom().nextDouble() > 0.75)
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
     }
 
     /**
      * Increments the level of blood sickness on an entity. If the entity does not currently have blood sickness, this will add it
+     *
      * @param entity the entity to increment the blood sickness level of
      */
     public static void incrementBloodSickness(LivingEntity entity) {
@@ -106,8 +113,9 @@ public class VampireHelper {
 
     /**
      * Transfers status effects from one entity to the other, clearing the effects from the original entity
+     *
      * @param from the entity to transfer effects from
-     * @param to the entity to transfer effects to
+     * @param to   the entity to transfer effects to
      */
     public static void transferStatusEffects(LivingEntity from, LivingEntity to) {
         for (StatusEffectInstance instance : from.getStatusEffects()) {
@@ -123,6 +131,7 @@ public class VampireHelper {
 
     /**
      * Checks if an entity should fill any held blood storage items upon draining blood
+     *
      * @param entity the entity to check
      * @return if any held blood storage items should be filled
      */
@@ -132,6 +141,7 @@ public class VampireHelper {
 
     /**
      * Teleports an entity to a random position near their current one. Has the same behaviour as a chorus fruit
+     *
      * @param entity the entity to teleport
      */
     public static void teleportRandomly(LivingEntity entity) {
@@ -140,12 +150,12 @@ public class VampireHelper {
         double y = entity.getY();
         double z = entity.getZ();
 
-        for(int i = 0; i < 16; ++i) {
+        for (int i = 0; i < 16; ++i) {
             double newPosX = entity.getX() + (entity.getRandom().nextDouble() - 0.5) * 16.0;
             double newPosY = MathHelper.clamp(
-                    entity.getY() + (double) (entity.getRandom().nextInt(16) - 8),
-                    world.getBottomY(),
-                    (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1)
+              entity.getY() + (double) (entity.getRandom().nextInt(16) - 8),
+              world.getBottomY(),
+              (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1)
             );
             double newPosZ = entity.getZ() + (entity.getRandom().nextDouble() - 0.5) * 16.0;
             if (entity.hasVehicle()) {

@@ -16,15 +16,15 @@ import net.minecraft.world.Heightmap;
 
 public class BLEntities {
     public static final EntityType<VampireVillagerEntity> VAMPIRE_VILLAGER = EntityType.Builder
-            .create(VampireVillagerEntity::new, SpawnGroup.MONSTER)
-            .maxTrackingRange(10)
-            .setDimensions(0.6F, 1.95F)
-            .build(BLResources.VAMPIRE_VILLAGER.toString());
+      .create(VampireVillagerEntity::new, SpawnGroup.MONSTER)
+      .maxTrackingRange(10)
+      .setDimensions(0.6F, 1.95F)
+      .build(BLResources.VAMPIRE_VILLAGER.toString());
     public static final EntityType<VampireMerchant> VAMPIRE_MERCHANT = EntityType.Builder
-            .create(VampireMerchant::new, SpawnGroup.MONSTER)
-            .maxTrackingRange(10)
-            .setDimensions(0.6F, 1.95F)
-            .build(BLResources.VAMPIRE_MERCHANT.toString());
+      .create(VampireMerchant::new, SpawnGroup.MONSTER)
+      .maxTrackingRange(10)
+      .setDimensions(0.6F, 1.95F)
+      .build(BLResources.VAMPIRE_MERCHANT.toString());
 
 
     public static void register() {
@@ -37,19 +37,19 @@ public class BLEntities {
 
     public static void registerAttributes() {
         FabricDefaultAttributeRegistry
-                .register(VAMPIRE_VILLAGER, VampireVillagerEntity.createHostileAttributes()
-                        .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
-                        .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7)
-                        .add(EntityAttributes.GENERIC_ARMOR, 2)
-                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
-                );
+          .register(VAMPIRE_VILLAGER, VampireVillagerEntity.createHostileAttributes()
+            .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
+            .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7)
+            .add(EntityAttributes.GENERIC_ARMOR, 2)
+            .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
+          );
         FabricDefaultAttributeRegistry
-                .register(VAMPIRE_MERCHANT, VampireVillagerEntity.createHostileAttributes()
-                        .add(EntityAttributes.GENERIC_MAX_HEALTH, 25)
-                        .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
-                        .add(EntityAttributes.GENERIC_ARMOR, 2)
-                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
-                );
+          .register(VAMPIRE_MERCHANT, VampireVillagerEntity.createHostileAttributes()
+            .add(EntityAttributes.GENERIC_MAX_HEALTH, 25)
+            .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
+            .add(EntityAttributes.GENERIC_ARMOR, 2)
+            .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.52)
+          );
     }
 
     public static void registerSpawns() {

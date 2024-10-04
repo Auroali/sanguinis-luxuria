@@ -11,6 +11,7 @@ public record ActivateAbilityC2S(int abilitySlot) implements FabricPacket {
     public ActivateAbilityC2S(PacketByteBuf buf) {
         this(buf.readVarInt());
     }
+
     @Override
     public void write(PacketByteBuf buf) {
         buf.writeVarInt(abilitySlot);

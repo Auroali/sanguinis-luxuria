@@ -26,6 +26,7 @@ public class VampireAbilitiesScreen extends Screen {
     List<VampireAbilityWidget> abilities;
     double scrollX = 0;
     double scrollY = -32;
+
     public VampireAbilitiesScreen() {
         super(NarratorManager.EMPTY);
         abilities = new ArrayList<>();
@@ -62,8 +63,8 @@ public class VampireAbilitiesScreen extends Screen {
         context.drawText(client.textRenderer, Text.translatable("gui.sanguinisluxuria.abilities"), panelX + 8, panelY + 6, 4210752, false);
         context.drawText(client.textRenderer, Text.translatable("gui.sanguinisluxuria.skill_points", component.getSkillPoints()), panelX + 8, panelY + 134, 4210752, false);
 
-        for(VampireAbilityWidget ability : abilities) {
-            if(ability.isMouseOver(mouseX, mouseY, (int) (centerX + scrollX), (int) (centerY + scrollY))) {
+        for (VampireAbilityWidget ability : abilities) {
+            if (ability.isMouseOver(mouseX, mouseY, (int) (centerX + scrollX), (int) (centerY + scrollY))) {
                 renderAbilityWidgetTooltip(context, mouseX, mouseY, component.getAbilties(), ability);
             }
         }
@@ -74,27 +75,27 @@ public class VampireAbilitiesScreen extends Screen {
         text.add(Text.translatable(widget.ability.getTranslationKey()));
         text.add(Text.translatable(widget.ability.getDescTranslationKey()));
 
-        if(!container.hasAbility(widget.ability))
+        if (!container.hasAbility(widget.ability))
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.required_skill_points", widget.ability.getRequiredSkillPoints())
-                    .formatted(Formatting.GRAY));
+              .formatted(Formatting.GRAY));
 
         List<VampireAbility> incompatibilities = widget.ability.getIncompatibilities();
-        if(!incompatibilities.isEmpty()) {
+        if (!incompatibilities.isEmpty()) {
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.incompatibilites"));
-            for(VampireAbility ability : incompatibilities) {
+            for (VampireAbility ability : incompatibilities) {
                 text.add(Text.translatable(
-                        "gui.sanguinisluxuria.abilities.incompatibilites_entry",
-                        Text.translatable(ability.getTranslationKey())
+                  "gui.sanguinisluxuria.abilities.incompatibilites_entry",
+                  Text.translatable(ability.getTranslationKey())
                 ).formatted(Formatting.DARK_RED, Formatting.ITALIC));
             }
         }
 
         int slot = container.getAbilityBinding(widget.ability);
-        if(widget == bindingWidget)
+        if (widget == bindingWidget)
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.binding").formatted(Formatting.GRAY, Formatting.ITALIC));
-        else if(slot == -1 && widget.ability.isKeybindable())
+        else if (slot == -1 && widget.ability.isKeybindable())
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.bind_prompt").formatted(Formatting.GRAY, Formatting.ITALIC));
-        else if(widget.ability.isKeybindable())
+        else if (widget.ability.isKeybindable())
             text.add(Text.translatable("gui.sanguinisluxuria.abilities.bound", getTextForSlot(slot)).formatted(Formatting.GRAY, Formatting.ITALIC));
         context.drawTooltip(client.textRenderer, text, mouseX, mouseY);
     }
@@ -109,19 +110,19 @@ public class VampireAbilitiesScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if(bindingWidget == null)
+        if (bindingWidget == null)
             return super.keyPressed(keyCode, scanCode, modifiers);
-        if(keyCode == GLFW.GLFW_KEY_ESCAPE) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             sendBindPacket(-1);
             bindingWidget = null;
             return true;
         }
 
-        if(keyCode == BloodlustClient.ABILITY_1.getDefaultKey().getCode()) {
+        if (keyCode == BloodlustClient.ABILITY_1.getDefaultKey().getCode()) {
             sendBindPacket(0);
             return true;
         }
-        if(keyCode == BloodlustClient.ABILITY_2.getDefaultKey().getCode()) {
+        if (keyCode == BloodlustClient.ABILITY_2.getDefaultKey().getCode()) {
             sendBindPacket(1);
             return true;
         }
@@ -137,10 +138,10 @@ public class VampireAbilitiesScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if(bindingWidget != null)
+        if (bindingWidget != null)
             return false;
-        for(VampireAbilityWidget ability : abilities) {
-            if(ability.isMouseOver((int) mouseX, (int) mouseY, (int) (width / 2 + scrollX), (int) (height / 2 + scrollY)) && ability.onClick(this, button))
+        for (VampireAbilityWidget ability : abilities) {
+            if (ability.isMouseOver((int) mouseX, (int) mouseY, (int) (width / 2 + scrollX), (int) (height / 2 + scrollY)) && ability.onClick(this, button))
                 return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -149,7 +150,7 @@ public class VampireAbilitiesScreen extends Screen {
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         boolean dragged = super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
-        if(!dragged) {
+        if (!dragged) {
             scrollX += deltaX;
             scrollY += deltaY;
             return false;

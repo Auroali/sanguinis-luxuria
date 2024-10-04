@@ -63,7 +63,7 @@ public class VampireMerchant extends MerchantEntity {
     }
 
     public void restock() {
-        for(TradeOffer tradeOffer : this.getOffers()) {
+        for (TradeOffer tradeOffer : this.getOffers()) {
             tradeOffer.resetUses();
         }
         this.lastRestockTime = this.getWorld().getTime();
@@ -71,7 +71,7 @@ public class VampireMerchant extends MerchantEntity {
     }
 
     private boolean needsRestock() {
-        for(TradeOffer tradeOffer : this.getOffers()) {
+        for (TradeOffer tradeOffer : this.getOffers()) {
             if (tradeOffer.hasBeenUsed()) {
                 return true;
             }
@@ -107,7 +107,7 @@ public class VampireMerchant extends MerchantEntity {
     @Override
     public void tick() {
         super.tick();
-        if(shouldRestock())
+        if (shouldRestock())
             restock();
     }
 
@@ -115,7 +115,7 @@ public class VampireMerchant extends MerchantEntity {
     protected void fillRecipes() {
         TradeOfferList offers = this.getOffers();
         TradeOffers.Factory[] tradePool = BLVampireVillagerTrades.TRADES.get(1);
-        if(offers != null) {
+        if (offers != null) {
             fillRecipesFromPool(offers, tradePool, 6);
         }
     }

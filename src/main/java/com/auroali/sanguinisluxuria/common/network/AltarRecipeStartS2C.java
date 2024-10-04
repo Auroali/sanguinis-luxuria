@@ -10,9 +10,11 @@ import java.util.List;
 
 public record AltarRecipeStartS2C(BlockPos pos, List<BlockPos> pedestals) implements FabricPacket {
     public static PacketType<AltarRecipeStartS2C> ID = PacketType.create(BLResources.ALTAR_RECIPE_START_S2C, AltarRecipeStartS2C::new);
+
     public AltarRecipeStartS2C(PacketByteBuf buf) {
         this(buf.readBlockPos(), buf.readList(PacketByteBuf::readBlockPos));
     }
+
     @Override
     public void write(PacketByteBuf buf) {
         buf.writeBlockPos(pos);

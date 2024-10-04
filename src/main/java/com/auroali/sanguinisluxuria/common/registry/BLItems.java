@@ -18,12 +18,12 @@ public class BLItems {
     public static final MaskItem MASK_2 = new MaskItem(new FabricItemSettings().maxCount(1));
     public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().maxCount(1));
     public static final BloodStorageItem BLOOD_BAG = new DrinkableBloodStorageItem(
-            new FabricItemSettings().maxCount(1),
-            10 * BloodConstants.BLOOD_PER_BOTTLE
+      new FabricItemSettings().maxCount(1),
+      10 * BloodConstants.BLOOD_PER_BOTTLE
     );
     public static final BloodStorageItem BLOOD_BOTTLE = new DrinkableBloodStorageItem(
-            new FabricItemSettings().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
-            BloodConstants.BLOOD_PER_BOTTLE
+      new FabricItemSettings().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
+      BloodConstants.BLOOD_PER_BOTTLE
     ).emptyItem(Items.GLASS_BOTTLE);
     public static final Item TWISTED_BLOOD = new TwistedBloodItem(new FabricItemSettings().maxCount(1));
     public static final Item BLESSED_BLOOD = new BlessedBloodItem(new FabricItemSettings().maxCount(1));

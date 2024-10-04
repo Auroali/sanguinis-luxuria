@@ -17,12 +17,12 @@ public class BLTradeOffers {
             ItemStack blessedWater = new ItemStack(Items.POTION);
             PotionUtil.setPotion(blessedWater, BLStatusEffects.BLESSED_WATER_POTION);
             return new TradeOffer(
-                    mundanePotion,
-                    new ItemStack(Items.EMERALD, 10),
-                    blessedWater,
-                    2,
-                    30,
-                    0.2f
+              mundanePotion,
+              new ItemStack(Items.EMERALD, 10),
+              blessedWater,
+              2,
+              30,
+              0.2f
 
             );
         });

@@ -40,7 +40,7 @@ public class AltarEmiRecipe implements EmiRecipe {
     public AltarEmiRecipe(AltarRecipe recipe, MinecraftClient client) {
         this.recipe = recipe;
         DefaultedList<EmiIngredient> stacks = DefaultedList.ofSize(8, EmiStack.EMPTY);
-        for(int i = 0; i < recipe.getIngredients().size(); i++) {
+        for (int i = 0; i < recipe.getIngredients().size(); i++) {
             stacks.set(i, EmiIngredient.of(recipe.getIngredients().get(i)));
         }
         this.inputs = stacks;
@@ -111,12 +111,12 @@ public class AltarEmiRecipe implements EmiRecipe {
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        for(int i = 0; i < inputs.size() / 2; i++) {
+        for (int i = 0; i < inputs.size() / 2; i++) {
             int x = 32 + (int) (32 * Math.cos((MathHelper.HALF_PI / 2 + i * 2 * MathHelper.TAU / inputs.size())));
             int y = 40 + (int) (32 * Math.sin((MathHelper.HALF_PI / 2 + i * 2 * MathHelper.TAU / inputs.size())));
             widgets.addSlot(inputs.get(i), x, y);
         }
-        for(int i = inputs.size() / 2; i < inputs.size(); i++) {
+        for (int i = inputs.size() / 2; i < inputs.size(); i++) {
             int x = 32 + (int) (32 * Math.cos((i * 2 * MathHelper.TAU / inputs.size())));
             int y = 40 + (int) (32 * Math.sin((i * 2 * MathHelper.TAU / inputs.size())));
             widgets.addSlot(inputs.get(i), x, y);
@@ -142,7 +142,7 @@ public class AltarEmiRecipe implements EmiRecipe {
             stack.pop();
         });
         widgets.addFillingArrow(84, 40, recipe.getProcessingTicks() * 50)
-                .tooltip(List.of(TooltipComponent.of(Text.translatable("emi.cooking.time", recipe.getProcessingTicks() / 20f).asOrderedText())));
+          .tooltip(List.of(TooltipComponent.of(Text.translatable("emi.cooking.time", recipe.getProcessingTicks() / 20f).asOrderedText())));
         widgets.addSlot(outputs.get(0), 109, 40).recipeContext(this);
     }
 }

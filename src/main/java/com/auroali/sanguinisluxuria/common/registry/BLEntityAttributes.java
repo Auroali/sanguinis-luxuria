@@ -14,6 +14,7 @@ public class BLEntityAttributes {
     public static final EntityAttribute BLESSED_DAMAGE = new ClampedEntityAttribute(transFromId(BLResources.BLESSED_DAMAGE_ID), 0.0f, 0.0, 2048);
     public static final EntityAttribute BLINK_COOLDOWN = new ClampedEntityAttribute(transFromId(BLResources.BLINK_COOLDOWN_ID), 250, 0, 2048);
     public static final EntityAttribute BLINK_RANGE = new ClampedEntityAttribute(transFromId(BLResources.BLINK_RANGE_ID), 8, 0, 2048);
+
     public static void register() {
         Registry.register(Registries.ATTRIBUTE, BLResources.BLESSED_DAMAGE_ID, BLESSED_DAMAGE);
         Registry.register(Registries.ATTRIBUTE, BLResources.BLINK_COOLDOWN_ID, BLINK_COOLDOWN);

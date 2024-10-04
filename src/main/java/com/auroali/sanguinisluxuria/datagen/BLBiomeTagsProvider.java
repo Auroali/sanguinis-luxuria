@@ -18,6 +18,6 @@ public class BLBiomeTagsProvider extends FabricTagProvider<Biome> {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup args) {
         getOrCreateTagBuilder(BLTags.Biomes.VAMPIRE_VILLAGER_SPAWN)
-                .add(BiomeKeys.DARK_FOREST);
+          .add(BiomeKeys.DARK_FOREST);
     }
 }

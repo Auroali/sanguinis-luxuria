@@ -36,22 +36,22 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
 
     @Override
     public boolean activate(LivingEntity entity, VampireComponent component) {
-        if(component.getAbilties().isOnCooldown(this))
+        if (component.getAbilties().isOnCooldown(this))
             return false;
 
         Vec3d start = entity.getPos();
         BlockHitResult result = entity.getWorld().raycast(new RaycastContext(
-                entity.getEyePos(),
-                entity.getEyePos().add(entity.getRotationVector().multiply(getRange(entity))),
-                RaycastContext.ShapeType.COLLIDER,
-                RaycastContext.FluidHandling.NONE,
-                entity
+          entity.getEyePos(),
+          entity.getEyePos().add(entity.getRotationVector().multiply(getRange(entity))),
+          RaycastContext.ShapeType.COLLIDER,
+          RaycastContext.FluidHandling.NONE,
+          entity
         ));
 
-        if(result == null)
+        if (result == null)
             return false;
 
-        if(entity.hasVehicle())
+        if (entity.hasVehicle())
             entity.stopRiding();
 
         BlockPos pos = result.getBlockPos().offset(result.getSide());
@@ -61,7 +61,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         entity.getWorld().emitGameEvent(GameEvent.TELEPORT, start, GameEvent.Emitter.of(entity));
         entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
         TrinketsApi.getTrinketComponent(entity).ifPresent(c -> {
-            if(c.isEquipped(BLItems.PENDANT_OF_PIERCING))
+            if (c.isEquipped(BLItems.PENDANT_OF_PIERCING))
                 damageEntitiesBetween(entity, start, newPos);
         });
 
@@ -75,10 +75,10 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
     public void damageEntitiesBetween(LivingEntity entity, Vec3d start, Vec3d end) {
         Box box = new Box(start, end);
         entity.getWorld().getOtherEntities(entity, box, e -> e.isLiving() && e.isAlive())
-                .forEach(e -> {
-                    if(e.getBoundingBox().intersects(start, end) && e.damage(BLDamageSources.teleport(entity), 4) && entity instanceof PlayerEntity player)
-                        player.addExhaustion(BLConfig.INSTANCE.piercingExhaustion / BLConfig.INSTANCE.vampireExhaustionMultiplier);
-                });
+          .forEach(e -> {
+              if (e.getBoundingBox().intersects(start, end) && e.damage(BLDamageSources.teleport(entity), 4) && entity instanceof PlayerEntity player)
+                  player.addExhaustion(BLConfig.INSTANCE.piercingExhaustion / BLConfig.INSTANCE.vampireExhaustionMultiplier);
+          });
     }
 
     public double getRange(LivingEntity entity) {
@@ -88,6 +88,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
     public int getCooldown(LivingEntity entity) {
         return (int) entity.getAttributeValue(BLEntityAttributes.BLINK_COOLDOWN);
     }
+
     @Override
     public boolean canTickCooldown(LivingEntity entity, VampireComponent vampireComponent) {
         return entity.isOnGround();
@@ -112,8 +113,8 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         double toY = buf.readDouble();
         double toZ = buf.readDouble();
         return new TeleportData(
-                new Vec3d(fromX, fromY, fromZ),
-                new Vec3d(toX, toY, toZ)
+          new Vec3d(fromX, fromY, fromZ),
+          new Vec3d(toX, toY, toZ)
         );
     }
 
@@ -122,22 +123,23 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         int dist = (int) data.to.distanceTo(data.from) * 2;
         double eyeYOffset = entity.getEyeHeight(entity.getPose()) / 2;
         Random rand = entity.getRandom();
-        for(int i = 0; i < dist; i++) {
+        for (int i = 0; i < dist; i++) {
             Vec3d pos = data.from.lerp(data.to, (float) i / dist).add(0, eyeYOffset, 0);
             double xOffset = rand.nextGaussian() * 0.2;
             double yOffset = rand.nextGaussian() * 0.2;
             double zOffset = rand.nextGaussian() * 0.2;
             entity.getWorld().addParticle(
-                    DustParticleEffect.DEFAULT,
-                    pos.getX() + xOffset,
-                    pos.getY() + yOffset,
-                    pos.getZ() + zOffset,
-                    0,
-                    0,
-                    0
+              DustParticleEffect.DEFAULT,
+              pos.getX() + xOffset,
+              pos.getY() + yOffset,
+              pos.getZ() + zOffset,
+              0,
+              0,
+              0
             );
         }
     }
 
-    public record TeleportData(Vec3d from, Vec3d to) {}
+    public record TeleportData(Vec3d from, Vec3d to) {
+    }
 }

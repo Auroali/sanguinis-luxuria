@@ -16,9 +16,9 @@ public class UnlockAbilityCriterion extends AbstractCriterion<UnlockAbilityCrite
     @Override
     protected UnlockAbilityCriterion.Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         VampireAbility ability = null;
-        if(obj.has("ability")) {
+        if (obj.has("ability")) {
             Identifier identifier = Identifier.tryParse(obj.get("ability").getAsString());
-            if(identifier != null)
+            if (identifier != null)
                 ability = BLRegistries.VAMPIRE_ABILITIES.get(identifier);
         }
         return new Conditions(playerPredicate, ability);
@@ -52,12 +52,13 @@ public class UnlockAbilityCriterion extends AbstractCriterion<UnlockAbilityCrite
         public boolean matches(VampireAbility ability) {
             return this.ability == null || this.ability == ability;
         }
+
         @Override
         public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
             JsonObject obj = super.toJson(predicateSerializer);
-            if(ability != null) {
+            if (ability != null) {
                 ability.getRegistryEntry().getKey().ifPresent(k ->
-                    obj.addProperty("ability", k.getValue().toString())
+                  obj.addProperty("ability", k.getValue().toString())
                 );
             }
             return obj;

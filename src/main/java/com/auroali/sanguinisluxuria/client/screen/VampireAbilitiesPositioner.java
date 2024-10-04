@@ -14,10 +14,10 @@ public class VampireAbilitiesPositioner {
         ClientPlayerEntity player = client.player;
         List<VampireAbilityWidget> abilities = widgets.stream().filter(w -> w.parent == null && !w.ability.isHidden(player)).toList();
         int currentRow = 0;
-        while(!abilities.isEmpty()) {
+        while (!abilities.isEmpty()) {
             int currentX = 0;
-            for(VampireAbilityWidget widget : abilities) {
-                if(widget.parent != null)
+            for (VampireAbilityWidget widget : abilities) {
+                if (widget.parent != null)
                     widget.setX(widget.parent.getX());
                 else {
                     widget.setX(currentX * columnSpacing);
@@ -26,31 +26,31 @@ public class VampireAbilitiesPositioner {
 
                 widget.setY(currentRow * rowSpacing);
             }
-            if(currentRow == 0) {
+            if (currentRow == 0) {
                 int size = abilities.size();
                 abilities.forEach(a ->
-                        a.setX(a.getX() - columnSpacing / 2 * (size))
+                  a.setX(a.getX() - columnSpacing / 2 * (size))
                 );
             }
             resolveCollisions(abilities, columnSpacing);
             currentRow++;
             abilities = abilities
-                    .stream()
-                    .flatMap(w -> w.getChildren().stream())
-                    .filter((w -> !w.ability.isHidden(player)))
-                    .toList();
+              .stream()
+              .flatMap(w -> w.getChildren().stream())
+              .filter((w -> !w.ability.isHidden(player)))
+              .toList();
         }
     }
 
     private static void resolveCollisions(List<VampireAbilityWidget> widgets, int columnSpacing) {
         boolean hasCollisions = true;
-        while(hasCollisions) {
+        while (hasCollisions) {
             hasCollisions = false;
             for (VampireAbilityWidget widget : widgets) {
                 for (VampireAbilityWidget other : widgets) {
-                    if(other != widget && widget.isOverlappingX(other)) {
+                    if (other != widget && widget.isOverlappingX(other)) {
                         int dir = 1;
-                        if(other.parent.getX() > widget.parent.getX())
+                        if (other.parent.getX() > widget.parent.getX())
                             dir = -1;
                         widget.setX(widget.getX() + dir * (columnSpacing / 2));
                         other.setX(other.getX() - dir * (columnSpacing / 2));
@@ -61,7 +61,7 @@ public class VampireAbilitiesPositioner {
         }
 
         hasCollisions = true;
-        while(hasCollisions) {
+        while (hasCollisions) {
             hasCollisions = false;
             for (VampireAbilityWidget widget : widgets) {
                 if (widget.parent == null)

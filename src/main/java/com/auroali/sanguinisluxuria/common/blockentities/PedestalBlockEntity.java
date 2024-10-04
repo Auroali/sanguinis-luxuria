@@ -22,7 +22,7 @@ public class PedestalBlockEntity extends BlockEntity {
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.PEDESTAL, pos, state);
         inv.addListener(inv -> {
-            if(world != null && !world.isClient)
+            if (world != null && !world.isClient)
                 world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
         });
     }
@@ -41,7 +41,7 @@ public class PedestalBlockEntity extends BlockEntity {
 
     public void setItem(ItemStack stack) {
         inv.setStack(0, stack);
-        if(world != null) {
+        if (world != null) {
             BlockState state = world.getBlockState(pos);
             world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
         }

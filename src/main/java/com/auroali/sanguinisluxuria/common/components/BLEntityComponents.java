@@ -20,14 +20,15 @@ public class BLEntityComponents implements EntityComponentInitializer {
     public static final ComponentKey<VampireComponent> VAMPIRE_COMPONENT = ComponentRegistry.getOrCreate(BLResources.VAMPIRE_COMPONENT_ID, VampireComponent.class);
 
     public static final ComponentKey<BloodTransferComponent> BLOOD_TRANSFER_COMPONENT = ComponentRegistry.getOrCreate(BLResources.BLOOD_DRAIN_ID, BloodTransferComponent.class);
+
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         // we don't need to copy the player component, as it stores no actual data
         registry.registerForPlayers(BLOOD_COMPONENT, PlayerBloodComponent::new, RespawnCopyStrategy.NEVER_COPY);
         registry.registerForPlayers(VAMPIRE_COMPONENT, PlayerVampireComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         registry.beginRegistration(LivingEntity.class, BLOOD_COMPONENT)
-                .impl(EntityBloodComponent.class)
-                .end(EntityBloodComponent::new);
+          .impl(EntityBloodComponent.class)
+          .end(EntityBloodComponent::new);
         registry.registerFor(TridentEntity.class, BLOOD_TRANSFER_COMPONENT, BloodTransferComponent::new);
         registry.registerFor(VampireVillagerEntity.class, VAMPIRE_COMPONENT, e -> new EntityVampireComponent<>(e, BLVampireAbilities.TELEPORT));
         registry.registerFor(VillagerEntity.class, VAMPIRE_COMPONENT, ConvertibleVampireComponent.create(BLEntities.VAMPIRE_VILLAGER));

@@ -56,21 +56,21 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     public void drainBloodFrom(LivingEntity entity) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
         BloodComponent holderBlood = BLEntityComponents.BLOOD_COMPONENT.get(holder);
-        if(!blood.hasBlood() || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
+        if (!blood.hasBlood() || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
             return;
 
         // damage the vampire and cancel filling up hunger if the target has blood protection
-        if(entity.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) {
+        if (entity.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) {
             holder.damage(BLDamageSources.blessedWater(entity), BLConfig.INSTANCE.blessedWaterDamage);
             return;
         }
 
         // handle differing amounts of blood depending on the good blood tag and unlocked abilities
         int bloodMultiplier = 1;
-        if(!VampireHelper.isVampire(entity) && abilities.hasAbility(BLVampireAbilities.MORE_BLOOD))
+        if (!VampireHelper.isVampire(entity) && abilities.hasAbility(BLVampireAbilities.MORE_BLOOD))
             bloodMultiplier = 2;
 
-        if(!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD)) {
+        if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD)) {
             holderBlood.addBlood(bloodMultiplier * 2);
             BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier * 2);
         } else {
@@ -81,31 +81,31 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
         holder.getWorld().emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
-        if(abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
+        if (abilities.hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
             BLVampireAbilities.TRANSFER_EFFECTS.sync(entity, InfectiousAbility.InfectiousData.create(entity, holder.getStatusEffects()));
             transferPotionEffectsTo(entity);
         }
 
         // apply any negative effects for toxic blood
-        if(entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
+        if (entity.getType().isIn(BLTags.Entities.TOXIC_BLOOD))
             addToxicBloodEffects();
 
         // allow conversion of entities with weakness
-        if(!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS)) {
-            if(holder instanceof ServerPlayerEntity player)
+        if (!VampireHelper.isVampire(entity) && entity.hasStatusEffect(StatusEffects.WEAKNESS)) {
+            if (holder instanceof ServerPlayerEntity player)
                 BLAdvancementCriterion.INFECT_ENTITY.trigger(player);
             addBloodSickness(entity);
         }
 
         // villagers have a 50% chance to wake up when having their blood drained
         // it also adds negative reputation to the player
-        if(entity.getWorld() instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
+        if (entity.getWorld() instanceof ServerWorld serverWorld && entity instanceof VillagerEntity villager) {
             serverWorld.handleInteraction(EntityInteraction.VILLAGER_HURT, holder, villager);
-            if(holder.getRandom().nextDouble() > 0.5f)
+            if (holder.getRandom().nextDouble() > 0.5f)
                 entity.wakeUp();
         }
 
-        if(entity.getType().isIn(BLTags.Entities.TELEPORTS_ON_DRAIN)) {
+        if (entity.getType().isIn(BLTags.Entities.TELEPORTS_ON_DRAIN)) {
             VampireHelper.teleportRandomly(holder);
         }
     }
@@ -113,16 +113,16 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     private void addToxicBloodEffects() {
         holder.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 3));
         holder.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 0));
-        if(holder.getRandom().nextDouble() > 0.75)
+        if (holder.getRandom().nextDouble() > 0.75)
             holder.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
     }
 
     private void transferPotionEffectsTo(LivingEntity entity) {
-        for(StatusEffectInstance instance : holder.getStatusEffects()) {
+        for (StatusEffectInstance instance : holder.getStatusEffects()) {
             entity.addStatusEffect(instance);
         }
 
-        if(holder instanceof ServerPlayerEntity player) {
+        if (holder instanceof ServerPlayerEntity player) {
             BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, player.getStatusEffects().size());
         }
 
@@ -131,8 +131,8 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
 
     private void addBloodSickness(LivingEntity target) {
         int level = target.hasStatusEffect(BLStatusEffects.BLOOD_SICKNESS)
-                ? target.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1
-                : 0;
+          ? target.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1
+          : 0;
 
         target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, level));
     }

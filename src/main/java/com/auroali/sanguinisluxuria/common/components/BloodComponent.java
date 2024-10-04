@@ -17,6 +17,7 @@ public interface BloodComponent extends Component, AutoSyncedComponent {
 
     /**
      * Adds blood to the current amount
+     *
      * @param amount the amount to add
      * @return the amount actually added
      */
@@ -24,12 +25,14 @@ public interface BloodComponent extends Component, AutoSyncedComponent {
 
     /**
      * Sets the current amount of blood
+     *
      * @param amount the new amount of blood
      */
     void setBlood(int amount);
 
     /**
      * Tries to drain one unit of blood
+     *
      * @param drainer the entity draining the component holder's blood
      * @return whether blood was actually drained
      * @see BloodComponent#drainBlood()
@@ -38,6 +41,7 @@ public interface BloodComponent extends Component, AutoSyncedComponent {
 
     /**
      * Tries to drain one unit of blood
+     *
      * @return whether blood was actually drained
      * @see BloodComponent#drainBlood(LivingEntity)
      */

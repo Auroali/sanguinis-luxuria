@@ -39,33 +39,34 @@ import org.lwjgl.glfw.GLFW;
 
 public class BloodlustClient implements ClientModInitializer {
     public static KeyBinding SUCK_BLOOD = new KeyBinding(
-            "key.sanguinisluxuria.bite",
-            InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
-            "category.sanguinisluxuria.sanguinisluxuria"
+      "key.sanguinisluxuria.bite",
+      InputUtil.Type.KEYSYM,
+      GLFW.GLFW_KEY_R,
+      "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static KeyBinding OPEN_ABILITIES = new KeyBinding(
-            "key.sanguinisluxuria.open_abilities",
-            InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_Y,
-            "category.sanguinisluxuria.sanguinisluxuria"
+      "key.sanguinisluxuria.open_abilities",
+      InputUtil.Type.KEYSYM,
+      GLFW.GLFW_KEY_Y,
+      "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static KeyBinding ABILITY_1 = new KeyBinding(
-            "key.sanguinisluxuria.ability_1",
-            InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_Z,
-            "category.sanguinisluxuria.sanguinisluxuria"
+      "key.sanguinisluxuria.ability_1",
+      InputUtil.Type.KEYSYM,
+      GLFW.GLFW_KEY_Z,
+      "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static KeyBinding ABILITY_2 = new KeyBinding(
-            "key.sanguinisluxuria.ability_2",
-            InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_X,
-            "category.sanguinisluxuria.sanguinisluxuria"
+      "key.sanguinisluxuria.ability_2",
+      InputUtil.Type.KEYSYM,
+      GLFW.GLFW_KEY_X,
+      "category.sanguinisluxuria.sanguinisluxuria"
     );
 
     public static boolean isAltarActive = false;
 
     public boolean drainingBlood;
+
     @Override
     public void onInitializeClient() {
         registerBindings();
@@ -99,8 +100,8 @@ public class BloodlustClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), BLFluids.BLOOD);
 
         FluidRenderHandlerRegistry.INSTANCE.register(BLFluids.BLOOD, new SimpleFluidRenderHandler(
-                BLResources.BLOOD_STILL_TEXTURE,
-                BLResources.BLOOD_FLOWING_TEXTURE
+          BLResources.BLOOD_STILL_TEXTURE,
+          BLResources.BLOOD_FLOWING_TEXTURE
         ));
 //        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
 //            registry.register(BLResources.BLOOD_FLOWING_TEXTURE);
@@ -110,31 +111,31 @@ public class BloodlustClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(BLResources.ABILITY_SYNC_CHANNEL, (client, handler, buf, responseSender) -> {
             int id = buf.readVarInt();
             VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
-            if(client.world != null && client.world.getEntityById(id) instanceof LivingEntity entity && ability instanceof SyncableVampireAbility<?> s)
+            if (client.world != null && client.world.getEntityById(id) instanceof LivingEntity entity && ability instanceof SyncableVampireAbility<?> s)
                 s.handlePacket(entity, buf, client::execute);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(AltarRecipeStartS2C.ID, (packet, player, responseSender) -> {
-           World world = player.getWorld();
-           final int density = 4;
-           for(BlockPos pedestalPos : packet.pedestals()) {
-               for(int i = 0; i < pedestalPos.getManhattanDistance(packet.pos()) * density; i++) {
-                   Vec3d pos = pedestalPos.toCenterPos();
-                   Vec3d offset = packet.pos().toCenterPos().subtract(pedestalPos.toCenterPos())
-                           .normalize()
-                           .multiply((double) i / density);
-                   pos = pos.add(offset);
-                   world.addParticle(
-                           DustParticleEffect.DEFAULT,
-                           pos.getX() + world.getRandom().nextGaussian() * 0.07,
-                           pos.getY() + world.getRandom().nextGaussian() * 0.07,
-                           pos.getZ() + world.getRandom().nextGaussian() * 0.07,
-                           0,
-                           0,
-                           0
-                   );
-               }
-           }
+            World world = player.getWorld();
+            final int density = 4;
+            for (BlockPos pedestalPos : packet.pedestals()) {
+                for (int i = 0; i < pedestalPos.getManhattanDistance(packet.pos()) * density; i++) {
+                    Vec3d pos = pedestalPos.toCenterPos();
+                    Vec3d offset = packet.pos().toCenterPos().subtract(pedestalPos.toCenterPos())
+                      .normalize()
+                      .multiply((double) i / density);
+                    pos = pos.add(offset);
+                    world.addParticle(
+                      DustParticleEffect.DEFAULT,
+                      pos.getX() + world.getRandom().nextGaussian() * 0.07,
+                      pos.getY() + world.getRandom().nextGaussian() * 0.07,
+                      pos.getZ() + world.getRandom().nextGaussian() * 0.07,
+                      0,
+                      0,
+                      0
+                    );
+                }
+            }
         });
     }
 
@@ -145,13 +146,13 @@ public class BloodlustClient implements ClientModInitializer {
         ABILITY_2 = KeyBindingHelper.registerKeyBinding(ABILITY_2);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while(OPEN_ABILITIES.wasPressed() && VampireHelper.isVampire(client.player)) {
+            while (OPEN_ABILITIES.wasPressed() && VampireHelper.isVampire(client.player)) {
                 client.setScreen(new VampireAbilitiesScreen());
             }
-            while(ABILITY_1.wasPressed()) {
+            while (ABILITY_1.wasPressed()) {
                 ClientPlayNetworking.send(new ActivateAbilityC2S(0));
             }
-            while(ABILITY_2.wasPressed()) {
+            while (ABILITY_2.wasPressed()) {
                 ClientPlayNetworking.send(new ActivateAbilityC2S(1));
             }
             if (SUCK_BLOOD.isPressed()) {
@@ -169,11 +170,11 @@ public class BloodlustClient implements ClientModInitializer {
 
     public static boolean isLookingAtValidTarget() {
         MinecraftClient client = MinecraftClient.getInstance();
-        if(!VampireHelper.isVampire(client.player))
+        if (!VampireHelper.isVampire(client.player))
             return false;
 
         HitResult result = client.crosshairTarget;
-        LivingEntity target = result != null && result.getType() == HitResult.Type.ENTITY && ((EntityHitResult)result).getEntity() instanceof LivingEntity living ? living : null;
+        LivingEntity target = result != null && result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() instanceof LivingEntity living ? living : null;
 
         return target != null && target.getType().isIn(BLTags.Entities.HAS_BLOOD);
     }

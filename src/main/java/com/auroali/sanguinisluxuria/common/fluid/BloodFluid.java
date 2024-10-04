@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.common.fluid;
 
-import com.auroali.sanguinisluxuria.common.registry.BLFluids;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler;
 import net.minecraft.block.Block;

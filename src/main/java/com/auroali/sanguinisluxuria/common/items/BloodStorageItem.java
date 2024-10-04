@@ -37,6 +37,7 @@ public abstract class BloodStorageItem extends Item {
     }
 
     public abstract boolean canFill();
+
     public abstract boolean canDrain();
 
 
@@ -49,15 +50,16 @@ public abstract class BloodStorageItem extends Item {
     }
 
     public static boolean isHoldingBloodFillableItem(LivingEntity entity) {
-        if(entity == null)
+        if (entity == null)
             return false;
 
         return (!getBloodStorageItemInHand(entity, Hand.OFF_HAND).isEmpty() && canBeFilled(getBloodStorageItemInHand(entity, Hand.OFF_HAND)))
-                || (!getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty() && canBeFilled(getBloodStorageItemInHand(entity, Hand.MAIN_HAND)));
+          || (!getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty() && canBeFilled(getBloodStorageItemInHand(entity, Hand.MAIN_HAND)));
     }
 
     /**
      * The item to replace this one with when it runs out of blood
+     *
      * @param item the item to use
      * @see BLItems#BLOOD_BOTTLE
      */
@@ -72,6 +74,7 @@ public abstract class BloodStorageItem extends Item {
 
     /**
      * The model predicate to use with ModelPredicateProviderRegistry
+     *
      * @see BloodStorageItem#registerModelPredicate()
      * @see net.minecraft.client.item.ModelPredicateProviderRegistry
      */
@@ -82,6 +85,7 @@ public abstract class BloodStorageItem extends Item {
 
     /**
      * Registers a model predicate for fill percent with ModelPredicateProviderRegistery
+     *
      * @apiNote The predicate's id is "sanguinisluxuria:blood_storage_item_fill"
      * @see net.minecraft.client.item.ModelPredicateProviderRegistry
      * @see BloodStorageItem#modelPredicate(ItemStack, ClientWorld, LivingEntity, int)
@@ -92,6 +96,7 @@ public abstract class BloodStorageItem extends Item {
 
     /**
      * Sets the amount of blood stored in a given stack
+     *
      * @param stack the blood storage item stack
      * @param blood the amount of blood
      */
@@ -102,6 +107,7 @@ public abstract class BloodStorageItem extends Item {
 
     /**
      * Gets the maximum amount of blood this item can store
+     *
      * @return the maximum amount of blood
      */
     public int getMaxBlood() {
@@ -110,17 +116,19 @@ public abstract class BloodStorageItem extends Item {
 
     /**
      * Gets the maximum amount of blood this item can store
+     *
      * @param stack the blood storing item
      * @return the maximum amount of blood
      */
     public static int getMaxBlood(ItemStack stack) {
-        if(stack.getItem() instanceof BloodStorageItem item)
+        if (stack.getItem() instanceof BloodStorageItem item)
             return item.getMaxBlood();
         return 0;
     }
 
     /**
      * Gets the amount of blood stored in a stack
+     *
      * @param stack the item stack
      * @return the amount of blood stored in the stack
      */
@@ -138,13 +146,14 @@ public abstract class BloodStorageItem extends Item {
 
     private static ItemStack getBloodStorageItemInHand(LivingEntity entity, Hand hand) {
         ItemStack stack = entity.getStackInHand(hand);
-        if(stack.isOf(Items.GLASS_BOTTLE))
+        if (stack.isOf(Items.GLASS_BOTTLE))
             return new ItemStack(BLItems.BLOOD_BOTTLE);
         return stack.getItem() instanceof BloodStorageItem ? stack : ItemStack.EMPTY;
     }
 
     /**
      * Tries to fill a valid blood-storing item in an entity's hand
+     *
      * @param entity the entity holding the item
      * @param amount the amount of blood to add
      * @return if the entity was both holding a valid item and the item could successfully be filled by amount
@@ -152,30 +161,30 @@ public abstract class BloodStorageItem extends Item {
     public static boolean tryAddBloodToItemInHand(LivingEntity entity, int amount) {
         ItemStack stack = getBloodStorageItemInHand(entity, Hand.OFF_HAND);
         Hand hand = Hand.OFF_HAND;
-        if(!getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty()) {
+        if (!getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty()) {
             stack = getBloodStorageItemInHand(entity, Hand.MAIN_HAND);
             hand = Hand.MAIN_HAND;
         }
 
-        if(stack.isEmpty() || !canBeFilled(stack) || getStoredBlood(stack) + amount > getMaxBlood(stack))
+        if (stack.isEmpty() || !canBeFilled(stack) || getStoredBlood(stack) + amount > getMaxBlood(stack))
             return false;
 
         setStoredBlood(stack, getStoredBlood(stack) + amount);
 
         Item originalHeldItem = entity.getStackInHand(hand).getItem();
 
-        if(stack != entity.getStackInHand(hand))
+        if (stack != entity.getStackInHand(hand))
             entity.getStackInHand(hand).decrement(1);
 
-        if(stack == entity.getStackInHand(hand) || entity.getStackInHand(hand).isEmpty())
+        if (stack == entity.getStackInHand(hand) || entity.getStackInHand(hand).isEmpty())
             entity.setStackInHand(hand, stack);
-        else if(!(entity instanceof PlayerEntity e && e.getInventory().insertStack(stack))) {
+        else if (!(entity instanceof PlayerEntity e && e.getInventory().insertStack(stack))) {
             if (entity instanceof PlayerEntity player)
                 player.dropItem(stack, false);
             else entity.dropStack(stack);
         }
 
-        if(entity instanceof PlayerEntity player)
+        if (entity instanceof PlayerEntity player)
             player.getItemCooldownManager().set(originalHeldItem, 10);
 
         return true;
@@ -216,7 +225,7 @@ public abstract class BloodStorageItem extends Item {
         }
 
         private long getStoredFluid() {
-            if(context.getItemVariant().getNbt() == null)
+            if (context.getItemVariant().getNbt() == null)
                 return 0;
             return (long) (FluidConstants.BOTTLE * context.getItemVariant().getNbt().getInt("StoredBlood") / (float) BloodConstants.BLOOD_PER_BOTTLE);
         }
@@ -265,8 +274,8 @@ public abstract class BloodStorageItem extends Item {
             if (resource.equals(containedFluid) && storedAmount != 0) {
                 // If that's ok, just convert one of the full item into the empty item, copying the nbt.
                 ItemVariant newVariant = getStoredFluid() - storedAmount > 0
-                        ? ItemVariant.of(setStoredBlood(new ItemStack(item), convertStoredFluidToBlood(getStoredFluid() - storedAmount)))
-                        : this.item.getEmptyItem() == null ? ItemVariant.of(this.item) : ItemVariant.of(this.item.getEmptyItem());
+                  ? ItemVariant.of(setStoredBlood(new ItemStack(item), convertStoredFluidToBlood(getStoredFluid() - storedAmount)))
+                  : this.item.getEmptyItem() == null ? ItemVariant.of(this.item) : ItemVariant.of(this.item.getEmptyItem());
 
                 if (context.exchange(newVariant, 1, transaction) == 1) {
                     // Conversion ok!

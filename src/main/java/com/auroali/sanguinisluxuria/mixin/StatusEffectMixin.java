@@ -12,18 +12,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(StatusEffect.class)
 public class StatusEffectMixin {
     @Inject(method = "applyUpdateEffect", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V",
-            shift = At.Shift.BEFORE
+      value = "INVOKE",
+      target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V",
+      shift = At.Shift.BEFORE
     ), cancellable = true)
     public void sanguinisluxuria$preventSaturationForVampires(LivingEntity entity, int amplifier, CallbackInfo ci) {
-        if(VampireHelper.isVampire(entity))
+        if (VampireHelper.isVampire(entity))
             ci.cancel();
     }
 
     @Inject(method = "applyUpdateEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", ordinal = 0), cancellable = true)
     public void sanguinisluxuria$preventPoisonFromKilling(LivingEntity entity, int amplifier, CallbackInfo ci) {
-        if(VampireHelper.isVampire(entity)) {
+        if (VampireHelper.isVampire(entity)) {
             entity.damage(entity.getDamageSources().magic(), 1.0F / BLConfig.INSTANCE.vampireDamageMultiplier);
             ci.cancel();
         }

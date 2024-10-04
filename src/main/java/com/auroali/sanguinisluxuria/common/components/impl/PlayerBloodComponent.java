@@ -19,14 +19,16 @@ public class PlayerBloodComponent implements BloodComponent {
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag) {}
+    public void readFromNbt(NbtCompound tag) {
+    }
 
     @Override
-    public void writeToNbt(NbtCompound tag) {}
+    public void writeToNbt(NbtCompound tag) {
+    }
 
     @Override
     public int getBlood() {
-        if(holder.getWorld().isClient) {
+        if (holder.getWorld().isClient) {
             return blood;
         }
         return holder.getHungerManager().getFoodLevel();
@@ -43,7 +45,7 @@ public class PlayerBloodComponent implements BloodComponent {
         int newBlood = Math.min(getMaxBlood(), amount + getBlood());
         int bloodAdded = newBlood - getBlood();
         holder.getHungerManager().setFoodLevel(newBlood);
-        if(VampireHelper.isVampire(holder) && bloodAdded > 0) {
+        if (VampireHelper.isVampire(holder) && bloodAdded > 0) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(holder);
             vampire.setDowned(false);
         }
@@ -58,7 +60,7 @@ public class PlayerBloodComponent implements BloodComponent {
     @Override
     public boolean drainBlood(LivingEntity entity) {
         int currentBlood = getBlood();
-        if(currentBlood > 0) {
+        if (currentBlood > 0) {
             holder.getHungerManager().setFoodLevel(currentBlood - 1);
             return true;
         }

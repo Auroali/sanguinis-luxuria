@@ -15,12 +15,12 @@ import net.minecraft.util.DyeColor;
 
 public class BLBlocks {
     public static final Block BLOOD_SPLATTER = new BloodSplatterBlock(
-            FabricBlockSettings.create(/*Materials.DECORATION*/)
-                    .mapColor(DyeColor.RED)
-                    .breakInstantly()
-                    .noCollision()
-                    .ticksRandomly()
-                    .sounds(BlockSoundGroup.HONEY)
+      FabricBlockSettings.create(/*Materials.DECORATION*/)
+        .mapColor(DyeColor.RED)
+        .breakInstantly()
+        .noCollision()
+        .ticksRandomly()
+        .sounds(BlockSoundGroup.HONEY)
     );
 
     //public static final FluidBlock BLOOD = new FluidBlock(BLFluids.BLOOD_STILL, FabricBlockSettings.of(Material.LAVA));

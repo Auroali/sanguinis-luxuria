@@ -34,21 +34,21 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
 
     @Override
     public boolean activate(LivingEntity entity, VampireComponent component) {
-        if(component.getAbilties().isOnCooldown(this) || VampireHelper.isMasked(entity))
+        if (component.getAbilties().isOnCooldown(this) || VampireHelper.isMasked(entity))
             return false;
 
         HitResult result = getTarget(entity);
-        if(result.getType() != HitResult.Type.ENTITY)
+        if (result.getType() != HitResult.Type.ENTITY)
             return false;
 
-        LivingEntity target = ((EntityHitResult)result).getEntity() instanceof LivingEntity e ? e : null;
-        if(target == null)
+        LivingEntity target = ((EntityHitResult) result).getEntity() instanceof LivingEntity e ? e : null;
+        if (target == null)
             return false;
 
         target.damage(BLDamageSources.bite(entity), 3);
         target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLEEDING, 100, 0));
         sync(entity, target);
-        if(component.getAbilties().hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
+        if (component.getAbilties().hasAbility(BLVampireAbilities.TRANSFER_EFFECTS)) {
             BLVampireAbilities.TRANSFER_EFFECTS.sync(entity, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
             VampireHelper.transferStatusEffects(entity, target);
         }
@@ -62,7 +62,7 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
         Vec3d end = start.add(entity.getRotationVector().multiply(reachDistance));
 
         HitResult result = entity.getWorld().raycast(new RaycastContext(
-                start, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, entity
+          start, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, entity
         ));
 
         Vec3d vec3d2 = entity.getRotationVec(1.0F);
@@ -71,10 +71,10 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
         Box box = entity.getBoundingBox().stretch(vec3d2.multiply(reachDistance)).expand(1.0, 1.0, 1.0);
 
         double d = reachDistance * reachDistance;
-        if(result != null)
+        if (result != null)
             d = result.getPos().squaredDistanceTo(start);
         EntityHitResult entityHitResult = ProjectileUtil.raycast(entity, start, vec3d3, box, e -> !e.isSpectator() && e.canHit(), d);
-        if(entityHitResult != null) {
+        if (entityHitResult != null) {
             double g = start.squaredDistanceTo(entityHitResult.getPos());
             if (g < d || result == null) {
                 return entityHitResult;
@@ -98,18 +98,18 @@ public class BiteAbility extends VampireAbility implements SyncableVampireAbilit
         Box box = data.getBoundingBox();
         Random rand = data.getRandom();
         int max = 15;
-        for(int i = 0; i < max; i++) {
+        for (int i = 0; i < max; i++) {
             double x = box.minX + rand.nextDouble() * box.getXLength();
             double y = box.minY + rand.nextDouble() * box.getYLength();
             double z = box.minZ + rand.nextDouble() * box.getZLength();
             data.getWorld().addParticle(
-                    DustParticleEffect.DEFAULT,
-                    x,
-                    y,
-                    z,
-                    0,
-                    0,
-                    0
+              DustParticleEffect.DEFAULT,
+              x,
+              y,
+              z,
+              0,
+              0,
+              0
             );
         }
     }

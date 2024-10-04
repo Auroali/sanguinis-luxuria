@@ -85,20 +85,20 @@ public class AltarRecipe implements Recipe<AltarInventory> {
     }
 
     public boolean matches(int level, Collection<ItemStack> input) {
-        if(level < minLevel || level > maxLevel || input.size() != ingredients.size())
+        if (level < minLevel || level > maxLevel || input.size() != ingredients.size())
             return false;
         List<ItemStack> stacks = new ArrayList<>(input);
         boolean matches = false;
-        for(Ingredient i : ingredients) {
-            for(ItemStack stack : stacks) {
-                if(i.test(stack)) {
+        for (Ingredient i : ingredients) {
+            for (ItemStack stack : stacks) {
+                if (i.test(stack)) {
                     stacks.remove(stack);
                     matches = true;
                     break;
                 }
                 matches = false;
             }
-            if(!matches)
+            if (!matches)
                 return false;
         }
 
@@ -125,14 +125,14 @@ public class AltarRecipe implements Recipe<AltarInventory> {
             int maxLevel = Integer.MAX_VALUE;
             String string = JsonHelper.getString(json, "group", "");
             int ticksToProcess = JsonHelper.getInt(json, "ticks", 300);
-            if(json.has("maxLevel"))
+            if (json.has("maxLevel"))
                 maxLevel = json.get("maxLevel").getAsInt();
 
             DefaultedList<Ingredient> ingredients = getIngredients(JsonHelper.getArray(json, "input"));
-            if(ingredients.isEmpty())
+            if (ingredients.isEmpty())
                 throw new JsonParseException("No ingredients for recipe");
 
-            if(ingredients.size() > 8)
+            if (ingredients.size() > 8)
                 throw new JsonParseException("There must be at most 8 inputs the the recipe");
 
             ItemStack itemStack = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
@@ -142,7 +142,7 @@ public class AltarRecipe implements Recipe<AltarInventory> {
         private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
             DefaultedList<Ingredient> defaultedList = DefaultedList.of();
 
-            for(int i = 0; i < json.size(); ++i) {
+            for (int i = 0; i < json.size(); ++i) {
                 Ingredient ingredient = Ingredient.fromJson(json.get(i));
                 if (!ingredient.isEmpty()) {
                     defaultedList.add(ingredient);
@@ -173,7 +173,7 @@ public class AltarRecipe implements Recipe<AltarInventory> {
             packetByteBuf.writeVarInt(altarRecipe.ticksToProcess);
             packetByteBuf.writeVarInt(altarRecipe.ingredients.size());
 
-            for(Ingredient ingredient : altarRecipe.ingredients) {
+            for (Ingredient ingredient : altarRecipe.ingredients) {
                 ingredient.write(packetByteBuf);
             }
 

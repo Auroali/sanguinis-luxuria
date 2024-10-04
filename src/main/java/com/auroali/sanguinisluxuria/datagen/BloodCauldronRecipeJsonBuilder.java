@@ -67,17 +67,17 @@ public class BloodCauldronRecipeJsonBuilder extends RecipeJsonBuilder implements
     public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
         validate(recipeId);
         this.advancementBuilder
-                .parent(ROOT)
-                .criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId))
-                .rewards(AdvancementRewards.Builder.recipe(recipeId))
-                .criteriaMerger(CriterionMerger.OR);
+          .parent(ROOT)
+          .criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId))
+          .rewards(AdvancementRewards.Builder.recipe(recipeId))
+          .criteriaMerger(CriterionMerger.OR);
         exporter.accept(
-                new Provider(
-                        recipeId,
-                        recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/"),
-                        this,
-                        getCraftingCategory(this.category)
-                )
+          new Provider(
+            recipeId,
+            recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/"),
+            this,
+            getCraftingCategory(this.category)
+          )
         );
     }
 

@@ -33,10 +33,9 @@ public class TwistedBloodItem extends Item {
 
         if (!world.isClient && VampireHelper.isVampire(user)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
-            if(vampire.getLevel() >= getMinLevel() && vampire.getLevel() < getMaxLevel())
+            if (vampire.getLevel() >= getMinLevel() && vampire.getLevel() < getMaxLevel())
                 vampire.setLevel(vampire.getLevel() + 1);
-        }
-        else if(!world.isClient) DrinkableBloodStorageItem.applyNonVampireEffects(user);
+        } else if (!world.isClient) DrinkableBloodStorageItem.applyNonVampireEffects(user);
 
         return new ItemStack(Items.GLASS_BOTTLE);
     }
@@ -44,6 +43,7 @@ public class TwistedBloodItem extends Item {
     public static int getMinLevel() {
         return 0;
     }
+
     public static int getMaxLevel() {
         return 7;
     }

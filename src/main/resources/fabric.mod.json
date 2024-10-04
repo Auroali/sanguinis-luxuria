@@ -1,64 +1,64 @@
 {
-	"schemaVersion": 1,
-	"id": "sanguinisluxuria",
-	"version": "${version}",
-	"name": "Sanguinis Luxuria",
-	"description": "A mod about becoming a vampire",
-	"authors": [
-		"Auroali",
-		"EastCoastJack"
-	],
-	"contact": {
-		"homepage": "https://modrinth.com/project/sanguinis-luxuria",
-		"sources": "https://github.com/Auroali/sanguinis-luxuria",
-		"issues": "https://github.com/Auroali/sanguinis-luxuria/issues"
-	},
-	"license": "MIT",
-	"icon": "assets/sanguinisluxuria/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"com.auroali.sanguinisluxuria.Bloodlust"
-		],
-		"client": [
-			"com.auroali.sanguinisluxuria.BloodlustClient"
-		],
-		"fabric-datagen": [
-			"com.auroali.sanguinisluxuria.BloodlustDataGenerator"
-		],
-		"cardinal-components": [
-			"com.auroali.sanguinisluxuria.common.components.BLEntityComponents"
-		],
-		"modmenu": [
-			"com.auroali.sanguinisluxuria.compat.ModMenuCompat"
-		],
-		"appleskin": [
-			"com.auroali.sanguinisluxuria.compat.AppleskinCompat"
-		],
-		"emi": [
-			"com.auroali.sanguinisluxuria.compat.emi.EmiCompat"
-		]
-	},
-	"mixins": [
-		"sanguinisluxuria.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=${loader_version}",
-		"minecraft": "~${minecraft_version}",
-		"java": ">=17",
-		"fabric-api": "*",
-		"trinkets": ">=${trinkets_version}",
-		"reach-entity-attributes": ">=${reach_entity_attributes_version}",
-		"cardinal-components-entity": "~${cca_version}",
-		"yet_another_config_lib_v3": ">=${yacl_version}",
-		"patchouli": ">=${patchouli_version}",
-		"configserializer": "~1.0.0"
-	},
-	"custom": {
-		"cardinal-components": [
-			"sanguinisluxuria:blood",
-			"sanguinisluxuria:vampire",
-			"sanguinisluxuria:blood_drain"
-		]
-	}
+  "schemaVersion": 1,
+  "id": "sanguinisluxuria",
+  "version": "${version}",
+  "name": "Sanguinis Luxuria",
+  "description": "A mod about becoming a vampire",
+  "authors": [
+    "Auroali",
+    "EastCoastJack"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/project/sanguinis-luxuria",
+    "sources": "https://github.com/Auroali/sanguinis-luxuria",
+    "issues": "https://github.com/Auroali/sanguinis-luxuria/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/sanguinisluxuria/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.auroali.sanguinisluxuria.Bloodlust"
+    ],
+    "client": [
+      "com.auroali.sanguinisluxuria.BloodlustClient"
+    ],
+    "fabric-datagen": [
+      "com.auroali.sanguinisluxuria.BloodlustDataGenerator"
+    ],
+    "cardinal-components": [
+      "com.auroali.sanguinisluxuria.common.components.BLEntityComponents"
+    ],
+    "modmenu": [
+      "com.auroali.sanguinisluxuria.compat.ModMenuCompat"
+    ],
+    "appleskin": [
+      "com.auroali.sanguinisluxuria.compat.AppleskinCompat"
+    ],
+    "emi": [
+      "com.auroali.sanguinisluxuria.compat.emi.EmiCompat"
+    ]
+  },
+  "mixins": [
+    "sanguinisluxuria.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17",
+    "fabric-api": "*",
+    "trinkets": ">=${trinkets_version}",
+    "reach-entity-attributes": ">=${reach_entity_attributes_version}",
+    "cardinal-components-entity": "~${cca_version}",
+    "yet_another_config_lib_v3": ">=${yacl_version}",
+    "patchouli": ">=${patchouli_version}",
+    "configserializer": "~1.0.0"
+  },
+  "custom": {
+    "cardinal-components": [
+      "sanguinisluxuria:blood",
+      "sanguinisluxuria:vampire",
+      "sanguinisluxuria:blood_drain"
+    ]
+  }
 }

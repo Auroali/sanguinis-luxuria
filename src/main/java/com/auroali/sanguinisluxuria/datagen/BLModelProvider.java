@@ -17,61 +17,61 @@ public class BLModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.blockStateCollector
-                .accept(
-                        VariantsBlockStateSupplier.create(BLBlocks.BLOOD_CAULDRON)
-                                .coordinate(
-                                        BlockStateVariantMap.create(LeveledCauldronBlock.LEVEL)
-                                                .register(
-                                                        1,
-                                                        BlockStateVariant.create()
-                                                                .put(
-                                                                        VariantSettings.MODEL,
-                                                                        Models.TEMPLATE_CAULDRON_LEVEL1
-                                                                                .upload(BLBlocks.BLOOD_CAULDRON, "_level1", TextureMap.cauldron(BLResources.BLOOD_STILL_TEXTURE), blockStateModelGenerator.modelCollector)
-                                                                )
-                                                )
-                                                .register(
-                                                        2,
-                                                        BlockStateVariant.create()
-                                                                .put(
-                                                                        VariantSettings.MODEL,
-                                                                        Models.TEMPLATE_CAULDRON_LEVEL2
-                                                                                .upload(BLBlocks.BLOOD_CAULDRON, "_level2", TextureMap.cauldron(BLResources.BLOOD_STILL_TEXTURE), blockStateModelGenerator.modelCollector)
-                                                                )
-                                                )
-                                                .register(
-                                                        3,
-                                                        BlockStateVariant.create()
-                                                                .put(
-                                                                        VariantSettings.MODEL,
-                                                                        Models.TEMPLATE_CAULDRON_FULL
-                                                                                .upload(BLBlocks.BLOOD_CAULDRON, "_full", TextureMap.cauldron(BLResources.BLOOD_STILL_TEXTURE), blockStateModelGenerator.modelCollector)
-                                                                )
-                                                )
-                                )
-                );
+          .accept(
+            VariantsBlockStateSupplier.create(BLBlocks.BLOOD_CAULDRON)
+              .coordinate(
+                BlockStateVariantMap.create(LeveledCauldronBlock.LEVEL)
+                  .register(
+                    1,
+                    BlockStateVariant.create()
+                      .put(
+                        VariantSettings.MODEL,
+                        Models.TEMPLATE_CAULDRON_LEVEL1
+                          .upload(BLBlocks.BLOOD_CAULDRON, "_level1", TextureMap.cauldron(BLResources.BLOOD_STILL_TEXTURE), blockStateModelGenerator.modelCollector)
+                      )
+                  )
+                  .register(
+                    2,
+                    BlockStateVariant.create()
+                      .put(
+                        VariantSettings.MODEL,
+                        Models.TEMPLATE_CAULDRON_LEVEL2
+                          .upload(BLBlocks.BLOOD_CAULDRON, "_level2", TextureMap.cauldron(BLResources.BLOOD_STILL_TEXTURE), blockStateModelGenerator.modelCollector)
+                      )
+                  )
+                  .register(
+                    3,
+                    BlockStateVariant.create()
+                      .put(
+                        VariantSettings.MODEL,
+                        Models.TEMPLATE_CAULDRON_FULL
+                          .upload(BLBlocks.BLOOD_CAULDRON, "_full", TextureMap.cauldron(BLResources.BLOOD_STILL_TEXTURE), blockStateModelGenerator.modelCollector)
+                      )
+                  )
+              )
+          );
         blockStateModelGenerator.blockStateCollector
-                .accept(BlockStateModelGenerator.createSingletonBlockState(
-                        BLBlocks.BLOOD_SPLATTER,
-                        BLModels.REDSTONE_DUST_DOT.upload(
-                                BLBlocks.BLOOD_SPLATTER,
-                                new TextureMap()
-                                        .put(TextureKey.PARTICLE, BLResources.id("block/blood_splatter"))
-                                        .put(BLTextureKeys.LINE, BLResources.id("block/blood_splatter"))
-                                        .put(BLTextureKeys.OVERLAY, BLResources.id("block/blood_splatter")),
-                                blockStateModelGenerator.modelCollector)
-                        ));
+          .accept(BlockStateModelGenerator.createSingletonBlockState(
+            BLBlocks.BLOOD_SPLATTER,
+            BLModels.REDSTONE_DUST_DOT.upload(
+              BLBlocks.BLOOD_SPLATTER,
+              new TextureMap()
+                .put(TextureKey.PARTICLE, BLResources.id("block/blood_splatter"))
+                .put(BLTextureKeys.LINE, BLResources.id("block/blood_splatter"))
+                .put(BLTextureKeys.OVERLAY, BLResources.id("block/blood_splatter")),
+              blockStateModelGenerator.modelCollector)
+          ));
         blockStateModelGenerator.blockStateCollector
-                .accept(VariantsBlockStateSupplier.create(BLBlocks.ALTAR)
-                        .coordinate(BlockStateVariantMap.create(AltarBlock.ACTIVE)
-                                .register(false, BlockStateVariant.create()
-                                        .put(VariantSettings.MODEL, BLResources.id("block/altar")))
-                                .register(true, BlockStateVariant.create()
-                                        .put(VariantSettings.MODEL, BLResources.id("block/altar_active")))
-                        )
-                );
+          .accept(VariantsBlockStateSupplier.create(BLBlocks.ALTAR)
+            .coordinate(BlockStateVariantMap.create(AltarBlock.ACTIVE)
+              .register(false, BlockStateVariant.create()
+                .put(VariantSettings.MODEL, BLResources.id("block/altar")))
+              .register(true, BlockStateVariant.create()
+                .put(VariantSettings.MODEL, BLResources.id("block/altar_active")))
+            )
+          );
         blockStateModelGenerator.blockStateCollector
-                .accept(BlockStateModelGenerator.createSingletonBlockState(BLBlocks.PEDESTAL, BLResources.id("block/pedestal")));
+          .accept(BlockStateModelGenerator.createSingletonBlockState(BLBlocks.PEDESTAL, BLResources.id("block/pedestal")));
         blockStateModelGenerator.registerSingleton(BLBlocks.SILVER_BLOCK, TextureMap.all(BLBlocks.SILVER_BLOCK), Models.CUBE_ALL);
         blockStateModelGenerator.registerSingleton(BLBlocks.SILVER_ORE, TexturedModel.CUBE_ALL);
         blockStateModelGenerator.registerSingleton(BLBlocks.DEEPSLATE_SILVER_ORE, TexturedModel.CUBE_ALL);

@@ -14,12 +14,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin {
-    @Shadow protected abstract void sayNo();
+    @Shadow
+    protected abstract void sayNo();
 
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$preventUnmaskedVampiresFromTrading(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if(VampireHelper.isVampire(player) && !VampireHelper.isMasked(player)) {
-            if(hand == Hand.MAIN_HAND && !player.getWorld().isClient)
+        if (VampireHelper.isVampire(player) && !VampireHelper.isMasked(player)) {
+            if (hand == Hand.MAIN_HAND && !player.getWorld().isClient)
                 sayNo();
 
             player.incrementStat(Stats.TALKED_TO_VILLAGER);

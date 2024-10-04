@@ -24,6 +24,7 @@ public class VampireAbility {
     private String transKey;
     private String descTransKey;
     private final RegistryEntry.Reference<VampireAbility> holder = BLRegistries.VAMPIRE_ABILITIES.createEntry(this);
+
     public VampireAbility(Supplier<ItemStack> icon, VampireAbility parent) {
         this.icon = icon;
         this.parent = parent;
@@ -60,15 +61,16 @@ public class VampireAbility {
     /**
      * Whether this ability should be hidden from an entity.
      * A hidden ability cannot be unlocked or viewed in the skill tree.
+     *
      * @param entity the entity to check
      * @return if this ability should be hidden
      */
     public boolean isHidden(LivingEntity entity) {
-        if(conditions.isEmpty())
+        if (conditions.isEmpty())
             return false;
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
-        for(VampireAbilityCondition condition : conditions) {
-            if(!condition.test(entity, vampire, vampire.getAbilties()))
+        for (VampireAbilityCondition condition : conditions) {
+            if (!condition.test(entity, vampire, vampire.getAbilties()))
                 return true;
         }
         return false;
@@ -76,6 +78,7 @@ public class VampireAbility {
 
     /**
      * Adds a condition for this ability to be visible
+     *
      * @param condition the condition to add
      * @return this ability, to allow chaining more functions
      */
@@ -86,6 +89,7 @@ public class VampireAbility {
 
     /**
      * Gets this ability's parent
+     *
      * @return this ability's parent, or null if it doesn't have one
      */
     public VampireAbility getParent() {
@@ -94,6 +98,7 @@ public class VampireAbility {
 
     /**
      * Gets the icon for this ability
+     *
      * @return the icon, as an item stack.
      * @implNote this calls the supplier passed in to the constructor
      * and does not cache the result
@@ -106,7 +111,7 @@ public class VampireAbility {
      * @return the ability's translation key, usually in the form 'vampire_ability.modid.ability_id'
      */
     public String getTranslationKey() {
-        if(transKey == null && getRegistryEntry().getKey().isPresent()) {
+        if (transKey == null && getRegistryEntry().getKey().isPresent()) {
             Identifier id = getRegistryEntry().getKey().get().getValue();
             transKey = "vampire_ability.%s.%s".formatted(id.getNamespace(), id.getPath());
         }
@@ -120,6 +125,7 @@ public class VampireAbility {
 
     /**
      * Gets the amount of skill points required to unlock this ability
+     *
      * @return the required skill points amount
      */
     public int getRequiredSkillPoints() {
@@ -128,7 +134,8 @@ public class VampireAbility {
 
     /**
      * Activates the ability when the bound key is pressed
-     * @param entity the entity using the ability
+     *
+     * @param entity    the entity using the ability
      * @param component the entity's vampire component
      * @return if the ability successfully activated
      */
@@ -138,7 +145,8 @@ public class VampireAbility {
 
     /**
      * If this ability's cooldown can be ticked
-     * @param entity the entity with the ability
+     *
+     * @param entity           the entity with the ability
      * @param vampireComponent the entity's vampire component
      * @return if this ability's cooldown can be ticked
      * @see VampireTeleportAbility#canTickCooldown(LivingEntity, VampireComponent)
@@ -149,23 +157,25 @@ public class VampireAbility {
 
     /**
      * Returns if this ability is incompatible with another ability
+     *
      * @param ability the other ability
      * @return if this ability is compatible with the other ability
      */
     public boolean incompatibleWith(VampireAbility ability) {
         return incompatibilities
-                .stream()
-                .map(Supplier::get)
-                .anyMatch(a -> a == ability)
-                || ability.incompatibilities
-                .stream()
-                .map(Supplier::get)
-                .anyMatch(a -> a == ability);
+          .stream()
+          .map(Supplier::get)
+          .anyMatch(a -> a == ability)
+          || ability.incompatibilities
+          .stream()
+          .map(Supplier::get)
+          .anyMatch(a -> a == ability);
     }
 
     /**
      * Called when an entity's state changes from vampire to non-vampire
-     * @param entity the entity
+     *
+     * @param entity  the entity
      * @param vampire the entity's vampire component
      */
     public void onUnVampire(LivingEntity entity, VampireComponent vampire) {
@@ -174,13 +184,16 @@ public class VampireAbility {
 
     /**
      * Called when this ability is removed
-     * @param entity the entity that used to have this ability
+     *
+     * @param entity  the entity that used to have this ability
      * @param vampire the entity's vampire component
      */
-    public void onAbilityRemoved(LivingEntity entity, VampireComponent vampire) {}
+    public void onAbilityRemoved(LivingEntity entity, VampireComponent vampire) {
+    }
 
     /**
      * Gets all abilities that this one is incompatible with
+     *
      * @return a list of abilities this one is incompatible with
      */
     public List<VampireAbility> getIncompatibilities() {
@@ -189,6 +202,7 @@ public class VampireAbility {
 
     /**
      * Marks this ability as incompatible with another
+     *
      * @param abilitySupplier the ability this one is incompatible with
      * @return this ability
      */
@@ -199,6 +213,7 @@ public class VampireAbility {
 
     /**
      * Sets the amount of skill points required to unlock this ability
+     *
      * @param points the amount of skill points required for this ability
      * @return this ability
      */

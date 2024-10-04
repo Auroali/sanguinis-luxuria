@@ -20,22 +20,22 @@ public class BLDamageTagsProvider extends FabricTagProvider<DamageType> {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_INVULNERABILITY)
-                .addOptional(BLResources.BLOOD_DRAIN_DAMAGE_KEY);
+          .addOptional(BLResources.BLOOD_DRAIN_DAMAGE_KEY);
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
-                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
+          .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_EFFECTS)
-                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
+          .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ENCHANTMENTS)
-                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
+          .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_RESISTANCE)
-                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
+          .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
-                .addOptional(BLResources.BITE_DAMAGE_KEY);
+          .addOptional(BLResources.BITE_DAMAGE_KEY);
         getOrCreateTagBuilder(DamageTypeTags.WITCH_RESISTANT_TO)
-                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
+          .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
         getOrCreateTagBuilder(BLTags.DamageTypes.VAMPIRES_WEAK_TO)
-                .forceAddTag(DamageTypeTags.WITCH_RESISTANT_TO)
-                .forceAddTag(DamageTypeTags.IS_FIRE)
-                .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
+          .forceAddTag(DamageTypeTags.WITCH_RESISTANT_TO)
+          .forceAddTag(DamageTypeTags.IS_FIRE)
+          .addOptional(BLResources.BLESSED_WATER_DAMAGE_KEY);
     }
 }

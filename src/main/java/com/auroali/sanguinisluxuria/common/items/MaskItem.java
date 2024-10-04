@@ -23,21 +23,21 @@ public class MaskItem extends TrinketItem implements TrinketRenderer {
 
     @Override
     public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        if(contextModel instanceof BipedEntityModel<? extends LivingEntity> model) {
+        if (contextModel instanceof BipedEntityModel<? extends LivingEntity> model) {
             matrices.push();
             ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
             model.head.rotate(matrices);
             matrices.multiply(RotationAxis.POSITIVE_Z.rotation(MathHelper.PI));
             matrices.translate(0, 0.5, 0);
             renderer.renderItem(
-                stack,
-                ModelTransformationMode.HEAD,
-                light,
-                OverlayTexture.DEFAULT_UV,
-                matrices,
-                vertexConsumers,
-                entity.getWorld(),
-                0
+              stack,
+              ModelTransformationMode.HEAD,
+              light,
+              OverlayTexture.DEFAULT_UV,
+              matrices,
+              vertexConsumers,
+              entity.getWorld(),
+              0
             );
             matrices.pop();
         }

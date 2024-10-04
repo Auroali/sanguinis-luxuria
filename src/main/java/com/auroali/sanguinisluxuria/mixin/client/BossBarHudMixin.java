@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BossBarHudMixin {
     @Inject(method = "shouldDarkenSky", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$makeSkyDarkDuringAltarCrafting(CallbackInfoReturnable<Boolean> cir) {
-        if(BloodlustClient.isAltarActive) {
+        if (BloodlustClient.isAltarActive) {
             BloodlustClient.isAltarActive = false;
             cir.setReturnValue(true);
         }

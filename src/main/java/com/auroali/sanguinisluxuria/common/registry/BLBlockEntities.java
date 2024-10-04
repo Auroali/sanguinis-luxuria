@@ -9,10 +9,10 @@ import net.minecraft.registry.Registry;
 
 public class BLBlockEntities {
     public static final BlockEntityType<AltarBlockEntity> SKILL_UPGRADER = BlockEntityType.Builder.create(
-            AltarBlockEntity::new, BLBlocks.ALTAR
+      AltarBlockEntity::new, BLBlocks.ALTAR
     ).build(null);
     public static final BlockEntityType<PedestalBlockEntity> PEDESTAL = BlockEntityType.Builder.create(
-            PedestalBlockEntity::new, BLBlocks.PEDESTAL
+      PedestalBlockEntity::new, BLBlocks.PEDESTAL
     ).build(null);
 
     public static void register() {

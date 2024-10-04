@@ -20,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
-    @Shadow protected HungerManager hungerManager;
+    @Shadow
+    protected HungerManager hungerManager;
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -28,11 +29,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "updatePose", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$forceCrawlingWhenNoBlood(CallbackInfo ci) {
-        if(!VampireHelper.isVampire(this))
+        if (!VampireHelper.isVampire(this))
             return;
 
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
-        if(!hasVehicle() && vampire.isDown()) {
+        if (!hasVehicle() && vampire.isDown()) {
             setPose(EntityPose.SWIMMING);
             ci.cancel();
         }
@@ -40,6 +41,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void sanguinisluxuria$setVampireHungerManagerPlayer(World world, BlockPos pos, float yaw, GameProfile gameProfile, CallbackInfo ci) {
-        ((VampireHungerManager)hungerManager).setPlayer((PlayerEntity) (Object)this);
+        ((VampireHungerManager) hungerManager).setPlayer((PlayerEntity) (Object) this);
     }
 }

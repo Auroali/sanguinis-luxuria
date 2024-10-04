@@ -21,14 +21,15 @@ import java.util.concurrent.CompletableFuture;
 public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
     public static final Collection<String> EXAMPLES = List.of(BLResources.VAMPIRE_HEALTH_1_ID.toString());
     private static final DynamicCommandExceptionType ID_INVALID_EXCEPTION = new DynamicCommandExceptionType(
-            id -> Text.translatable("argument.sanguinisluxuria.id.invalid", id)
+      id -> Text.translatable("argument.sanguinisluxuria.id.invalid", id)
     );
+
     @Override
     public VampireAbility parse(StringReader reader) throws CommandSyntaxException {
         int cursor = reader.getCursor();
         Identifier id = Identifier.fromCommandInput(reader);
         VampireAbility ability = BLRegistries.VAMPIRE_ABILITIES.get(id);
-        if(ability == null) {
+        if (ability == null) {
             reader.setCursor(cursor);
             throw ID_INVALID_EXCEPTION.createWithContext(reader, id);
         }
@@ -42,7 +43,8 @@ public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
         try {
             parse(stringReader);
             return Suggestions.empty();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return CommandSource.suggestIdentifiers(BLRegistries.VAMPIRE_ABILITIES.getIds(), builder.createOffset(stringReader.getCursor()));
     }
 

@@ -39,36 +39,37 @@ public class AltarBlockEntity extends BlockEntity {
     AltarRecipe recipe = null;
     Identifier recipeId = null;
     int ticksProcessing = 0;
+
     public AltarBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.SKILL_UPGRADER, pos, state);
     }
 
     public void checkAndStartRecipe(World world, LivingEntity entity) {
-        if(recipe != null || world.isClient || !VampireHelper.isVampire(entity))
+        if (recipe != null || world.isClient || !VampireHelper.isVampire(entity))
             return;
 
         DefaultedList<ItemStack> collectedStacks = DefaultedList.of();
         List<PedestalBlockEntity> pedestals = new ArrayList<>();
         BlockPos.stream(new Box(pos).expand(15))
-                .forEach(p -> {
-                    BlockEntity bl = world.getBlockEntity(p);
-                    if(bl instanceof PedestalBlockEntity pedestal && !pedestal.getItem().isEmpty()) {
-                        ItemStack stack = pedestal.getItem().copy();
-                        stack.setCount(1);
-                        collectedStacks.add(stack);
-                        pedestals.add(pedestal);
-                    }
-                });
+          .forEach(p -> {
+              BlockEntity bl = world.getBlockEntity(p);
+              if (bl instanceof PedestalBlockEntity pedestal && !pedestal.getItem().isEmpty()) {
+                  ItemStack stack = pedestal.getItem().copy();
+                  stack.setCount(1);
+                  collectedStacks.add(stack);
+                  pedestals.add(pedestal);
+              }
+          });
 
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
 
         AltarRecipe recipe = world.getRecipeManager().values().stream()
-                .filter(r -> r.getType().equals(BLRecipeTypes.ALTAR_RECIPE))
-                .map(AltarRecipe.class::cast)
-                .filter(p -> p.matches(vampire.getLevel(), collectedStacks))
-                .findFirst().orElse(null);
+          .filter(r -> r.getType().equals(BLRecipeTypes.ALTAR_RECIPE))
+          .map(AltarRecipe.class::cast)
+          .filter(p -> p.matches(vampire.getLevel(), collectedStacks))
+          .findFirst().orElse(null);
 
-        if(recipe == null)
+        if (recipe == null)
             return;
 
         pedestals.forEach(p -> {
@@ -80,7 +81,7 @@ public class AltarBlockEntity extends BlockEntity {
 
 
         PlayerLookup.tracking(this)
-                        .forEach(p -> ServerPlayNetworking.send(p, new AltarRecipeStartS2C(pos, pedestals.stream().map(BlockEntity::getPos).toList())));
+          .forEach(p -> ServerPlayNetworking.send(p, new AltarRecipeStartS2C(pos, pedestals.stream().map(BlockEntity::getPos).toList())));
         this.recipe = recipe;
         this.stacks = collectedStacks;
         this.ticksProcessing = 0;
@@ -91,14 +92,14 @@ public class AltarBlockEntity extends BlockEntity {
     }
 
     public static void vfxTick(World world, BlockPos pos, BlockState state, AltarBlockEntity entity) {
-        if(!state.get(AltarBlock.ACTIVE)) {
+        if (!state.get(AltarBlock.ACTIVE)) {
             return;
         }
 
         BloodlustClient.isAltarActive = true;
 
         Box box = new Box(pos).expand(5);
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             double x = box.minX + world.random.nextDouble() * box.getXLength();
             double y = box.minY + world.random.nextDouble() * box.getYLength();
             double z = box.minZ + world.random.nextDouble() * box.getZLength();
@@ -107,12 +108,12 @@ public class AltarBlockEntity extends BlockEntity {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, AltarBlockEntity entity) {
-        if(entity.recipeId != null)
+        if (entity.recipeId != null)
             entity.validateRecipe();
 
-        if(entity.recipe != null) {
-            if(entity.ticksProcessing < entity.recipe.getProcessingTicks()) {
-                if(entity.ticksProcessing % 20 == 0)
+        if (entity.recipe != null) {
+            if (entity.ticksProcessing < entity.recipe.getProcessingTicks()) {
+                if (entity.ticksProcessing % 20 == 0)
                     world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), BLSounds.ALTAR_BEATS, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 entity.ticksProcessing++;
                 entity.markDirty();
@@ -120,7 +121,7 @@ public class AltarBlockEntity extends BlockEntity {
             }
 
             AltarInventory inv = new AltarInventory(entity.stacks.size());
-            for(int i = 0; i < entity.stacks.size(); i++) {
+            for (int i = 0; i < entity.stacks.size(); i++) {
                 inv.setStack(i, entity.stacks.get(i));
             }
 
@@ -128,7 +129,7 @@ public class AltarBlockEntity extends BlockEntity {
             outputs.add(entity.recipe.craft(inv, world.getRegistryManager()));
             outputs.addAll(entity.recipe.getRemainder(inv).stream().filter(i -> !i.isEmpty()).toList());
 
-            for(ItemStack stack : outputs) {
+            for (ItemStack stack : outputs) {
                 ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
                 world.spawnEntity(item);
             }
@@ -144,9 +145,9 @@ public class AltarBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        if(nbt.contains("Recipe")) {
+        if (nbt.contains("Recipe")) {
             Identifier recipeId = Identifier.tryParse(nbt.getString("Recipe"));
-            if(recipeId == null) {
+            if (recipeId == null) {
                 Bloodlust.LOGGER.warn("Failed to parse id");
                 return;
             }
@@ -155,16 +156,16 @@ public class AltarBlockEntity extends BlockEntity {
             this.ticksProcessing = nbt.getInt("ProcessingTicks");
             NbtList inv = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
             inv.stream()
-                    .map(NbtCompound.class::cast)
-                    .map(ItemStack::fromNbt)
-                    .forEach(stacks::add);
+              .map(NbtCompound.class::cast)
+              .map(ItemStack::fromNbt)
+              .forEach(stacks::add);
         }
     }
 
     private void validateRecipe() {
         recipe = (AltarRecipe) world.getRecipeManager().get(recipeId).orElse(null);
 
-        if(recipe == null) {
+        if (recipe == null) {
             stacks.clear();
             ticksProcessing = 0;
             recipeId = null;
@@ -177,7 +178,7 @@ public class AltarBlockEntity extends BlockEntity {
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        if(recipe != null) {
+        if (recipe != null) {
             nbt.putString("Recipe", recipe.getId().toString());
             NbtList inv = new NbtList();
             stacks.forEach(i -> inv.add(i.writeNbt(new NbtCompound())));

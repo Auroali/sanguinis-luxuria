@@ -22,7 +22,7 @@ public class AltarInventory implements Inventory, RecipeInputProvider {
 
     @Override
     public boolean isEmpty() {
-        for(ItemStack itemStack : this.stacks) {
+        for (ItemStack itemStack : this.stacks) {
             if (!itemStack.isEmpty()) {
                 return false;
             }
@@ -67,7 +67,7 @@ public class AltarInventory implements Inventory, RecipeInputProvider {
 
     @Override
     public void provideRecipeInputs(RecipeMatcher finder) {
-        for(ItemStack itemStack : this.stacks) {
+        for (ItemStack itemStack : this.stacks) {
             finder.addUnenchantedInput(itemStack);
         }
     }

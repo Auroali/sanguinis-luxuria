@@ -40,7 +40,7 @@ public class PedestalBlockRenderer implements BlockEntityRenderer<PedestalBlockE
 
     @Override
     public void render(PedestalBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if(entity.getItem().isEmpty())
+        if (entity.getItem().isEmpty())
             return;
 
         matrices.push();
@@ -61,13 +61,13 @@ public class PedestalBlockRenderer implements BlockEntityRenderer<PedestalBlockE
         float zGroundScale = model.getTransformation().ground.scale.z();
         int amount = getRenderedAmount(entity.getItem());
         if (!hasDepth) {
-            float r = -0.0F * (float)(amount - 1) * 0.5F * xGroundScale;
-            float s = -0.0F * (float)(amount - 1) * 0.5F * yGroundScale;
-            float t = -0.09375F * (float)(amount - 1) * 0.5F * zGroundScale;
+            float r = -0.0F * (float) (amount - 1) * 0.5F * xGroundScale;
+            float s = -0.0F * (float) (amount - 1) * 0.5F * yGroundScale;
+            float t = -0.09375F * (float) (amount - 1) * 0.5F * zGroundScale;
             matrices.translate(r, s, t);
         }
 
-        for(int i = 0; i < amount; ++i) {
+        for (int i = 0; i < amount; ++i) {
             matrices.push();
             if (i > 0) {
                 if (hasDepth) {
@@ -83,7 +83,7 @@ public class PedestalBlockRenderer implements BlockEntityRenderer<PedestalBlockE
             }
 
             this.itemRenderer
-                    .renderItem(entity.getItem(), ModelTransformationMode.GROUND, false, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, model);
+              .renderItem(entity.getItem(), ModelTransformationMode.GROUND, false, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, model);
             matrices.pop();
             if (!hasDepth) {
                 matrices.translate((0.0F * xGroundScale), (0.0F * yGroundScale), (0.09375F * zGroundScale));

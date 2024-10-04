@@ -45,13 +45,13 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
     }
 
     public void resolveParent(List<VampireAbilityWidget> abilities) {
-        if(hidden)
+        if (hidden)
             return;
-        for(VampireAbilityWidget widget : abilities) {
-            if(widget.ability == ability.getParent()) {
+        for (VampireAbilityWidget widget : abilities) {
+            if (widget.ability == ability.getParent()) {
                 this.parent = widget;
                 this.parent.getChildren().add(this);
-                if(!this.hidden) {
+                if (!this.hidden) {
                     this.hidden = parent.hidden;
                     progateHiddenStateToChildren();
                 }
@@ -62,47 +62,47 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
 
     public void progateHiddenStateToChildren() {
         List<VampireAbilityWidget> children = this.children.stream().filter(c -> !c.hidden).toList();
-        while(!children.isEmpty()) {
+        while (!children.isEmpty()) {
             children.forEach(c -> c.hidden = hidden);
             children = children
-                    .stream()
-                    .flatMap(c -> c.getChildren().stream())
-                    .filter(c -> !c.hidden)
-                    .toList();
+              .stream()
+              .flatMap(c -> c.getChildren().stream())
+              .filter(c -> !c.hidden)
+              .toList();
         }
     }
 
     public void render(DrawContext context, VampireAbilityContainer container, int offsetX, int offsetY, int mouseX, int mouseY) {
-        if(hidden)
+        if (hidden)
             return;
 
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
 
         drawLines(context, container, offsetX, offsetY);
         context.drawTexture(
-                BLResources.ICONS,
-                offsetX + x,
-                offsetY + y,
-                0,
-                container.hasAbility(ability) ? 46 + HEIGHT : 46,
-                WIDTH,
-                HEIGHT,
-                256,
-                256
+          BLResources.ICONS,
+          offsetX + x,
+          offsetY + y,
+          0,
+          container.hasAbility(ability) ? 46 + HEIGHT : 46,
+          WIDTH,
+          HEIGHT,
+          256,
+          256
         );
         context.drawItem(
-                icon,
-                getX() + offsetX + 1,
-                getY() + offsetY + 1
+          icon,
+          getX() + offsetX + 1,
+          getY() + offsetY + 1
         );
         RenderSystem.disableDepthTest();
     }
 
     public void drawLines(DrawContext context, VampireAbilityContainer container, int offsetX, int offsetY) {
-        if(children.isEmpty())
+        if (children.isEmpty())
             return;
 
-        if(childrenMinX == Integer.MIN_VALUE && childrenMaxX == Integer.MIN_VALUE)
+        if (childrenMinX == Integer.MIN_VALUE && childrenMaxX == Integer.MIN_VALUE)
             calculateLineMinMaxX();
 
 //        int colour = -1;
@@ -115,10 +115,9 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
         context.fill(offsetX + x + WIDTH / 2 - 1, offsetY + y + 16, offsetX + x + WIDTH / 2 + 2, y + yOff + 2, 0xFF000000);
         children.stream().sorted().forEach(w -> {
             int colour = -1;
-            if(VampireHelper.hasIncompatibleAbility(MinecraftClient.getInstance().player, w.ability) || !container.hasAbility(ability)) {
+            if (VampireHelper.hasIncompatibleAbility(MinecraftClient.getInstance().player, w.ability) || !container.hasAbility(ability)) {
                 colour = 0xFF6C0000;
-            }
-            else if(container.hasAbility(w.ability)) {
+            } else if (container.hasAbility(w.ability)) {
                 colour = 0xFFFF6E11;
             }
             int childYOff = (w.getY() - y) / 4;
@@ -130,21 +129,21 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
     }
 
     public void calculateLineMinMaxX() {
-        if(children.isEmpty())
+        if (children.isEmpty())
             return;
 
         childrenMinX = getX();
         childrenMaxX = getX();
-        for(VampireAbilityWidget w : children) {
-            if(childrenMinX > w.getX())
+        for (VampireAbilityWidget w : children) {
+            if (childrenMinX > w.getX())
                 childrenMinX = w.getX();
-            if(childrenMaxX < w.getX())
+            if (childrenMaxX < w.getX())
                 childrenMaxX = w.getX();
         }
     }
 
     public boolean isMouseOver(int mouseX, int mouseY, int offsetX, int offsetY) {
-        if(hidden)
+        if (hidden)
             return false;
         int x = getX() + offsetX;
         int y = getY() + offsetY;
@@ -152,18 +151,19 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
         return mouseX >= x && mouseX <= x + WIDTH && mouseY >= y && mouseY <= y + HEIGHT;
 
     }
-    
+
     public void setX(int x) {
         this.x = x;
     }
+
     public void setY(int y) {
         this.y = y;
     }
-    
+
     public int getX() {
         return x;
     }
-    
+
     public int getY() {
         return y;
     }
@@ -173,31 +173,31 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
     }
 
     public boolean isOverlappingX(VampireAbilityWidget other) {
-        if(hidden)
+        if (hidden)
             return false;
         return getX() >= other.getX() && getX() <= other.getX() + WIDTH;
     }
 
     public boolean isOverlappingY(VampireAbilityWidget other) {
-        if(hidden)
+        if (hidden)
             return false;
         return getY() >= other.getY() && getY() <= other.getY() + HEIGHT;
     }
 
     public boolean onClick(VampireAbilitiesScreen screen, int button) {
-        if(hidden)
+        if (hidden)
             return false;
         ClientPlayerEntity entity = MinecraftClient.getInstance().player;
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entity);
         if (button == 0 && tryUnlock(vampire, entity))
             return true;
-        if(button == 1 && bindTo(vampire, entity, screen))
+        if (button == 1 && bindTo(vampire, entity, screen))
             return true;
         return false;
     }
 
     private boolean bindTo(VampireComponent vampire, ClientPlayerEntity entity, VampireAbilitiesScreen screen) {
-        if(!vampire.getAbilties().hasAbility(ability) || !ability.isKeybindable())
+        if (!vampire.getAbilties().hasAbility(ability) || !ability.isKeybindable())
             return false;
 
         screen.bindingWidget = this;
@@ -210,7 +210,7 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
             return false;
         }
 
-        if(VampireHelper.hasIncompatibleAbility(vampire.getAbilties(), ability))
+        if (VampireHelper.hasIncompatibleAbility(vampire.getAbilties(), ability))
             return false;
 
         entity.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -220,7 +220,7 @@ public class VampireAbilityWidget implements Comparable<VampireAbilityWidget> {
 
     @Override
     public int compareTo(@NotNull VampireAbilityWidget ability) {
-        if(parent != null) {
+        if (parent != null) {
             int xDiff = x - parent.x;
             int xDiff2 = ability.x - parent.x;
 

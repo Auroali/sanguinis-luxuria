@@ -33,12 +33,12 @@ public class BloodSplatterBlock extends Block {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);
-        if(stack.isOf(Items.GLASS_BOTTLE)) {
+        if (stack.isOf(Items.GLASS_BOTTLE)) {
             ItemStack bloodBottle = new ItemStack(BLItems.BLOOD_BOTTLE);
             BloodStorageItem.setStoredBlood(bloodBottle, BLItems.BLOOD_BOTTLE.getMaxBlood());
-            if(!world.isClient) {
+            if (!world.isClient) {
                 stack.decrement(1);
-                if(!player.getInventory().insertStack(bloodBottle))
+                if (!player.getInventory().insertStack(bloodBottle))
                     player.dropItem(bloodBottle, true);
                 world.removeBlock(pos, false);
                 world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -52,7 +52,7 @@ public class BloodSplatterBlock extends Block {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
-        if(!state.canPlaceAt(world, pos))
+        if (!state.canPlaceAt(world, pos))
             world.removeBlock(pos, false);
     }
 
@@ -69,7 +69,7 @@ public class BloodSplatterBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.randomTick(state, world, pos, random);
-        if(random.nextInt(25) == 0)
+        if (random.nextInt(25) == 0)
             world.removeBlock(pos, false);
     }
 

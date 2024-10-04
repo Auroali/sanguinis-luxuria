@@ -23,6 +23,7 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
         this.ingredient = ingredient;
         this.result = result;
     }
+
     @Override
     public boolean matches(SimpleInventory inventory, World world) {
         return inventory.size() == 1 && ingredient.test(inventory.getStack(0));
@@ -70,9 +71,9 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
     public static class Serializer implements RecipeSerializer<BloodCauldronRecipe> {
         @Override
         public BloodCauldronRecipe read(Identifier id, JsonObject json) {
-            if(!json.has("input"))
+            if (!json.has("input"))
                 throw new JsonParseException("Missing recipe input!");
-            if(!json.has("result"))
+            if (!json.has("result"))
                 throw new JsonParseException("Missing recipe result!");
             Ingredient ingredient = Ingredient.fromJson(json.get("input"));
             ItemStack result = ShapedRecipe.outputFromJson(json.get("result").getAsJsonObject());

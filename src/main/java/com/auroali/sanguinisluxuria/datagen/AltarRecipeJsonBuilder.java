@@ -62,7 +62,7 @@ public class AltarRecipeJsonBuilder extends RecipeJsonBuilder implements Craftin
     }
 
     public AltarRecipeJsonBuilder input(ItemStack item, boolean nbtIngredient) {
-        if(nbtIngredient && item.getNbt() != null)
+        if (nbtIngredient && item.getNbt() != null)
             return input(DefaultCustomIngredients.nbt(item, false));
         return input(Ingredient.ofStacks(item));
     }
@@ -110,9 +110,9 @@ public class AltarRecipeJsonBuilder extends RecipeJsonBuilder implements Craftin
     }
 
     public void validate(Identifier id) {
-        if(this.ingredients.isEmpty())
+        if (this.ingredients.isEmpty())
             throw new IllegalStateException("Recipe " + id + " must have at least 1 input");
-        if(this.ingredients.size() > 8)
+        if (this.ingredients.size() > 8)
             throw new IllegalStateException("Recipe " + id + " must have at most 8 inputs");
         if (this.advancementBuilder.getCriteria().isEmpty())
             throw new IllegalStateException("No way of obtaining recipe " + id);
@@ -122,17 +122,17 @@ public class AltarRecipeJsonBuilder extends RecipeJsonBuilder implements Craftin
     public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
         validate(recipeId);
         this.advancementBuilder
-                .parent(ROOT)
-                .criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId))
-                .rewards(AdvancementRewards.Builder.recipe(recipeId))
-                .criteriaMerger(CriterionMerger.OR);
+          .parent(ROOT)
+          .criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId))
+          .rewards(AdvancementRewards.Builder.recipe(recipeId))
+          .criteriaMerger(CriterionMerger.OR);
         exporter.accept(
-                new Provider(
-                        recipeId,
-                        recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/"),
-                        getCraftingCategory(this.category),
-                        this
-                )
+          new Provider(
+            recipeId,
+            recipeId.withPrefixedPath("recipes/" + this.category.getName() + "/"),
+            getCraftingCategory(this.category),
+            this
+          )
         );
     }
 
@@ -167,13 +167,13 @@ public class AltarRecipeJsonBuilder extends RecipeJsonBuilder implements Craftin
         public void serialize(JsonObject json) {
             json.addProperty("category", category.asString());
             JsonArray ingredientsJson = new JsonArray();
-            for(Ingredient i : ingredients) {
+            for (Ingredient i : ingredients) {
                 ingredientsJson.add(i.toJson());
             }
             json.add("input", ingredientsJson);
 
             json.addProperty("minLevel", minLevel);
-            if(maxLevel != Integer.MAX_VALUE)
+            if (maxLevel != Integer.MAX_VALUE)
                 json.addProperty("maxLevel", maxLevel);
 
             json.addProperty("ticksToProcess", ticksToProcess);

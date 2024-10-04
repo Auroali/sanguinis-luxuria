@@ -27,19 +27,21 @@ import java.util.function.Supplier;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin extends World {
-    @Shadow @Final
+    @Shadow
+    @Final
     List<ServerPlayerEntity> players;
 
     protected ServerWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DynamicRegistryManager registryManager, RegistryEntry<DimensionType> dimensionEntry, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long biomeAccess, int maxChainedNeighborUpdates) {
         super(properties, registryRef, registryManager, dimensionEntry, profiler, isClient, debugWorld, biomeAccess, maxChainedNeighborUpdates);
     }
 
-    @Shadow public abstract void setTimeOfDay(long timeOfDay);
+    @Shadow
+    public abstract void setTimeOfDay(long timeOfDay);
 
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/MutableWorldProperties;getTimeOfDay()J", ordinal = 0))
     public void sanguinisluxuria$modifySleep(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("time") LocalLongRef time) {
-        if(this.isDay() && this.players.stream().filter(VampireHelper::isVampire).anyMatch(PlayerEntity::isSleeping)) {
+        if (this.isDay() && this.players.stream().filter(VampireHelper::isVampire).anyMatch(PlayerEntity::isSleeping)) {
             time.set(properties.getTimeOfDay());
             hasSetTime.set(true);
         }
@@ -47,7 +49,7 @@ public abstract class ServerWorldMixin extends World {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
     public void sanguinisluxuria$setTimeOfDay(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("time") LocalLongRef time) {
-        if(hasSetTime.get()) {
+        if (hasSetTime.get()) {
             long timeOfDay = time.get() + 24000L;
             setTimeOfDay((timeOfDay - timeOfDay % 24000L) - 11000L);
         }

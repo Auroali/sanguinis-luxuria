@@ -12,7 +12,7 @@ public class AppleskinCompat implements AppleSkinApi {
         HUDOverlayEvent.Saturation.EVENT.register(this::cancelEventIfVampire);
         HUDOverlayEvent.HungerRestored.EVENT.register(this::cancelEventIfVampire);
         HUDOverlayEvent.HealthRestored.EVENT.register(event -> {
-            if(!event.itemStack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM))
+            if (!event.itemStack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM))
                 cancelEventIfVampire(event);
         });
 
@@ -20,7 +20,7 @@ public class AppleskinCompat implements AppleSkinApi {
 
     public void cancelEventIfVampire(HUDOverlayEvent event) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if(VampireHelper.isVampire(client.player))
+        if (VampireHelper.isVampire(client.player))
             event.isCanceled = true;
     }
 }

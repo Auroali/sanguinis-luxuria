@@ -38,16 +38,16 @@ public class BlessedBloodItem extends Item {
 
         if (!world.isClient && VampireHelper.isVampire(user)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
-            for(VampireAbility ability : vampire.getAbilties()) {
+            for (VampireAbility ability : vampire.getAbilties()) {
                 ability.onAbilityRemoved(user, vampire);
                 vampire.getAbilties().removeAbility(ability);
-                if(user instanceof ServerPlayerEntity player)
+                if (user instanceof ServerPlayerEntity player)
                     BLAdvancementCriterion.RESET_ABILITIES.trigger(player);
             }
 
             vampire.setSkillPoints(vampire.getLevel() * BLConfig.INSTANCE.skillPointsPerLevel);
 
-            if(!(user instanceof PlayerEntity player && player.isCreative())) {
+            if (!(user instanceof PlayerEntity player && player.isCreative())) {
                 user.damage(BLDamageSources.get(world, BLResources.BLESSED_WATER_DAMAGE_KEY), 16 / BLConfig.INSTANCE.vampireDamageMultiplier);
                 if (!user.isAlive())
                     return new ItemStack(Items.GLASS_BOTTLE);

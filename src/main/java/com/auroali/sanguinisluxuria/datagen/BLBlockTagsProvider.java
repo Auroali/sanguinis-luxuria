@@ -19,21 +19,21 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup args) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(BLBlocks.ALTAR)
-                .add(BLBlocks.PEDESTAL)
-                .add(BLBlocks.SILVER_ORE)
-                .add(BLBlocks.DEEPSLATE_SILVER_ORE)
-                .add(BLBlocks.SILVER_BLOCK)
-                .add(BLBlocks.RAW_SILVER_BLOCK);
+          .add(BLBlocks.ALTAR)
+          .add(BLBlocks.PEDESTAL)
+          .add(BLBlocks.SILVER_ORE)
+          .add(BLBlocks.DEEPSLATE_SILVER_ORE)
+          .add(BLBlocks.SILVER_BLOCK)
+          .add(BLBlocks.RAW_SILVER_BLOCK);
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
-                .add(BLBlocks.SILVER_ORE)
-                .add(BLBlocks.DEEPSLATE_SILVER_ORE)
-                .add(BLBlocks.SILVER_BLOCK)
-                .add(BLBlocks.RAW_SILVER_BLOCK);
+          .add(BLBlocks.SILVER_ORE)
+          .add(BLBlocks.DEEPSLATE_SILVER_ORE)
+          .add(BLBlocks.SILVER_BLOCK)
+          .add(BLBlocks.RAW_SILVER_BLOCK);
         getOrCreateTagBuilder(BlockTags.CAULDRONS)
-                .add(BLBlocks.BLOOD_CAULDRON);
+          .add(BLBlocks.BLOOD_CAULDRON);
         getOrCreateTagBuilder(ConventionalBlockTags.ORES)
-                .add(BLBlocks.SILVER_ORE)
-                .add(BLBlocks.DEEPSLATE_SILVER_ORE);
+          .add(BLBlocks.SILVER_ORE)
+          .add(BLBlocks.DEEPSLATE_SILVER_ORE);
     }
 }

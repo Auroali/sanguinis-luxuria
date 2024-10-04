@@ -12,21 +12,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class VillagerHostilesSensorMixin {
     @Inject(method = "isHostile", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$makeVillagersScaredOfVampire(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
-        if(VampireHelper.isVampire(entity) && !VampireHelper.isMasked(entity))
+        if (VampireHelper.isVampire(entity) && !VampireHelper.isMasked(entity))
             cir.setReturnValue(true);
     }
 
     @Inject(method = "isCloseEnoughForDanger", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$injectVampireDangerRadius(LivingEntity villager, LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
-        if(!VampireHelper.isVampire(target) || VampireHelper.isMasked(target))
+        if (!VampireHelper.isVampire(target) || VampireHelper.isMasked(target))
             return;
 
-        if(villager.isSleeping()) {
+        if (villager.isSleeping()) {
             cir.setReturnValue(false);
             return;
         }
 
-        if(villager.squaredDistanceTo(target) < 36 * target.getAttackDistanceScalingFactor(villager)) {
+        if (villager.squaredDistanceTo(target) < 36 * target.getAttackDistanceScalingFactor(villager)) {
             cir.setReturnValue(true);
             return;
         }

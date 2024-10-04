@@ -24,9 +24,9 @@ import java.util.stream.Stream;
 
 public class AltarBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE = Stream.of(
-            Block.createCuboidShape(0, 0, 0, 16, 7, 16),
-            Block.createCuboidShape(1, 7, 1, 15, 14, 15),
-            Block.createCuboidShape(3, 7, 3, 13, 16, 13)
+      Block.createCuboidShape(0, 0, 0, 16, 7, 16),
+      Block.createCuboidShape(1, 7, 1, 15, 14, 15),
+      Block.createCuboidShape(3, 7, 3, 13, 16, 13)
     ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
 
     public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
@@ -44,7 +44,7 @@ public class AltarBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         AltarBlockEntity altar = world.getBlockEntity(pos) instanceof AltarBlockEntity e ? e : null;
-        if(altar == null)
+        if (altar == null)
             return ActionResult.FAIL;
 
         altar.checkAndStartRecipe(world, player);
@@ -66,7 +66,7 @@ public class AltarBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        if(world.isClient)
+        if (world.isClient)
             return checkType(type, BLBlockEntities.SKILL_UPGRADER, AltarBlockEntity::vfxTick);
         return checkType(type, BLBlockEntities.SKILL_UPGRADER, AltarBlockEntity::tick);
     }

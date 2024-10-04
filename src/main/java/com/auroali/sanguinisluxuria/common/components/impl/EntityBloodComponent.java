@@ -27,14 +27,14 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
     }
 
     public void initializeBloodValues() {
-        if(!holder.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
+        if (!holder.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
             maxBlood = 0;
             currentBlood = 0;
             BLEntityComponents.BLOOD_COMPONENT.sync(holder);
             return;
         }
         maxBlood = (int) Math.ceil(holder.getMaxHealth());
-        if(currentBlood == -1)
+        if (currentBlood == -1)
             currentBlood = maxBlood;
         currentBlood = Math.min(currentBlood, maxBlood);
 
@@ -70,7 +70,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         int bloodAdded = newBlood - currentBlood;
         currentBlood = newBlood;
         BLEntityComponents.BLOOD_COMPONENT.sync(holder);
-        if(VampireHelper.isVampire(holder) && bloodAdded > 0) {
+        if (VampireHelper.isVampire(holder) && bloodAdded > 0) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(holder);
             vampire.setDowned(false);
         }
@@ -85,11 +85,11 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
 
     @Override
     public boolean drainBlood(LivingEntity drainer) {
-        if(!hasBlood())
+        if (!hasBlood())
             return false;
 
         bloodGainTimer = 0;
-        if(currentBlood > 1) {
+        if (currentBlood > 1) {
             currentBlood--;
             BLEntityComponents.BLOOD_COMPONENT.sync(holder);
             return true;
@@ -97,7 +97,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
 
         currentBlood = 0;
         BLEntityComponents.BLOOD_COMPONENT.sync(holder);
-        if(drainer == null)
+        if (drainer == null)
             holder.damage(BLDamageSources.get(holder.getWorld(), BLResources.BLOOD_DRAIN_DAMAGE_KEY), Float.MAX_VALUE);
         else
             holder.damage(BLDamageSources.bloodDrain(drainer), Float.MAX_VALUE);
@@ -117,16 +117,16 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
     @Override
     public void serverTick() {
         // have to do this here instead of the constructor, as health values aren't available there
-        if(maxBlood == -1)
+        if (maxBlood == -1)
             initializeBloodValues();
 
-        if(getMaxBlood() == 0 || VampireHelper.isVampire(holder))
+        if (getMaxBlood() == 0 || VampireHelper.isVampire(holder))
             return;
 
-        if(getBlood() < getMaxBlood() && bloodGainTimer < BloodConstants.BLOOD_GAIN_RATE)
+        if (getBlood() < getMaxBlood() && bloodGainTimer < BloodConstants.BLOOD_GAIN_RATE)
             bloodGainTimer++;
 
-        if(bloodGainTimer >= BloodConstants.BLOOD_GAIN_RATE) {
+        if (bloodGainTimer >= BloodConstants.BLOOD_GAIN_RATE) {
             currentBlood++;
             bloodGainTimer = 0;
             BLEntityComponents.BLOOD_COMPONENT.sync(holder);

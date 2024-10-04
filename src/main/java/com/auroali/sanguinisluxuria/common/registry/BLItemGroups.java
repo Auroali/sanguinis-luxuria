@@ -21,47 +21,47 @@ public class BLItemGroups {
 
     public static void register() {
         Registry.register(Registries.ITEM_GROUP, BLResources.ITEM_GROUP_ID, FabricItemGroup.builder()
-                        .icon(() -> BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BloodConstants.BLOOD_PER_BOTTLE))
-                        .displayName(Text.translatable("itemGroup.sanguinisluxuria.sanguinisluxuria"))
-                        .entries((displayContext, entries) -> {
-                            entries.addAll(BLItems.BLOOD_BOTTLE.generateGroupEntries());
-                            entries.add(BLItems.TWISTED_BLOOD);
-                            entries.add(BLItems.BLESSED_BLOOD);
-                            entries.addAll(BLItems.BLOOD_BAG.generateGroupEntries());
-                            entries.add(BLItems.MASK_1);
-                            entries.add(BLItems.MASK_2);
-                            entries.add(BLItems.MASK_3);
-                            entries.add(BLItems.BLOOD_PETAL);
-                            entries.add(BLItems.PENDANT_OF_PIERCING);
-                            entries.add(BLItems.PENDANT_OF_TRANSFUSION);
-                            entries.add(BLItems.SILVER_SWORD);
-                            entries.add(BLItems.SILVER_PICKAXE);
-                            entries.add(BLItems.SILVER_AXE);
-                            entries.add(BLItems.SILVER_SHOVEL);
-                            entries.add(BLItems.SILVER_HOE);
-                            entries.add(BLItems.SILVER_INGOT);
-                            entries.add(BLBlocks.SILVER_BLOCK);
-                            entries.add(BLItems.RAW_SILVER);
-                            entries.add(BLBlocks.RAW_SILVER_BLOCK);
-                            entries.add(BLBlocks.SILVER_ORE);
-                            entries.add(BLBlocks.DEEPSLATE_SILVER_ORE);
-                            entries.add(BLBlocks.ALTAR);
-                            entries.add(BLBlocks.PEDESTAL);
-                            entries.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION));
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), BLStatusEffects.BLESSED_WATER_POTION));
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), BLStatusEffects.BLESSED_WATER_POTION));
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.TIPPED_ARROW), BLStatusEffects.BLESSED_WATER_POTION));
-                            entries.add(PotionUtil.setPotion(new ItemStack(Items.TIPPED_ARROW), BLStatusEffects.BLESSED_WATER_POTION_TWO));
-                        })
-                .build());
+          .icon(() -> BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BloodConstants.BLOOD_PER_BOTTLE))
+          .displayName(Text.translatable("itemGroup.sanguinisluxuria.sanguinisluxuria"))
+          .entries((displayContext, entries) -> {
+              entries.addAll(BLItems.BLOOD_BOTTLE.generateGroupEntries());
+              entries.add(BLItems.TWISTED_BLOOD);
+              entries.add(BLItems.BLESSED_BLOOD);
+              entries.addAll(BLItems.BLOOD_BAG.generateGroupEntries());
+              entries.add(BLItems.MASK_1);
+              entries.add(BLItems.MASK_2);
+              entries.add(BLItems.MASK_3);
+              entries.add(BLItems.BLOOD_PETAL);
+              entries.add(BLItems.PENDANT_OF_PIERCING);
+              entries.add(BLItems.PENDANT_OF_TRANSFUSION);
+              entries.add(BLItems.SILVER_SWORD);
+              entries.add(BLItems.SILVER_PICKAXE);
+              entries.add(BLItems.SILVER_AXE);
+              entries.add(BLItems.SILVER_SHOVEL);
+              entries.add(BLItems.SILVER_HOE);
+              entries.add(BLItems.SILVER_INGOT);
+              entries.add(BLBlocks.SILVER_BLOCK);
+              entries.add(BLItems.RAW_SILVER);
+              entries.add(BLBlocks.RAW_SILVER_BLOCK);
+              entries.add(BLBlocks.SILVER_ORE);
+              entries.add(BLBlocks.DEEPSLATE_SILVER_ORE);
+              entries.add(BLBlocks.ALTAR);
+              entries.add(BLBlocks.PEDESTAL);
+              entries.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION));
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), BLStatusEffects.BLESSED_WATER_POTION));
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), BLStatusEffects.BLESSED_WATER_POTION));
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.TIPPED_ARROW), BLStatusEffects.BLESSED_WATER_POTION));
+              entries.add(PotionUtil.setPotion(new ItemStack(Items.TIPPED_ARROW), BLStatusEffects.BLESSED_WATER_POTION_TWO));
+          })
+          .build());
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS)
-                .register(entries -> {
-                    entries.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
-                });
+          .register(entries -> {
+              entries.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
+          });
     }
 }

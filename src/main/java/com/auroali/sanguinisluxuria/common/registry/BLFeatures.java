@@ -13,7 +13,7 @@ public class BLFeatures {
     public static final RegistryKey<PlacedFeature> SILVER_ORE = RegistryKey.of(RegistryKeys.PLACED_FEATURE, BLResources.SILVER_ORE_ID);
 
     public static void register() {
-        if(BLConfig.INSTANCE.generateSilverOre)
+        if (BLConfig.INSTANCE.generateSilverOre)
             BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, BLFeatures.SILVER_ORE);
     }
 }

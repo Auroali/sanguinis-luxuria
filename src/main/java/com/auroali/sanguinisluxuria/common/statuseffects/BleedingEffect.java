@@ -16,11 +16,11 @@ public class BleedingEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if(!entity.getType().isIn(BLTags.Entities.HAS_BLOOD))
+        if (!entity.getType().isIn(BLTags.Entities.HAS_BLOOD))
             return;
 
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-        if(blood.drainBlood())
+        if (blood.drainBlood())
             entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), BLSounds.BLEEDING, SoundCategory.NEUTRAL, 1.0f, 1.0f);
     }
 

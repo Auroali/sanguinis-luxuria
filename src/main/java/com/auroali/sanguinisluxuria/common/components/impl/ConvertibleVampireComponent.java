@@ -35,14 +35,16 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
     }
 
     public ConvertibleVampireComponent(U holder, EntityType<T> conversionType) {
-        this(holder, conversionType, (f, t) -> {});
+        this(holder, conversionType, (f, t) -> {
+        });
     }
 
     /**
      * Creates a factory for a ConvertibleVampireComponent of the specified type
+     *
      * @param type the entity type to convert to
+     * @param <T>  the entity class
      * @return the factory
-     * @param <T> the entity class
      */
     public static <U extends LivingEntity, T extends LivingEntity> ComponentFactory<U, ? extends VampireComponent> create(EntityType<T> type) {
         return e -> new ConvertibleVampireComponent<>(e, type);
@@ -50,11 +52,12 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
 
     /**
      * Creates a factory for a ConvertibleVampireComponent of the specified type
-     * @param type the entity type to convert to
+     *
+     * @param type              the entity type to convert to
      * @param conversionHandler a bi consumer that accepts the original entity and the newly created entity upon conversion, right before it spawns in.
      *                          Can be used for handling custom conversion logic, such as copying certain properties over to the new entity
+     * @param <T>               the entity class
      * @return the factory
-     * @param <T> the entity class
      */
     public static <U extends LivingEntity, T extends LivingEntity> ComponentFactory<U, ? extends VampireComponent> create(EntityType<T> type, BiConsumer<U, T> conversionHandler) {
         return e -> new ConvertibleVampireComponent<>(e, type, conversionHandler);
@@ -67,10 +70,10 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
 
     @Override
     public void setIsVampire(boolean isVampire) {
-        if(!isVampire || !AllowVampireChangeEvent.EVENT.invoker().onChanged(holder, this, isVampire))
+        if (!isVampire || !AllowVampireChangeEvent.EVENT.invoker().onChanged(holder, this, isVampire))
             return;
         T entity = conversionType.create(holder.getWorld());
-        if(entity == null) {
+        if (entity == null) {
             Bloodlust.LOGGER.error("Could not perform conversion for entity {}!", Registries.ENTITY_TYPE.getId(holder.getType()));
             return;
         }
@@ -78,11 +81,11 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
         entity.setYaw(holder.getYaw());
         entity.setPitch(holder.getPitch());
 
-        if(holder.getType().isIn(BLTags.Entities.HAS_BLOOD) && conversionType.isIn(BLTags.Entities.HAS_BLOOD)) {
+        if (holder.getType().isIn(BLTags.Entities.HAS_BLOOD) && conversionType.isIn(BLTags.Entities.HAS_BLOOD)) {
             BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(holder);
             BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
             // we do this as otherwise the values we set will be overridden
-            if(newBlood instanceof InitializableBloodComponent c)
+            if (newBlood instanceof InitializableBloodComponent c)
                 c.initializeBloodValues();
             newBlood.setBlood(Math.min(newBlood.getMaxBlood(), component.getBlood()));
         }
@@ -98,13 +101,16 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
     }
 
     @Override
-    public void drainBloodFrom(LivingEntity entity) {}
+    public void drainBloodFrom(LivingEntity entity) {
+    }
 
     @Override
-    public void tryStartSuckingBlood() {}
+    public void tryStartSuckingBlood() {
+    }
 
     @Override
-    public void stopSuckingBlood() {}
+    public void stopSuckingBlood() {
+    }
 
     @Override
     public int getBloodDrainTimer() {
@@ -132,10 +138,12 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
     }
 
     @Override
-    public void setSkillPoints(int points) {}
+    public void setSkillPoints(int points) {
+    }
 
     @Override
-    public void setLevel(int level) {}
+    public void setLevel(int level) {
+    }
 
     @Override
     public int getLevel() {
@@ -143,7 +151,8 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
     }
 
     @Override
-    public void unlockAbility(VampireAbility ability) {}
+    public void unlockAbility(VampireAbility ability) {
+    }
 
     @Override
     public boolean isDown() {
@@ -151,14 +160,18 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
     }
 
     @Override
-    public void setDowned(boolean down) {}
+    public void setDowned(boolean down) {
+    }
 
     @Override
-    public void serverTick() {}
+    public void serverTick() {
+    }
 
     @Override
-    public void readFromNbt(NbtCompound tag) {}
+    public void readFromNbt(NbtCompound tag) {
+    }
 
     @Override
-    public void writeToNbt(NbtCompound tag) {}
+    public void writeToNbt(NbtCompound tag) {
+    }
 }

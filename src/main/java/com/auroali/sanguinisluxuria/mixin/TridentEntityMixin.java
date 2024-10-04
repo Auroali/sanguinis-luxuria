@@ -26,7 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TridentEntity.class)
 public abstract class TridentEntityMixin extends PersistentProjectileEntity {
-    @Shadow protected abstract boolean isOwnerAlive();
+    @Shadow
+    protected abstract boolean isOwnerAlive();
 
     @Unique
     private int sanguinisluxuria$latchedTicks = 0;
@@ -40,8 +41,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
         BloodTransferComponent bloodTransfer = BLEntityComponents.BLOOD_TRANSFER_COMPONENT.get(this);
         int bloodDrainLevel = bloodTransfer.getBloodTransferLevel();
         Entity latched = bloodTransfer.getLatchedEntity();
-        if(bloodDrainLevel != 0 && latched != null && latched.isAlive() && !latched.isRemoved()) {
-            if(!this.isOwnerAlive()) {
+        if (bloodDrainLevel != 0 && latched != null && latched.isAlive() && !latched.isRemoved()) {
+            if (!this.isOwnerAlive()) {
                 if (!this.getWorld().isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
@@ -49,7 +50,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 ci.cancel();
                 return;
             }
-            if(sanguinisluxuria$latchedTicks > 300) {
+            if (sanguinisluxuria$latchedTicks > 300) {
                 bloodTransfer.setLatchedEntity(null);
                 sanguinisluxuria$latchedTicks = 0;
                 return;
@@ -58,7 +59,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(latched);
             BloodComponent ownerBlood = BLEntityComponents.BLOOD_COMPONENT.get(owner);
 
-            if((latched instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
+            if ((latched instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
                 bloodTransfer.setLatchedEntity(null);
                 sanguinisluxuria$latchedTicks = 0;
                 return;
@@ -68,8 +69,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             setVelocity(Vec3d.ZERO);
 
             int timeToDrain = latched instanceof LivingEntity e && e.hasStatusEffect(BLStatusEffects.BLEEDING) ? 20 : 40;
-            if(sanguinisluxuria$latchedTicks % timeToDrain == 0 && !getWorld().isClient && blood.drainBlood()) {
-                if(!(owner instanceof LivingEntity entity && BloodStorageItem.tryAddBloodToItemInHand(entity, 1)) && VampireHelper.isVampire(owner)) {
+            if (sanguinisluxuria$latchedTicks % timeToDrain == 0 && !getWorld().isClient && blood.drainBlood()) {
+                if (!(owner instanceof LivingEntity entity && BloodStorageItem.tryAddBloodToItemInHand(entity, 1)) && VampireHelper.isVampire(owner)) {
                     ownerBlood.addBlood(1);
                 }
                 playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
@@ -83,8 +84,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     @Inject(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
     public void sanguinisluxuria$latchOnEntity(EntityHitResult entityHitResult, CallbackInfo ci, @Local(ordinal = 0) Entity target, @Local(ordinal = 1) Entity owner) {
         BloodTransferComponent bloodTransfer = BLEntityComponents.BLOOD_TRANSFER_COMPONENT.get(this);
-        if(bloodTransfer.getBloodTransferLevel() != 0 && target.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
-            if(target instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION))
+        if (bloodTransfer.getBloodTransferLevel() != 0 && target.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
+            if (target instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION))
                 return;
             bloodTransfer.setLatchedEntity(target);
             sanguinisluxuria$latchedTicks = 0;

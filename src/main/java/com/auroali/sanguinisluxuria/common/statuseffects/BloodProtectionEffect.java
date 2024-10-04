@@ -23,16 +23,16 @@ public class BloodProtectionEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(entity, amplifier);
-        if(entity.getWorld().isClient || !VampireHelper.isVampire(entity))
+        if (entity.getWorld().isClient || !VampireHelper.isVampire(entity))
             return;
 
         int duration = entity.getStatusEffect(this).getDuration();
 
-        if(entity.getRandom().nextInt(200) == 0)
+        if (entity.getRandom().nextInt(200) == 0)
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100));
 
-        if(duration == 1) {
-            if(entity instanceof ServerPlayerEntity p)
+        if (duration == 1) {
+            if (entity instanceof ServerPlayerEntity p)
                 BLAdvancementCriterion.UNBECOME_VAMPIRE.trigger(p);
             entity.clearStatusEffects();
             BLEntityComponents.VAMPIRE_COMPONENT.get(entity).setIsVampire(false);

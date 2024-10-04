@@ -20,8 +20,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class DrinkableBloodStorageItem extends BloodStorageItem
-{
+public class DrinkableBloodStorageItem extends BloodStorageItem {
     public DrinkableBloodStorageItem(Settings settings, int maxBlood) {
         super(settings, maxBlood);
     }
@@ -33,23 +32,23 @@ public class DrinkableBloodStorageItem extends BloodStorageItem
             serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
         }
 
-        if(!world.isClient) {
+        if (!world.isClient) {
             BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(user);
             int bloodToAdd = Math.min(blood.getMaxBlood() - blood.getBlood(), getStoredBlood(stack));
-            if(bloodToAdd == 0)
+            if (bloodToAdd == 0)
                 return stack;
 
-            if(!VampireHelper.isVampire(user)) {
+            if (!VampireHelper.isVampire(user)) {
                 applyNonVampireEffects(user);
                 // i know i could use a food component but this seems like it gives more control
-                if(user instanceof ServerPlayerEntity e && e.getRandom().nextInt(2) == 0)
+                if (user instanceof ServerPlayerEntity e && e.getRandom().nextInt(2) == 0)
                     e.getHungerManager().add(1, 0);
-            } else if(VampireHelper.isVampire(user))
+            } else if (VampireHelper.isVampire(user))
                 bloodToAdd = BLEntityComponents.BLOOD_COMPONENT.get(user).addBlood(bloodToAdd);
 
-            if(!(user instanceof PlayerEntity entity && entity.isCreative()))
+            if (!(user instanceof PlayerEntity entity && entity.isCreative()))
                 setStoredBlood(stack, getStoredBlood(stack) - bloodToAdd);
-            if(getStoredBlood(stack) == 0 && emptyItem != null)
+            if (getStoredBlood(stack) == 0 && emptyItem != null)
                 return new ItemStack(emptyItem, stack.getCount());
         }
 
@@ -58,13 +57,13 @@ public class DrinkableBloodStorageItem extends BloodStorageItem
     }
 
     public static void applyNonVampireEffects(LivingEntity user) {
-        if(user.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) || user.getWorld().isClient)
+        if (user.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION) || user.getWorld().isClient)
             return;
 
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 2));
-        if(user.getRandom().nextInt(2) == 0)
+        if (user.getRandom().nextInt(2) == 0)
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 120, 0));
-        if(user.getRandom().nextInt(4) == 0)
+        if (user.getRandom().nextInt(4) == 0)
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0));
 
         VampireHelper.incrementBloodSickness(user);
@@ -72,7 +71,7 @@ public class DrinkableBloodStorageItem extends BloodStorageItem
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if(getStoredBlood(user.getStackInHand(hand)) == 0)
+        if (getStoredBlood(user.getStackInHand(hand)) == 0)
             return TypedActionResult.pass(user.getStackInHand(hand));
         return ItemUsage.consumeHeldItem(world, user, hand);
     }

@@ -36,7 +36,8 @@ public class CauldronInfusingEmiRecipe implements EmiRecipe {
     public CauldronInfusingEmiRecipe(BloodCauldronRecipe recipe, MinecraftClient client) {
         this.recipe = recipe;
         this.inputs = List.of(EmiIngredient.of(recipe.getIngredients().get(0)));
-        this.outputs = List.of(EmiStack.of(recipe.getOutput(client.world.getRegistryManager())));;
+        this.outputs = List.of(EmiStack.of(recipe.getOutput(client.world.getRegistryManager())));
+        ;
     }
 
     @Override

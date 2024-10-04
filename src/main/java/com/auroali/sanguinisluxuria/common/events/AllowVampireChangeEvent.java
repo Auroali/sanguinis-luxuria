@@ -7,11 +7,12 @@ import net.minecraft.entity.LivingEntity;
 
 public interface AllowVampireChangeEvent {
     Event<AllowVampireChangeEvent> EVENT = EventFactory.createArrayBacked(AllowVampireChangeEvent.class, callbacks -> (entity, vampire, isVampire) -> {
-        for(AllowVampireChangeEvent event : callbacks) {
-            if(!event.onChanged(entity, vampire, isVampire))
+        for (AllowVampireChangeEvent event : callbacks) {
+            if (!event.onChanged(entity, vampire, isVampire))
                 return false;
         }
         return true;
     });
+
     boolean onChanged(LivingEntity entity, VampireComponent vampire, boolean isVampire);
 }

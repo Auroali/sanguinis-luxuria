@@ -16,7 +16,7 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-public class BloodCauldronFillRecipe extends BloodCauldronRecipe{
+public class BloodCauldronFillRecipe extends BloodCauldronRecipe {
     public BloodCauldronFillRecipe(Identifier id, Ingredient ingredient, ItemStack result) {
         super(id, ingredient, BloodStorageItem.setStoredBlood(result, Math.min(BloodStorageItem.getMaxBlood(result), BloodConstants.BLOOD_PER_BOTTLE)));
     }
@@ -25,13 +25,13 @@ public class BloodCauldronFillRecipe extends BloodCauldronRecipe{
     public boolean matches(SimpleInventory inventory, World world) {
         ItemStack stack = inventory.getStack(0);
         return ingredient.test(inventory.getStack(0))
-                && (!BloodStorageItem.canBeFilled(stack) || BloodStorageItem.getMaxBlood(stack) - BloodStorageItem.getStoredBlood(stack) >= BloodConstants.BLOOD_PER_BOTTLE);
+          && (!BloodStorageItem.canBeFilled(stack) || BloodStorageItem.getMaxBlood(stack) - BloodStorageItem.getStoredBlood(stack) >= BloodConstants.BLOOD_PER_BOTTLE);
     }
 
     @Override
     public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
         ItemStack stack = inventory.getStack(0).copy();
-        if(!stack.isOf(result.getItem())) {
+        if (!stack.isOf(result.getItem())) {
             NbtCompound tag = stack.getNbt();
             stack = new ItemStack(result.getItem());
             stack.setNbt(tag);
@@ -50,9 +50,9 @@ public class BloodCauldronFillRecipe extends BloodCauldronRecipe{
     public static class Serializer implements RecipeSerializer<BloodCauldronRecipe> {
         @Override
         public BloodCauldronRecipe read(Identifier id, JsonObject json) {
-            if(!json.has("input"))
+            if (!json.has("input"))
                 throw new JsonParseException("Missing recipe input!");
-            if(!json.has("result"))
+            if (!json.has("result"))
                 throw new JsonParseException("Missing recipe result!");
             Ingredient ingredient = Ingredient.fromJson(json.get("input"));
             ItemStack result = ShapedRecipe.outputFromJson(json.get("result").getAsJsonObject());
