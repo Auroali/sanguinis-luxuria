@@ -4,6 +4,7 @@
   "input": {
     "tag": "minecraft:flowers"
   },
+  "level": 1,
   "result": {
     "item": "sanguinisluxuria:blood_petal"
   }

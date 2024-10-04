@@ -1,4 +1,4 @@
-// 1.20.1	2024-09-23T23:49:15.60728872	Sanguinis Luxuria/Recipes
+// 1.20.1	2024-10-04T17:09:46.38475363	Sanguinis Luxuria/Recipes
 751b5f320c36b3d5f94b1659d2eed59a92c1ed2c data/sanguinisluxuria/recipes/altar.json
 42d1fc6ed1546a126f420b0a6ce62389c830a24f data/sanguinisluxuria/advancements/recipes/tools/mask_2.json
 5754589c950a6a018ae6a5fe7dd59a8ab7bd81cd data/sanguinisluxuria/recipes/mask_3.json
@@ -36,7 +36,7 @@ beb99514eafbba3b9a4a303bf3dfb15cc2d529e6 data/sanguinisluxuria/recipes/silver_sw
 b6901b43272afcaaac200792fa95b3bb4689724e data/sanguinisluxuria/recipes/mask_2.json
 e965f90ce18e6b622222f88d08c94183da68e133 data/sanguinisluxuria/advancements/recipes/tools/blood_bag.json
 1b0405829b01afd64d7bf72e01ef8f016bdedb14 data/sanguinisluxuria/advancements/recipes/misc/smelting/silver_ingot.json
-00dffe2c39646576c1a5346d8cb904d9cf6eec04 data/sanguinisluxuria/recipes/blood_petal.json
+79531c30f449fc945f394a389c85ef4b1151735e data/sanguinisluxuria/recipes/blood_petal.json
 1add7ad9d6900a2933b9b196b50226b5248304e6 data/sanguinisluxuria/advancements/recipes/brewing/twisted_blood_bottle.json
 74259cee2b1efe2a18b1120dceb4889e2fe89589 data/sanguinisluxuria/advancements/recipes/tools/silver_pickaxe.json
 0198a2973bebd3d4d3f7422ed657f6e8c4730e45 data/sanguinisluxuria/advancements/recipes/misc/raw_silver_block.json

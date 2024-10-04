@@ -113,8 +113,9 @@ public class BloodCauldronRecipeJsonBuilder extends RecipeJsonBuilder implements
 
         @Override
         public void serialize(JsonObject json) {
-            json.addProperty("category", category.asString());
+            json.addProperty("category", this.category.asString());
             json.add("input", ingredient.toJson());
+            json.addProperty("level", this.level);
 
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);
