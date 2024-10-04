@@ -13,7 +13,6 @@
     "HungerManagerMixin",
     "IronGolemEntityMixin",
     "LivingEntityMixin",
-    "MeleeAttackGoalAccessor",
     "PersistentProjectileEntityAccessor",
     "PlayerEntityMixin",
     "ServerPlayerEntityMixin",
