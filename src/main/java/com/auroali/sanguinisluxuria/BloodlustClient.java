@@ -96,9 +96,9 @@ public class BloodlustClient implements ClientModInitializer {
 
         HudRenderCallback.EVENT.register(BLHud::render);
 
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), BLFluids.BLOOD_STILL, BLFluids.BLOOD_FLOWING);
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), BLFluids.BLOOD);
 
-        FluidRenderHandlerRegistry.INSTANCE.register(BLFluids.BLOOD_STILL, BLFluids.BLOOD_FLOWING, new SimpleFluidRenderHandler(
+        FluidRenderHandlerRegistry.INSTANCE.register(BLFluids.BLOOD, new SimpleFluidRenderHandler(
                 BLResources.BLOOD_STILL_TEXTURE,
                 BLResources.BLOOD_FLOWING_TEXTURE
         ));

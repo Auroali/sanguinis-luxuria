@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.common.registry.BLCauldronBehaviours;
+import com.auroali.sanguinisluxuria.common.registry.BLFluids;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -8,6 +9,7 @@ import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -25,6 +27,11 @@ public class BloodCauldronBlock extends LeveledCauldronBlock {
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return Blocks.CAULDRON.getPickStack(world, pos, state);
+    }
+
+    @Override
+    protected boolean canBeFilledByDripstone(Fluid fluid) {
+        return fluid == BLFluids.BLOOD;
     }
 
     @Override

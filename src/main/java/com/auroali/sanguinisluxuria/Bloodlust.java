@@ -118,14 +118,13 @@ public class Bloodlust implements ModInitializer {
 			return null;
 		}, BLBlockEntities.PEDESTAL);
 
-		CauldronFluidContent.registerCauldron(BLBlocks.BLOOD_CAULDRON, BLFluids.BLOOD_STILL, FluidConstants.BOTTLE, LeveledCauldronBlock.LEVEL);
+		CauldronFluidContent.registerCauldron(BLBlocks.BLOOD_CAULDRON, BLFluids.BLOOD, FluidConstants.BOTTLE, LeveledCauldronBlock.LEVEL);
 
 		FluidStorage.combinedItemApiProvider(BLItems.BLOOD_BOTTLE).register(ctx -> new BloodStorageItem.FluidStorage(ctx, BLItems.BLOOD_BOTTLE));
 		FluidStorage.combinedItemApiProvider(Items.GLASS_BOTTLE).register(ctx -> new BloodStorageItem.FluidStorage(ctx, BLItems.BLOOD_BOTTLE));
 		FluidStorage.combinedItemApiProvider(BLItems.BLOOD_BAG).register(ctx -> new BloodStorageItem.FluidStorage(ctx, BLItems.BLOOD_BAG));
 
-		FluidVariantAttributes.register(BLFluids.BLOOD_STILL, BLFluids.BLOOD_ATTRIBUTE_HANDLER);
-		FluidVariantAttributes.register(BLFluids.BLOOD_FLOWING, BLFluids.BLOOD_ATTRIBUTE_HANDLER);
+		FluidVariantAttributes.register(BLFluids.BLOOD, BLFluids.BLOOD_ATTRIBUTE_HANDLER);
 	}
 
 	private static void dropBlood(LivingEntity entity, DamageSource source) {

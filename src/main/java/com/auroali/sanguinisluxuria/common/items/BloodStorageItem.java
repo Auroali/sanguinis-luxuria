@@ -212,7 +212,7 @@ public abstract class BloodStorageItem extends Item {
         public FluidStorage(ContainerItemContext ctx, BloodStorageItem bloodStoringItem) {
             this.context = ctx;
             this.item = bloodStoringItem;
-            this.containedFluid = FluidVariant.of(BLFluids.BLOOD_STILL);
+            this.containedFluid = FluidVariant.of(BLFluids.BLOOD);
         }
 
         private long getStoredFluid() {
@@ -240,7 +240,7 @@ public abstract class BloodStorageItem extends Item {
             if (!context.getItemVariant().isOf(emptyItem) || !item.canFill()) return 0;
 
             // Make sure that the fluid and amount match.
-            if (resource.isOf(BLFluids.BLOOD_STILL) && insertableAmount != 0) {
+            if (resource.isOf(BLFluids.BLOOD) && insertableAmount != 0) {
                 // If that's ok, just convert one of the empty item into the full item, with the mapping function.
                 ItemVariant newVariant = ItemVariant.of(setStoredBlood(new ItemStack(this.item), convertStoredFluidToBlood(getStoredFluid() + insertableAmount)));
 

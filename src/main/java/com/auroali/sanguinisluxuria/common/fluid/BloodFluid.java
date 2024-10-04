@@ -70,7 +70,7 @@ public class BloodFluid extends FlowableFluid {
 
     @Override
     public boolean isStill(FluidState state) {
-        return false;
+        return true;
     }
 
     @Override
@@ -80,12 +80,12 @@ public class BloodFluid extends FlowableFluid {
 
     @Override
     public Fluid getFlowing() {
-        return BLFluids.BLOOD_FLOWING;
+        return this;
     }
 
     @Override
     public Fluid getStill() {
-        return BLFluids.BLOOD_STILL;
+        return this;
     }
 
     @Override
