@@ -7,7 +7,9 @@ import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.LeveledCauldronBlock;
+import net.minecraft.block.enums.WireConnection;
 import net.minecraft.data.client.*;
+import net.minecraft.state.property.Properties;
 
 public class BLModelProvider extends FabricModelProvider {
     public BLModelProvider(FabricDataOutput dataGenerator) {
@@ -50,17 +52,74 @@ public class BLModelProvider extends FabricModelProvider {
                   )
               )
           );
-        blockStateModelGenerator.blockStateCollector
-          .accept(BlockStateModelGenerator.createSingletonBlockState(
-            BLBlocks.BLOOD_SPLATTER,
-            BLModels.REDSTONE_DUST_DOT.upload(
-              BLBlocks.BLOOD_SPLATTER,
-              new TextureMap()
-                .put(TextureKey.PARTICLE, BLResources.id("block/blood_splatter"))
-                .put(BLTextureKeys.LINE, BLResources.id("block/blood_splatter"))
-                .put(BLTextureKeys.OVERLAY, BLResources.id("block/blood_splatter")),
-              blockStateModelGenerator.modelCollector)
-          ));
+
+        blockStateModelGenerator.blockStateCollector.accept(
+          MultipartBlockStateSupplier.create(BLBlocks.BLOOD_SPLATTER)
+            .with(
+              When.anyOf(
+                When.create()
+                  .set(Properties.NORTH_WIRE_CONNECTION, WireConnection.NONE)
+                  .set(Properties.EAST_WIRE_CONNECTION, WireConnection.NONE)
+                  .set(Properties.SOUTH_WIRE_CONNECTION, WireConnection.NONE)
+                  .set(Properties.WEST_WIRE_CONNECTION, WireConnection.NONE),
+                When.create()
+                  .set(Properties.NORTH_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP)
+                  .set(Properties.EAST_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP),
+                When.create()
+                  .set(Properties.EAST_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP)
+                  .set(Properties.SOUTH_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP),
+                When.create()
+                  .set(Properties.SOUTH_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP)
+                  .set(Properties.WEST_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP),
+                When.create()
+                  .set(Properties.WEST_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP)
+                  .set(Properties.NORTH_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP)
+              ),
+              BlockStateVariant.create().put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_dot"))
+            )
+            .with(
+              When.create().set(Properties.NORTH_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP),
+              BlockStateVariant.create().put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_side0"))
+            )
+            .with(
+              When.create().set(Properties.SOUTH_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP),
+              BlockStateVariant.create().put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_alt0"))
+            )
+            .with(
+              When.create().set(Properties.EAST_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP),
+              BlockStateVariant.create()
+                .put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_alt1"))
+                .put(VariantSettings.Y, VariantSettings.Rotation.R270)
+            )
+            .with(
+              When.create().set(Properties.WEST_WIRE_CONNECTION, WireConnection.SIDE, WireConnection.UP),
+              BlockStateVariant.create()
+                .put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_side1"))
+                .put(VariantSettings.Y, VariantSettings.Rotation.R270)
+            )
+            .with(
+              When.create().set(Properties.NORTH_WIRE_CONNECTION, WireConnection.UP),
+              BlockStateVariant.create().put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_up"))
+            )
+            .with(
+              When.create().set(Properties.EAST_WIRE_CONNECTION, WireConnection.UP),
+              BlockStateVariant.create()
+                .put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_up"))
+                .put(VariantSettings.Y, VariantSettings.Rotation.R90)
+            )
+            .with(
+              When.create().set(Properties.SOUTH_WIRE_CONNECTION, WireConnection.UP),
+              BlockStateVariant.create()
+                .put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_up"))
+                .put(VariantSettings.Y, VariantSettings.Rotation.R180)
+            )
+            .with(
+              When.create().set(Properties.WEST_WIRE_CONNECTION, WireConnection.UP),
+              BlockStateVariant.create()
+                .put(VariantSettings.MODEL, BLResources.id("block/blood_splatter_up"))
+                .put(VariantSettings.Y, VariantSettings.Rotation.R270)
+            )
+        );
         blockStateModelGenerator.blockStateCollector
           .accept(VariantsBlockStateSupplier.create(BLBlocks.ALTAR)
             .coordinate(BlockStateVariantMap.create(AltarBlock.ACTIVE)

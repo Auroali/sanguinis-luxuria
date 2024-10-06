@@ -2,7 +2,7 @@
   "parent": "minecraft:block/redstone_dust_dot",
   "textures": {
     "line": "sanguinisluxuria:block/blood_splatter",
-    "overlay": "sanguinisluxuria:block/blood_splatter",
+    "overlay": "sanguinisluxuria:block/blood_splatter_overlay",
     "particle": "sanguinisluxuria:block/blood_splatter"
   }
 }

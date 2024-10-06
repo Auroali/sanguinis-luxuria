@@ -1,0 +1,7 @@
+{
+  "parent": "block/redstone_dust_side",
+  "textures": {
+    "line": "sanguinisluxuria:block/blood_splatter_line0",
+    "overlay": "sanguinisluxuria:block/blood_splatter_overlay"
+  }
+}

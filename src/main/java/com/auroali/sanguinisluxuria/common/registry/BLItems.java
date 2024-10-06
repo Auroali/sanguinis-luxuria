@@ -21,7 +21,7 @@ public class BLItems {
       new FabricItemSettings().maxCount(1),
       10 * BloodConstants.BLOOD_PER_BOTTLE
     );
-    public static final BloodStorageItem BLOOD_BOTTLE = new DrinkableBloodStorageItem(
+    public static final BloodStorageItem BLOOD_BOTTLE = new BloodBottleItem(
       new FabricItemSettings().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
       BloodConstants.BLOOD_PER_BOTTLE
     ).emptyItem(Items.GLASS_BOTTLE);
