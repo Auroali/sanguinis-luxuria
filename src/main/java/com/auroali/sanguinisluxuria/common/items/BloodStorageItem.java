@@ -158,6 +158,8 @@ public abstract class BloodStorageItem extends Item {
      * @return if the entity was both holding a valid item and the item could successfully be filled by amount
      */
     public static boolean tryAddBloodToItemInHand(LivingEntity entity, int amount) {
+        // get the currently held blood storage item
+        // will prefer to use the main hand
         ItemStack stack = getBloodStorageItemInHand(entity, Hand.OFF_HAND);
         Hand hand = Hand.OFF_HAND;
         if (!getBloodStorageItemInHand(entity, Hand.MAIN_HAND).isEmpty()) {
@@ -165,6 +167,7 @@ public abstract class BloodStorageItem extends Item {
             hand = Hand.MAIN_HAND;
         }
 
+        // if no item was found, or it cannot be filled, return false
         if (stack.isEmpty() || !canBeFilled(stack) || getStoredBlood(stack) + amount > getMaxBlood(stack))
             return false;
 
@@ -172,9 +175,12 @@ public abstract class BloodStorageItem extends Item {
 
         Item originalHeldItem = entity.getStackInHand(hand).getItem();
 
+        // decrement the held stack if it isn't the same as the final stack
+        // this occurs in situations like filling bottles
         if (stack != entity.getStackInHand(hand))
             entity.getStackInHand(hand).decrement(1);
 
+        // set the item in the player's hand, or drop it if there isn't enough inventory space
         if (stack == entity.getStackInHand(hand) || entity.getStackInHand(hand).isEmpty())
             entity.setStackInHand(hand, stack);
         else if (!(entity instanceof PlayerEntity e && e.getInventory().insertStack(stack))) {
@@ -183,6 +189,7 @@ public abstract class BloodStorageItem extends Item {
             else entity.dropStack(stack);
         }
 
+        // put the item on cooldown
         if (entity instanceof PlayerEntity player)
             player.getItemCooldownManager().set(originalHeldItem, 10);
 
@@ -191,6 +198,7 @@ public abstract class BloodStorageItem extends Item {
 
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
+        // if theres no blood or the item is full, we don't need to display the fill bar
         return getStoredBlood(stack) > 0 && getStoredBlood(stack) != getMaxBlood(stack);
     }
 

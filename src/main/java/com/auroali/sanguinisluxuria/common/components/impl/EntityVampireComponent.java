@@ -66,17 +66,16 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
         }
 
         // handle differing amounts of blood depending on the good blood tag and unlocked abilities
-        int bloodMultiplier = 1;
+        int bloodAmount = 1;
         if (!VampireHelper.isVampire(entity) && abilities.hasAbility(BLVampireAbilities.MORE_BLOOD))
-            bloodMultiplier = 2;
+            bloodAmount = 2;
 
-        if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD)) {
-            holderBlood.addBlood(bloodMultiplier * 2);
-            BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier * 2);
-        } else {
-            holderBlood.addBlood(bloodMultiplier);
-            BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier);
-        }
+        if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+            bloodAmount *= 2;
+
+        holderBlood.addBlood(bloodAmount);
+        BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodAmount);
+
         setDowned(false);
         holder.getWorld().emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
 

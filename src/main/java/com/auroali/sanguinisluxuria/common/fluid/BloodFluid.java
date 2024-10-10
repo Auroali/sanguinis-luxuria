@@ -63,7 +63,7 @@ public class BloodFluid extends FlowableFluid {
 
     @Override
     protected BlockState toBlockState(FluidState state) {
-        return Blocks.AIR.getDefaultState(); //BLBlocks.BLOOD.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(state));
+        return Blocks.AIR.getDefaultState();
     }
 
     @Override

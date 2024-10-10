@@ -21,12 +21,15 @@ public class BloodBottleItem extends DrinkableBloodStorageItem {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         ItemPlacementContext placementContext = new ItemPlacementContext(context);
+        // if the item can't be drained or doesn't have enough blood, return
         if (!BloodStorageItem.canBeDrained(context.getStack()) || BloodStorageItem.getStoredBlood(context.getStack()) < BloodConstants.BLOOD_PER_BOTTLE)
             return super.useOnBlock(context);
 
         if (placementContext.canPlace() && context.getPlayer() != null && context.getPlayer().isSneaking()) {
             BlockState bloodState = BLBlocks.BLOOD_SPLATTER.getPlacementState(placementContext);
             ShapeContext shapeContext = ShapeContext.of(context.getPlayer());
+            // check to make sure the blockstate isn't null and that it can be placed at
+            // the location. returns fail here if it can't be placed
             if (
               bloodState == null
                 || !bloodState.canPlaceAt(placementContext.getWorld(), placementContext.getBlockPos())
@@ -35,18 +38,23 @@ public class BloodBottleItem extends DrinkableBloodStorageItem {
                 return ActionResult.FAIL;
             }
 
+            // place the block
             context.getWorld().setBlockState(placementContext.getBlockPos(), bloodState, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+
+            // if the player is in survival, drain blood from the bottle
             if (!context.getPlayer().isCreative()) {
                 BloodStorageItem.setStoredBlood(context.getStack(), getStoredBlood(context.getStack()) - BloodConstants.BLOOD_PER_BOTTLE);
                 if (this.emptyItem != null && BloodStorageItem.getStoredBlood(context.getStack()) <= 0)
                     context.getPlayer().setStackInHand(context.getHand(), new ItemStack(this.emptyItem));
             }
+            // play the bottle empty sound and emit the block place game event
             context.getWorld().playSound(context.getPlayer(), placementContext.getBlockPos(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
             context.getWorld().emitGameEvent(
               GameEvent.BLOCK_PLACE,
               placementContext.getBlockPos(),
               GameEvent.Emitter.of(context.getPlayer(), bloodState)
             );
+
             return ActionResult.success(context.getWorld().isClient);
         }
         return super.useOnBlock(context);

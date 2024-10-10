@@ -14,6 +14,7 @@ import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 
@@ -91,6 +92,12 @@ public class ConvertibleVampireComponent<U extends LivingEntity, T extends Livin
         }
 
         entity.setCustomName(holder.getCustomName());
+
+
+        if (entity instanceof TameableEntity tameable && holder instanceof TameableEntity holderTameable && holderTameable.isTamed()) {
+            tameable.setOwnerUuid(holderTameable.getOwnerUuid());
+            tameable.setTamed(true);
+        }
 
         conversionHandler.accept(holder, entity);
 

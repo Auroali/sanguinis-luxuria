@@ -95,6 +95,7 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void drainBloodFrom(LivingEntity entity) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+        // if the target doesn't have blood or cannot be drained, we can't fill hunger
         if (!blood.hasBlood() || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(holder, entity) || !blood.drainBlood(holder))
             return;
 
@@ -105,21 +106,23 @@ public class PlayerVampireComponent implements VampireComponent {
         }
 
         // handle differing amounts of blood depending on the good blood tag and unlocked abilities
-        int bloodMultiplier = 1;
+        int bloodAmount = 1;
         if (!VampireHelper.isVampire(entity) && abilities.hasAbility(BLVampireAbilities.MORE_BLOOD))
-            bloodMultiplier = 2;
+            bloodAmount = 2;
 
-        if (!VampireHelper.shouldFillHeldItemOnDrain(holder) || !BloodStorageItem.tryAddBloodToItemInHand(holder, bloodMultiplier)) {
-            if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD)) {
-                ((VampireHungerManager) holder.getHungerManager()).sanguinisluxuria$addHunger(bloodMultiplier * 2, 0.125f);
-                BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier * 2);
-            } else {
-                ((VampireHungerManager) holder.getHungerManager()).sanguinisluxuria$addHunger(bloodMultiplier, 0.125f);
-                BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodMultiplier);
-            }
+        if (!VampireHelper.isVampire(entity) && entity.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+            bloodAmount *= 2;
+
+        // try to fill any held blood-storing items first if possible and allowed. if that fails,
+        // add to the player's hunger
+        if (!VampireHelper.shouldFillHeldItemOnDrain(holder) || !BloodStorageItem.tryAddBloodToItemInHand(holder, bloodAmount)) {
+            ((VampireHungerManager) holder.getHungerManager()).sanguinisluxuria$addHunger(bloodAmount, 0.125f);
+            BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(holder, entity, bloodAmount);
         }
 
+        // reset the downed state
         setDowned(false);
+
         holder.getWorld().emitGameEvent(holder, GameEvent.DRINK, holder.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target

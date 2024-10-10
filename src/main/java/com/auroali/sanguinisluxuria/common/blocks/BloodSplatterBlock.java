@@ -202,8 +202,12 @@ public class BloodSplatterBlock extends Block {
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState state = this.getDefaultState().with(PERSISTENT, true);
+        return getConnectionState(ctx.getWorld(), state, ctx.getBlockPos());
+    }
+    
+    public BlockState getConnectionState(WorldAccess world, BlockState state, BlockPos pos) {
         for (Direction direction : Direction.Type.HORIZONTAL) {
-            state = getConnectionForDirection(ctx.getWorld(), state, ctx.getBlockPos().offset(direction), direction);
+            state = getConnectionForDirection(world, state, pos.offset(direction), direction);
         }
         return state;
     }
