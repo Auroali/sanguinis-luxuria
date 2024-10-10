@@ -1,11 +1,10 @@
 package com.auroali.sanguinisluxuria.common.items;
 
 import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.BloodConstants;
+import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.registry.BLFluids;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
@@ -227,15 +226,11 @@ public abstract class BloodStorageItem extends Item {
         private long getStoredFluid() {
             if (context.getItemVariant().getNbt() == null)
                 return 0;
-            return (long) (FluidConstants.BOTTLE * context.getItemVariant().getNbt().getInt("StoredBlood") / (float) BloodConstants.BLOOD_PER_BOTTLE);
+            return VampireHelper.bloodToDroplets(context.getItemVariant().getNbt().getInt("StoredBlood"));
         }
 
         private long getMaxStoredFluid() {
-            return (long) (FluidConstants.BOTTLE * item.getMaxBlood() / (float) BloodConstants.BLOOD_PER_BOTTLE);
-        }
-
-        private int convertStoredFluidToBlood(long fluid) {
-            return (int) ((float) fluid / FluidConstants.BOTTLE * BloodConstants.BLOOD_PER_BOTTLE);
+            return VampireHelper.bloodToDroplets(item.getMaxBlood());
         }
 
         @Override
@@ -251,7 +246,7 @@ public abstract class BloodStorageItem extends Item {
             // Make sure that the fluid and amount match.
             if (resource.isOf(BLFluids.BLOOD) && insertableAmount != 0) {
                 // If that's ok, just convert one of the empty item into the full item, with the mapping function.
-                ItemVariant newVariant = ItemVariant.of(setStoredBlood(new ItemStack(this.item), convertStoredFluidToBlood(getStoredFluid() + insertableAmount)));
+                ItemVariant newVariant = ItemVariant.of(setStoredBlood(new ItemStack(this.item), VampireHelper.dropletsToBlood(getStoredFluid() + insertableAmount)));
 
                 if (context.exchange(newVariant, 1, transaction) == 1) {
                     // Conversion ok!
@@ -274,7 +269,7 @@ public abstract class BloodStorageItem extends Item {
             if (resource.equals(containedFluid) && storedAmount != 0) {
                 // If that's ok, just convert one of the full item into the empty item, copying the nbt.
                 ItemVariant newVariant = getStoredFluid() - storedAmount > 0
-                  ? ItemVariant.of(setStoredBlood(new ItemStack(item), convertStoredFluidToBlood(getStoredFluid() - storedAmount)))
+                  ? ItemVariant.of(setStoredBlood(new ItemStack(item), VampireHelper.dropletsToBlood(getStoredFluid() - storedAmount)))
                   : this.item.getEmptyItem() == null ? ItemVariant.of(this.item) : ItemVariant.of(this.item.getEmptyItem());
 
                 if (context.exchange(newVariant, 1, transaction) == 1) {

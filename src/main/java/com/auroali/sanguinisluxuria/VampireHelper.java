@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria;
 
+import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -9,6 +10,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import dev.emi.trinkets.api.TrinketsApi;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -171,5 +173,27 @@ public class VampireHelper {
                 break;
             }
         }
+    }
+
+    /**
+     * Converts blood units to droplets
+     *
+     * @param blood the amount of blood
+     * @return the amount of droplets
+     */
+    @SuppressWarnings("UnstableApiUsage")
+    public static long bloodToDroplets(int blood) {
+        return blood * FluidConstants.BOTTLE / BloodConstants.BLOOD_PER_BOTTLE;
+    }
+
+    /**
+     * Converts droplets to blood units
+     *
+     * @param droplets the amount of droplets
+     * @return the amount of blood, rounded down
+     */
+    @SuppressWarnings("UnstableApiUsage")
+    public static int dropletsToBlood(long droplets) {
+        return (int) (droplets * BloodConstants.BLOOD_PER_BOTTLE / FluidConstants.BOTTLE);
     }
 }
