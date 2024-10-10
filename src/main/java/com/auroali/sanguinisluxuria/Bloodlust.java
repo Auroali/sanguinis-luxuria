@@ -110,7 +110,7 @@ public class Bloodlust implements ModInitializer {
         ServerEntityWorldChangeEvents.AFTER_ENTITY_CHANGE_WORLD.register(this::syncComponentsOnWorldChange);
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(this::syncComponentsOnWorldChange);
 
-        TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 5, BLTradeOffers::registerClericTrades);
+        TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 3, BLTradeOffers::registerClericTrades);
 
         ItemStorage.SIDED.registerForBlockEntities((blockEntity, context) -> {
             if (blockEntity instanceof PedestalBlockEntity e)
