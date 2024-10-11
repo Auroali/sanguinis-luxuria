@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "sanguinisluxuria:block/stripped_decayed_log",
+    "side": "sanguinisluxuria:block/stripped_decayed_log"
+  }
+}

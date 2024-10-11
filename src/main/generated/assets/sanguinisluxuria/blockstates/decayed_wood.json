@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "sanguinisluxuria:block/decayed_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "sanguinisluxuria:block/decayed_wood"
+    },
+    "axis=z": {
+      "model": "sanguinisluxuria:block/decayed_wood",
+      "x": 90
+    }
+  }
+}

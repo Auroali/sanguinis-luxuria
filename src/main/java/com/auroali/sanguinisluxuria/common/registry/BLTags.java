@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
@@ -14,6 +15,7 @@ public class BLTags {
     public static class Blocks {
 
         //public static final TagKey<Block> BLOOD_SPLATTER_REPLACEABLE = TagKey.of(Registry.BLOCK_KEY, BLResources.BLOOD_SPLATTER_REPLACEABLE);;
+        public static final TagKey<Block> DECAYED_LOGS = TagKey.of(RegistryKeys.BLOCK, BLResources.DECAYED_LOGS_ID);
     }
 
     public static class Entities {
@@ -33,6 +35,7 @@ public class BLTags {
         public static final TagKey<Item> SUN_BLOCKING_HELMETS = TagKey.of(RegistryKeys.ITEM, BLResources.SUN_BLOCKING_HELMETS);
         public static final TagKey<Item> VAMPIRE_MASKS = TagKey.of(RegistryKeys.ITEM, BLResources.VAMPIRE_MASKS_ID);
         public static final TagKey<Item> SILVER_INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "silver_ingots"));
+        public static final TagKey<Item> DECAYED_LOGS = TagKey.of(RegistryKeys.ITEM, BLResources.DECAYED_LOGS_ID);
     }
 
     public static class VampireAbilities {

@@ -47,6 +47,12 @@ public class BLItemGroups {
               entries.add(BLBlocks.DEEPSLATE_SILVER_ORE);
               entries.add(BLBlocks.ALTAR);
               entries.add(BLBlocks.PEDESTAL);
+              entries.add(BLBlocks.HUNGRY_DECAYED_LOG);
+              entries.add(BLBlocks.DECAYED_LOG);
+              entries.add(BLBlocks.DECAYED_WOOD);
+              entries.add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+              entries.add(BLBlocks.STRIPPED_DECAYED_LOG);
+              entries.add(BLBlocks.STRIPPED_DECAYED_WOOD);
               entries.add(BLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
               entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION));
               entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION_TWO));

@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
+import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
@@ -35,5 +36,33 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
         getOrCreateTagBuilder(ConventionalBlockTags.ORES)
           .add(BLBlocks.SILVER_ORE)
           .add(BLBlocks.DEEPSLATE_SILVER_ORE);
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
+          .add(BLBlocks.DECAYED_WOOD)
+          .add(BLBlocks.DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_WOOD)
+          .add(BLBlocks.HUNGRY_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+        getOrCreateTagBuilder(BLTags.Blocks.DECAYED_LOGS)
+          .add(BLBlocks.DECAYED_WOOD)
+          .add(BLBlocks.DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_WOOD)
+          .add(BLBlocks.HUNGRY_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+        getOrCreateTagBuilder(BlockTags.LOGS)
+          .add(BLBlocks.DECAYED_WOOD)
+          .add(BLBlocks.DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_WOOD)
+          .add(BLBlocks.HUNGRY_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+        getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
+          .add(BLBlocks.DECAYED_WOOD)
+          .add(BLBlocks.DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_DECAYED_WOOD)
+          .add(BLBlocks.HUNGRY_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
     }
 }

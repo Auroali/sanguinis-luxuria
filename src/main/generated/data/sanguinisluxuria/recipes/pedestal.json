@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "l": {
-      "tag": "minecraft:logs"
+      "tag": "sanguinisluxuria:decayed_logs"
     },
     "s": {
       "item": "minecraft:blackstone_wall"

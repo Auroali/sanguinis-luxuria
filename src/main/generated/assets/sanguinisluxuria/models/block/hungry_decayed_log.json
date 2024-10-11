@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "sanguinisluxuria:block/hungry_decayed_log_top",
+    "side": "sanguinisluxuria:block/hungry_decayed_log_0"
+  }
+}

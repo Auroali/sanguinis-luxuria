@@ -106,6 +106,13 @@ public class BLResources {
     public static final Identifier BLOOD_CAULDRON_FILL_ID = id("blood_cauldron_fill");
     public static final Identifier BLINK_COOLDOWN_ID = id("blink_cooldown");
     public static final Identifier BLINK_RANGE_ID = id("blink_range");
+    public static final Identifier HUNGRY_DECAYED_LOG = id("hungry_decayed_log");
+    public static final Identifier STRIPPED_HUNGRY_DECAYED_LOG = id("stripped_hungry_decayed_log");
+    public static final Identifier DECAYED_LOG = id("decayed_log");
+    public static final Identifier STRIPPED_DECAYED_LOG = id("stripped_decayed_log");
+    public static final Identifier DECAYED_WOOD = id("decayed_wood");
+    public static final Identifier STRIPPED_DECAYED_WOOD = id("stripped_decayed_wood");
+    public static final Identifier DECAYED_LOGS_ID = id("decayed_logs");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

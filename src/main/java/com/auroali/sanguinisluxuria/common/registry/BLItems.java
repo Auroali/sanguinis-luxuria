@@ -6,12 +6,14 @@ import com.auroali.sanguinisluxuria.common.items.*;
 import com.auroali.sanguinisluxuria.common.items.tools.*;
 import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 public class BLItems {
     public static final MaskItem MASK_1 = new MaskItem(new FabricItemSettings().maxCount(1));
@@ -60,11 +62,25 @@ public class BLItems {
         Registry.register(Registries.ITEM, BLResources.SILVER_HOE_ID, SILVER_HOE);
 
         // blocks
-        Registry.register(Registries.ITEM, BLResources.ALTAR_ID, new BlockItem(BLBlocks.ALTAR, new FabricItemSettings()));
-        Registry.register(Registries.ITEM, BLResources.PEDESTAL_ID, new BlockItem(BLBlocks.PEDESTAL, new FabricItemSettings()));
-        Registry.register(Registries.ITEM, BLResources.SILVER_BLOCK_ID, new BlockItem(BLBlocks.SILVER_BLOCK, new FabricItemSettings()));
-        Registry.register(Registries.ITEM, BLResources.SILVER_ORE_ID, new BlockItem(BLBlocks.SILVER_ORE, new FabricItemSettings()));
-        Registry.register(Registries.ITEM, BLResources.DEEPSLATE_SILVER_ORE_ID, new BlockItem(BLBlocks.DEEPSLATE_SILVER_ORE, new FabricItemSettings()));
-        Registry.register(Registries.ITEM, BLResources.RAW_SILVER_BLOCK_ID, new BlockItem(BLBlocks.RAW_SILVER_BLOCK, new FabricItemSettings()));
+        registerBlock(BLResources.ALTAR_ID, BLBlocks.ALTAR);
+        registerBlock(BLResources.PEDESTAL_ID, BLBlocks.PEDESTAL);
+        registerBlock(BLResources.SILVER_BLOCK_ID, BLBlocks.SILVER_BLOCK);
+        registerBlock(BLResources.SILVER_ORE_ID, BLBlocks.SILVER_ORE);
+        registerBlock(BLResources.DEEPSLATE_SILVER_ORE_ID, BLBlocks.DEEPSLATE_SILVER_ORE);
+        registerBlock(BLResources.RAW_SILVER_BLOCK_ID, BLBlocks.RAW_SILVER_BLOCK);
+        registerBlock(BLResources.HUNGRY_DECAYED_LOG, BLBlocks.HUNGRY_DECAYED_LOG);
+        registerBlock(BLResources.STRIPPED_HUNGRY_DECAYED_LOG, BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+        registerBlock(BLResources.DECAYED_LOG, BLBlocks.DECAYED_LOG);
+        registerBlock(BLResources.STRIPPED_DECAYED_LOG, BLBlocks.STRIPPED_DECAYED_LOG);
+        registerBlock(BLResources.STRIPPED_DECAYED_WOOD, BLBlocks.STRIPPED_DECAYED_WOOD);
+        registerBlock(BLResources.DECAYED_WOOD, BLBlocks.DECAYED_WOOD);
+    }
+
+    public static void registerBlock(Identifier id, Block block, Item.Settings settings) {
+        Registry.register(Registries.ITEM, id, new BlockItem(block, settings));
+    }
+
+    public static void registerBlock(Identifier id, Block block) {
+        registerBlock(id, block, new Item.Settings());
     }
 }

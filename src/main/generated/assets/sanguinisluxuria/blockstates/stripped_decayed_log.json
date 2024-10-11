@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "sanguinisluxuria:block/stripped_decayed_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "sanguinisluxuria:block/stripped_decayed_log"
+    },
+    "axis=z": {
+      "model": "sanguinisluxuria:block/stripped_decayed_log_horizontal",
+      "x": 90
+    }
+  }
+}

@@ -1,12 +1,15 @@
-// 1.20.1	2024-10-10T20:03:23.313911573	Sanguinis Luxuria/Tags for minecraft:item
+// 1.20.1	2024-10-11T17:04:28.639910467	Sanguinis Luxuria/Tags for minecraft:item
 7246aec037ac6c03902a5efb15c2e213af5d8f3d data/minecraft/tags/items/hoes.json
 6d684fce31ed676aeaa54e1c92a9fa648b6f16e7 data/minecraft/tags/items/shovels.json
-69e797885d92007ca6205470e9993c9f3d8ad1e2 data/minecraft/tags/items/pickaxes.json
 6833b2e755c0a03d2b0802c9b489a4a58776efc6 data/minecraft/tags/items/axes.json
-d28260a9ba94faa24303cd8825b3ebd4ec8d7ee2 data/minecraft/tags/items/swords.json
 3d81f29b664ba8ac540a85e97eabcbec26ed6a9c data/sanguinisluxuria/tags/items/sun_blocking_helmets.json
 facafd2526c364a82c85495552558d6c38405d42 data/c/tags/items/silver_ingots.json
 d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/items/ores.json
-629f75843c82691375ef6b0fe17524c2599abffc data/trinkets/tags/items/head/face.json
+cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/items/logs.json
 629f75843c82691375ef6b0fe17524c2599abffc data/sanguinisluxuria/tags/items/vampire_masks.json
+cbc32d4bc22046141999636336671badf0644782 data/sanguinisluxuria/tags/items/decayed_logs.json
+69e797885d92007ca6205470e9993c9f3d8ad1e2 data/minecraft/tags/items/pickaxes.json
+d28260a9ba94faa24303cd8825b3ebd4ec8d7ee2 data/minecraft/tags/items/swords.json
+cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/items/logs_that_burn.json
+629f75843c82691375ef6b0fe17524c2599abffc data/trinkets/tags/items/head/face.json
 145394fa5265be8766e5f0506ac3c8c96a5f208e data/trinkets/tags/items/chest/necklace.json

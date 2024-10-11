@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "minecraft:logs"
+    "tag": "sanguinisluxuria:decayed_logs"
   },
   "result": "sanguinisluxuria:mask_2"
 }

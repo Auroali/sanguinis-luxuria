@@ -1,5 +1,9 @@
-// 1.20.1	2024-10-10T20:03:23.314805909	Sanguinis Luxuria/Tags for minecraft:block
+// 1.20.1	2024-10-11T17:04:28.662220046	Sanguinis Luxuria/Tags for minecraft:block
 3834d12c6b786b3d3a1eb209fb685d1dfd849abf data/minecraft/tags/blocks/cauldrons.json
+cbc32d4bc22046141999636336671badf0644782 data/sanguinisluxuria/tags/blocks/decayed_logs.json
 87b1e2b7bc6bf46f34b0c8318d19721505fc1431 data/minecraft/tags/blocks/mineable/pickaxe.json
 0828bb42b778c355bdf4bf1906ca564eb4a4d5ee data/minecraft/tags/blocks/needs_stone_tool.json
+cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/blocks/mineable/axe.json
+cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/blocks/logs_that_burn.json
 d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/blocks/ores.json
+cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/blocks/logs.json

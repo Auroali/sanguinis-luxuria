@@ -26,13 +26,13 @@ public class BLRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(Consumer<RecipeJsonProvider> exporter) {
-        SingleItemRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(ItemTags.LOGS), RecipeCategory.TOOLS, BLItems.MASK_1)
+        SingleItemRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(BLTags.Items.DECAYED_LOGS), RecipeCategory.TOOLS, BLItems.MASK_1)
           .criterion("has_log", conditionsFromTag(ItemTags.LOGS))
           .offerTo(exporter);
-        SingleItemRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(ItemTags.LOGS), RecipeCategory.TOOLS, BLItems.MASK_2)
+        SingleItemRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(BLTags.Items.DECAYED_LOGS), RecipeCategory.TOOLS, BLItems.MASK_2)
           .criterion("has_log", conditionsFromTag(ItemTags.LOGS))
           .offerTo(exporter);
-        SingleItemRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(ItemTags.LOGS), RecipeCategory.TOOLS, BLItems.MASK_3)
+        SingleItemRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(BLTags.Items.DECAYED_LOGS), RecipeCategory.TOOLS, BLItems.MASK_3)
           .criterion("has_log", conditionsFromTag(ItemTags.LOGS))
           .offerTo(exporter);
         AltarRecipeJsonBuilder.create(RecipeCategory.BREWING, BLItems.TWISTED_BLOOD)
@@ -54,7 +54,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .pattern("sss")
           .input('b', BLItems.BLOOD_BOTTLE)
           .input('s', Items.BLACKSTONE)
-          .input('l', ItemTags.LOGS)
+          .input('l', BLTags.Items.DECAYED_LOGS)
           .criterion("is_vampire", BecomeVampireCriterion.Conditions.create())
           .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
           .offerTo(exporter);
@@ -62,7 +62,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .pattern(" l ")
           .pattern(" s ")
           .input('s', Items.BLACKSTONE_WALL)
-          .input('l', ItemTags.LOGS)
+          .input('l', BLTags.Items.DECAYED_LOGS)
           .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
           .offerTo(exporter);
         AltarRecipeJsonBuilder.create(RecipeCategory.BREWING, BLItems.BLESSED_BLOOD)

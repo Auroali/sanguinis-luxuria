@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "axis=x,blood=0": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,blood=1": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_1_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,blood=2": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_2_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,blood=3": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_3_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,blood=0": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log"
+    },
+    "axis=y,blood=1": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_1"
+    },
+    "axis=y,blood=2": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_2"
+    },
+    "axis=y,blood=3": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_3"
+    },
+    "axis=z,blood=0": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_horizontal",
+      "x": 90
+    },
+    "axis=z,blood=1": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_1_horizontal",
+      "x": 90
+    },
+    "axis=z,blood=2": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_2_horizontal",
+      "x": 90
+    },
+    "axis=z,blood=3": {
+      "model": "sanguinisluxuria:block/hungry_decayed_log_3_horizontal",
+      "x": 90
+    }
+  }
+}

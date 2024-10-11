@@ -55,5 +55,26 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
         getOrCreateTagBuilder(ConventionalItemTags.ORES)
           .add(BLBlocks.SILVER_ORE.asItem())
           .add(BLBlocks.DEEPSLATE_SILVER_ORE.asItem());
+        getOrCreateTagBuilder(BLTags.Items.DECAYED_LOGS)
+          .add(BLBlocks.DECAYED_WOOD.asItem())
+          .add(BLBlocks.DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_DECAYED_WOOD.asItem())
+          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
+        getOrCreateTagBuilder(ItemTags.LOGS)
+          .add(BLBlocks.DECAYED_WOOD.asItem())
+          .add(BLBlocks.DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_DECAYED_WOOD.asItem())
+          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
+        getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN)
+          .add(BLBlocks.DECAYED_WOOD.asItem())
+          .add(BLBlocks.DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_DECAYED_WOOD.asItem())
+          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
     }
 }

@@ -217,6 +217,12 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLBlocks.ALTAR, "Altar");
         translationBuilder.add(BLBlocks.BLOOD_CAULDRON, "Blood Cauldron");
         translationBuilder.add(BLBlocks.BLOOD_SPLATTER, "Blood");
+        translationBuilder.add(BLBlocks.HUNGRY_DECAYED_LOG, "Hungry Decayed Log");
+        translationBuilder.add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG, "Stripped Hungry Decayed Log");
+        translationBuilder.add(BLBlocks.STRIPPED_DECAYED_LOG, "Stripped Decayed Log");
+        translationBuilder.add(BLBlocks.DECAYED_LOG, "Decayed Log");
+        translationBuilder.add(BLBlocks.DECAYED_WOOD, "Decayed Wood");
+        translationBuilder.add(BLBlocks.STRIPPED_DECAYED_WOOD, "Stripped Decayed Wood");
     }
 
     private static void items(TranslationBuilder translationBuilder) {
