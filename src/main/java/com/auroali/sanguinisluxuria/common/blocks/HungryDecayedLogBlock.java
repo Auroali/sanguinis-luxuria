@@ -4,12 +4,11 @@ import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PillarBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,6 +24,7 @@ import net.minecraft.util.TypeFilter;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
@@ -74,11 +74,31 @@ public class HungryDecayedLogBlock extends PillarBlock {
 
     @Override
     public boolean hasRandomTicks(BlockState state) {
-        return state.get(BLOOD_LEVEL) < 3 && super.hasRandomTicks(state);
+        return (state.getBlock() == BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || state.get(BLOOD_LEVEL) < 3) && super.hasRandomTicks(state);
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (state.get(BLOOD_LEVEL) >= 3) {
+            BlockPos lowerPosition = pos.down();
+            for (Direction direction : Direction.Type.HORIZONTAL) {
+                BlockState lowerState = world.getBlockState(lowerPosition.offset(direction));
+                BlockState neighbourState = world.getBlockState(pos.offset(direction));
+
+                if (!neighbourState.isAir())
+                    continue;
+
+                if (lowerState.isOf(BLBlocks.BLOOD_CAULDRON) && lowerState.get(LeveledCauldronBlock.LEVEL) < 3) {
+                    int newLevel = lowerState.get(LeveledCauldronBlock.LEVEL) + 1;
+                    world.setBlockState(lowerPosition.offset(direction), lowerState.with(LeveledCauldronBlock.LEVEL, newLevel));
+                }
+                if (lowerState.isOf(Blocks.CAULDRON)) {
+                    world.setBlockState(lowerPosition.offset(direction), BLBlocks.BLOOD_CAULDRON.getDefaultState());
+                }
+            }
+            world.setBlockState(pos, state.with(BLOOD_LEVEL, 0));
+            return;
+        }
         if (random.nextInt(5) == 0) {
             int newLevel = state.get(BLOOD_LEVEL) + 1;
             Box boundingBox = new Box(pos).expand(5);
