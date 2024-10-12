@@ -29,8 +29,8 @@ public class BLBlocks {
     public static final Block SILVER_ORE = new Block(AbstractBlock.Settings.copy(Blocks.IRON_ORE));
     public static final Block DEEPSLATE_SILVER_ORE = new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_IRON_ORE));
     public static final Block RAW_SILVER_BLOCK = new Block(AbstractBlock.Settings.copy(Blocks.RAW_COPPER_BLOCK));
-    public static final Block HUNGRY_DECAYED_LOG = new BloodDecayedLogBlock(AbstractBlock.Settings.create().burnable().ticksRandomly().mapColor(MapColor.OFF_WHITE).instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
-    public static final Block STRIPPED_HUNGRY_DECAYED_LOG = new BloodDecayedLogBlock(AbstractBlock.Settings.create().burnable().ticksRandomly().mapColor(MapColor.OFF_WHITE).instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
+    public static final Block HUNGRY_DECAYED_LOG = new HungryDecayedLogBlock(AbstractBlock.Settings.create().burnable().ticksRandomly().mapColor(MapColor.OFF_WHITE).instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
+    public static final Block STRIPPED_HUNGRY_DECAYED_LOG = new HungryDecayedLogBlock(AbstractBlock.Settings.create().burnable().ticksRandomly().mapColor(MapColor.OFF_WHITE).instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
     public static final Block DECAYED_LOG = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
     public static final Block DECAYED_WOOD = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
     public static final Block STRIPPED_DECAYED_LOG = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
@@ -54,5 +54,6 @@ public class BLBlocks {
 
         StrippableBlockRegistry.register(HUNGRY_DECAYED_LOG, STRIPPED_HUNGRY_DECAYED_LOG);
         StrippableBlockRegistry.register(DECAYED_LOG, STRIPPED_DECAYED_LOG);
+        StrippableBlockRegistry.register(DECAYED_WOOD, STRIPPED_DECAYED_WOOD);
     }
 }

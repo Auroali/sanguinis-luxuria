@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
@@ -29,10 +30,10 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BloodDecayedLogBlock extends PillarBlock {
+public class HungryDecayedLogBlock extends PillarBlock {
     public static final IntProperty BLOOD_LEVEL = IntProperty.of("blood", 0, 3);
 
-    public BloodDecayedLogBlock(Settings settings) {
+    public HungryDecayedLogBlock(Settings settings) {
         super(settings);
         this.setDefaultState(
           this.getStateManager().getDefaultState().with(BLOOD_LEVEL, 0)
@@ -42,6 +43,7 @@ public class BloodDecayedLogBlock extends PillarBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);
+        // fill glass bottles
         if (stack.isOf(Items.GLASS_BOTTLE) && state.get(BLOOD_LEVEL) >= 3) {
             stack.decrement(1);
             ItemStack bloodBottle = BloodStorageItem.setStoredBlood(new ItemStack(BLItems.BLOOD_BOTTLE), BloodConstants.BLOOD_PER_BOTTLE);
@@ -50,6 +52,19 @@ public class BloodDecayedLogBlock extends PillarBlock {
             else if (!player.getInventory().insertStack(bloodBottle))
                 player.dropItem(bloodBottle, false, false);
 
+            world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            world.setBlockState(pos, state.with(BLOOD_LEVEL, 0));
+
+            return ActionResult.success(world.isClient);
+        }
+        // fill blood storing items
+        if (stack.getItem() instanceof BloodStorageItem bloodStoringItem && bloodStoringItem.canFill() && state.get(BLOOD_LEVEL) >= 3) {
+            if (BloodStorageItem.getStoredBlood(stack) > BloodStorageItem.getMaxBlood(stack) - BloodConstants.BLOOD_PER_BOTTLE)
+                return ActionResult.FAIL;
+
+            BloodStorageItem.setStoredBlood(stack, BloodStorageItem.getStoredBlood(stack) + BloodConstants.BLOOD_PER_BOTTLE);
+
+            world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
             world.setBlockState(pos, state.with(BLOOD_LEVEL, 0));
 
             return ActionResult.success(world.isClient);

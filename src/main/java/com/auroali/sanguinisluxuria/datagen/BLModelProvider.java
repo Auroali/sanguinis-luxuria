@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
-import com.auroali.sanguinisluxuria.common.blocks.BloodDecayedLogBlock;
+import com.auroali.sanguinisluxuria.common.blocks.HungryDecayedLogBlock;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.google.gson.JsonElement;
@@ -163,7 +163,7 @@ public class BLModelProvider extends FabricModelProvider {
     }
 
     public static VariantsBlockStateSupplier generateHungryDecayedLog(Block block, BiConsumer<Identifier, Supplier<JsonElement>> modelCollector) {
-        BlockStateVariantMap.DoubleProperty<Integer, Direction.Axis> map = BlockStateVariantMap.create(BloodDecayedLogBlock.BLOOD_LEVEL, PillarBlock.AXIS);
+        BlockStateVariantMap.DoubleProperty<Integer, Direction.Axis> map = BlockStateVariantMap.create(HungryDecayedLogBlock.BLOOD_LEVEL, PillarBlock.AXIS);
         Identifier[] horizontalModels = new Identifier[4];
         Identifier[] verticalModels = new Identifier[4];
         for (int i = 0; i < 4; i++) {
@@ -173,7 +173,7 @@ public class BLModelProvider extends FabricModelProvider {
         }
 
         for (BlockState state : block.getStateManager().getStates()) {
-            int bloodLevel = state.get(BloodDecayedLogBlock.BLOOD_LEVEL);
+            int bloodLevel = state.get(HungryDecayedLogBlock.BLOOD_LEVEL);
             Direction.Axis axis = state.get(Properties.AXIS);
             BlockStateVariant variant = BlockStateVariant.create();
             switch (axis) {
@@ -186,7 +186,7 @@ public class BLModelProvider extends FabricModelProvider {
                 case Y -> variant
                   .put(VariantSettings.MODEL, verticalModels[bloodLevel]);
             }
-            map.register(state.get(BloodDecayedLogBlock.BLOOD_LEVEL), state.get(PillarBlock.AXIS), variant);
+            map.register(state.get(HungryDecayedLogBlock.BLOOD_LEVEL), state.get(PillarBlock.AXIS), variant);
         }
         return VariantsBlockStateSupplier.create(block).coordinate(map);
     }
