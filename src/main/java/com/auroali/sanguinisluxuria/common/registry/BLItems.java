@@ -5,7 +5,6 @@ import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.items.*;
 import com.auroali.sanguinisluxuria.common.items.tools.*;
 import dev.emi.trinkets.api.TrinketItem;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -16,30 +15,30 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class BLItems {
-    public static final MaskItem MASK_1 = new MaskItem(new FabricItemSettings().maxCount(1));
-    public static final MaskItem MASK_2 = new MaskItem(new FabricItemSettings().maxCount(1));
-    public static final MaskItem MASK_3 = new MaskItem(new FabricItemSettings().maxCount(1));
+    public static final MaskItem MASK_1 = new MaskItem(new Item.Settings().maxCount(1));
+    public static final MaskItem MASK_2 = new MaskItem(new Item.Settings().maxCount(1));
+    public static final MaskItem MASK_3 = new MaskItem(new Item.Settings().maxCount(1));
     public static final BloodStorageItem BLOOD_BAG = new DrinkableBloodStorageItem(
-      new FabricItemSettings().maxCount(1),
+      new Item.Settings().maxCount(1),
       10 * BloodConstants.BLOOD_PER_BOTTLE
     );
     public static final BloodStorageItem BLOOD_BOTTLE = new BloodBottleItem(
-      new FabricItemSettings().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
+      new Item.Settings().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE),
       BloodConstants.BLOOD_PER_BOTTLE
     ).emptyItem(Items.GLASS_BOTTLE);
-    public static final Item TWISTED_BLOOD = new TwistedBloodItem(new FabricItemSettings().maxCount(1));
-    public static final Item BLESSED_BLOOD = new BlessedBloodItem(new FabricItemSettings().maxCount(1));
-    public static final Item VAMPIRE_VILLAGER_SPAWN_EGG = new SpawnEggItem(BLEntities.VAMPIRE_VILLAGER, 0xFF1E1C1B, 0xFFF9f8EF, new FabricItemSettings());
-    public static final Item PENDANT_OF_PIERCING = new TrinketItem(new FabricItemSettings().maxCount(1));
-    public static final Item PENDANT_OF_TRANSFUSION = new TrinketItem(new FabricItemSettings().maxCount(1));
-    public static final Item BLOOD_PETAL = new Item(new FabricItemSettings());
-    public static final Item SILVER_INGOT = new Item(new FabricItemSettings());
-    public static final Item RAW_SILVER = new Item(new FabricItemSettings());
-    public static final Item SILVER_SWORD = new BlessedSwordItem(BLToolMaterials.SILVER, 3, -2.4f, 4f, new FabricItemSettings());
-    public static final Item SILVER_PICKAXE = new BlessedPickaxeItem(BLToolMaterials.SILVER, 1, -2.8f, 2, new FabricItemSettings());
-    public static final Item SILVER_AXE = new BlessedAxeItem(BLToolMaterials.SILVER, 6, -3.1f, 2.5f, new FabricItemSettings());
-    public static final Item SILVER_SHOVEL = new BlessedShovelItem(BLToolMaterials.SILVER, 1.5f, -3.f, 2, new FabricItemSettings());
-    public static final Item SILVER_HOE = new BlessedHoeItem(BLToolMaterials.SILVER, 0, -1.f, 2, new FabricItemSettings());
+    public static final Item TWISTED_BLOOD = new TwistedBloodItem(new Item.Settings().maxCount(1));
+    public static final Item BLESSED_BLOOD = new BlessedBloodItem(new Item.Settings().maxCount(1));
+    public static final Item VAMPIRE_VILLAGER_SPAWN_EGG = new SpawnEggItem(BLEntities.VAMPIRE_VILLAGER, 0xFF1E1C1B, 0xFFF9f8EF, new Item.Settings());
+    public static final Item PENDANT_OF_PIERCING = new TrinketItem(new Item.Settings().maxCount(1));
+    public static final Item PENDANT_OF_TRANSFUSION = new TrinketItem(new Item.Settings().maxCount(1));
+    public static final Item BLOOD_PETAL = new Item(new Item.Settings());
+    public static final Item SILVER_INGOT = new Item(new Item.Settings());
+    public static final Item RAW_SILVER = new Item(new Item.Settings());
+    public static final Item SILVER_SWORD = new BlessedSwordItem(BLToolMaterials.SILVER, 3, -2.4f, 4f, new Item.Settings());
+    public static final Item SILVER_PICKAXE = new BlessedPickaxeItem(BLToolMaterials.SILVER, 1, -2.8f, 2, new Item.Settings());
+    public static final Item SILVER_AXE = new BlessedAxeItem(BLToolMaterials.SILVER, 6, -3.1f, 2.5f, new Item.Settings());
+    public static final Item SILVER_SHOVEL = new BlessedShovelItem(BLToolMaterials.SILVER, 1.5f, -3.f, 2, new Item.Settings());
+    public static final Item SILVER_HOE = new BlessedHoeItem(BLToolMaterials.SILVER, 0, -1.f, 2, new Item.Settings());
 
     public static void register() {
         Registry.register(Registries.ITEM, BLResources.MASK_ONE_ID, MASK_1);
@@ -75,6 +74,7 @@ public class BLItems {
         registerBlock(BLResources.STRIPPED_DECAYED_WOOD, BLBlocks.STRIPPED_DECAYED_WOOD);
         registerBlock(BLResources.DECAYED_WOOD, BLBlocks.DECAYED_WOOD);
         registerBlock(BLResources.DECAYED_TWIGS, BLBlocks.DECAYED_TWIGS);
+        registerBlock(BLResources.HUNGRY_SAPLING, BLBlocks.HUNGRY_SAPLING);
     }
 
     public static void registerBlock(Identifier id, Block block, Item.Settings settings) {

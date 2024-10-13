@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.blocks.*;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
@@ -14,7 +13,7 @@ import net.minecraft.util.DyeColor;
 
 public class BLBlocks {
     public static final Block BLOOD_SPLATTER = new BloodSplatterBlock(
-      FabricBlockSettings.create(/*Materials.DECORATION*/)
+      AbstractBlock.Settings.create(/*Materials.DECORATION*/)
         .mapColor(DyeColor.RED)
         .breakInstantly()
         .noCollision()
