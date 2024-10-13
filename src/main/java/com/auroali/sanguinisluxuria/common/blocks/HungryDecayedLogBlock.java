@@ -4,15 +4,19 @@ import com.auroali.sanguinisluxuria.common.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.network.HungryDecayedLogVFXS2C;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -112,6 +116,9 @@ public class HungryDecayedLogBlock extends PillarBlock {
                 if (component.drainBlood()) {
                     world.playSound(null, pos, BLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     world.setBlockState(pos, state.with(BLOOD_LEVEL, newLevel));
+                    HungryDecayedLogVFXS2C packet = new HungryDecayedLogVFXS2C(entity.getId());
+                    PlayerLookup.tracking(world, pos)
+                      .forEach(p -> ServerPlayNetworking.send(p, packet));
                     return;
                 }
             }
@@ -123,5 +130,24 @@ public class HungryDecayedLogBlock extends PillarBlock {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(BLOOD_LEVEL);
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (state.get(BLOOD_LEVEL) < 3 || this != BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || random.nextInt(5) != 0)
+            return;
+
+        for (Direction direction : Direction.values()) {
+            if (direction.getAxis() == state.get(AXIS))
+                continue;
+
+            Direction.Axis axis = direction.getAxis();
+            double x = axis == Direction.Axis.X ? 0.5 + 0.5625 * direction.getOffsetX() : random.nextFloat();
+            double y = axis == Direction.Axis.Y ? 0.5 + 0.5625 * direction.getOffsetY() : random.nextFloat();
+            double z = axis == Direction.Axis.Z ? 0.5 + 0.5625 * direction.getOffsetZ() : random.nextFloat();
+
+            // todo: add custom particle
+            world.addParticle(DustParticleEffect.DEFAULT, pos.getX() + x, pos.getY() + y, pos.getZ() + z, 0, 0, 0);
+        }
     }
 }

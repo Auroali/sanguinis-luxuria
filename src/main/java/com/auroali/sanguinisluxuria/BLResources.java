@@ -115,6 +115,7 @@ public class BLResources {
     public static final Identifier DECAYED_LOGS_ID = id("decayed_logs");
     public static final Identifier DECAYED_TWIGS = id("decayed_twigs");
     public static final Identifier HUNGRY_SAPLING = id("hungry_sapling");
+    public static final Identifier HUNGRY_DECAYED_LOG_VFX_S2C = id("hungry_decayed_log_vfx");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
