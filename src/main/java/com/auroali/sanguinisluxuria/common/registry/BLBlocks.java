@@ -35,8 +35,8 @@ public class BLBlocks {
     public static final Block DECAYED_WOOD = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
     public static final Block STRIPPED_DECAYED_LOG = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
     public static final Block STRIPPED_DECAYED_WOOD = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
-    public static final Block DECAYED_TWIGS = new DecayedTwigsBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).noCollision().burnable().instrument(Instrument.BASS).sounds(BlockSoundGroup.WOOD).breakInstantly());
-    public static final Block HUNGRY_SAPLING = new HungrySaplingBlock(AbstractBlock.Settings.copy(Blocks.OAK_SAPLING).ticksRandomly());
+    public static final Block DECAYED_TWIGS = new DecayedTwigsBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).noCollision().burnable().sounds(BlockSoundGroup.GRASS).breakInstantly());
+    public static final Block HUNGRY_SAPLING = new HungrySaplingBlock(AbstractBlock.Settings.copy(Blocks.OAK_SAPLING).mapColor(MapColor.OFF_WHITE).ticksRandomly());
 
     public static void register() {
         Registry.register(Registries.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
