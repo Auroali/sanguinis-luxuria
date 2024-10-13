@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.blocks.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Instrument;
@@ -35,6 +36,8 @@ public class BLBlocks {
     public static final Block DECAYED_WOOD = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
     public static final Block STRIPPED_DECAYED_LOG = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
     public static final Block STRIPPED_DECAYED_WOOD = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.WOOD));
+    public static final Block DECAYED_TWIGS = new DecayedTwigsBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).noCollision().burnable().instrument(Instrument.BASS).sounds(BlockSoundGroup.WOOD).breakInstantly());
+    public static final Block HUNGRY_SAPLING = new HungrySaplingBlock(AbstractBlock.Settings.copy(Blocks.OAK_SAPLING).ticksRandomly());
 
     public static void register() {
         Registry.register(Registries.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
@@ -51,9 +54,20 @@ public class BLBlocks {
         Registry.register(Registries.BLOCK, BLResources.STRIPPED_DECAYED_WOOD, STRIPPED_DECAYED_WOOD);
         Registry.register(Registries.BLOCK, BLResources.DECAYED_LOG, DECAYED_LOG);
         Registry.register(Registries.BLOCK, BLResources.DECAYED_WOOD, DECAYED_WOOD);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_TWIGS, DECAYED_TWIGS);
+        Registry.register(Registries.BLOCK, BLResources.HUNGRY_SAPLING, HUNGRY_SAPLING);
 
         StrippableBlockRegistry.register(HUNGRY_DECAYED_LOG, STRIPPED_HUNGRY_DECAYED_LOG);
         StrippableBlockRegistry.register(DECAYED_LOG, STRIPPED_DECAYED_LOG);
         StrippableBlockRegistry.register(DECAYED_WOOD, STRIPPED_DECAYED_WOOD);
+
+        FlammableBlockRegistry fireRegistry = FlammableBlockRegistry.getDefaultInstance();
+        fireRegistry.add(DECAYED_WOOD, 5, 5);
+        fireRegistry.add(STRIPPED_DECAYED_WOOD, 5, 5);
+        fireRegistry.add(DECAYED_LOG, 5, 5);
+        fireRegistry.add(STRIPPED_DECAYED_LOG, 5, 5);
+        fireRegistry.add(HUNGRY_DECAYED_LOG, 5, 5);
+        fireRegistry.add(STRIPPED_HUNGRY_DECAYED_LOG, 5, 5);
+        fireRegistry.add(DECAYED_TWIGS, 5, 5);
     }
 }

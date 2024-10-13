@@ -36,7 +36,9 @@ public class HungryDecayedLogBlock extends PillarBlock {
     public HungryDecayedLogBlock(Settings settings) {
         super(settings);
         this.setDefaultState(
-          this.getStateManager().getDefaultState().with(BLOOD_LEVEL, 0)
+          this.getStateManager().getDefaultState()
+            .with(BLOOD_LEVEL, 0)
+            .with(AXIS, Direction.Axis.Y)
         );
     }
 

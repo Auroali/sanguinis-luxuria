@@ -74,6 +74,7 @@ public class BLItems {
         registerBlock(BLResources.STRIPPED_DECAYED_LOG, BLBlocks.STRIPPED_DECAYED_LOG);
         registerBlock(BLResources.STRIPPED_DECAYED_WOOD, BLBlocks.STRIPPED_DECAYED_WOOD);
         registerBlock(BLResources.DECAYED_WOOD, BLBlocks.DECAYED_WOOD);
+        registerBlock(BLResources.DECAYED_TWIGS, BLBlocks.DECAYED_TWIGS);
     }
 
     public static void registerBlock(Identifier id, Block block, Item.Settings settings) {

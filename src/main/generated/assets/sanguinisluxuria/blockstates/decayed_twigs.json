@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "sanguinisluxuria:block/decayed_twigs",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "sanguinisluxuria:block/decayed_twigs"
+    },
+    "facing=south": {
+      "model": "sanguinisluxuria:block/decayed_twigs",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "sanguinisluxuria:block/decayed_twigs",
+      "y": 270
+    }
+  }
+}

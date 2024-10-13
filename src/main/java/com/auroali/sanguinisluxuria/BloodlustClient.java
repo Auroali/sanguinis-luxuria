@@ -89,6 +89,7 @@ public class BloodlustClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.BLOOD_SPLATTER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.PEDESTAL, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.ALTAR, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BLBlocks.DECAYED_TWIGS, RenderLayer.getCutout());
 
         EntityRendererRegistry.register(BLEntities.VAMPIRE_VILLAGER, VampireVillagerRenderer::new);
         EntityRendererRegistry.register(BLEntities.VAMPIRE_MERCHANT, VampireMerchantRenderer::new);

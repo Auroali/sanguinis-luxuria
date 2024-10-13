@@ -223,6 +223,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLBlocks.DECAYED_LOG, "Decayed Log");
         translationBuilder.add(BLBlocks.DECAYED_WOOD, "Decayed Wood");
         translationBuilder.add(BLBlocks.STRIPPED_DECAYED_WOOD, "Stripped Decayed Wood");
+        translationBuilder.add(BLBlocks.DECAYED_TWIGS, "Decayed Twigs");
     }
 
     private static void items(TranslationBuilder translationBuilder) {

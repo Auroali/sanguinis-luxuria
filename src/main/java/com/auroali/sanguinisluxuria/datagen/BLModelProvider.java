@@ -53,6 +53,17 @@ public class BLModelProvider extends FabricModelProvider {
 
         blockStateModelGenerator.blockStateCollector.accept(generateHungryDecayedLog(BLBlocks.HUNGRY_DECAYED_LOG, blockStateModelGenerator.modelCollector));
         blockStateModelGenerator.blockStateCollector.accept(generateHungryDecayedLog(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG, blockStateModelGenerator.modelCollector));
+
+        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLBlocks.DECAYED_TWIGS);
+        blockStateModelGenerator.blockStateCollector.accept(
+          VariantsBlockStateSupplier.create(BLBlocks.DECAYED_TWIGS)
+            .coordinate(BlockStateVariantMap.create(Properties.HORIZONTAL_FACING)
+              .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.MODEL, BLResources.id("block/decayed_twigs")))
+              .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R90).put(VariantSettings.MODEL, BLResources.id("block/decayed_twigs")))
+              .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R180).put(VariantSettings.MODEL, BLResources.id("block/decayed_twigs")))
+              .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R270).put(VariantSettings.MODEL, BLResources.id("block/decayed_twigs")))
+            )
+        );
     }
 
     private static void createCauldron(BlockStateModelGenerator blockStateModelGenerator, Block block, Identifier fillTexture) {
@@ -219,5 +230,6 @@ public class BLModelProvider extends FabricModelProvider {
         itemModelGenerator.register(BLItems.SILVER_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(BLItems.SILVER_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(BLItems.SILVER_HOE, Models.HANDHELD);
+        itemModelGenerator.register(BLBlocks.DECAYED_TWIGS.asItem(), Models.GENERATED);
     }
 }
