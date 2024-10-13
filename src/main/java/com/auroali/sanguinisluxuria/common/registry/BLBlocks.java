@@ -13,7 +13,7 @@ import net.minecraft.util.DyeColor;
 
 public class BLBlocks {
     public static final Block BLOOD_SPLATTER = new BloodSplatterBlock(
-      AbstractBlock.Settings.create(/*Materials.DECORATION*/)
+      AbstractBlock.Settings.create()
         .mapColor(DyeColor.RED)
         .breakInstantly()
         .noCollision()
