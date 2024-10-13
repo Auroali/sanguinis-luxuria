@@ -55,8 +55,10 @@ public class DecayedTwigsBlock extends HorizontalFacingBlock {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
-        if (!state.canPlaceAt(world, pos))
+        if (!state.canPlaceAt(world, pos)) {
+            dropStacks(state, world, pos);
             world.removeBlock(pos, false);
+        }
     }
 
     @Override
