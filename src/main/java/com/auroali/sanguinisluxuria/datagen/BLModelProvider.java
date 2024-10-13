@@ -64,6 +64,8 @@ public class BLModelProvider extends FabricModelProvider {
               .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R270).put(VariantSettings.MODEL, BLResources.id("block/decayed_twigs")))
             )
         );
+        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLBlocks.HUNGRY_SAPLING);
+        blockStateModelGenerator.registerSingleton(BLBlocks.HUNGRY_SAPLING, TextureMap.cross(BLBlocks.HUNGRY_SAPLING), Models.CROSS);
     }
 
     private static void createCauldron(BlockStateModelGenerator blockStateModelGenerator, Block block, Identifier fillTexture) {

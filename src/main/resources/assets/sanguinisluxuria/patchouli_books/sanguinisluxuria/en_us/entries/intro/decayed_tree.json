@@ -1,0 +1,12 @@
+{
+  "name": "Hungry Sapling",
+  "icon": "sanguinisluxuria:decayed_log",
+  "category": "sanguinisluxuria:intro",
+  "advancement": "sanguinisluxuria:grow_decayed_tree",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The sapling grew into a seemingly lifeless tree. The wood is decayed, and it does not grow leaves. Instead, it seems that on occasion a log will grow with holes in it, allowing the tree to drain blood from nearby creatures to sustain itself.$(br2)Perhaps excess blood could be harvested?"
+    }
+  ]
+}

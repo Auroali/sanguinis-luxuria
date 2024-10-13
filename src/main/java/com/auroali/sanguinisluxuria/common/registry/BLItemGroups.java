@@ -47,6 +47,7 @@ public class BLItemGroups {
               entries.add(BLBlocks.DEEPSLATE_SILVER_ORE);
               entries.add(BLBlocks.ALTAR);
               entries.add(BLBlocks.PEDESTAL);
+              entries.add(BLBlocks.HUNGRY_SAPLING);
               entries.add(BLBlocks.HUNGRY_DECAYED_LOG);
               entries.add(BLBlocks.DECAYED_LOG);
               entries.add(BLBlocks.DECAYED_WOOD);

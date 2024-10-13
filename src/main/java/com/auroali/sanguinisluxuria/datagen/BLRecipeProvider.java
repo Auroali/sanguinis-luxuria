@@ -157,5 +157,10 @@ public class BLRecipeProvider extends FabricRecipeProvider {
         BloodCauldronFillRecipeJsonBuilder.create(RecipeCategory.BREWING, BLItems.BLOOD_BAG)
           .criterion("has_item", conditionsFromItem(BLItems.BLOOD_BAG))
           .offerTo(exporter);
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BLBlocks.HUNGRY_SAPLING)
+          .input(BLItems.BLOOD_PETAL)
+          .input(ItemTags.SAPLINGS)
+          .criterion(hasItem(BLItems.BLOOD_PETAL), conditionsFromItem(BLItems.BLOOD_PETAL))
+          .offerTo(exporter);
     }
 }

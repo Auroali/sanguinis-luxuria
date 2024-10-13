@@ -1,5 +1,5 @@
 {
-  "parent": "sanguinisluxuria:become_vampire",
+  "parent": "sanguinisluxuria:grow_decayed_tree",
   "criteria": {
     "drink_twisted_blood": {
       "conditions": {

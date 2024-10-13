@@ -2,7 +2,7 @@
   "name": "Altar",
   "icon": "sanguinisluxuria:altar",
   "category": "sanguinisluxuria:intro",
-  "advancement": "sanguinisluxuria:become_vampire",
+  "advancement": "sanguinisluxuria:grow_decayed_tree",
   "pages": [
     {
       "type": "patchouli:text",

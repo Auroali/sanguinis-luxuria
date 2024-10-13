@@ -1,7 +1,9 @@
-// 1.20.1	2024-10-12T21:30:58.017204631	Sanguinis Luxuria/Advancements
+// 1.20.1	2024-10-13T17:10:12.111230691	Sanguinis Luxuria/Advancements
+df2d631bc56e8f26a2888c9b90cf036176733a6a data/sanguinisluxuria/advancements/grow_decayed_tree.json
 254e74381e407636facd5f920299e1e1144474f3 data/sanguinisluxuria/advancements/infect_other.json
 ce5978aa079b5743a839a137d7ed41c4580c194f data/sanguinisluxuria/advancements/unbecome_vampire.json
-abfe93968f7c9c2ae164d7543fdf2db9ba5cc52f data/sanguinisluxuria/advancements/drink_twisted_blood.json
+8630cab40ef2c90a19e1803f6b7ec1b55511a67f data/sanguinisluxuria/advancements/drink_twisted_blood.json
+b725a48f7b0eb687c5015dc411f0023b62bd54e2 data/sanguinisluxuria/advancements/craft_hungry_sapling.json
 87e91b09c4e5a7c6ce0f60d9dd6012bf0e558a3c data/sanguinisluxuria/advancements/transfer_more_effects.json
 4aee30613209dca0277e19ccd9eca4219da19a6e data/sanguinisluxuria/advancements/reset_abilities.json
 12f8046930f83d17ca2537583c9ed197b4549788 data/sanguinisluxuria/advancements/unlock_ability.json

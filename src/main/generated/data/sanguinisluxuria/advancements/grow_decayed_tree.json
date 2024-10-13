@@ -1,0 +1,36 @@
+{
+  "parent": "sanguinisluxuria:craft_hungry_sapling",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "sanguinisluxuria:decayed_logs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.grow_decayed_tree.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "sanguinisluxuria:decayed_log"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.grow_decayed_tree.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

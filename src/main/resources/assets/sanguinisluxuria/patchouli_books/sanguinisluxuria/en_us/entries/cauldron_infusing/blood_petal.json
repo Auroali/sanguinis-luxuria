@@ -10,6 +10,14 @@
     {
       "type": "sanguinisluxuria:cauldron_infusing",
       "recipe": "sanguinisluxuria:blood_petal"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A blood petal can be grafted to a sapling, seemingly causing the sapling to decay. No amount of water seems to satiate it, yet it still grows. Interestingly, the presence of the sun in the sky seems to halt it's growth temporarily."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:hungry_sapling"
     }
   ]
 }

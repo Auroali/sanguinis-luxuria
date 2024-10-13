@@ -7,17 +7,20 @@ import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.EffectsChangedCriterion;
+import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityEffectPredicate;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -44,6 +47,39 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
           )
           .criterion("convert", BecomeVampireCriterion.Conditions.create())
           .build(BLResources.id("become_vampire"));
+
+        Advancement craftHungrySapling = Advancement.Builder
+          .create()
+          .parent(becomeVampire)
+          .display(
+            new ItemStack(BLBlocks.HUNGRY_SAPLING),
+            Text.translatable(title("craft_hungry_sapling")),
+            Text.translatable(desc("craft_hungry_sapling")),
+            null,
+            AdvancementFrame.TASK,
+            true,
+            true,
+            false
+          )
+          .criterion("has_item", InventoryChangedCriterion.Conditions.items(BLBlocks.HUNGRY_SAPLING))
+          .build(BLResources.id("craft_hungry_sapling"));
+
+        Advancement growDecayedTree = Advancement.Builder
+          .create()
+          .parent(craftHungrySapling)
+          .display(
+            new ItemStack(BLBlocks.DECAYED_LOG),
+            Text.translatable(title("grow_decayed_tree")),
+            Text.translatable(desc("grow_decayed_tree")),
+            null,
+            AdvancementFrame.TASK,
+            true,
+            true,
+            false
+          )
+          .criterion("has_item", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(BLTags.Items.DECAYED_LOGS).build()))
+          .build(BLResources.id("grow_decayed_tree"));
+
         Advancement unbecomeVampire = Advancement.Builder
           .create()
           .display(
@@ -107,7 +143,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
             false
           )
           .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(BLItems.TWISTED_BLOOD))
-          .parent(becomeVampire)
+          .parent(growDecayedTree)
           .build(BLResources.id("drink_twisted_blood"));
 
         Advancement unlockAnyAbility = Advancement.Builder
@@ -174,6 +210,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
           .criterion("reset_abilities", ResetAbilitiesCriterion.Conditions.create())
           .build(BLResources.id("reset_abilities"));
 
+
         consumer.accept(becomeVampire);
         consumer.accept(bloodSickness);
         consumer.accept(drinkTwistedBlood);
@@ -183,6 +220,8 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
         consumer.accept(transferEffects);
         consumer.accept(transferMoreEffects);
         consumer.accept(unbecomeVampire);
+        consumer.accept(craftHungrySapling);
+        consumer.accept(growDecayedTree);
     }
 
     public static String title(String name) {
