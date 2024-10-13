@@ -101,7 +101,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
             world.setBlockState(pos, state.with(BLOOD_LEVEL, 0));
             return;
         }
-        if (random.nextInt(5) == 0) {
+        if (random.nextInt(13) == 0) {
             int newLevel = state.get(BLOOD_LEVEL) + 1;
             Box boundingBox = new Box(pos).expand(5);
 
