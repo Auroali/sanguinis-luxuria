@@ -76,5 +76,8 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
           .add(BLBlocks.STRIPPED_DECAYED_WOOD.asItem())
           .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
           .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
+        getOrCreateTagBuilder(BLTags.Items.HUNGRY_DECAYED_LOGS)
+          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
     }
 }

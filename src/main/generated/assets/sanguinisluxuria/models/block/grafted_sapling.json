@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "sanguinisluxuria:block/hungry_sapling"
+    "cross": "sanguinisluxuria:block/grafted_sapling"
   }
 }

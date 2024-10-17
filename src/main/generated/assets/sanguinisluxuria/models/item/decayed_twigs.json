@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "sanguinisluxuria:item/decayed_twigs"
+    "layer0": "sanguinisluxuria:block/decayed_twigs"
   }
 }

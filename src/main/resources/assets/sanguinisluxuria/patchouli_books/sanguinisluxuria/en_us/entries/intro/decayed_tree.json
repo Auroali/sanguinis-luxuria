@@ -6,7 +6,12 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The sapling grew into a seemingly lifeless tree. The wood is decayed, and it does not grow leaves. Instead, it seems that on occasion a log will grow with holes in it, allowing the tree to drain blood from nearby creatures to sustain itself.$(br2)Perhaps excess blood could be harvested?"
+      "text": "By all means, this tree should not exist. The sapling itself was weak, and rejected sunlight and water. Even the tree itself is decayed, despite being new. There are no leaves, and the wood looks old and is highly flammable. It's almost as if it sustains itself off of something different than other plants..."
+    },
+    {
+      "type": "patchouli:text",
+      "advancement": "sanguinisluxuria:obtain_hungry_decayed_log",
+      "text": "It drinks blood. It drinks blood from nearby creatures, which unfortunately includes yourself. Yet it seems like it builds up an excess of blood over time, pooling in the holes it draws blood in from.$(br2)Perhaps, much like honey in a bee's nest, this excess blood could be harvested?"
     }
   ]
 }

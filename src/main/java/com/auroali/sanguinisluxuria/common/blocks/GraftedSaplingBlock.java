@@ -23,11 +23,11 @@ import net.minecraft.world.WorldView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HungrySaplingBlock extends Block implements Fertilizable {
+public class GraftedSaplingBlock extends Block implements Fertilizable {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 12.0, 14.0);
     public static final IntProperty STAGE = Properties.STAGE;
 
-    public HungrySaplingBlock(Settings settings) {
+    public GraftedSaplingBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getStateManager().getDefaultState().with(STAGE, 0));
     }

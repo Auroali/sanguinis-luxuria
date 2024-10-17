@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_blood_petal": {
+    "has_item": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "sanguinisluxuria:blood_petal"
-            ]
+            "tag": "c:silver_ingots"
           }
         ]
       },
@@ -15,20 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "sanguinisluxuria:hungry_sapling"
+        "recipe": "sanguinisluxuria:silver_pressure_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_blood_petal",
+      "has_item",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "sanguinisluxuria:hungry_sapling"
+      "sanguinisluxuria:silver_pressure_plate"
     ]
   },
   "sends_telemetry_event": false

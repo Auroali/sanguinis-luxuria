@@ -74,7 +74,9 @@ public class BLItems {
         registerBlock(BLResources.STRIPPED_DECAYED_WOOD, BLBlocks.STRIPPED_DECAYED_WOOD);
         registerBlock(BLResources.DECAYED_WOOD, BLBlocks.DECAYED_WOOD);
         registerBlock(BLResources.DECAYED_TWIGS, BLBlocks.DECAYED_TWIGS);
-        registerBlock(BLResources.HUNGRY_SAPLING, BLBlocks.HUNGRY_SAPLING);
+        registerBlock(BLResources.GRAFTED_SAPLING, BLBlocks.GRAFTED_SAPLING);
+        registerBlock(BLResources.SILVER_PRESSURE_PLATE, BLBlocks.SILVER_PRESSURE_PLATE);
+        registerBlock(BLResources.DECAYED_WOOD_PRESSURE_PLATE, BLBlocks.DECAYED_WOOD_PRESSURE_PLATE);
     }
 
     public static void registerBlock(Identifier id, Block block, Item.Settings settings) {

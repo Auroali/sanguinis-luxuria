@@ -52,7 +52,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
           .create()
           .parent(becomeVampire)
           .display(
-            new ItemStack(BLBlocks.HUNGRY_SAPLING),
+            new ItemStack(BLBlocks.GRAFTED_SAPLING),
             Text.translatable(title("craft_hungry_sapling")),
             Text.translatable(desc("craft_hungry_sapling")),
             null,
@@ -61,7 +61,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
             true,
             false
           )
-          .criterion("has_item", InventoryChangedCriterion.Conditions.items(BLBlocks.HUNGRY_SAPLING))
+          .criterion("has_item", InventoryChangedCriterion.Conditions.items(BLBlocks.GRAFTED_SAPLING))
           .build(BLResources.id("craft_hungry_sapling"));
 
         Advancement growDecayedTree = Advancement.Builder
@@ -79,6 +79,21 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
           )
           .criterion("has_item", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(BLTags.Items.DECAYED_LOGS).build()))
           .build(BLResources.id("grow_decayed_tree"));
+        Advancement obtainHungryLog = Advancement.Builder
+          .create()
+          .parent(growDecayedTree)
+          .display(
+            new ItemStack(BLBlocks.DECAYED_LOG),
+            Text.translatable(title("obtain_hungry_decayed_log")),
+            Text.translatable(desc("obtain_hungry_decayed_log")),
+            null,
+            AdvancementFrame.TASK,
+            true,
+            true,
+            false
+          )
+          .criterion("has_item", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(BLTags.Items.HUNGRY_DECAYED_LOGS).build()))
+          .build(BLResources.id("obtain_hungry_decayed_log"));
 
         Advancement unbecomeVampire = Advancement.Builder
           .create()
@@ -222,6 +237,19 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
         consumer.accept(unbecomeVampire);
         consumer.accept(craftHungrySapling);
         consumer.accept(growDecayedTree);
+        consumer.accept(obtainHungryLog);
+
+        generateUnlockAdvancements(consumer);
+    }
+
+    // generates advancements for book unlocks
+    private static void generateUnlockAdvancements(Consumer<Advancement> consumer) {
+        consumer.accept(
+          Advancement.Builder.create()
+            .criterion("become_vampire", BecomeVampireCriterion.Conditions.create())
+            .criterion("grow_tree", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(BLTags.Items.DECAYED_LOGS).build()))
+            .build(BLResources.id("unlock/grow_tree_and_become_vampire"))
+        );
     }
 
     public static String title(String name) {

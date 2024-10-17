@@ -114,8 +114,13 @@ public class BLResources {
     public static final Identifier STRIPPED_DECAYED_WOOD = id("stripped_decayed_wood");
     public static final Identifier DECAYED_LOGS_ID = id("decayed_logs");
     public static final Identifier DECAYED_TWIGS = id("decayed_twigs");
-    public static final Identifier HUNGRY_SAPLING = id("hungry_sapling");
+    public static final Identifier GRAFTED_SAPLING = id("grafted_sapling");
     public static final Identifier HUNGRY_DECAYED_LOG_VFX_S2C = id("hungry_decayed_log_vfx");
+    public static final Identifier SILVER_BLOCK_SET = id("silver");
+    public static final Identifier DECAYED_WOOD_BLOCK_SET = id("decayed_wood");
+    public static final Identifier SILVER_PRESSURE_PLATE = id("silver_pressure_plate");
+    public static final Identifier DECAYED_WOOD_PRESSURE_PLATE = id("decayed_wood_pressure_plate");
+    public static final Identifier HUNGRY_DECAYED_LOGS_ID = id("hungry_decayed_logs");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

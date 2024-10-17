@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "sanguinisluxuria:block/silver_pressure_plate"
+    },
+    "powered=true": {
+      "model": "sanguinisluxuria:block/silver_pressure_plate_down"
+    }
+  }
+}

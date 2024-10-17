@@ -1,13 +1,11 @@
 {
-  "parent": "sanguinisluxuria:become_vampire",
+  "parent": "sanguinisluxuria:grow_decayed_tree",
   "criteria": {
     "has_item": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "sanguinisluxuria:grafted_sapling"
-            ]
+            "tag": "sanguinisluxuria:hungry_decayed_logs"
           }
         ]
       },
@@ -17,16 +15,16 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.sanguinisluxuria.craft_hungry_sapling.description"
+      "translate": "advancements.sanguinisluxuria.obtain_hungry_decayed_log.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "sanguinisluxuria:grafted_sapling"
+      "item": "sanguinisluxuria:decayed_log"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.sanguinisluxuria.craft_hungry_sapling.title"
+      "translate": "advancements.sanguinisluxuria.obtain_hungry_decayed_log.title"
     }
   },
   "requirements": [

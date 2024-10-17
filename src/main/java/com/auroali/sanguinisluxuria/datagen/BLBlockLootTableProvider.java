@@ -64,6 +64,9 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(BLBlocks.STRIPPED_DECAYED_LOG);
         addDrop(BLBlocks.STRIPPED_DECAYED_WOOD);
         addDrop(BLBlocks.DECAYED_TWIGS);
-        addDrop(BLBlocks.HUNGRY_SAPLING);
+        addDrop(BLBlocks.GRAFTED_SAPLING);
+
+        addDrop(BLBlocks.DECAYED_WOOD_PRESSURE_PLATE);
+        addDrop(BLBlocks.SILVER_PRESSURE_PLATE);
     }
 }

@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "become_vampire": {
+      "conditions": {},
+      "trigger": "sanguinisluxuria:become_vampire"
+    },
+    "grow_tree": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "sanguinisluxuria:decayed_logs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "become_vampire"
+    ],
+    [
+      "grow_tree"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

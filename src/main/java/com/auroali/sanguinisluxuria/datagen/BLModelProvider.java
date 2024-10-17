@@ -33,14 +33,11 @@ public class BLModelProvider extends FabricModelProvider {
         createBloodSplatter(blockStateModelGenerator);
 
         blockStateModelGenerator.blockStateCollector
-          .accept(VariantsBlockStateSupplier.create(BLBlocks.ALTAR)
-            .coordinate(BlockStateVariantMap.create(AltarBlock.ACTIVE)
-              .register(false, BlockStateVariant.create()
-                .put(VariantSettings.MODEL, BLResources.id("block/altar")))
-              .register(true, BlockStateVariant.create()
-                .put(VariantSettings.MODEL, BLResources.id("block/altar_active")))
-            )
+          .accept(VariantsBlockStateSupplier
+            .create(BLBlocks.ALTAR)
+            .coordinate(BlockStateModelGenerator.createBooleanModelMap(AltarBlock.ACTIVE, BLResources.id("block/altar_active"), BLResources.id("block/altar")))
           );
+
         blockStateModelGenerator.blockStateCollector
           .accept(BlockStateModelGenerator.createSingletonBlockState(BLBlocks.PEDESTAL, BLResources.id("block/pedestal")));
         blockStateModelGenerator.registerSingleton(BLBlocks.SILVER_BLOCK, TexturedModel.CUBE_ALL);
@@ -54,7 +51,7 @@ public class BLModelProvider extends FabricModelProvider {
         blockStateModelGenerator.blockStateCollector.accept(generateHungryDecayedLog(BLBlocks.HUNGRY_DECAYED_LOG, blockStateModelGenerator.modelCollector));
         blockStateModelGenerator.blockStateCollector.accept(generateHungryDecayedLog(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG, blockStateModelGenerator.modelCollector));
 
-        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLBlocks.DECAYED_TWIGS);
+        blockStateModelGenerator.registerItemModel(BLBlocks.DECAYED_TWIGS);
         blockStateModelGenerator.blockStateCollector.accept(
           VariantsBlockStateSupplier.create(BLBlocks.DECAYED_TWIGS)
             .coordinate(BlockStateVariantMap.create(Properties.HORIZONTAL_FACING)
@@ -64,8 +61,19 @@ public class BLModelProvider extends FabricModelProvider {
               .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R270).put(VariantSettings.MODEL, BLResources.id("block/decayed_twigs")))
             )
         );
-        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(BLBlocks.HUNGRY_SAPLING);
-        blockStateModelGenerator.registerSingleton(BLBlocks.HUNGRY_SAPLING, TextureMap.cross(BLBlocks.HUNGRY_SAPLING), Models.CROSS);
+        blockStateModelGenerator.registerItemModel(BLBlocks.GRAFTED_SAPLING);
+        blockStateModelGenerator.registerSingleton(BLBlocks.GRAFTED_SAPLING, TextureMap.cross(BLBlocks.GRAFTED_SAPLING), Models.CROSS);
+
+        registerPressurePlate(blockStateModelGenerator, BLBlocks.SILVER_PRESSURE_PLATE, BLBlocks.SILVER_BLOCK);
+        registerPressurePlate(blockStateModelGenerator, BLBlocks.DECAYED_WOOD_PRESSURE_PLATE, BLBlocks.DECAYED_LOG);
+    }
+
+    private static void registerPressurePlate(BlockStateModelGenerator modelGenerator, Block pressurePlate, Block source) {
+        TextureMap textureMap = TextureMap.texture(source);
+        Identifier up = Models.PRESSURE_PLATE_UP.upload(pressurePlate, textureMap, modelGenerator.modelCollector);
+        Identifier down = Models.PRESSURE_PLATE_DOWN.upload(pressurePlate, textureMap, modelGenerator.modelCollector);
+        modelGenerator.blockStateCollector
+          .accept(VariantsBlockStateSupplier.create(pressurePlate).coordinate(BlockStateModelGenerator.createBooleanModelMap(Properties.POWERED, down, up)));
     }
 
     private static void createCauldron(BlockStateModelGenerator blockStateModelGenerator, Block block, Identifier fillTexture) {
@@ -232,6 +240,5 @@ public class BLModelProvider extends FabricModelProvider {
         itemModelGenerator.register(BLItems.SILVER_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(BLItems.SILVER_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(BLItems.SILVER_HOE, Models.HANDHELD);
-        itemModelGenerator.register(BLBlocks.DECAYED_TWIGS.asItem(), Models.GENERATED);
     }
 }

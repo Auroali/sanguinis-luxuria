@@ -224,7 +224,9 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLBlocks.DECAYED_WOOD, "Decayed Wood");
         translationBuilder.add(BLBlocks.STRIPPED_DECAYED_WOOD, "Stripped Decayed Wood");
         translationBuilder.add(BLBlocks.DECAYED_TWIGS, "Decayed Twigs");
-        translationBuilder.add(BLBlocks.HUNGRY_SAPLING, "Hungry Sapling");
+        translationBuilder.add(BLBlocks.GRAFTED_SAPLING, "Grafted Sapling");
+        translationBuilder.add(BLBlocks.DECAYED_WOOD_PRESSURE_PLATE, "Decayed Wood Pressure Plate");
+        translationBuilder.add(BLBlocks.SILVER_PRESSURE_PLATE, "Silver Pressure Plate");
     }
 
     private static void items(TranslationBuilder translationBuilder) {
@@ -288,8 +290,11 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLAdvancementsProvider.title("craft_hungry_sapling"), "Grafted Petal");
         translationBuilder.add(BLAdvancementsProvider.desc("craft_hungry_sapling"), "Craft a Hungry Sapling");
 
-        translationBuilder.add(BLAdvancementsProvider.title("grow_decayed_tree"), "It wants Blood");
-        translationBuilder.add(BLAdvancementsProvider.desc("grow_decayed_tree"), "Grow a Hungry Sapling");
+        translationBuilder.add(BLAdvancementsProvider.title("grow_decayed_tree"), "Decayed");
+        translationBuilder.add(BLAdvancementsProvider.desc("grow_decayed_tree"), "Grow a Grafted Sapling");
+
+        translationBuilder.add(BLAdvancementsProvider.title("obtain_hungry_decayed_log"), "Blood Collector");
+        translationBuilder.add(BLAdvancementsProvider.desc("obtain_hungry_decayed_log"), "Obtain a Hungry Decayed Log");
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {

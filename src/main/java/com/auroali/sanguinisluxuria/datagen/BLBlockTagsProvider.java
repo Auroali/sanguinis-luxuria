@@ -64,5 +64,8 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
           .add(BLBlocks.STRIPPED_DECAYED_WOOD)
           .add(BLBlocks.HUNGRY_DECAYED_LOG)
           .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+        getOrCreateTagBuilder(BLTags.Blocks.HUNGRY_DECAYED_LOGS)
+          .add(BLBlocks.HUNGRY_DECAYED_LOG)
+          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
     }
 }
