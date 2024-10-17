@@ -31,11 +31,15 @@ public class TwistedBloodItem extends Item {
             serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
         }
 
-        if (!world.isClient && VampireHelper.isVampire(user)) {
+        if (world.isClient)
+            return new ItemStack(Items.GLASS_BOTTLE);
+
+        if (VampireHelper.isVampire(user)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(user);
             if (vampire.getLevel() >= getMinLevel() && vampire.getLevel() < getMaxLevel())
                 vampire.setLevel(vampire.getLevel() + 1);
-        } else if (!world.isClient) DrinkableBloodStorageItem.applyNonVampireEffects(user);
+
+        } else DrinkableBloodStorageItem.applyNonVampireEffects(user);
 
         return new ItemStack(Items.GLASS_BOTTLE);
     }
