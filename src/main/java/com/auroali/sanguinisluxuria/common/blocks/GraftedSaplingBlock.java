@@ -1,10 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.item.AutomaticItemPlacementContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -23,7 +20,7 @@ import net.minecraft.world.WorldView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraftedSaplingBlock extends Block implements Fertilizable {
+public class GraftedSaplingBlock extends PlantBlock implements Fertilizable {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 12.0, 14.0);
     public static final IntProperty STAGE = Properties.STAGE;
 
@@ -89,7 +86,7 @@ public class GraftedSaplingBlock extends Block implements Fertilizable {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (world.isNight() && random.nextInt(7) == 0) {
+        if (world.isNight() && world.isSkyVisible(pos) && random.nextInt(7) == 0) {
             tryGrow(world, state, pos, random);
         }
     }
@@ -101,7 +98,7 @@ public class GraftedSaplingBlock extends Block implements Fertilizable {
 
     @Override
     public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return random.nextFloat() < 0.25;
+        return world.isNight() && world.isSkyVisible(pos) && random.nextFloat() < 0.25;
     }
 
     @Override

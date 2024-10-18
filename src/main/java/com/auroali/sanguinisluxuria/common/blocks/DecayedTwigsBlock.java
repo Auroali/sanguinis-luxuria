@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
 import net.minecraft.block.*;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -75,6 +76,11 @@ public class DecayedTwigsBlock extends HorizontalFacingBlock implements Waterlog
             dropStacks(state, world, pos);
             world.removeBlock(pos, false);
         }
+    }
+
+    @Override
+    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+        return type == NavigationType.AIR && !this.collidable || super.canPathfindThrough(state, world, pos, type);
     }
 
     @Override
