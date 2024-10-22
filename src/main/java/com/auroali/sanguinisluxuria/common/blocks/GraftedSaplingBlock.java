@@ -47,7 +47,8 @@ public class GraftedSaplingBlock extends PlantBlock implements Fertilizable {
             BlockState logBlock = i != hungryLogPos || !generateHungryLog ? BLBlocks.DECAYED_LOG.getDefaultState() : BLBlocks.HUNGRY_DECAYED_LOG.getDefaultState();
             BlockPos logPos = pos.up(i);
             ItemPlacementContext placementContext = new AutomaticItemPlacementContext(world, logPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP);
-            if (!world.getBlockState(logPos).canReplace(placementContext))
+            BlockState existingState = world.getBlockState(logPos);
+            if (!existingState.isOf(BLBlocks.GRAFTED_SAPLING) && !existingState.canReplace(placementContext))
                 break;
             world.setBlockState(logPos, logBlock, Block.NOTIFY_ALL);
             if (!logBlock.isOf(BLBlocks.HUNGRY_DECAYED_LOG))
