@@ -34,7 +34,7 @@ public class BloodItemFluidStorage implements Storage<FluidVariant>, StorageView
             return 0;
 
         int bloodToFill = Math.min(
-          BloodStorageItem.getItemMaxBlood(stack) - BloodStorageItem.getItemBlood(stack),
+          BloodStorageItem.getItemCapacity(stack),
           BloodConstants.dropletsToBlood(maxAmount)
         );
 

@@ -135,7 +135,7 @@ public class BloodSplatterBlock extends Block {
         ItemStack resultItem = stack;
         if (isFillableRegularItem) {
             resultItem = BloodStorageFillEvents.TRANSFORM_STACK.invoker().createFrom(player, stack);
-            if (!BloodStorageItem.isItemFillable(resultItem) || BloodStorageItem.getItemMaxBlood(resultItem) - BloodStorageItem.getItemBlood(stack) < BloodConstants.BLOOD_PER_BOTTLE)
+            if (!BloodStorageItem.isItemFillable(resultItem) || BloodStorageItem.getItemCapacity(stack) < BloodConstants.BLOOD_PER_BOTTLE)
                 return ActionResult.FAIL;
 
             stack.decrement(1);
@@ -145,7 +145,7 @@ public class BloodSplatterBlock extends Block {
                 player.dropItem(resultItem, true);
         }
 
-        if (BloodStorageItem.getItemMaxBlood(resultItem) - BloodStorageItem.getItemBlood(stack) < BloodConstants.BLOOD_PER_BOTTLE)
+        if (BloodStorageItem.getItemCapacity(stack) < BloodConstants.BLOOD_PER_BOTTLE)
             return ActionResult.FAIL;
 
         BloodStorageItem.incrementItemBlood(resultItem, BloodConstants.BLOOD_PER_BOTTLE);

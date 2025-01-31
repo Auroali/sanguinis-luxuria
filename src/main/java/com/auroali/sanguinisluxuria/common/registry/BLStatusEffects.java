@@ -34,6 +34,6 @@ public class BLStatusEffects {
         Registry.register(Registries.POTION, BLResources.BLESSED_WATER_TWO_ID, BLESSED_WATER_POTION_TWO);
         Registry.register(Registries.POTION, BLResources.BLOOD_LUST_ID, BLOOD_LUST_POTION);
         BrewingRecipeRegistry.registerPotionRecipe(BLESSED_WATER_POTION, Items.GLOWSTONE_DUST, BLESSED_WATER_POTION_TWO);
-        BrewingRecipeRegistry.registerPotionRecipe(BLOOD_LUST_POTION, BLItems.BLOOD_PETAL, Potions.MUNDANE);
+        BrewingRecipeRegistry.registerPotionRecipe(Potions.MUNDANE, BLItems.BLOOD_PETAL, BLOOD_LUST_POTION);
     }
 }

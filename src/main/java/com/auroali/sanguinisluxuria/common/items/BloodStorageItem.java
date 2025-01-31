@@ -55,24 +55,50 @@ public interface BloodStorageItem {
         return bloodTag;
     }
 
+    /**
+     * Gets the amount of blood in a given item
+     *
+     * @param stack the stack to check
+     * @return the amount of blood the item has
+     */
     static int getItemBlood(ItemStack stack) {
         if (stack.getItem() instanceof BloodStorageItem item)
             return item.getBlood(stack);
         return 0;
     }
 
+    /**
+     * Gets the maximum amount of blood in a given item
+     *
+     * @param stack the stack to check
+     * @return the maximum amount of blood the item can hold
+     */
     static int getItemMaxBlood(ItemStack stack) {
         if (stack.getItem() instanceof BloodStorageItem item)
             return item.getMaxBlood(stack);
         return 0;
     }
 
+    /**
+     * Sets the amount of blood in a given item
+     *
+     * @param stack the stack to modify
+     * @param blood the new amount of blood
+     * @return the stack, for chaining/inlining
+     */
     static ItemStack setItemBlood(ItemStack stack, int blood) {
         if (stack.getItem() instanceof BloodStorageItem item)
             item.setBlood(stack, blood);
         return stack;
     }
 
+    /**
+     * Decrements the amount of blood stored in a given item by the specified amount
+     *
+     * @param stack  the stack to remove blood from
+     * @param amount the amount to remove
+     * @return if the amount was successfully decremented
+     */
     static boolean decrementItemBlood(ItemStack stack, int amount) {
         if (!stack.hasNbt() || !stack.getNbt().contains(BLOOD_KEY, NbtElement.COMPOUND_TYPE))
             getOrCreateBloodTag(stack);
@@ -85,6 +111,13 @@ public interface BloodStorageItem {
         return true;
     }
 
+    /**
+     * Increments the amount of blood stored in a given item by the specified amount
+     *
+     * @param stack  the stack to add blood to
+     * @param amount the amount to add
+     * @return if the amount was successfully incremented
+     */
     static boolean incrementItemBlood(ItemStack stack, int amount) {
         if (!stack.hasNbt() || !stack.getNbt().contains(BLOOD_KEY, NbtElement.COMPOUND_TYPE))
             getOrCreateBloodTag(stack);
@@ -99,11 +132,24 @@ public interface BloodStorageItem {
         return true;
     }
 
+    /**
+     * Creates an item stack, with the specified amount of blood for the given item
+     *
+     * @param item  the item to use for the stack
+     * @param blood the amount of blood to set the item to store
+     * @return the new stack
+     */
     static ItemStack createStack(Item item, int blood) {
         ItemStack stack = new ItemStack(item);
         return setItemBlood(stack, blood);
     }
 
+    /**
+     * Creates an item stack, with the maximum amount of blood for the given item
+     *
+     * @param item the item to use for the stack
+     * @return the new stack
+     */
     static ItemStack createStack(Item item) {
         ItemStack stack = new ItemStack(item);
         if (item instanceof BloodStorageItem bloodStorage)
@@ -111,20 +157,77 @@ public interface BloodStorageItem {
         return stack;
     }
 
+    /**
+     * Creates the empty stack for a given blood storing item
+     *
+     * @param stack the blood storing item stack
+     * @return the empty stack, or the original if there is no specific empty item stack
+     */
     static ItemStack createEmptyStackFor(ItemStack stack) {
         return stack.getItem() instanceof BloodStorageItem item ? item.createEmptyItem(stack) : stack;
     }
 
+    /**
+     * Checks if an item is fillable
+     *
+     * @param stack the blood storing item stack
+     * @return if the item can be filled
+     */
     static boolean isItemFillable(ItemStack stack) {
         if (stack.getItem() instanceof BloodStorageItem item)
             return item.canFill();
         return false;
     }
 
+    /**
+     * Checks if an item is drainable
+     *
+     * @param stack the blood storing item stack
+     * @return if the item can be drained
+     */
     static boolean isItemDrainable(ItemStack stack) {
         if (stack.getItem() instanceof BloodStorageItem item)
             return item.canDrain();
         return false;
+    }
+
+    /**
+     * Returns the amount of blood the item can still hold
+     *
+     * @param stack the blood storing item stack
+     * @return the amount of blood the item can still hold
+     */
+    static int getItemCapacity(ItemStack stack) {
+        if (getItemMaxBlood(stack) == 0)
+            return 0;
+
+        // technically the max blood can be less than the stored blood due
+        // to nbt editing, so make sure the capacity is never negative
+        // to avoid potential weird issues
+        return Math.max(getItemMaxBlood(stack) - getItemBlood(stack), 0);
+    }
+
+    /**
+     * Checks if an item is at max capacity
+     *
+     * @param stack the blood storing item stack
+     * @return if the item cannot hold any more blood
+     */
+    static boolean isItemFull(ItemStack stack) {
+        if (getItemMaxBlood(stack) == 0)
+            return true;
+
+        return getItemBlood(stack) >= getItemMaxBlood(stack);
+    }
+
+    /**
+     * Checks if an item is empty
+     *
+     * @param stack the blood storing item stack
+     * @return if the item has no stored blood
+     */
+    static boolean isItemEmpty(ItemStack stack) {
+        return getItemBlood(stack) == 0;
     }
 
     static void registerModelPredicate(Item item) {
