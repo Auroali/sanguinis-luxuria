@@ -4,7 +4,6 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.common.registry.BLWorldgen;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;

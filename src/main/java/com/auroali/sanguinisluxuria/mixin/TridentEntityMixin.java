@@ -6,7 +6,6 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.BloodTransferComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

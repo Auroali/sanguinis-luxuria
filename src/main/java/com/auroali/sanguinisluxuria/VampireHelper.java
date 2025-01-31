@@ -5,7 +5,6 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.google.common.base.Predicates;
@@ -31,7 +30,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class VampireHelper {
@@ -53,6 +51,12 @@ public class VampireHelper {
      */
     public static boolean hasBlood(Entity entity) {
         return entity != null && entity.getType().isIn(BLTags.Entities.HAS_BLOOD) && BLEntityComponents.BLOOD_COMPONENT.isProvidedBy(entity);
+    }
+
+    public static boolean consumesBlood(Entity entity) {
+        if (entity == null)
+            return false;
+        return VampireHelper.isVampire(entity) || entity instanceof LivingEntity living && living.hasStatusEffect(BLStatusEffects.BLOOD_LUST);
     }
 
     /**
@@ -216,7 +220,7 @@ public class VampireHelper {
 
         if (stack == resultStack)
             return true;
-        
+
         stack.decrement(1);
 
         if (stack.isEmpty()) {

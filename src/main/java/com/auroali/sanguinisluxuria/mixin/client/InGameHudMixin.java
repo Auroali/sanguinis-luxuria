@@ -4,7 +4,6 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -35,8 +34,7 @@ public class InGameHudMixin {
       target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 2
     )))
     public Identifier sanguinisluxuria$injectHungerIcons(Identifier texture) {
-        PlayerEntity entity = MinecraftClient.getInstance().player;
-        if (VampireHelper.isVampire(entity) || entity.hasStatusEffect(BLStatusEffects.BLOOD_LUST)) {
+        if (VampireHelper.consumesBlood(MinecraftClient.getInstance().player)) {
             return BLResources.ICONS;
         }
         return texture;

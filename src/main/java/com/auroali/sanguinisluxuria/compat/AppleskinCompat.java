@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.compat;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.minecraft.client.MinecraftClient;
 import squeek.appleskin.api.AppleSkinApi;
@@ -21,7 +20,7 @@ public class AppleskinCompat implements AppleSkinApi {
 
     public void cancelEventIfVampire(HUDOverlayEvent event) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (VampireHelper.isVampire(client.player) || client.player.hasStatusEffect(BLStatusEffects.BLOOD_LUST))
+        if (VampireHelper.consumesBlood(client.player))
             event.isCanceled = true;
     }
 }

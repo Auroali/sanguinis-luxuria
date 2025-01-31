@@ -7,7 +7,6 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -35,11 +34,11 @@ import java.util.List;
 
 public class DrinkableBloodItem extends Item implements BloodStorageItem, EntityTrackingItem {
     public static final FoodComponent BLOOD_FOOD_COMPONENT = new FoodComponent.Builder()
-            .hunger(1)
-            .saturationModifier(0.05f)
-            .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 360), 0.4f)
-            .alwaysEdible()
-            .build();
+      .hunger(1)
+      .saturationModifier(0.05f)
+      .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 360), 0.4f)
+      .alwaysEdible()
+      .build();
 
     private final int maxBlood;
 
@@ -86,9 +85,9 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         // is then clamped between 0 and 6, and added to the entity's blood
         // component and removed from the blood storage item's blood amount
         int bloodToFill = MathHelper.clamp(
-                Math.min(userBlood.getMaxBlood() - userBlood.getBlood(), BloodStorageItem.getItemBlood(stack)),
-                0,
-                4
+          Math.min(userBlood.getMaxBlood() - userBlood.getBlood(), BloodStorageItem.getItemBlood(stack)),
+          0,
+          4
         );
 
         if (!(user instanceof PlayerEntity player && player.isCreative()))
@@ -152,9 +151,9 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         // check to make sure the blockstate isn't null and that it can be placed at
         // the location. returns fail here if it can't be placed
         if (
-                bloodState == null
-                        || !bloodState.canPlaceAt(world, pos)
-                        || !world.canPlace(bloodState, pos, shapeContext)
+          bloodState == null
+            || !bloodState.canPlaceAt(world, pos)
+            || !world.canPlace(bloodState, pos, shapeContext)
         ) {
             return ActionResult.FAIL;
         }
@@ -171,9 +170,9 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         // play the bottle empty sound and emit the block place game event
         world.playSound(player, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
         world.emitGameEvent(
-                GameEvent.BLOCK_PLACE,
-                pos,
-                GameEvent.Emitter.of(player, bloodState)
+          GameEvent.BLOCK_PLACE,
+          pos,
+          GameEvent.Emitter.of(player, bloodState)
         );
 
         return ActionResult.success(world.isClient);

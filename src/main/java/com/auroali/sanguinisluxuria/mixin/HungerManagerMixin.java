@@ -3,7 +3,6 @@ package com.auroali.sanguinisluxuria.mixin;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -86,7 +85,7 @@ public class HungerManagerMixin implements VampireHungerManager {
 
     @WrapOperation(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
     public void sanguinisluxuria$handleVampireEdibleFood(HungerManager instance, int food, float saturationModifier, Operation<Void> original, @Local(argsOnly = true) ItemStack stack) {
-        if ((VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer) || this.sanguinisluxuria$hmTrackedPlayer.hasStatusEffect(BLStatusEffects.BLOOD_LUST)) && stack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM))
+        if (VampireHelper.consumesBlood(this.sanguinisluxuria$hmTrackedPlayer) && stack.isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM))
             this.sanguinisluxuria$addHunger(food, saturationModifier);
         else
             original.call(instance, food, saturationModifier);
@@ -94,7 +93,7 @@ public class HungerManagerMixin implements VampireHungerManager {
 
     @Inject(method = "add", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$cancelAddIfVampire(int food, float saturationModifier, CallbackInfo ci) {
-        if ((VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer) || this.sanguinisluxuria$hmTrackedPlayer.hasStatusEffect(BLStatusEffects.BLOOD_LUST)))
+        if (VampireHelper.consumesBlood(this.sanguinisluxuria$hmTrackedPlayer))
             ci.cancel();
     }
 

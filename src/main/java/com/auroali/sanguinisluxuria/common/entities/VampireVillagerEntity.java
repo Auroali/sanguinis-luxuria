@@ -7,7 +7,6 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.goals.TeleportWhenOutOfRangeGoal;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

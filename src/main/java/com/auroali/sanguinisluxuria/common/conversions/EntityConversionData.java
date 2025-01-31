@@ -6,7 +6,6 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
