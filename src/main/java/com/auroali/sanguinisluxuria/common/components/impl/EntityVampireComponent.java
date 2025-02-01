@@ -7,6 +7,8 @@ import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.google.common.base.Predicates;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -106,6 +108,20 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     @Override
     public void serverTick() {
         this.abilities.tick(this.holder, this);
+    }
+
+    @Override
+    public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
+        buf.writeBoolean(this.downed);
+        buf.writeBoolean(this.isMist);
+        this.abilities.writePacket(buf);
+    }
+
+    @Override
+    public void applySyncPacket(PacketByteBuf buf) {
+        this.downed = buf.readBoolean();
+        this.isMist = buf.readBoolean();
+        this.abilities.readPacket(buf);
     }
 
     @Override
