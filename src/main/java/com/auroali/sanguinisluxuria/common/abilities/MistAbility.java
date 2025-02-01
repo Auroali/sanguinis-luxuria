@@ -52,4 +52,10 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
             world.addParticle(ParticleTypes.SMOKE, x, y, z, velocityX, velocityY, velocityZ);
         }
     }
+
+    @Override
+    public void onAbilityRemoved(LivingEntity entity, VampireComponent vampire) {
+        super.onAbilityRemoved(entity, vampire);
+        vampire.setMist(false);
+    }
 }

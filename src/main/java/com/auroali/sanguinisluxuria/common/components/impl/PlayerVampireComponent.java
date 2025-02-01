@@ -108,6 +108,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         this.skillPoints = tag.getInt("SkillPoints");
         this.level = tag.getInt("Level");
         this.isDowned = tag.getBoolean("IsDowned");
+        this.isMist = tag.getBoolean("IsMist");
         this.abilities.load(tag);
         this.abilities.setShouldSync(true);
         BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
@@ -120,6 +121,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         tag.putInt("SkillPoints", this.skillPoints);
         tag.putInt("Level", this.level);
         tag.putBoolean("IsDowned", this.isDowned);
+        tag.putBoolean("IsMist", this.isMist);
         this.abilities.save(tag);
     }
 
