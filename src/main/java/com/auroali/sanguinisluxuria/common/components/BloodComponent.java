@@ -31,6 +31,25 @@ public interface BloodComponent extends Component, AutoSyncedComponent {
     void setBlood(int amount);
 
     /**
+     * Tries to drain a specified amount of blood
+     *
+     * @param amount  the amount of blood to drain
+     * @param drainer the entity draining the component holder's blood
+     * @return whether blood was actually drained
+     * @see BloodComponent#drainBlood(int)
+     */
+    boolean drainBlood(int amount, LivingEntity drainer);
+
+    /**
+     * Tries to drain a specified amount of blood
+     *
+     * @param amount the amount of blood to drain
+     * @return whether blood was actually drained
+     * @see BloodComponent#drainBlood(int, LivingEntity)
+     */
+    boolean drainBlood(int amount);
+
+    /**
      * Tries to drain one unit of blood
      *
      * @param drainer the entity draining the component holder's blood

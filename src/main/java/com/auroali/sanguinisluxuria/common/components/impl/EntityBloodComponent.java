@@ -111,31 +111,41 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
     }
 
     @Override
-    public boolean drainBlood(LivingEntity drainer) {
-        if (!this.isEmpty())
+    public boolean drainBlood(int amount, LivingEntity drainer) {
+        if (this.isEmpty())
+            return false;
+
+        if (this.currentBlood < amount)
             return false;
 
         this.bloodGainTimer = 0;
-        if (this.currentBlood > 1) {
-            this.currentBlood--;
-            BLEntityComponents.BLOOD_COMPONENT.sync(this.holder);
-            return true;
-        }
+        this.currentBlood -= amount;
 
-        this.currentBlood = 0;
         BLEntityComponents.BLOOD_COMPONENT.sync(this.holder);
-        this.killHolderFromBloodloss(drainer);
+        if (this.currentBlood == 0)
+            this.killHolderFromBloodloss(drainer);
+
         return true;
     }
 
     @Override
+    public boolean drainBlood(int amount) {
+        return this.drainBlood(amount, null);
+    }
+
+    @Override
+    public boolean drainBlood(LivingEntity drainer) {
+        return this.drainBlood(1, drainer);
+    }
+
+    @Override
     public boolean drainBlood() {
-        return this.drainBlood(null);
+        return this.drainBlood(1, null);
     }
 
     @Override
     public boolean isEmpty() {
-        return this.getMaxBlood() > 0;
+        return this.getMaxBlood() <= 0 || this.getBlood() <= 0;
     }
 
     public void killHolderFromBloodloss(LivingEntity drainer) {

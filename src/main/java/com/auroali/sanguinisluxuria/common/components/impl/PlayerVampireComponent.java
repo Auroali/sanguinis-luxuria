@@ -428,8 +428,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         LivingEntity entity = ((EntityHitResult) result).getEntity() instanceof LivingEntity living ? living : null;
 
         if (!VampireHelper.hasBlood(entity)
-          || !BLEntityComponents.BLOOD_COMPONENT.get(entity).isEmpty()
-          || BLEntityComponents.BLOOD_COMPONENT.get(entity).getBlood() == 0
+          || BLEntityComponents.BLOOD_COMPONENT.get(entity).isEmpty()
         ) {
             this.target = null;
             this.bloodDrainTimer = 0;

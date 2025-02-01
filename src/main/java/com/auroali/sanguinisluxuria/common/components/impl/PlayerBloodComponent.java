@@ -58,13 +58,31 @@ public class PlayerBloodComponent implements BloodComponent {
     }
 
     @Override
-    public boolean drainBlood(LivingEntity entity) {
-        int currentBlood = this.getBlood();
-        if (currentBlood > 0) {
-            this.holder.getHungerManager().setFoodLevel(currentBlood - 1);
-            return true;
-        }
-        return false;
+    public boolean drainBlood(int amount, LivingEntity drainer) {
+        if (this.isEmpty())
+            return false;
+
+        if (this.getBlood() < amount)
+            return false;
+
+        this.setBlood(this.getBlood() - amount);
+        BLEntityComponents.BLOOD_COMPONENT.sync(this.holder);
+        return true;
+    }
+
+    @Override
+    public boolean drainBlood(int amount) {
+        return this.drainBlood(amount, null);
+    }
+
+    @Override
+    public boolean drainBlood(LivingEntity drainer) {
+        return this.drainBlood(1, drainer);
+    }
+
+    @Override
+    public boolean drainBlood() {
+        return this.drainBlood(1, null);
     }
 
     @Override
@@ -78,12 +96,7 @@ public class PlayerBloodComponent implements BloodComponent {
     }
 
     @Override
-    public boolean drainBlood() {
-        return this.drainBlood(null);
-    }
-
-    @Override
     public boolean isEmpty() {
-        return true;
+        return this.getBlood() <= 0;
     }
 }
