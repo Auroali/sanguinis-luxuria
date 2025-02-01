@@ -1,8 +1,9 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.advancements.BecomeVampireCriterion;
+import com.auroali.sanguinisluxuria.common.advancements.ConvertCriterion;
 import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
+import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.common.rituals.AbilityRevealRitual;
 import com.auroali.sanguinisluxuria.common.rituals.ItemRitual;
@@ -84,7 +85,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .input('b', BLItems.BLOOD_BOTTLE)
           .input('s', Items.BLACKSTONE)
           .input('l', BLTags.Items.DECAYED_LOGS)
-          .criterion("is_vampire", BecomeVampireCriterion.Conditions.create())
+          .criterion("is_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
           .offerTo(exporter);
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLBlocks.PEDESTAL)
@@ -154,7 +155,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
 
     public void generateCauldronInfusingRecipes(Consumer<RecipeJsonProvider> exporter) {
         BloodCauldronRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.fromTag(ItemTags.FLOWERS), BLItems.BLOOD_PETAL)
-          .criterion("become_vampire", BecomeVampireCriterion.Conditions.create())
+          .criterion("become_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .offerTo(exporter);
         BloodCauldronFillRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.ofItems(Items.GLASS_BOTTLE), BLItems.BLOOD_BOTTLE)
           .criterion("has_item", conditionsFromItem(BLItems.BLOOD_BOTTLE))
@@ -170,7 +171,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .input(Items.NETHER_WART)
           .input(Items.FERMENTED_SPIDER_EYE)
           .input(BLItems.BLOOD_PETAL)
-          .criterion("is_vampire", BecomeVampireCriterion.Conditions.create())
+          .criterion("is_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .offerTo(exporter);
         RitualRecipeJsonBuilder.create(RecipeCategory.TOOLS, new ItemRitual(BLItems.BLOOD_BAG))
           .catalyst(Items.GLASS_BOTTLE)

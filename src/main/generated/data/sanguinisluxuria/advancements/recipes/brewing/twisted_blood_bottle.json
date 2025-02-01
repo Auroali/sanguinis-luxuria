@@ -8,8 +8,10 @@
       "trigger": "minecraft:recipe_unlocked"
     },
     "is_vampire": {
-      "conditions": {},
-      "trigger": "sanguinisluxuria:become_vampire"
+      "conditions": {
+        "conversion": "converting"
+      },
+      "trigger": "sanguinisluxuria:converted"
     }
   },
   "requirements": [

@@ -20,26 +20,22 @@ import net.minecraft.util.math.Vec3d;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbilityRevealRitual implements Ritual, ItemCreatingRitual {
+public class AbilityRevealRitual extends ItemRitual {
     public static final AbilityRevealRitual INSTANCE = new AbilityRevealRitual();
     public static final Codec<AbilityRevealRitual> CODEC = Codec.unit(() -> INSTANCE);
     public static final ItemStack OUTPUT = new ItemStack(Items.WRITTEN_BOOK);
 
     protected AbilityRevealRitual() {
+        super(OUTPUT);
     }
 
     @Override
-    public ItemStack getOutput() {
-        return OUTPUT;
-    }
-
-    @Override
-    public void onCompleted(RitualParameters parameters) {
+    protected ItemStack createResultItem(RitualParameters parameters) {
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(parameters.initiator());
         ItemStack outputStack = new ItemStack(Items.WRITTEN_BOOK);
         NbtCompound nbt = outputStack.getOrCreateNbt();
         nbt.putString(WrittenBookItem.AUTHOR_KEY, "Ritual of Revealing");
-        nbt.putString(WrittenBookItem.TITLE_KEY, "Mutations");
+        nbt.putString(WrittenBookItem.TITLE_KEY, "Transformations");
 
         // generate the pages for the book
         List<Text> pages = new ArrayList<>();
@@ -70,15 +66,7 @@ public class AbilityRevealRitual implements Ritual, ItemCreatingRitual {
         pages.stream().map(Text.Serializer::toJson).map(NbtString::of).forEach(pagesNbt::add);
         outputStack.setSubNbt(WrittenBookItem.PAGES_KEY, pagesNbt);
 
-        // spawn the entity
-        Vec3d centerPos = parameters.pos().toCenterPos();
-        ItemEntity entity = new ItemEntity(
-          parameters.world(),
-          centerPos.getX(),
-          centerPos.getY() + 1,
-          centerPos.getZ(),
-          outputStack);
-        parameters.world().spawnEntity(entity);
+        return outputStack;
     }
 
     @Override

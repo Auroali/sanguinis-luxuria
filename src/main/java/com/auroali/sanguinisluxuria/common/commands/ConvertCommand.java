@@ -14,7 +14,6 @@ import java.util.Collection;
 public class ConvertCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal("convert")
-          .requires(ctx -> ctx.hasPermissionLevel(2))
           .then(CommandManager.argument("targets", EntityArgumentType.entities())
             .then(CommandManager.argument("conversion", ConversionArgument.conversion())
               .executes(ctx -> convert(

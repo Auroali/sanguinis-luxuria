@@ -16,7 +16,6 @@ import java.util.Collection;
 public class AbilityCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal("ability")
-          .requires(ctx -> ctx.hasPermissionLevel(2))
           .then(CommandManager.argument("ability", VampireAbilityArgument.argument())
             .then(CommandManager.argument("targets", EntityArgumentType.players())
               .executes(ctx -> grantAbility(ctx, EntityArgumentType.getPlayers(ctx, "targets")))

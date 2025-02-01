@@ -1,8 +1,10 @@
 {
   "criteria": {
     "convert": {
-      "conditions": {},
-      "trigger": "sanguinisluxuria:become_vampire"
+      "conditions": {
+        "conversion": "converting"
+      },
+      "trigger": "sanguinisluxuria:converted"
     }
   },
   "display": {

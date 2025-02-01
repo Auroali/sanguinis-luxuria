@@ -8,12 +8,18 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 
-public record ItemRitual(ItemStack stack) implements Ritual, ItemCreatingRitual {
+public class ItemRitual implements Ritual, ItemCreatingRitual {
     public static final Codec<ItemRitual> CODEC = RecordCodecBuilder.create(instance -> instance
       .group(
-        ItemStack.CODEC.fieldOf("result").forGetter(ItemRitual::stack)
+        ItemStack.CODEC.fieldOf("result").forGetter(ItemRitual::getOutput)
       ).apply(instance, ItemRitual::new)
     );
+
+    protected final ItemStack output;
+
+    public ItemRitual(ItemStack stack) {
+        this.output = stack;
+    }
 
     public ItemRitual(ItemConvertible item, int output) {
         this(new ItemStack(item, output));
@@ -25,13 +31,21 @@ public record ItemRitual(ItemStack stack) implements Ritual, ItemCreatingRitual 
 
     @Override
     public void onCompleted(RitualParameters parameters) {
+        this.spawnResultItem(parameters, this.createResultItem(parameters));
+    }
+
+    protected ItemStack createResultItem(RitualParameters parameters) {
+        return this.getOutput();
+    }
+
+    protected void spawnResultItem(RitualParameters parameters, ItemStack stack) {
         Vec3d centerPos = parameters.pos().toCenterPos();
         ItemEntity entity = new ItemEntity(
           parameters.world(),
           centerPos.getX(),
           centerPos.getY() + 1,
           centerPos.getZ(),
-          this.stack().copy());
+          stack.copy());
         parameters.world().spawnEntity(entity);
     }
 
@@ -42,6 +56,6 @@ public record ItemRitual(ItemStack stack) implements Ritual, ItemCreatingRitual 
 
     @Override
     public ItemStack getOutput() {
-        return this.stack;
+        return this.output;
     }
 }

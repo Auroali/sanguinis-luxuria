@@ -2,8 +2,10 @@
   "parent": "sanguinisluxuria:become_vampire",
   "criteria": {
     "unconvert": {
-      "conditions": {},
-      "trigger": "sanguinisluxuria:unbecome_vampire"
+      "conditions": {
+        "conversion": "deconverting"
+      },
+      "trigger": "sanguinisluxuria:converted"
     }
   },
   "display": {

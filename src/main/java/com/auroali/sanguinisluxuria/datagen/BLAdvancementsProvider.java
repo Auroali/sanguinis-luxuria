@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.advancements.*;
+import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
@@ -45,7 +46,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
             true,
             false
           )
-          .criterion("convert", BecomeVampireCriterion.Conditions.create())
+          .criterion("convert", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .build(BLResources.id("become_vampire"));
 
         Advancement craftHungrySapling = Advancement.Builder
@@ -108,7 +109,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
             false
           )
           .parent(becomeVampire)
-          .criterion("unconvert", UnbecomeVampireCriterion.Conditions.create())
+          .criterion("unconvert", ConvertCriterion.Conditions.create(ConversionContext.Conversion.DECONVERTING))
           .build(BLResources.id("unbecome_vampire"));
 
         Advancement bloodSickness = Advancement.Builder
@@ -245,7 +246,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
     private static void generateUnlockAdvancements(Consumer<Advancement> consumer) {
         consumer.accept(
           Advancement.Builder.create()
-            .criterion("become_vampire", BecomeVampireCriterion.Conditions.create())
+            .criterion("become_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
             .criterion("grow_tree", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(BLTags.Items.DECAYED_LOGS).build()))
             .build(BLResources.id("unlock/grow_tree_and_become_vampire"))
         );
