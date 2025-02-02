@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -62,6 +63,12 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateTagTranslation(builder, BLTags.Items.VAMPIRE_MASKS, "Vampire Masks");
         generateTagTranslation(builder, BLTags.Items.SUN_BLOCKING_HELMETS, "Sun Blocking Helmets");
         generateTagTranslation(builder, BLTags.Items.VAMPIRES_GET_HUNGER_FROM, "Vampire Food");
+        generateTagTranslation(builder, BLTags.Items.BLOOD_STORING_BOTTLES, "Blood Storing Bottles");
+        generateTagTranslation(builder, BLTags.Items.DECAYED_LOGS, "Decayed Logs");
+        generateTagTranslation(builder, BLTags.Items.SILVER_INGOTS, "Silver Ingots");
+        generateTagTranslation(builder, BLTags.Items.SILVER_ORES, "Silver Ores");
+        generateTagTranslation(builder, BLTags.Items.SILVER_BLOCKS, "Silver Blocks");
+        generateTagTranslation(builder, BLTags.Items.RAW_SILVER_BLOCKS, "Raw Silver Blocks");
     }
 
     private static void deathMessages(TranslationBuilder translationBuilder) {
@@ -92,6 +99,9 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateRitualKey(builder, BLRitualTypes.ABILITY_RESET_RITUAL_TYPE, "Ritual of Cleansing");
         generateRitualKey(builder, BLRitualTypes.ITEM_RITUAL_TYPE, "Ritual of Transmutation");
         generateRitualKey(builder, BLRitualTypes.ABILITY_REVEAL_RITUAL_TYPE, "Ritual of Revealing");
+        generateRitualKey(builder, BLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE, "Ritual of Summoning");
+        generateRitualKey(builder, BLRitualTypes.STATUS_EFFECT_RITUAL_TYPE, "Ritual of Alchemy");
+        generateRitualKey(builder, BLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
     }
 
     private static void generateRitualKey(TranslationBuilder builder, RitualType<?> type, String entry) {
@@ -157,18 +167,6 @@ public class BLLangProvider extends FabricLanguageProvider {
     }
 
     private static void gui(TranslationBuilder translationBuilder) {
-        translationBuilder.add("gui.sanguinisluxuria.abilities", "Abilities");
-        translationBuilder.add("gui.sanguinisluxuria.skill_points", "Skill Points: %d");
-
-        translationBuilder.add("gui.sanguinisluxuria.abilities.bound", "Bound to [%s]");
-        translationBuilder.add("gui.sanguinisluxuria.abilities.bind_prompt", "Right click to bind...");
-        translationBuilder.add("gui.sanguinisluxuria.abilities.binding", "Press a key...");
-
-        translationBuilder.add("gui.sanguinisluxuria.abilities.incompatibilites", "Incompatible With:");
-        translationBuilder.add("gui.sanguinisluxuria.abilities.incompatibilites_entry", "  - %s");
-
-        translationBuilder.add("gui.sanguinisluxuria.abilities.required_skill_points", "Requires %d skill point(s)");
-
         translationBuilder.add("gui.sanguinisluxuria.blood_bottle_tooltip", "%d Blood Bottle(s)");
     }
 
@@ -179,11 +177,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("sanguinisluxuria.config.option.vampire_damage_multiplier.desc", "How much damage is multiplied for vampires from damage types they are weak to, such as fire.");
         translationBuilder.add("sanguinisluxuria.config.option.vampire_exhaustion_multiplier", "Exhaustion Multiplier");
         translationBuilder.add("sanguinisluxuria.config.option.vampire_exhaustion_multiplier.desc", "How much exhaustion is multiplied by for vampires");
-        translationBuilder.add("sanguinisluxuria.config.option.blessed_water_damage", "Blessed Water Damage");
-        translationBuilder.add("sanguinisluxuria.config.option.blessed_water_damage.desc", "The base amount of damage blessed water does against vampires and undead entities");
         translationBuilder.add("sanguinisluxuria.config.category.abilities", "Abilities");
-        translationBuilder.add("sanguinisluxuria.config.option.skill_points_per_level", "Skill Points Per Level");
-        translationBuilder.add("sanguinisluxuria.config.option.skill_points_per_level.desc", "How many skill points are gained per level");
         translationBuilder.add("sanguinisluxuria.config.category.worldgen", "Worldgen");
         translationBuilder.add("sanguinisluxuria.config.option.generate_silver_ore", "Generate Silver Ore");
         translationBuilder.add("sanguinisluxuria.config.option.generate_silver_ore.desc", "If silver ore should generate naturally in the world");
@@ -245,10 +239,15 @@ public class BLLangProvider extends FabricLanguageProvider {
 
     private static void statusEffects(TranslationBuilder translationBuilder) {
         translationBuilder.add(BLStatusEffects.BLOOD_SICKNESS, "Blood Sickness");
+        generateStatusEffectDescription(translationBuilder, BLStatusEffects.BLOOD_SICKNESS, "Gained from drinking blood. High enough levels will convert you to a vampire");
         translationBuilder.add(BLStatusEffects.BLESSED_WATER, "Blessed Water");
+        generateStatusEffectDescription(translationBuilder, BLStatusEffects.BLESSED_WATER, "Damages the undead and grants Blessed Blood to the living");
         translationBuilder.add(BLStatusEffects.BLOOD_PROTECTION, "Blessed Blood");
+        generateStatusEffectDescription(translationBuilder, BLStatusEffects.BLOOD_PROTECTION, "Protects you from having your blood drained by vampires");
         translationBuilder.add(BLStatusEffects.BLEEDING, "Bleeding");
+        generateStatusEffectDescription(translationBuilder, BLStatusEffects.BLEEDING, "Causes the afflicted entity to slowly bleed out");
         translationBuilder.add(BLStatusEffects.BLOOD_LUST, "Blood Lust");
+        generateStatusEffectDescription(translationBuilder, BLStatusEffects.BLOOD_LUST, "Gives the living a thirst for blood");
     }
 
     public static void advancements(TranslationBuilder translationBuilder) {
@@ -297,5 +296,9 @@ public class BLLangProvider extends FabricLanguageProvider {
 
     public static void generateAbilityKey(TranslationBuilder builder, VampireAbility ability, String entry) {
         builder.add(ability.getTranslationKey(), entry);
+    }
+
+    public static void generateStatusEffectDescription(TranslationBuilder builder, StatusEffect effect, String entry) {
+        builder.add(effect.getTranslationKey() + ".desc", entry);
     }
 }

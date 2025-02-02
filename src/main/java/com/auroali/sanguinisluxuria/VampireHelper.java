@@ -18,6 +18,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -66,8 +67,15 @@ public class VampireHelper {
      * @return whether the entity is both a vampire and wearing a carved mask
      */
     public static boolean isMasked(LivingEntity entity) {
-        return isVampire(entity)
-          && TrinketsApi.getTrinketComponent(entity)
+        if (!isVampire(entity))
+            return false;
+
+        for (ItemStack stack : entity.getArmorItems()) {
+            if (stack.isIn(BLTags.Items.VAMPIRE_MASKS))
+                return true;
+        }
+
+        return TrinketsApi.getTrinketComponent(entity)
           .map(c -> c.isEquipped(i -> i.isIn(BLTags.Items.VAMPIRE_MASKS)))
           .orElse(false);
     }
@@ -90,7 +98,7 @@ public class VampireHelper {
      */
     public static void transferStatusEffects(LivingEntity from, LivingEntity to) {
         for (StatusEffectInstance instance : from.getStatusEffects()) {
-            if (instance.isAmbient())
+            if (instance.isAmbient() || Registries.STATUS_EFFECT.getEntry(instance.getEffectType()).isIn(BLTags.StatusEffects.NON_TRANSFERABLE))
                 continue;
 
             to.addStatusEffect(instance);

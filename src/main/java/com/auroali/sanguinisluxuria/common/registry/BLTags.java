@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
@@ -49,6 +50,10 @@ public class BLTags {
         public static final TagKey<Item> RAW_SILVER_BLOCKS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "raw_silver_blocks"));
         public static final TagKey<Item> SILVER_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "silver_ores"));
         public static final TagKey<Item> BLOOD_STORING_BOTTLES = TagKey.of(RegistryKeys.ITEM, BLResources.BLOOD_STORING_BOTTLES);
+    }
+
+    public static class StatusEffects {
+        public static final TagKey<StatusEffect> NON_TRANSFERABLE = TagKey.of(RegistryKeys.STATUS_EFFECT, BLResources.NON_TRANSFERABLE_ID);
     }
 
     public static class DamageTypes {

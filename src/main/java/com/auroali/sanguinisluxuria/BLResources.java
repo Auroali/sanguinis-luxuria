@@ -150,6 +150,7 @@ public class BLResources {
     public static final Identifier BLOOD_LUST_ID = id("blood_lust");
     public static final Identifier CONVERT_ENTITY_RITUAL_TYPE = id("convert");
     public static final Identifier CONVERT_CRITERION_ID = id("converted");
+    public static final Identifier NON_TRANSFERABLE_ID = id("non_transferable");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
