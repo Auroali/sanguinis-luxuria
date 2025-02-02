@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.datagen.builders;
 
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
-import com.auroali.sanguinisluxuria.common.rituals.ItemRitual;
+import com.auroali.sanguinisluxuria.common.rituals.ItemCreatingRitual;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -116,8 +116,8 @@ public class RitualRecipeJsonBuilder extends RecipeJsonBuilder {
     }
 
     protected Identifier getId() {
-        if (this.ritual instanceof ItemRitual itemRitual) {
-            return CraftingRecipeJsonBuilder.getItemId(itemRitual.stack().getItem());
+        if (this.ritual instanceof ItemCreatingRitual itemRitual) {
+            return CraftingRecipeJsonBuilder.getItemId(itemRitual.getOutput().getItem());
         }
         throw new IllegalArgumentException("Non-item ritual recipes must manually specify an id");
     }
