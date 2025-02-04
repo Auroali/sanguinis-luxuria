@@ -97,10 +97,10 @@ public class VampireVillagerEntity extends HostileEntity {
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(3, new MeleeAttackGoal(this, 1.0f, false));
         this.goalSelector.add(2, new TeleportWhenOutOfRangeGoal(this));
-        this.goalSelector.add(5, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
-        this.goalSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
-        this.goalSelector.add(5, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.goalSelector.add(6, new ActiveTargetGoal<>(this, LivingEntity.class, true, e -> {
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(6, new ActiveTargetGoal<>(this, LivingEntity.class, true, e -> {
             BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
             return VampireHelper.hasBlood(e) && ((double) blood.getBlood() / blood.getMaxBlood()) < 0.4;
         }));
