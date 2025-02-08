@@ -4,6 +4,10 @@
     {
       "type": "sanguinisluxuria:context",
       "conversion": "deconverting"
+    },
+    {
+      "type": "sanguinisluxuria:vampire",
+      "isVampire": true
     }
   ],
   "entity": "minecraft:player",

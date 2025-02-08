@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.conversions.*;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.ConversionContextCondition;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.OrConversionCondition;
+import com.auroali.sanguinisluxuria.common.conversions.conditions.VampireConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransformer;
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
@@ -43,6 +44,7 @@ public class BLConversions implements IdentifiableResourceReloadListener {
 
     public static final EntityConversionCondition.Serializer<?> CONVERSION_CONTEXT_CONDITION = new EntityConversionCondition.Serializer<>(ConversionContextCondition::fromJson);
     public static final EntityConversionCondition.Serializer<?> OR_CONDITION = new EntityConversionCondition.Serializer<>(OrConversionCondition::fromJson);
+    public static final EntityConversionCondition.Serializer<?> VAMPIRE_CONDITION = new EntityConversionCondition.Serializer<>(VampireConversionCondition::fromJson);
 
     public static void register() {
         Registry.register(BLRegistries.CONVERSION_TYPES, BLResources.SET_VAMPIRE_TYPE, SET_VAMPIRE_TYPE);
@@ -52,6 +54,7 @@ public class BLConversions implements IdentifiableResourceReloadListener {
         Registry.register(BLRegistries.CONVERSION_TRANSFORMERS, BLResources.SET_TRANSFORMER_ID, SET_TRANSFORMER);
         Registry.register(BLRegistries.CONVERSION_CONDITIONS, BLResources.CONVERSION_CONTEXT_CONDITION_ID, CONVERSION_CONTEXT_CONDITION);
         Registry.register(BLRegistries.CONVERSION_CONDITIONS, BLResources.OR_CONDITION_ID, OR_CONDITION);
+        Registry.register(BLRegistries.CONVERSION_CONDITIONS, BLResources.VAMPIRE_CONDITION_ID, VAMPIRE_CONDITION);
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
           .registerReloadListener(new BLConversions());

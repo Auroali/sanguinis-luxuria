@@ -1,0 +1,16 @@
+{
+  "name": "Becoming Human",
+  "icon": "sanguinisluxuria:twisted_blood_bottle",
+  "category": "sanguinisluxuria:rituals",
+  "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "There is a ritual to cure vampirism, known as the Ritual of Conversion. It acts on a target and attempts to deconvert them, if possible."
+    },
+    {
+      "type": "sanguinisluxuria:ritual",
+      "recipe": "sanguinisluxuria:rituals/deconversion"
+    }
+  ]
+}

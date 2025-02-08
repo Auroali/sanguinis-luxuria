@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.entities;
 
+import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
@@ -17,15 +18,20 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
+import net.minecraft.village.VillagerData;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class VampireVillagerEntity extends HostileEntity {
-    int bloodDrainTimer;
+    private int bloodDrainTimer;
+    private VillagerData villagerData;
+    private NbtCompound offers;
+    private int xp;
 
     public VampireVillagerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -120,6 +126,10 @@ public class VampireVillagerEntity extends HostileEntity {
         return super.tryAttack(target);
     }
 
+    public void setVillagerData(VillagerData data) {
+        this.villagerData = data;
+    }
+
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_VILLAGER_HURT;
@@ -140,11 +150,26 @@ public class VampireVillagerEntity extends HostileEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("BloodDrainTimer", this.bloodDrainTimer);
+        if (this.villagerData != null)
+            VillagerData.CODEC.encodeStart(NbtOps.INSTANCE, this.villagerData)
+              .resultOrPartial(Bloodlust.LOGGER::error)
+              .ifPresent(element -> nbt.put("VillagerData", element));
+        if (this.offers != null)
+            nbt.put("Offers", this.offers);
+        nbt.putInt("Xp", this.xp);
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.bloodDrainTimer = nbt.getInt("BloodDrainTimer");
+        if (nbt.contains("VillagerData"))
+            VillagerData.CODEC.parse(NbtOps.INSTANCE, nbt.get("VillagerData"))
+              .resultOrPartial(Bloodlust.LOGGER::error)
+              .ifPresent(this::setVillagerData);
+        if (nbt.contains("Offers"))
+            this.offers = nbt.getCompound("Offers");
+        if (nbt.contains("Xp"))
+            this.xp = nbt.getInt("Xp");
     }
 }

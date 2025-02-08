@@ -4,11 +4,9 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.advancements.ConvertCriterion;
 import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
+import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.*;
-import com.auroali.sanguinisluxuria.common.rituals.AbilityRevealRitual;
-import com.auroali.sanguinisluxuria.common.rituals.ItemRitual;
-import com.auroali.sanguinisluxuria.common.rituals.VampireAbilityResetRitual;
-import com.auroali.sanguinisluxuria.common.rituals.VampireAbilityRitual;
+import com.auroali.sanguinisluxuria.common.rituals.*;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronFillRecipeJsonBuilder;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronRecipeJsonBuilder;
 import com.auroali.sanguinisluxuria.datagen.builders.RitualRecipeJsonBuilder;
@@ -223,5 +221,13 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .catalyst(Items.WRITABLE_BOOK)
           .criterion("unlocked_ability", UnlockAbilityCriterion.Conditions.create())
           .offerTo(exporter, BLResources.id("rituals/reveal_abilities"));
+
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, new ConvertEntityRitual(ConversionContext.Conversion.DECONVERTING))
+          .catalyst(Items.GOLDEN_APPLE)
+          .input(BLItems.SILVER_INGOT)
+          .input(BLItems.SILVER_INGOT)
+          .input(BLItems.SILVER_INGOT)
+          .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
+          .offerTo(exporter, BLResources.id("rituals/deconversion"));
     }
 }

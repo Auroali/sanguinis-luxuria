@@ -1,0 +1,22 @@
+{
+  "type": "sanguinisluxuria:ritual",
+  "catalyst": {
+    "item": "minecraft:golden_apple"
+  },
+  "category": "misc",
+  "inputs": [
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    },
+    {
+      "item": "sanguinisluxuria:silver_ingot"
+    }
+  ],
+  "ritual": {
+    "type": "sanguinisluxuria:convert",
+    "conversion": "deconverting"
+  }
+}

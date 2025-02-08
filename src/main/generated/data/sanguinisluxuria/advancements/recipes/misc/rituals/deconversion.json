@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "became_vampire": {
+      "conditions": {
+        "conversion": "converting"
+      },
+      "trigger": "sanguinisluxuria:converted"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "sanguinisluxuria:rituals/deconversion"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "became_vampire",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "sanguinisluxuria:rituals/deconversion"
+    ]
+  },
+  "sends_telemetry_event": true
+}

@@ -26,6 +26,8 @@
   "altar_ritual.sanguinisluxuria.ability": "Ritual of Transformation",
   "altar_ritual.sanguinisluxuria.ability_reveal": "Ritual of Revealing",
   "altar_ritual.sanguinisluxuria.convert": "Ritual of Conversion",
+  "altar_ritual.sanguinisluxuria.convert.converting": "Converting",
+  "altar_ritual.sanguinisluxuria.convert.deconverting": "Deconverting",
   "altar_ritual.sanguinisluxuria.effect": "Ritual of Alchemy",
   "altar_ritual.sanguinisluxuria.entity": "Ritual of Summoning",
   "altar_ritual.sanguinisluxuria.item_ritual": "Ritual of Transmutation",

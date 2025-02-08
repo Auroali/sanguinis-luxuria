@@ -8,6 +8,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+
+import java.util.List;
 
 public class ConvertEntityRitual implements Ritual {
     public static final Codec<ConvertEntityRitual> CODEC = RecordCodecBuilder.create(instance -> instance
@@ -31,6 +34,14 @@ public class ConvertEntityRitual implements Ritual {
 
     public ConversionContext.Conversion getConversion() {
         return this.conversion;
+    }
+
+    @Override
+    public void appendTooltips(List<Text> tooltips) {
+        switch (this.conversion) {
+            case CONVERTING -> tooltips.add(Text.translatable("altar_ritual.sanguinisluxuria.convert.converting"));
+            case DECONVERTING -> tooltips.add(Text.translatable("altar_ritual.sanguinisluxuria.convert.deconverting"));
+        }
     }
 
     @Override

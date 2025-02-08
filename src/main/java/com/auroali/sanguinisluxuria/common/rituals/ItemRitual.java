@@ -56,6 +56,6 @@ public class ItemRitual implements Ritual, ItemCreatingRitual {
 
     @Override
     public ItemStack getOutput() {
-        return this.output;
+        return this.output.copy();
     }
 }

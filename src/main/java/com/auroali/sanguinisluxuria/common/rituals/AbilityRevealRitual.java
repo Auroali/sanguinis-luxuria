@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbilityRevealRitual extends ItemRitual {
+    public static final ItemStack OUTPUT = new ItemStack(Items.WRITTEN_BOOK);
     public static final AbilityRevealRitual INSTANCE = new AbilityRevealRitual();
     public static final Codec<AbilityRevealRitual> CODEC = Codec.unit(() -> INSTANCE);
-    public static final ItemStack OUTPUT = new ItemStack(Items.WRITTEN_BOOK);
 
     protected AbilityRevealRitual() {
         super(OUTPUT);

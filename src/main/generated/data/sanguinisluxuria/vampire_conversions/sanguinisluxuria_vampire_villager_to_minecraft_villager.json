@@ -3,11 +3,11 @@
   "conditions": [
     {
       "type": "sanguinisluxuria:context",
-      "conversion": "converting"
+      "conversion": "deconverting"
     }
   ],
-  "entity": "minecraft:villager",
-  "target": "sanguinisluxuria:vampire_villager",
+  "entity": "sanguinisluxuria:vampire_villager",
+  "target": "minecraft:villager",
   "transformers": [
     {
       "type": "sanguinisluxuria:copy",

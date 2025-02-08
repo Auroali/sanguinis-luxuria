@@ -102,6 +102,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateRitualKey(builder, BLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE, "Ritual of Summoning");
         generateRitualKey(builder, BLRitualTypes.STATUS_EFFECT_RITUAL_TYPE, "Ritual of Alchemy");
         generateRitualKey(builder, BLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
+        builder.add("altar_ritual.sanguinisluxuria.convert.converting", "Converting");
+        builder.add("altar_ritual.sanguinisluxuria.convert.deconverting", "Deconverting");
     }
 
     private static void generateRitualKey(TranslationBuilder builder, RitualType<?> type, String entry) {

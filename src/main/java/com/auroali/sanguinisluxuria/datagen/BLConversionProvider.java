@@ -3,6 +3,8 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.ConversionContextCondition;
+import com.auroali.sanguinisluxuria.common.conversions.conditions.VampireConversionCondition;
+import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.registry.BLConversions;
 import com.auroali.sanguinisluxuria.common.registry.BLEntities;
 import com.auroali.sanguinisluxuria.datagen.builders.ConversionJsonBuilder;
@@ -21,17 +23,30 @@ public class BLConversionProvider extends SanguinisLuxuriaConversionsProvider {
     protected void generateConversions(Consumer<ConversionJsonBuilder.Provider> exporter) {
         ConversionJsonBuilder.create(EntityType.VILLAGER, BLEntities.VAMPIRE_VILLAGER)
           .type(BLConversions.SPAWN_TYPE)
+          .transformer(CopyConversionTransformer.create("Offers"))
+          .transformer(CopyConversionTransformer.create("Xp"))
+          .transformer(CopyConversionTransformer.create("VillagerData"))
           .condition(ConversionContextCondition.converting())
+          .offerTo(exporter, Bloodlust.MODID);
+
+        ConversionJsonBuilder.create(BLEntities.VAMPIRE_VILLAGER, EntityType.VILLAGER)
+          .type(BLConversions.SPAWN_TYPE)
+          .transformer(CopyConversionTransformer.create("Offers"))
+          .transformer(CopyConversionTransformer.create("Xp"))
+          .transformer(CopyConversionTransformer.create("VillagerData"))
+          .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter, Bloodlust.MODID);
 
         ConversionJsonBuilder.create(EntityType.PLAYER, EntityType.PLAYER)
           .type(BLConversions.SET_VAMPIRE_TYPE)
           .condition(ConversionContextCondition.converting())
+          .condition(VampireConversionCondition.nonVampire())
           .offerTo(exporter, BLResources.id("convert_player_to_vampire"));
 
         ConversionJsonBuilder.create(EntityType.PLAYER, EntityType.PLAYER)
           .type(BLConversions.REVERT_VAMPIRE_TYPE)
           .condition(ConversionContextCondition.deconverting())
+          .condition(VampireConversionCondition.vampire())
           .offerTo(exporter, BLResources.id("convert_vampire_to_player"));
     }
 }

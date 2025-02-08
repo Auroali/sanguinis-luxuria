@@ -17,10 +17,19 @@ public class CopyConversionTransformer implements EntityConversionTransformer {
         this.dstPath = dstPath;
     }
 
+    public static CopyConversionTransformer create(String src) {
+        return create(src, src);
+    }
+
+    public static CopyConversionTransformer create(String src, String dst) {
+        return new CopyConversionTransformer(NbtTreeLocation.fromString(src), NbtTreeLocation.fromString(dst));
+    }
+
     @Override
     public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut) {
         NbtElement element = this.srcPath.get(nbtIn);
-        this.dstPath.insertInto(nbtOut, element);
+        if (element != null)
+            this.dstPath.insertInto(nbtOut, element);
     }
 
     @Override
