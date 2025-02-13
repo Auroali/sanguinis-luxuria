@@ -48,7 +48,7 @@
       ]
     },
     {
-      "name": "Time",
+      "name": "RenderTime",
       "type": "float",
       "count": 1,
       "values": [
