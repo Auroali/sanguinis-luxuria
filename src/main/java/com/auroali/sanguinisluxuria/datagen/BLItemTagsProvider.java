@@ -22,18 +22,24 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         this.getOrCreateTagBuilder(BLTags.Items.FACE_TRINKETS)
-          .add(BLItems.MASK_1)
-          .add(BLItems.MASK_2)
-          .add(BLItems.MASK_3);
+          .add(
+            BLItems.MASK_1,
+            BLItems.MASK_2,
+            BLItems.MASK_3
+          );
         this.getOrCreateTagBuilder(BLTags.Items.NECKLACE_TRINKETS)
           .add(BLItems.PENDANT_OF_PIERCING);
         this.getOrCreateTagBuilder(BLTags.Items.SUN_BLOCKING_HELMETS)
-          .add(Items.LEATHER_HELMET)
-          .add(Items.CARVED_PUMPKIN);
+          .add(
+            Items.LEATHER_HELMET,
+            Items.CARVED_PUMPKIN
+          );
         this.getOrCreateTagBuilder(BLTags.Items.VAMPIRE_MASKS)
-          .add(BLItems.MASK_1)
-          .add(BLItems.MASK_2)
-          .add(BLItems.MASK_3);
+          .add(
+            BLItems.MASK_1,
+            BLItems.MASK_2,
+            BLItems.MASK_3
+          );
         this.getOrCreateTagBuilder(BLTags.Items.SILVER_INGOTS)
           .add(BLItems.SILVER_INGOT);
         this.getOrCreateTagBuilder(ItemTags.PICKAXES)
@@ -47,62 +53,74 @@ public class BLItemTagsProvider extends FabricTagProvider<Item> {
         this.getOrCreateTagBuilder(ItemTags.SHOVELS)
           .add(BLItems.SILVER_SHOVEL);
         this.getOrCreateTagBuilder(ConventionalItemTags.ORES)
-          .add(BLBlocks.SILVER_ORE.asItem())
-          .add(BLBlocks.DEEPSLATE_SILVER_ORE.asItem());
+          .add(
+            BLItems.SILVER_ORE,
+            BLItems.DEEPSLATE_SILVER_ORE
+          );
         this.getOrCreateTagBuilder(BLTags.Items.DECAYED_LOGS)
-          .add(BLBlocks.DECAYED_WOOD.asItem())
-          .add(BLBlocks.DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_DECAYED_WOOD.asItem())
-          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
+          .add(
+            BLItems.DECAYED_WOOD,
+            BLItems.DECAYED_LOG,
+            BLItems.STRIPPED_DECAYED_LOG,
+            BLItems.STRIPPED_DECAYED_WOOD,
+            BLItems.HUNGRY_DECAYED_LOG,
+            BLItems.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(ItemTags.LOGS)
-          .add(BLBlocks.DECAYED_WOOD.asItem())
-          .add(BLBlocks.DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_DECAYED_WOOD.asItem())
-          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
+          .add(
+            BLItems.DECAYED_WOOD,
+            BLItems.DECAYED_LOG,
+            BLItems.STRIPPED_DECAYED_LOG,
+            BLItems.STRIPPED_DECAYED_WOOD,
+            BLItems.HUNGRY_DECAYED_LOG,
+            BLItems.STRIPPED_HUNGRY_DECAYED_LOG)
+        ;
         this.getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN)
-          .add(BLBlocks.DECAYED_WOOD.asItem())
-          .add(BLBlocks.DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_DECAYED_WOOD.asItem())
-          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
+          .add(
+            BLItems.DECAYED_WOOD,
+            BLItems.DECAYED_LOG,
+            BLItems.STRIPPED_DECAYED_LOG,
+            BLItems.STRIPPED_DECAYED_WOOD,
+            BLItems.HUNGRY_DECAYED_LOG,
+            BLItems.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(BLTags.Items.HUNGRY_DECAYED_LOGS)
-          .add(BLBlocks.HUNGRY_DECAYED_LOG.asItem())
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG.asItem());
+          .add(
+            BLItems.HUNGRY_DECAYED_LOG,
+            BLItems.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(ItemTags.WOODEN_PRESSURE_PLATES)
-          .add(BLBlocks.DECAYED_PRESSURE_PLATE.asItem());
+          .add(BLItems.DECAYED_PRESSURE_PLATE);
         this.getOrCreateTagBuilder(BLTags.Items.SILVER_BLOCKS)
-          .add(BLBlocks.SILVER_BLOCK.asItem());
+          .add(BLItems.SILVER_BLOCK);
         this.getOrCreateTagBuilder(BLTags.Items.RAW_SILVER_BLOCKS)
-          .add(BLBlocks.RAW_SILVER_BLOCK.asItem());
+          .add(BLItems.RAW_SILVER_BLOCK);
         this.getOrCreateTagBuilder(BLTags.Items.SILVER_ORES)
-          .add(BLBlocks.SILVER_ORE.asItem())
-          .add(BLBlocks.DEEPSLATE_SILVER_ORE.asItem());
+          .add(
+            BLItems.SILVER_ORE,
+            BLItems.DEEPSLATE_SILVER_ORE
+          );
         this.getOrCreateTagBuilder(ConventionalItemTags.INGOTS)
           .add(BLItems.SILVER_INGOT);
         this.getOrCreateTagBuilder(ItemTags.SAPLINGS)
-          .add(BLBlocks.GRAFTED_SAPLING.asItem());
+          .add(BLItems.GRAFTED_SAPLING);
 
         this.getOrCreateTagBuilder(ItemTags.PLANKS)
-          .add(BLBlocks.DECAYED_PLANKS.asItem());
+          .add(BLItems.DECAYED_PLANKS);
         this.getOrCreateTagBuilder(ItemTags.WOODEN_FENCES)
-          .add(BLBlocks.DECAYED_FENCE.asItem());
+          .add(BLItems.DECAYED_FENCE);
         this.getOrCreateTagBuilder(ItemTags.FENCE_GATES)
-          .add(BLBlocks.DECAYED_FENCE_GATE.asItem());
+          .add(BLItems.DECAYED_FENCE_GATE);
         this.getOrCreateTagBuilder(ItemTags.WOODEN_DOORS)
-          .add(BLBlocks.DECAYED_DOOR.asItem());
+          .add(BLItems.DECAYED_DOOR);
         this.getOrCreateTagBuilder(ItemTags.WOODEN_BUTTONS)
-          .add(BLBlocks.DECAYED_BUTTON.asItem());
+          .add(BLItems.DECAYED_BUTTON);
         this.getOrCreateTagBuilder(ItemTags.WOODEN_TRAPDOORS)
-          .add(BLBlocks.DECAYED_TRAPDOOR.asItem());
+          .add(BLItems.DECAYED_TRAPDOOR);
         this.getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS)
-          .add(BLBlocks.DECAYED_STAIRS.asItem());
+          .add(BLItems.DECAYED_STAIRS);
         this.getOrCreateTagBuilder(ItemTags.WOODEN_SLABS)
-          .add(BLBlocks.DECAYED_SLAB.asItem());
+          .add(BLItems.DECAYED_SLAB);
 
         this.getOrCreateTagBuilder(BLTags.Items.BLOOD_STORING_BOTTLES)
           .add(Items.GLASS_BOTTLE);

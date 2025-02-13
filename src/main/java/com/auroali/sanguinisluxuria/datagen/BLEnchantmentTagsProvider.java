@@ -18,8 +18,10 @@ public class BLEnchantmentTagsProvider extends FabricTagProvider<Enchantment> {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         this.getOrCreateTagBuilder(BLTags.Enchantments.VAMPIRE_MERCHANT_OFFERS)
-          .add(BLEnchantments.BLOOD_DRAIN)
-          .add(BLEnchantments.SERRATED)
-          .add(BLEnchantments.SUN_PROTECTION);
+          .add(
+            BLEnchantments.BLOOD_DRAIN,
+            BLEnchantments.SERRATED,
+            BLEnchantments.SUN_PROTECTION
+          );
     }
 }

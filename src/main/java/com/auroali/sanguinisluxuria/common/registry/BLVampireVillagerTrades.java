@@ -34,7 +34,7 @@ public class BLVampireVillagerTrades {
       })
       .put(2, new TradeOffers.Factory[]{
         new SellPotionFactory(Items.POTION, Potions.FIRE_RESISTANCE, 16, 1, 1, 4),
-        new TradeOffers.BuyForOneEmeraldFactory(BLBlocks.GRAFTED_SAPLING.asItem(), 1, 1, 4)
+        new TradeOffers.BuyForOneEmeraldFactory(BLItems.GRAFTED_SAPLING, 1, 1, 4)
       })
       .build();
 

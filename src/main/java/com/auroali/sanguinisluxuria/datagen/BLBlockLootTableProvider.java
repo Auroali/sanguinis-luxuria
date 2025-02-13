@@ -32,7 +32,7 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
           .pool(new LootPool.Builder()
             .rolls(ConstantLootNumberProvider.create(1))
             .with(AlternativeEntry.builder(
-                ItemEntry.builder(BLBlocks.SILVER_ORE)
+                ItemEntry.builder(BLItems.SILVER_ORE)
                   .conditionally(MatchToolLootCondition.builder(
                       ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1)))
                     )
@@ -45,7 +45,7 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
           .pool(new LootPool.Builder()
             .rolls(ConstantLootNumberProvider.create(1))
             .with(AlternativeEntry.builder(
-                ItemEntry.builder(BLBlocks.DEEPSLATE_SILVER_ORE)
+                ItemEntry.builder(BLItems.DEEPSLATE_SILVER_ORE)
                   .conditionally(MatchToolLootCondition.builder(
                       ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1)))
                     )

@@ -61,23 +61,23 @@ public class BLRecipeProvider extends FabricRecipeProvider {
 
     public void generateCraftingRecipes(Consumer<RecipeJsonProvider> exporter) {
         generateFamily(exporter, BLBlockFamilies.DECAYED_WOOD_FAMILY);
-        offerPlanksRecipe(exporter, BLBlocks.DECAYED_PLANKS, BLTags.Items.DECAYED_LOGS, 4);
-        offerHangingSignRecipe(exporter, BLBlocks.DECAYED_HANGING_SIGN, BLBlocks.STRIPPED_DECAYED_LOG);
-        offerBarkBlockRecipe(exporter, BLBlocks.DECAYED_WOOD, BLBlocks.DECAYED_LOG);
-        offerBarkBlockRecipe(exporter, BLBlocks.STRIPPED_DECAYED_WOOD, BLBlocks.STRIPPED_DECAYED_LOG);
+        offerPlanksRecipe(exporter, BLItems.DECAYED_PLANKS, BLTags.Items.DECAYED_LOGS, 4);
+        offerHangingSignRecipe(exporter, BLItems.DECAYED_HANGING_SIGN, BLItems.STRIPPED_DECAYED_LOG);
+        offerBarkBlockRecipe(exporter, BLItems.DECAYED_WOOD, BLItems.DECAYED_LOG);
+        offerBarkBlockRecipe(exporter, BLItems.STRIPPED_DECAYED_WOOD, BLItems.STRIPPED_DECAYED_LOG);
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BLBlocks.GRAFTED_SAPLING)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BLItems.GRAFTED_SAPLING)
           .input(BLItems.BLOOD_PETAL)
           .input(ItemTags.SAPLINGS)
           .criterion(hasItem(BLItems.BLOOD_PETAL), conditionsFromItem(BLItems.BLOOD_PETAL))
           .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, BLBlocks.SILVER_PRESSURE_PLATE)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, BLItems.SILVER_PRESSURE_PLATE)
           .pattern("##")
           .input('#', BLTags.Items.SILVER_INGOTS)
           .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
           .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLBlocks.ALTAR)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLItems.ALTAR)
           .pattern("lbl")
           .pattern("sss")
           .input('b', BLItems.BLOOD_BOTTLE)
@@ -86,7 +86,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .criterion("is_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
           .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLBlocks.PEDESTAL)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLItems.PEDESTAL)
           .pattern(" l ")
           .pattern(" s ")
           .input('s', Items.BLACKSTONE_WALL)
@@ -134,18 +134,18 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .criterion("has_item", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
           .offerTo(exporter);
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BLItems.SILVER_INGOT, 9)
-          .input(BLBlocks.SILVER_BLOCK)
-          .criterion("has_silver", conditionsFromItem(BLBlocks.SILVER_BLOCK))
+          .input(BLItems.SILVER_BLOCK)
+          .criterion("has_silver", conditionsFromItem(BLItems.SILVER_BLOCK))
           .offerTo(exporter);
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BLBlocks.SILVER_BLOCK)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BLItems.SILVER_BLOCK)
           .input(BLItems.SILVER_INGOT, 9)
           .criterion("has_silver", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
           .offerTo(exporter);
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BLItems.RAW_SILVER, 9)
-          .input(BLBlocks.RAW_SILVER_BLOCK)
+          .input(BLItems.RAW_SILVER_BLOCK)
           .criterion("has_silver", conditionsFromItem(BLItems.RAW_SILVER))
           .offerTo(exporter);
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BLBlocks.RAW_SILVER_BLOCK)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BLItems.RAW_SILVER_BLOCK)
           .input(BLItems.RAW_SILVER, 9)
           .criterion("has_silver", conditionsFromItem(BLItems.RAW_SILVER))
           .offerTo(exporter);

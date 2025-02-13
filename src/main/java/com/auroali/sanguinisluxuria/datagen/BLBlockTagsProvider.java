@@ -21,28 +21,38 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup args) {
         this.getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-          .add(BLBlocks.ALTAR)
-          .add(BLBlocks.PEDESTAL)
-          .add(BLBlocks.SILVER_ORE)
-          .add(BLBlocks.DEEPSLATE_SILVER_ORE)
-          .add(BLBlocks.SILVER_BLOCK)
-          .add(BLBlocks.RAW_SILVER_BLOCK);
+          .add(
+            BLBlocks.ALTAR,
+            BLBlocks.PEDESTAL,
+            BLBlocks.SILVER_ORE,
+            BLBlocks.DEEPSLATE_SILVER_ORE,
+            BLBlocks.SILVER_BLOCK,
+            BLBlocks.RAW_SILVER_BLOCK
+          );
         this.getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
-          .add(BLBlocks.SILVER_ORE)
-          .add(BLBlocks.DEEPSLATE_SILVER_ORE)
-          .add(BLBlocks.SILVER_BLOCK)
-          .add(BLBlocks.RAW_SILVER_BLOCK);
+          .add(
+            BLBlocks.SILVER_ORE,
+            BLBlocks.DEEPSLATE_SILVER_ORE,
+            BLBlocks.SILVER_BLOCK,
+            BLBlocks.RAW_SILVER_BLOCK
+          );
         this.getOrCreateTagBuilder(BlockTags.CAULDRONS)
           .add(BLBlocks.BLOOD_CAULDRON);
         this.getOrCreateTagBuilder(ConventionalBlockTags.ORES)
-          .add(BLBlocks.SILVER_ORE)
-          .add(BLBlocks.DEEPSLATE_SILVER_ORE);
+          .add(
+            BLBlocks.SILVER_ORE,
+            BLBlocks.DEEPSLATE_SILVER_ORE
+          );
         this.getOrCreateTagBuilder(BlockTags.ALL_SIGNS)
-          .add(BLBlocks.DECAYED_SIGN)
-          .add(BLBlocks.DECAYED_WALL_SIGN);
+          .add(
+            BLBlocks.DECAYED_SIGN,
+            BLBlocks.DECAYED_WALL_SIGN
+          );
         this.getOrCreateTagBuilder(BlockTags.ALL_HANGING_SIGNS)
-          .add(BLBlocks.DECAYED_HANGING_SIGN)
-          .add(BLBlocks.DECAYED_WALL_HANGING_SIGN);
+          .add(
+            BLBlocks.DECAYED_HANGING_SIGN,
+            BLBlocks.DECAYED_WALL_HANGING_SIGN
+          );
         this.getOrCreateTagBuilder(BlockTags.PLANKS)
           .add(BLBlocks.DECAYED_PLANKS);
         this.getOrCreateTagBuilder(BlockTags.WOODEN_SLABS)
@@ -58,46 +68,60 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
         this.getOrCreateTagBuilder(BlockTags.FENCE_GATES)
           .add(BLBlocks.DECAYED_FENCE_GATE);
         this.getOrCreateTagBuilder(BLTags.Blocks.DECAYED_LOGS)
-          .add(BLBlocks.DECAYED_WOOD)
-          .add(BLBlocks.DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_DECAYED_WOOD)
-          .add(BLBlocks.HUNGRY_DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+          .add(
+            BLBlocks.DECAYED_WOOD,
+            BLBlocks.DECAYED_LOG,
+            BLBlocks.STRIPPED_DECAYED_LOG,
+            BLBlocks.STRIPPED_DECAYED_WOOD,
+            BLBlocks.HUNGRY_DECAYED_LOG,
+            BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(BlockTags.WOODEN_PRESSURE_PLATES)
           .add(BLBlocks.DECAYED_PRESSURE_PLATE);
         this.getOrCreateTagBuilder(BlockTags.LOGS)
-          .add(BLBlocks.DECAYED_WOOD)
-          .add(BLBlocks.DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_DECAYED_WOOD)
-          .add(BLBlocks.HUNGRY_DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+          .add(
+            BLBlocks.DECAYED_WOOD,
+            BLBlocks.DECAYED_LOG,
+            BLBlocks.STRIPPED_DECAYED_LOG,
+            BLBlocks.STRIPPED_DECAYED_WOOD,
+            BLBlocks.HUNGRY_DECAYED_LOG,
+            BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
-          .add(BLBlocks.DECAYED_WOOD)
-          .add(BLBlocks.DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_DECAYED_WOOD)
-          .add(BLBlocks.HUNGRY_DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+          .add(
+            BLBlocks.DECAYED_WOOD,
+            BLBlocks.DECAYED_LOG,
+            BLBlocks.STRIPPED_DECAYED_LOG,
+            BLBlocks.STRIPPED_DECAYED_WOOD,
+            BLBlocks.HUNGRY_DECAYED_LOG,
+            BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(BLTags.Blocks.HUNGRY_DECAYED_LOGS)
-          .add(BLBlocks.HUNGRY_DECAYED_LOG)
-          .add(BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG);
+          .add(
+            BLBlocks.HUNGRY_DECAYED_LOG,
+            BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES)
-          .add(BLBlocks.SILVER_PRESSURE_PLATE)
-          .add(BLBlocks.DECAYED_PRESSURE_PLATE);
+          .add(
+            BLBlocks.SILVER_PRESSURE_PLATE,
+            BLBlocks.DECAYED_PRESSURE_PLATE
+          );
         this.getOrCreateTagBuilder(BLTags.Blocks.SILVER_BLOCKS)
           .add(BLBlocks.SILVER_BLOCK);
         this.getOrCreateTagBuilder(BLTags.Blocks.RAW_SILVER_BLOCKS)
           .add(BLBlocks.RAW_SILVER_BLOCK);
         this.getOrCreateTagBuilder(BLTags.Blocks.SILVER_ORES)
-          .add(BLBlocks.SILVER_ORE)
-          .add(BLBlocks.DEEPSLATE_SILVER_ORE);
+          .add(
+            BLBlocks.SILVER_ORE,
+            BLBlocks.DEEPSLATE_SILVER_ORE
+          );
         this.getOrCreateTagBuilder(BlockTags.SAPLINGS)
           .add(BLBlocks.GRAFTED_SAPLING);
         this.getOrCreateTagBuilder(BLTags.Blocks.NO_MIST_COLLISION)
-          .add(Blocks.IRON_BARS)
-          .add(Blocks.BAMBOO)
+          .add(
+            Blocks.IRON_BARS,
+            Blocks.BAMBOO
+          )
           .forceAddTag(BlockTags.DOORS)
           .forceAddTag(BlockTags.TRAPDOORS)
           .forceAddTag(BlockTags.FENCE_GATES)
