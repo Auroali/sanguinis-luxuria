@@ -1,6 +1,8 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
+import com.auroali.sanguinisluxuria.common.loot.SetBloodLootFunction;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
@@ -30,16 +32,10 @@ public class BLEntityLootTableProvider extends SimpleFabricLootTableProvider {
             .rolls(ConstantLootNumberProvider.create(1))
             .with(ItemEntry.builder(BLItems.MASK_1))
             .with(ItemEntry.builder(BLItems.BLOOD_BOTTLE)
-              .apply(this.createNbtLootFunc(c -> c.putInt("StoredBlood", 1)))
+              .apply(SetBloodLootFunction.builder(BloodConstants.BLOOD_PER_BOTTLE))
             )
             .build()
           )
         );
-    }
-
-    public ConditionalLootFunction.Builder<?> createNbtLootFunc(Consumer<NbtCompound> compoundConsumer) {
-        NbtCompound compound = new NbtCompound();
-        compoundConsumer.accept(compound);
-        return SetNbtLootFunction.builder(compound);
     }
 }

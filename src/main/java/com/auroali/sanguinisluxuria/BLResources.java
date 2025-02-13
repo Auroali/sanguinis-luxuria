@@ -153,6 +153,7 @@ public class BLResources {
     public static final Identifier NON_TRANSFERABLE_ID = id("non_transferable");
     public static final Identifier VAMPIRE_CONDITION_ID = id("vampire");
     public static final Identifier IMMUNE_TO_BLOOD_LOSS_ID = id("blood_loss_immunity");
+    public static final Identifier SET_BLOOD_ID = id("set_blood");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

@@ -12,8 +12,8 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{StoredBlood:1}"
+              "blood": 2,
+              "function": "sanguinisluxuria:set_blood"
             }
           ],
           "name": "sanguinisluxuria:blood_bottle"
