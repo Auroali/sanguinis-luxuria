@@ -35,13 +35,14 @@ public class BLTags {
         public static final TagKey<EntityType<?>> TOXIC_BLOOD = TagKey.of(RegistryKeys.ENTITY_TYPE, BLResources.TOXIC_BLOOD_ID);
         public static final TagKey<EntityType<?>> CAN_DROP_BLOOD = TagKey.of(RegistryKeys.ENTITY_TYPE, BLResources.CAN_DROP_BLOOD);
         public static final TagKey<EntityType<?>> TELEPORTS_ON_DRAIN = TagKey.of(RegistryKeys.ENTITY_TYPE, BLResources.TELEPORTS_ON_DRAIN_ID);
+        public static final TagKey<EntityType<?>> IMMUNE_TO_BLOOD_LOSS = TagKey.of(RegistryKeys.ENTITY_TYPE, BLResources.IMMUNE_TO_BLOOD_LOSS_ID);
     }
 
     public static class Items {
         public static final TagKey<Item> VAMPIRES_GET_HUNGER_FROM = TagKey.of(RegistryKeys.ITEM, BLResources.VAMPIRES_GET_HUNGER_FROM_ID);
         public static final TagKey<Item> FACE_TRINKETS = TagKey.of(RegistryKeys.ITEM, new Identifier("trinkets", "head/face"));
         public static final TagKey<Item> NECKLACE_TRINKETS = TagKey.of(RegistryKeys.ITEM, new Identifier("trinkets", "chest/necklace"));
-        public static final TagKey<Item> SUN_BLOCKING_HELMETS = TagKey.of(RegistryKeys.ITEM, BLResources.SUN_BLOCKING_HELMETS);
+        public static final TagKey<Item> SUN_BLOCKING_HELMETS = TagKey.of(RegistryKeys.ITEM, BLResources.SUN_BLOCKING_HELMETS_ID);
         public static final TagKey<Item> VAMPIRE_MASKS = TagKey.of(RegistryKeys.ITEM, BLResources.VAMPIRE_MASKS_ID);
         public static final TagKey<Item> SILVER_INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "silver_ingots"));
         public static final TagKey<Item> DECAYED_LOGS = TagKey.of(RegistryKeys.ITEM, BLResources.DECAYED_LOGS_ID);
@@ -49,7 +50,7 @@ public class BLTags {
         public static final TagKey<Item> SILVER_BLOCKS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "silver_blocks"));
         public static final TagKey<Item> RAW_SILVER_BLOCKS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "raw_silver_blocks"));
         public static final TagKey<Item> SILVER_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "silver_ores"));
-        public static final TagKey<Item> BLOOD_STORING_BOTTLES = TagKey.of(RegistryKeys.ITEM, BLResources.BLOOD_STORING_BOTTLES);
+        public static final TagKey<Item> BLOOD_STORING_BOTTLES = TagKey.of(RegistryKeys.ITEM, BLResources.BLOOD_STORING_BOTTLES_ID);
     }
 
     public static class StatusEffects {
@@ -61,7 +62,7 @@ public class BLTags {
     }
 
     public static class Biomes {
-        public static final TagKey<Biome> VAMPIRE_VILLAGER_SPAWN = TagKey.of(RegistryKeys.BIOME, BLResources.VAMPIRE_VILLAGER_SPAWN);
+        public static final TagKey<Biome> VAMPIRE_VILLAGER_SPAWN = TagKey.of(RegistryKeys.BIOME, BLResources.VAMPIRE_VILLAGER_SPAWN_ID);
     }
 
     public static class Enchantments {

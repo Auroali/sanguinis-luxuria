@@ -150,7 +150,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
 
     public void killHolderFromBloodloss(LivingEntity drainer) {
         // vampires can't die from blood loss
-        if (VampireHelper.isVampire(this.holder))
+        if (VampireHelper.isVampire(this.holder) || this.holder.getType().isIn(BLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
             return;
 
         if (drainer == null)
