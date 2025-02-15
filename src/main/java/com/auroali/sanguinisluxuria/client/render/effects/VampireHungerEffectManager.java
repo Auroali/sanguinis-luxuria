@@ -17,8 +17,8 @@ public class VampireHungerEffectManager {
     private static final Uniform1f PERCENT = SHADER.findUniform1f("Percent");
     private static final Uniform1f RENDER_TIME = SHADER.findUniform1f("RenderTime");
     private static final int HUNGER_LIMIT = 6;
-    private static final int MAX_TICKS = 10;
-    private static final int MAX_TICKS_ENTITY = 20;
+    private static final int MAX_TICKS = 20;
+    private static final int MAX_TICKS_ENTITY = 40;
     private int ticks;
     private int maxTicks;
     private int renderTicks;
@@ -29,7 +29,7 @@ public class VampireHungerEffectManager {
         this.renderTicks++;
         if (manager.getFoodLevel() <= HUNGER_LIMIT) {
             this.render = true;
-            this.maxTicks = this.shouldFadeIn() ? this.getMaxTicksEntity(manager.getFoodLevel()) : this.getMaxTicks(manager.getFoodLevel());
+            this.maxTicks = this.shouldFadeIn(entity) ? this.getMaxTicksEntity(manager.getFoodLevel()) : this.getMaxTicks(manager.getFoodLevel());
             if (this.ticks < this.maxTicks)
                 this.ticks++;
             if (this.ticks > this.maxTicks)
@@ -54,17 +54,16 @@ public class VampireHungerEffectManager {
     }
 
     public int getMaxTicks(int hunger) {
-        return MAX_TICKS - (int) (1.5f * hunger);
+        return MAX_TICKS - 3 * hunger;
     }
 
     public int getMaxTicksEntity(int hunger) {
-        return MAX_TICKS_ENTITY - 2 * hunger;
+        return MAX_TICKS_ENTITY - 3 * hunger;
     }
 
-    public boolean shouldFadeIn() {
-        HitResult result = MinecraftClient.getInstance().crosshairTarget;
+    public boolean shouldFadeIn(PlayerEntity entity) {
+        HitResult result = VampireHelper.raycastEntity(entity, entity.getRotationVector(), VampireHelper::hasBlood, 8.0d);
         return result != null
-          && result.getType() == HitResult.Type.ENTITY
-          && VampireHelper.hasBlood(((EntityHitResult) result).getEntity());
+          && result.getType() == HitResult.Type.ENTITY;
     }
 }
