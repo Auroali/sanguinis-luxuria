@@ -16,6 +16,7 @@
     "DatapackContentsMixin",
     "HungerManagerMixin",
     "IronGolemEntityMixin",
+    "ItemStackMixin",
     "LivingEntityMixin",
     "PersistentProjectileEntityAccessor",
     "PlayerEntityMixin",

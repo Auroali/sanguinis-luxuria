@@ -154,6 +154,7 @@ public class BLResources {
     public static final Identifier VAMPIRE_CONDITION_ID = id("vampire");
     public static final Identifier IMMUNE_TO_BLOOD_LOSS_ID = id("blood_loss_immunity");
     public static final Identifier SET_BLOOD_ID = id("set_blood");
+    public static final Identifier SUN_RESISTANCE_ID = id("sun_resistance");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

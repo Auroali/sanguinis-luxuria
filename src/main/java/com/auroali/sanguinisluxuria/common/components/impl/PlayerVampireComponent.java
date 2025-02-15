@@ -364,17 +364,8 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
 
     @Override
     public int getMaxTimeInSun() {
-        int maxTime = 40;
-        ItemStack helmet = this.holder.getEquippedStack(EquipmentSlot.HEAD);
-
-        if (helmet.isIn(BLTags.Items.SUN_BLOCKING_HELMETS))
-            maxTime += 80;
-
-        int level = EnchantmentHelper.getLevel(BLEnchantments.SUN_PROTECTION, helmet);
-        maxTime += level * 20;
-
-        double sunResistance = this.holder.getAttributeValue(BLEntityAttributes.SUN_RESISTANCE);
-        return (int) (sunResistance * VampireSunEvents.MODIFY_SUN_TIME.invoker().getMaxTimeInSun(this.holder, this, maxTime));
+        int time = (int) this.holder.getAttributeValue(BLEntityAttributes.SUN_RESISTANCE);
+        return VampireSunEvents.MODIFY_SUN_TIME.invoker().getMaxTimeInSun(this.holder, this, time);
     }
 
     @Override

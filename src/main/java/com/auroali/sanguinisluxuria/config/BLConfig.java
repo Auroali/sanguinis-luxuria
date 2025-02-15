@@ -26,7 +26,6 @@ public class BLConfig {
       .setPrettyPrinting()
       .create();
 
-    public float vampireDamageMultiplier = 1.5f;
     public float vampireExhaustionMultiplier = 0.45f;
     public float piercingExhaustion = 2.5f;
     public boolean generateSilverOre = true;
@@ -38,12 +37,6 @@ public class BLConfig {
             .name(Text.translatable("sanguinisluxuria.config.category.gameplay"))
             .group(OptionGroup.createBuilder()
               .option(Option.<Float>createBuilder()
-                .name(Text.translatable("sanguinisluxuria.config.option.vampire_damage_multiplier"))
-                .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.vampire_damage_multiplier.desc")))
-                .binding(1.5f, () -> this.vampireDamageMultiplier, f -> this.vampireDamageMultiplier = f)
-                .controller(FloatFieldControllerBuilder::create)
-                .build()
-              ).option(Option.<Float>createBuilder()
                 .name(Text.translatable("sanguinisluxuria.config.option.vampire_exhaustion_multiplier"))
                 .description(OptionDescription.of(Text.translatable("sanguinisluxuria.config.option.vampire_exhaustion_multiplier.desc")))
                 .binding(0.45f, () -> this.vampireExhaustionMultiplier, f -> this.vampireExhaustionMultiplier = f)
@@ -88,7 +81,6 @@ public class BLConfig {
         JsonObject root = new JsonObject();
         ConfigSerializer.create(root)
           .category("gameplay")
-          .writeValue("vampireDamageMultiplier", this.vampireDamageMultiplier, JsonObject::addProperty)
           .writeValue("vampireExhaustionMultiplier", this.vampireExhaustionMultiplier, JsonObject::addProperty)
           .up()
           .category("abilities")
@@ -121,7 +113,6 @@ public class BLConfig {
 
         ConfigSerializer.create(root)
           .category("gameplay")
-          .readValue("vampireDamageMultiplier", v -> this.vampireDamageMultiplier = v, this.vampireDamageMultiplier, JsonElement::getAsFloat)
           .readValue("vampireExhaustionMultiplier", v -> this.vampireExhaustionMultiplier = v, this.vampireExhaustionMultiplier, JsonElement::getAsFloat)
           .up()
           .category("abilities")
