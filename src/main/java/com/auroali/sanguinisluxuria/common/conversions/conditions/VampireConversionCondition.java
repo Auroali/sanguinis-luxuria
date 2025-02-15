@@ -3,11 +3,9 @@ package com.auroali.sanguinisluxuria.common.conversions.conditions;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
-import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.auroali.sanguinisluxuria.common.registry.BLConversions;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.nbt.NbtCompound;
 
 public class VampireConversionCondition implements EntityConversionCondition {
     private final boolean isVampire;

@@ -4,8 +4,10 @@ import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.advancements.ConvertCriterion;
 import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
-import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.common.registry.BLItems;
+import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
 import com.auroali.sanguinisluxuria.common.rituals.*;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronFillRecipeJsonBuilder;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronRecipeJsonBuilder;
@@ -209,6 +211,26 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .input(Items.GLOWSTONE_DUST)
           .criterion("has_twisted_blood", conditionsFromItem(BLItems.TWISTED_BLOOD))
           .offerTo(exporter, BLResources.id("rituals/infectious"));
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, new VampireAbilityRitual(BLVampireAbilities.MIST))
+          .catalyst(BLItems.TWISTED_BLOOD)
+          .input(Items.DRAGON_BREATH)
+          .input(Items.COBWEB)
+          .input(Items.DRAGON_BREATH)
+          .input(Items.COBWEB)
+          .criterion("has_twisted_blood", conditionsFromItem(BLItems.TWISTED_BLOOD))
+          .offerTo(exporter, BLResources.id("rituals/mist"));
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, new VampireAbilityRitual(BLVampireAbilities.RESILIENCE))
+          .catalyst(BLItems.TWISTED_BLOOD)
+          .input(Items.OBSIDIAN)
+          .input(Items.OBSIDIAN)
+          .criterion("has_twisted_blood", conditionsFromItem(BLItems.TWISTED_BLOOD))
+          .offerTo(exporter, BLResources.id("rituals/resilience"));
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, new VampireAbilityRitual(BLVampireAbilities.VULNERABILITY))
+          .catalyst(BLItems.TWISTED_BLOOD)
+          .input(Items.GLASS_PANE)
+          .input(Items.GLASS_PANE)
+          .criterion("has_twisted_blood", conditionsFromItem(BLItems.TWISTED_BLOOD))
+          .offerTo(exporter, BLResources.id("rituals/vulnerability"));
 
         RitualRecipeJsonBuilder.create(RecipeCategory.MISC, VampireAbilityResetRitual.INSTANCE)
           .catalyst(PotionUtil.setPotion(new ItemStack(Items.POTION), BLStatusEffects.BLESSED_WATER_POTION))

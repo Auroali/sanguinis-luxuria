@@ -10,7 +10,7 @@
     },
     {
       "type": "sanguinisluxuria:ritual",
-      "recipe": "sanguinisluxuria:rituals/vulnerability"
+      "recipe": "sanguinisluxuria:rituals/resilience"
     }
   ]
 }

@@ -391,9 +391,6 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
     public void unlockAbility(VampireAbility ability) {
         this.getAbilties().addAbility(ability);
         this.requestSync(SYNC_ABILITIES);
-        if (this.holder instanceof ServerPlayerEntity entity) {
-            BLAdvancementCriterion.UNLOCK_ABILITY.trigger(entity, ability);
-        }
     }
 
     @Override

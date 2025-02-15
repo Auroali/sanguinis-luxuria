@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.datagen;
 
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

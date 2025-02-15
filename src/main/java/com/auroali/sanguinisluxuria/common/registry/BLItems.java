@@ -8,12 +8,10 @@ import com.auroali.sanguinisluxuria.common.items.MaskItem;
 import com.auroali.sanguinisluxuria.common.items.PendantOfPiercingItem;
 import com.auroali.sanguinisluxuria.common.items.tools.*;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 import java.util.function.BiFunction;
 

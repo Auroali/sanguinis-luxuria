@@ -10,14 +10,10 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ConditionalLootFunction;
-import net.minecraft.loot.function.SetNbtLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class BLEntityLootTableProvider extends SimpleFabricLootTableProvider {
     public BLEntityLootTableProvider(FabricDataOutput dataGenerator) {

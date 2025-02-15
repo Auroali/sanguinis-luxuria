@@ -35,7 +35,7 @@ public class BiteAbility extends VampireAbility implements EntitySyncableVampire
         target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLEEDING, 100, 0));
         this.sync(entity, target);
         if (component.getAbilties().hasAbility(BLVampireAbilities.INFECTIOUS)) {
-            BLVampireAbilities.INFECTIOUS.sync(entity, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
+            SyncableVampireAbility.syncAbility(entity, BLVampireAbilities.INFECTIOUS, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
             VampireHelper.transferStatusEffects(entity, target);
         }
         component.getAbilties().setCooldown(this, 220);

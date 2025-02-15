@@ -20,6 +20,14 @@ public record RitualParameters(World world, BlockPos pos, Inventory inventory, L
             consumer.accept(player);
     }
 
+    public boolean targetWithin(double distance) {
+        return this.target.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
+    }
+
+    public boolean initiatorWithin(double distance) {
+        return this.initiator.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
+    }
+
     public static RitualParametersBuilder builder() {
         return new RitualParametersBuilder();
     }

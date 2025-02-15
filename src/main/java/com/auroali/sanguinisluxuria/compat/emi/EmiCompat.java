@@ -3,7 +3,6 @@ package com.auroali.sanguinisluxuria.compat.emi;
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRitualRecipe;
 import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
 import dev.emi.emi.api.EmiPlugin;

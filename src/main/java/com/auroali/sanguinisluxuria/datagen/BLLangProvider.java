@@ -91,7 +91,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateAbilityKey(translationBuilder, BLVampireAbilities.BITE, "Bite");
         generateAbilityKey(translationBuilder, BLVampireAbilities.MIST, "Mist");
         generateAbilityKey(translationBuilder, BLVampireAbilities.VULNERABILITY, "Vulnerability");
-        generateAbilityKey(translationBuilder, BLVampireAbilities.SUN_RESIST, "Resilience");
+        generateAbilityKey(translationBuilder, BLVampireAbilities.RESILIENCE, "Resilience");
     }
 
     public static void rituals(TranslationBuilder builder) {

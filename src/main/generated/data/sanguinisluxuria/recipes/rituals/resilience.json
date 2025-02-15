@@ -1,0 +1,19 @@
+{
+  "type": "sanguinisluxuria:ritual",
+  "catalyst": {
+    "item": "sanguinisluxuria:twisted_blood_bottle"
+  },
+  "category": "misc",
+  "inputs": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "ritual": {
+    "type": "sanguinisluxuria:ability",
+    "ability": "sanguinisluxuria:sun_resistance"
+  }
+}

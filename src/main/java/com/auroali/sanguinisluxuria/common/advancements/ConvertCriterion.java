@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.common.advancements;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
-import com.google.common.base.Predicates;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;

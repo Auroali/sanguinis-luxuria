@@ -47,4 +47,11 @@ public interface SyncableVampireAbility<T> {
     }
 
     void handle(LivingEntity entity, T data);
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    static <T> void syncAbility(LivingEntity entity, VampireAbility ability, T data) {
+        if (ability instanceof SyncableVampireAbility<?> sync) {
+            ((SyncableVampireAbility) sync).sync(entity, data);
+        }
+    }
 }

@@ -132,7 +132,7 @@ public class BLResources {
     public static final Identifier BLOOD_DRAIN_EFFECTS = id("blood_drain_effects");
     public static final Identifier NO_MIST_COLLISION_ID = id("mist_phaseable");
     public static final Identifier MIST_ID = id("mist");
-    public static final Identifier SUN_RESISTANCE_ID = id("sun_resistance");
+    public static final Identifier RESILIENCE_ID = id("resilience");
     public static final Identifier VAMPIRE_MERCHANT_OFFERS_ID = id("vampire_merchant_enchantments");
     public static final Identifier VULNERABILITY_ID = id("vulnerability");
     public static final Identifier CONVERSION_TRANSFORMERS = id("conversion_transformers");

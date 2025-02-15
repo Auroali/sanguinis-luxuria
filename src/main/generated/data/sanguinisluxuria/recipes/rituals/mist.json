@@ -1,0 +1,25 @@
+{
+  "type": "sanguinisluxuria:ritual",
+  "catalyst": {
+    "item": "sanguinisluxuria:twisted_blood_bottle"
+  },
+  "category": "misc",
+  "inputs": [
+    {
+      "item": "minecraft:dragon_breath"
+    },
+    {
+      "item": "minecraft:cobweb"
+    },
+    {
+      "item": "minecraft:dragon_breath"
+    },
+    {
+      "item": "minecraft:cobweb"
+    }
+  ],
+  "ritual": {
+    "type": "sanguinisluxuria:ability",
+    "ability": "sanguinisluxuria:mist"
+  }
+}
