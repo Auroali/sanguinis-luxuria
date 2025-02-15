@@ -79,7 +79,7 @@ public class HungerManagerMixin implements VampireHungerManager {
     )
     public float sanguinisluxuria$makeRegenUseMoreExhaustion(float value) {
         if (VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer))
-            return 2.5f / (BLConfig.INSTANCE.vampireExhaustionMultiplier);
+            return 1.2f / (BLConfig.INSTANCE.vampireExhaustionMultiplier);
         return value;
     }
 
