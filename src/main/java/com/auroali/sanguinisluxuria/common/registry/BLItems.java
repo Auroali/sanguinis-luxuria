@@ -36,6 +36,7 @@ public class BLItems {
     public static final Item SILVER_AXE = new BlessedAxeItem(BLToolMaterials.SILVER, 6, -3.1f, 2.5f, new Item.Settings());
     public static final Item SILVER_SHOVEL = new BlessedShovelItem(BLToolMaterials.SILVER, 1.5f, -3.f, 2, new Item.Settings());
     public static final Item SILVER_HOE = new BlessedHoeItem(BLToolMaterials.SILVER, 0, -1.f, 2, new Item.Settings());
+    public static final Item VAMPIRE_FANG = new Item(new Item.Settings());
 
     // blocks
     public static final Item ALTAR = createBlock(BLBlocks.ALTAR);
@@ -82,6 +83,7 @@ public class BLItems {
         Registry.register(Registries.ITEM, BLResources.SILVER_AXE_ID, SILVER_AXE);
         Registry.register(Registries.ITEM, BLResources.SILVER_SHOVEL_ID, SILVER_SHOVEL);
         Registry.register(Registries.ITEM, BLResources.SILVER_HOE_ID, SILVER_HOE);
+        Registry.register(Registries.ITEM, BLResources.VAMPIRE_FANG_ID, VAMPIRE_FANG);
 
         // blocks
         Registry.register(Registries.ITEM, BLResources.ALTAR_ID, ALTAR);

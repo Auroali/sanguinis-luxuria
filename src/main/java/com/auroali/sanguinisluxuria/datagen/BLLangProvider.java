@@ -235,6 +235,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLItems.MASK_3, "Carved Mask");
         translationBuilder.add(BLItems.BLOOD_BAG, "Blood Bag");
         translationBuilder.add(BLItems.BLOOD_BOTTLE, "Blood Bottle");
+        translationBuilder.add(BLItems.VAMPIRE_FANG, "Vampire Fang");
         translationBuilder.add("item.sanguinisluxuria.book", "Sanguinis Luxuria");
         translationBuilder.add("sanguinisluxuria.landing", "A book of vampires.");
     }

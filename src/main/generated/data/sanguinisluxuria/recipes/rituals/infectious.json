@@ -1,12 +1,12 @@
 {
   "type": "sanguinisluxuria:ritual",
   "catalyst": {
-    "item": "minecraft:glass_bottle"
+    "item": "sanguinisluxuria:twisted_blood_bottle"
   },
   "category": "misc",
   "inputs": [
     {
-      "item": "sanguinisluxuria:twisted_blood_bottle"
+      "item": "minecraft:glass_bottle"
     },
     {
       "item": "minecraft:gunpowder"

@@ -1,18 +1,18 @@
 {
   "type": "sanguinisluxuria:ritual",
   "catalyst": {
-    "item": "minecraft:pointed_dripstone"
+    "item": "sanguinisluxuria:twisted_blood_bottle"
   },
   "category": "misc",
   "inputs": [
     {
-      "item": "sanguinisluxuria:twisted_blood_bottle"
+      "item": "sanguinisluxuria:vampire_fang"
     },
     {
       "item": "minecraft:bone"
     },
     {
-      "item": "minecraft:skeleton_skull"
+      "item": "sanguinisluxuria:vampire_fang"
     },
     {
       "item": "minecraft:bone"

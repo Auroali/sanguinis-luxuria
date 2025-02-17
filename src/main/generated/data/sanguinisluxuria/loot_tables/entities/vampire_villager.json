@@ -6,7 +6,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "sanguinisluxuria:mask_1"
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:binomial",
+                "n": 2.0,
+                "p": 0.5
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "sanguinisluxuria:vampire_fang"
         },
         {
           "type": "minecraft:item",

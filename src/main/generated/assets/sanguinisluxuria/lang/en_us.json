@@ -125,6 +125,7 @@
   "item.sanguinisluxuria.silver_shovel": "Silver Shovel",
   "item.sanguinisluxuria.silver_sword": "Silver Sword",
   "item.sanguinisluxuria.twisted_blood_bottle": "Twisted Blood Bottle",
+  "item.sanguinisluxuria.vampire_fang": "Vampire Fang",
   "item.sanguinisluxuria.vampire_villager_spawn_egg": "Vampire Villager Spawn Egg",
   "itemGroup.sanguinisluxuria.sanguinisluxuria": "Sanguinis Luxuria",
   "key.sanguinisluxuria.activate_bite": "Bite",
@@ -159,7 +160,7 @@
   "tag.item.sanguinisluxuria.vampires_get_hunger_from": "Vampire Food",
   "vampire_ability.sanguinisluxuria.bite": "Bite",
   "vampire_ability.sanguinisluxuria.mist": "Mist",
-  "vampire_ability.sanguinisluxuria.sun_resistance": "Resilience",
+  "vampire_ability.sanguinisluxuria.resilience": "Resilience",
   "vampire_ability.sanguinisluxuria.teleport": "Blink",
   "vampire_ability.sanguinisluxuria.transfer_effects": "Infectious",
   "vampire_ability.sanguinisluxuria.vulnerability": "Vulnerability"

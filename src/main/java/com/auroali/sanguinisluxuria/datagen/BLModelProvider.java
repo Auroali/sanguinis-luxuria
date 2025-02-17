@@ -281,5 +281,6 @@ public class BLModelProvider extends FabricModelProvider {
         itemModelGenerator.register(BLItems.SILVER_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(BLItems.SILVER_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(BLItems.SILVER_HOE, Models.HANDHELD);
+        itemModelGenerator.register(BLItems.VAMPIRE_FANG, Models.GENERATED);
     }
 }

@@ -10,7 +10,10 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.BinomialLootNumberProvider;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.LootNumberProviderTypes;
 import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
@@ -26,7 +29,9 @@ public class BLEntityLootTableProvider extends SimpleFabricLootTableProvider {
           .type(LootContextTypes.ENTITY)
           .pool(LootPool.builder()
             .rolls(ConstantLootNumberProvider.create(1))
-            .with(ItemEntry.builder(BLItems.MASK_1))
+            .with(ItemEntry.builder(BLItems.VAMPIRE_FANG)
+              .apply(SetCountLootFunction.builder(BinomialLootNumberProvider.create(2, 0.5f)))
+            )
             .with(ItemEntry.builder(BLItems.BLOOD_BOTTLE)
               .apply(SetBloodLootFunction.builder(BloodConstants.BLOOD_PER_BOTTLE))
             )

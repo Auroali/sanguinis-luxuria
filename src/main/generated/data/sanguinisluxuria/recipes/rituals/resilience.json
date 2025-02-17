@@ -14,6 +14,6 @@
   ],
   "ritual": {
     "type": "sanguinisluxuria:ability",
-    "ability": "sanguinisluxuria:sun_resistance"
+    "ability": "sanguinisluxuria:resilience"
   }
 }
