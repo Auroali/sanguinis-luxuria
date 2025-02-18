@@ -216,6 +216,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLBlocks.DECAYED_SIGN, "Decayed Sign");
         translationBuilder.add(BLBlocks.DECAYED_HANGING_SIGN, "Decayed Hanging Sign");
         translationBuilder.add(BLBlocks.DECAYED_STAIRS, "Decayed Stairs");
+        translationBuilder.add(BLBlocks.POTTED_GRAFTED_SAPLING, "Potted Grafted Sapling");
     }
 
     private static void items(TranslationBuilder translationBuilder) {

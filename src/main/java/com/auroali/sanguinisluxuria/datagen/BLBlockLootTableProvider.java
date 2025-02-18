@@ -68,5 +68,7 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
 
         this.addDrop(BLBlocks.DECAYED_PRESSURE_PLATE);
         this.addDrop(BLBlocks.SILVER_PRESSURE_PLATE);
+
+        this.addPottedPlantDrops(BLBlocks.POTTED_GRAFTED_SAPLING);
     }
 }

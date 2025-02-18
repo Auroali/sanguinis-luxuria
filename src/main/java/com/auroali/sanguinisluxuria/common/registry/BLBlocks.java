@@ -38,7 +38,7 @@ public class BLBlocks {
     public static final Block STRIPPED_DECAYED_LOG = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.NETHER_WOOD));
     public static final Block STRIPPED_DECAYED_WOOD = new PillarBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).burnable().instrument(Instrument.BASS).strength(2.f).sounds(BlockSoundGroup.NETHER_WOOD));
     public static final Block DECAYED_TWIGS = new DecayedTwigsBlock(AbstractBlock.Settings.create().mapColor(MapColor.OFF_WHITE).noCollision().burnable().sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY).breakInstantly());
-    public static final Block GRAFTED_SAPLING = new GraftedSaplingBlock(new GraftedSaplingBlock.GraftedSaplingGenerator(), AbstractBlock.Settings.copy(Blocks.OAK_SAPLING).mapColor(MapColor.OFF_WHITE).ticksRandomly());
+    public static final Block GRAFTED_SAPLING = new GraftedSaplingBlock(new GraftedSaplingBlock.GraftedSaplingGenerator(), AbstractBlock.Settings.copy(Blocks.OAK_SAPLING).mapColor(MapColor.OFF_WHITE).ticksRandomly().pistonBehavior(PistonBehavior.DESTROY));
     public static final Block DECAYED_PRESSURE_PLATE = new PredicatePressurePlateBlock(
       PressurePlateBlock.ActivationRule.MOBS,
       e -> e instanceof LivingEntity entity && entity.isUndead(),
@@ -167,6 +167,12 @@ public class BLBlocks {
       .sounds(BlockSoundGroup.NETHER_WOOD),
       BLBlockSetTypes.DECAYED_WOOD
     );
+    public static final Block POTTED_GRAFTED_SAPLING = new FlowerPotBlock(BLBlocks.GRAFTED_SAPLING, AbstractBlock.Settings
+      .create()
+      .breakInstantly()
+      .nonOpaque()
+      .pistonBehavior(PistonBehavior.DESTROY)
+    );
 
     public static void register() {
         Registry.register(Registries.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
@@ -177,29 +183,29 @@ public class BLBlocks {
         Registry.register(Registries.BLOCK, BLResources.SILVER_ORE_ID, SILVER_ORE);
         Registry.register(Registries.BLOCK, BLResources.DEEPSLATE_SILVER_ORE_ID, DEEPSLATE_SILVER_ORE);
         Registry.register(Registries.BLOCK, BLResources.RAW_SILVER_BLOCK_ID, RAW_SILVER_BLOCK);
-        Registry.register(Registries.BLOCK, BLResources.HUNGRY_DECAYED_LOG, HUNGRY_DECAYED_LOG);
-        Registry.register(Registries.BLOCK, BLResources.STRIPPED_HUNGRY_DECAYED_LOG, STRIPPED_HUNGRY_DECAYED_LOG);
-        Registry.register(Registries.BLOCK, BLResources.STRIPPED_DECAYED_LOG, STRIPPED_DECAYED_LOG);
-        Registry.register(Registries.BLOCK, BLResources.STRIPPED_DECAYED_WOOD, STRIPPED_DECAYED_WOOD);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_LOG, DECAYED_LOG);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_WOOD, DECAYED_WOOD);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_TWIGS, DECAYED_TWIGS);
-        Registry.register(Registries.BLOCK, BLResources.GRAFTED_SAPLING, GRAFTED_SAPLING);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_PRESSURE_PLATE, DECAYED_PRESSURE_PLATE);
-        Registry.register(Registries.BLOCK, BLResources.SILVER_PRESSURE_PLATE, SILVER_PRESSURE_PLATE);
-
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_PLANKS, DECAYED_PLANKS);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_FENCE, DECAYED_FENCE);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_FENCE_GATE, DECAYED_FENCE_GATE);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_STAIRS, DECAYED_STAIRS);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_SLAB, DECAYED_SLAB);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_SIGN, DECAYED_SIGN);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_WALL_SIGN, DECAYED_WALL_SIGN);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_BUTTON, DECAYED_BUTTON);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_HANGING_SIGN, DECAYED_HANGING_SIGN);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_WALL_HANGING_SIGN, DECAYED_WALL_HANGING_SIGN);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_DOOR, DECAYED_DOOR);
-        Registry.register(Registries.BLOCK, BLResources.DECAYED_TRAPDOOR, DECAYED_TRAPDOOR);
+        Registry.register(Registries.BLOCK, BLResources.HUNGRY_DECAYED_LOG_ID, HUNGRY_DECAYED_LOG);
+        Registry.register(Registries.BLOCK, BLResources.STRIPPED_HUNGRY_DECAYED_LOG_ID, STRIPPED_HUNGRY_DECAYED_LOG);
+        Registry.register(Registries.BLOCK, BLResources.STRIPPED_DECAYED_LOG_ID, STRIPPED_DECAYED_LOG);
+        Registry.register(Registries.BLOCK, BLResources.STRIPPED_DECAYED_WOOD_ID, STRIPPED_DECAYED_WOOD);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_LOG_ID, DECAYED_LOG);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_WOOD_ID, DECAYED_WOOD);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_TWIGS_ID, DECAYED_TWIGS);
+        Registry.register(Registries.BLOCK, BLResources.GRAFTED_SAPLING_ID, GRAFTED_SAPLING);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_PRESSURE_PLATE_ID, DECAYED_PRESSURE_PLATE);
+        Registry.register(Registries.BLOCK, BLResources.SILVER_PRESSURE_PLATE_ID, SILVER_PRESSURE_PLATE);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_PLANKS_ID, DECAYED_PLANKS);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_FENCE_ID, DECAYED_FENCE);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_FENCE_GATE_ID, DECAYED_FENCE_GATE);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_STAIRS_ID, DECAYED_STAIRS);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_SLAB_ID, DECAYED_SLAB);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_SIGN_ID, DECAYED_SIGN);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_WALL_SIGN_ID, DECAYED_WALL_SIGN);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_BUTTON_ID, DECAYED_BUTTON);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_HANGING_SIGN_ID, DECAYED_HANGING_SIGN);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_WALL_HANGING_SIGN_ID, DECAYED_WALL_HANGING_SIGN);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_DOOR_ID, DECAYED_DOOR);
+        Registry.register(Registries.BLOCK, BLResources.DECAYED_TRAPDOOR_ID, DECAYED_TRAPDOOR);
+        Registry.register(Registries.BLOCK, BLResources.POTTED_GRAFTED_SAPLING_ID, POTTED_GRAFTED_SAPLING);
 
         StrippableBlockRegistry.register(HUNGRY_DECAYED_LOG, STRIPPED_HUNGRY_DECAYED_LOG);
         StrippableBlockRegistry.register(DECAYED_LOG, STRIPPED_DECAYED_LOG);

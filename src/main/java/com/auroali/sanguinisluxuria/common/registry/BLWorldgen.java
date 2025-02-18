@@ -20,7 +20,7 @@ public class BLWorldgen {
     public static final TreeDecoratorType<?> DECAYED_TWIGS_DECORATOR = new TreeDecoratorType<>(DecayedTwigsDecorator.CODEC);
 
     public static void register() {
-        Registry.register(Registries.TREE_DECORATOR_TYPE, BLResources.DECAYED_TWIGS, DECAYED_TWIGS_DECORATOR);
+        Registry.register(Registries.TREE_DECORATOR_TYPE, BLResources.DECAYED_TWIGS_ID, DECAYED_TWIGS_DECORATOR);
 
         if (BLConfig.INSTANCE.generateSilverOre)
             BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, BLWorldgen.SILVER_ORE);

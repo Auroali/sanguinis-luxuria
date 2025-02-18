@@ -56,9 +56,6 @@ public class BLModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerItemModel(BLBlocks.DECAYED_TWIGS);
         createDecayedTwigs(BLBlocks.DECAYED_TWIGS, blockStateModelGenerator.blockStateCollector, blockStateModelGenerator.modelCollector);
 
-        blockStateModelGenerator.registerItemModel(BLBlocks.GRAFTED_SAPLING);
-        blockStateModelGenerator.registerSingleton(BLBlocks.GRAFTED_SAPLING, TextureMap.cross(BLBlocks.GRAFTED_SAPLING), Models.CROSS);
-
         registerPressurePlate(blockStateModelGenerator, BLBlocks.SILVER_PRESSURE_PLATE, BLBlocks.SILVER_BLOCK);
 
         blockStateModelGenerator.registerCubeAllModelTexturePool(BLBlocks.DECAYED_PLANKS)
@@ -71,6 +68,7 @@ public class BLModelProvider extends FabricModelProvider {
 //          .fenceGate(BLBlocks.DECAYED_FENCE_GATE)
 //          .slab(BLBlocks.DECAYED_SLAB)
 //          .sign(BLBlocks.DECAYED_SIGN);
+        blockStateModelGenerator.registerFlowerPotPlant(BLBlocks.GRAFTED_SAPLING, BLBlocks.POTTED_GRAFTED_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
     }
 
     private static void createDecayedTwigs(Block block, Consumer<BlockStateSupplier> blockStateCollector, BiConsumer<Identifier, Supplier<JsonElement>> modelCollector) {
