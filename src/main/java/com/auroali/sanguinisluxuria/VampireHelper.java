@@ -197,9 +197,9 @@ public class VampireHelper {
      *
      * @param entity the entity holding the item
      * @param amount the amount to try and fill
-     * @return if the item was successfully filled
+     * @return the amount of blood successfully filled
      */
-    public static boolean fillHeldBloodStorage(LivingEntity entity, int amount) {
+    public static int fillHeldBloodStorage(LivingEntity entity, int amount) {
         return fillHeldBloodStorage(entity, amount, null);
     }
 
@@ -209,9 +209,9 @@ public class VampireHelper {
      * @param entity   the entity holding the item
      * @param amount   the amount to try and fill
      * @param consumer the consumer to call once the item is filled
-     * @return if the item was successfully filled
+     * @return the amount of blood successfully filled
      */
-    public static boolean fillHeldBloodStorage(LivingEntity entity, int amount, Consumer<ItemStack> consumer) {
+    public static int fillHeldBloodStorage(LivingEntity entity, int amount, Consumer<ItemStack> consumer) {
         ItemStack stack = getItemInHand(entity, Hand.MAIN_HAND, s -> s.getItem() instanceof BloodStorageItem || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(entity, s));
         Hand hand = getHandForStack(entity, stack);
 
@@ -220,30 +220,32 @@ public class VampireHelper {
             resultStack = BloodStorageFillEvents.TRANSFORM_STACK.invoker().createFrom(entity, resultStack);
         }
 
-        if (!BloodStorageItem.isItemFillable(resultStack) || !BloodStorageItem.incrementItemBlood(resultStack, amount))
-            return false;
+        int amountToFill = Math.min(amount, BloodStorageItem.getItemCapacity(resultStack));
+
+        if (amountToFill == 0 || !BloodStorageItem.isItemFillable(resultStack) || !BloodStorageItem.incrementItemBlood(resultStack, amountToFill))
+            return 0;
 
         if (consumer != null)
             consumer.accept(resultStack);
 
         if (stack == resultStack)
-            return true;
+            return amountToFill;
 
         stack.decrement(1);
 
         if (stack.isEmpty()) {
             entity.setStackInHand(hand, resultStack);
-            return true;
+            return amountToFill;
         }
 
         if (entity instanceof PlayerEntity player) {
             if (!player.getInventory().insertStack(resultStack))
                 player.dropItem(resultStack, true);
-            return true;
+            return amountToFill;
         }
 
         entity.dropStack(resultStack);
-        return true;
+        return amountToFill;
     }
 
     public static void applyModifierFromBlood(LivingEntity entity, EntityAttribute attribute, EntityAttributeModifier modifier, BloodComponent blood, Predicate<BloodComponent> bloodPredicate) {

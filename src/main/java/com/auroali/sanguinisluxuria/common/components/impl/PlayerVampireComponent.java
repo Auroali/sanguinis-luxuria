@@ -335,13 +335,16 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         if (blood.getBlood() == 0)
             return;
 
-        if (VampireHelper.fillHeldBloodStorage(this.holder, 1, stack -> {
+        int amountToFill = Math.min(blood.getBlood(), BloodConstants.BLOOD_PER_BOTTLE);
+        int amountFilled = VampireHelper.fillHeldBloodStorage(this.holder, amountToFill, stack -> {
             if (EntityTrackingItem.canTrackEntity(stack) && EntityTrackingItem.getEntity(stack) == null && this.getLastDrained() != null) {
                 EntityTrackingItem.setEntity(stack, this.getLastDrained());
                 this.setLastDrained(null);
             }
-        })) {
-            blood.drainBlood();
+        });
+        
+        if (amountFilled != 0) {
+            blood.drainBlood(amountFilled);
         }
     }
 
