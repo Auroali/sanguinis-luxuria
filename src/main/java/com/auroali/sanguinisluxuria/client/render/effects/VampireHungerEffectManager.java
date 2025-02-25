@@ -5,10 +5,8 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import ladysnake.satin.api.managed.ManagedShaderEffect;
 import ladysnake.satin.api.managed.ShaderEffectManager;
 import ladysnake.satin.api.managed.uniform.Uniform1f;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
 
@@ -16,7 +14,7 @@ public class VampireHungerEffectManager {
     private static final ManagedShaderEffect SHADER = ShaderEffectManager.getInstance().manage(BLResources.VAMPIRE_HUNGER_SHADER);
     private static final Uniform1f PERCENT = SHADER.findUniform1f("Percent");
     private static final Uniform1f RENDER_TIME = SHADER.findUniform1f("RenderTime");
-    private static final int HUNGER_LIMIT = 6;
+    private static final int HUNGER_LIMIT = 8;
     private static final int MAX_TICKS = 20;
     private static final int MAX_TICKS_ENTITY = 40;
     private int ticks;
