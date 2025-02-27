@@ -1,0 +1,11 @@
+{
+  "type": "sanguinisluxuria:spawn",
+  "conditions": [
+    {
+      "type": "sanguinisluxuria:context",
+      "conversion": "deconverting"
+    }
+  ],
+  "entity": "minecraft:vex",
+  "target": "minecraft:allay"
+}

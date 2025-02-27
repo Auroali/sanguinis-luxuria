@@ -11,8 +11,10 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ConversionJsonBuilder {
     final EntityType<?> from;
@@ -112,6 +114,20 @@ public class ConversionJsonBuilder {
 
     public ConversionJsonBuilder transformer(EntityConversionTransformer transformer) {
         this.transformers.add(transformer);
+        return this;
+    }
+
+    public ConversionJsonBuilder transformers(EntityConversionTransformer... transformers) {
+        for (EntityConversionTransformer transformer : transformers) {
+            this.transformer(transformer);
+        }
+        return this;
+    }
+
+    public <T> ConversionJsonBuilder transformers(Collection<T> collection, Function<T, EntityConversionTransformer> transformerBuilder) {
+        for (T obj : collection) {
+            this.transformer(transformerBuilder.apply(obj));
+        }
         return this;
     }
 

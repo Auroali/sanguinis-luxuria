@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.conversions.*;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.ConversionContextCondition;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.OrConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.VampireConversionCondition;
+import com.auroali.sanguinisluxuria.common.conversions.transformers.ConditionalTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransformer;
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
@@ -41,6 +42,7 @@ public class BLConversions implements IdentifiableResourceReloadListener {
 
     public static final EntityConversionTransformer.Serializer<?> COPY_TRANSFORMER = new EntityConversionTransformer.Serializer<>(CopyConversionTransformer::fromJson);
     public static final EntityConversionTransformer.Serializer<?> SET_TRANSFORMER = new EntityConversionTransformer.Serializer<>(SetTransformer::fromJson);
+    public static final EntityConversionTransformer.Serializer<?> CONDITIONAL_TRANSFORMER = new EntityConversionTransformer.Serializer<>(ConditionalTransformer::fromJson);
 
     public static final EntityConversionCondition.Serializer<?> CONVERSION_CONTEXT_CONDITION = new EntityConversionCondition.Serializer<>(ConversionContextCondition::fromJson);
     public static final EntityConversionCondition.Serializer<?> OR_CONDITION = new EntityConversionCondition.Serializer<>(OrConversionCondition::fromJson);
@@ -52,6 +54,7 @@ public class BLConversions implements IdentifiableResourceReloadListener {
         Registry.register(BLRegistries.CONVERSION_TYPES, BLResources.SPAWN_TYPE, SPAWN_TYPE);
         Registry.register(BLRegistries.CONVERSION_TRANSFORMERS, BLResources.COPY_TRANSFORMER_ID, COPY_TRANSFORMER);
         Registry.register(BLRegistries.CONVERSION_TRANSFORMERS, BLResources.SET_TRANSFORMER_ID, SET_TRANSFORMER);
+        Registry.register(BLRegistries.CONVERSION_TRANSFORMERS, BLResources.CONDITIONAL_TRANSFORMER_ID, CONDITIONAL_TRANSFORMER);
         Registry.register(BLRegistries.CONVERSION_CONDITIONS, BLResources.CONVERSION_CONTEXT_CONDITION_ID, CONVERSION_CONTEXT_CONDITION);
         Registry.register(BLRegistries.CONVERSION_CONDITIONS, BLResources.OR_CONDITION_ID, OR_CONDITION);
         Registry.register(BLRegistries.CONVERSION_CONDITIONS, BLResources.VAMPIRE_CONDITION_ID, VAMPIRE_CONDITION);
@@ -88,6 +91,8 @@ public class BLConversions implements IdentifiableResourceReloadListener {
         return CompletableFuture.supplyAsync(() -> FINDER.findResources(manager), prepareExecutor)
           .thenApply(resources -> {
               List<EntityConversionData> data = new ArrayList<>();
+              EntityConversionTransformer.Serializer.initCache();
+              EntityConversionCondition.Serializer.initCache();
               resources.forEach((identifier, resource) -> {
                   try {
                       JsonObject object = GSON.fromJson(resource.getReader(), JsonObject.class);
@@ -100,6 +105,8 @@ public class BLConversions implements IdentifiableResourceReloadListener {
                       Bloodlust.LOGGER.error("Failed to read conversion {}", identifier, e);
                   }
               });
+              EntityConversionTransformer.Serializer.dropCache();
+              EntityConversionCondition.Serializer.dropCache();
               return data;
           })
           .thenCompose(synchronizer::whenPrepared)

@@ -1,0 +1,41 @@
+{
+  "type": "sanguinisluxuria:spawn",
+  "conditions": [
+    {
+      "type": "sanguinisluxuria:context",
+      "conversion": "deconverting"
+    }
+  ],
+  "entity": "minecraft:zombie_horse",
+  "target": "minecraft:horse",
+  "transformers": [
+    {
+      "type": "sanguinisluxuria:copy",
+      "src": "Owner"
+    },
+    {
+      "type": "sanguinisluxuria:copy",
+      "src": "Bred"
+    },
+    {
+      "type": "sanguinisluxuria:copy",
+      "src": "EatingHaystack"
+    },
+    {
+      "type": "sanguinisluxuria:copy",
+      "src": "SaddleItem"
+    },
+    {
+      "type": "sanguinisluxuria:copy",
+      "src": "Tame"
+    },
+    {
+      "type": "sanguinisluxuria:copy",
+      "src": "Temper"
+    },
+    {
+      "type": "sanguinisluxuria:copy",
+      "src": "attributes"
+    }
+  ]
+}

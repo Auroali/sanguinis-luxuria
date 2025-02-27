@@ -39,8 +39,21 @@ public class NbtTreeLocation {
 
     public void insertInto(NbtCompound tag, NbtElement element) {
         NbtCompound parent = this.getParent(tag);
-        if (parent != null)
-            parent.put(this.nodes[this.nodes.length - 1], element);
+        if (parent == null)
+            parent = this.createParent(tag);
+
+        parent.put(this.nodes[this.nodes.length - 1], element);
+    }
+
+    private NbtCompound createParent(NbtCompound tag) {
+        NbtCompound current = tag;
+        for (int i = 0; i < this.nodes.length - 1; i++) {
+            if (!current.contains(this.nodes[i], NbtElement.COMPOUND_TYPE))
+                current.put(this.nodes[i], new NbtCompound());
+
+            current = current.getCompound(this.nodes[i]);
+        }
+        return current;
     }
 
     @Override

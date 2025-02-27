@@ -112,20 +112,7 @@ public class EntityConversionData {
     public static List<EntityConversionCondition> parseConditions(JsonArray json) {
         List<EntityConversionCondition> conditions = new ArrayList<>(json.size());
         for (JsonElement element : json) {
-            JsonObject conditionJson = element.getAsJsonObject();
-            if (!conditionJson.has("type"))
-                throw new JsonParseException("Condition missing type field");
-
-            Identifier id = Identifier.tryParse(conditionJson.get("type").getAsString());
-            if (id == null)
-                throw new JsonParseException("Cannot parse id " + conditionJson.get("type"));
-
-            EntityConversionCondition.Serializer<?> serializer = BLRegistries.CONVERSION_CONDITIONS.get(id);
-            if (serializer == null)
-                throw new JsonParseException("Failed to read condition type " + id);
-
-            EntityConversionCondition condition = serializer.fromJson(conditionJson);
-            conditions.add(condition);
+            conditions.add(EntityConversionCondition.fromJson(element.getAsJsonObject()));
         }
         return conditions;
     }
@@ -133,20 +120,7 @@ public class EntityConversionData {
     public static List<EntityConversionTransformer> parseTransformers(JsonArray json) {
         List<EntityConversionTransformer> transformers = new ArrayList<>(json.size());
         for (JsonElement element : json) {
-            JsonObject transformerJson = element.getAsJsonObject();
-            if (!transformerJson.has("type"))
-                throw new JsonParseException("Transformer missing type field");
-
-            Identifier id = Identifier.tryParse(transformerJson.get("type").getAsString());
-            if (id == null)
-                throw new JsonParseException("Cannot parse id " + transformerJson.get("type"));
-
-            EntityConversionTransformer.Serializer<?> serializer = BLRegistries.CONVERSION_TRANSFORMERS.get(id);
-            if (serializer == null)
-                throw new JsonParseException("Failed to read transformer type " + id);
-
-            EntityConversionTransformer transformer = serializer.fromJson(transformerJson);
-            transformers.add(transformer);
+            transformers.add(EntityConversionTransformer.fromJson(element.getAsJsonObject()));
         }
         return transformers;
     }

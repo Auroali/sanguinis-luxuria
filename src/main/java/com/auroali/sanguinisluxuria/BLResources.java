@@ -157,6 +157,7 @@ public class BLResources {
     public static final Identifier SUN_RESISTANCE_ID = id("sun_resistance");
     public static final Identifier VAMPIRE_FANG_ID = id("vampire_fang");
     public static final Identifier POTTED_GRAFTED_SAPLING_ID = id("potted_grafted_sapling");
+    public static final Identifier CONDITIONAL_TRANSFORMER_ID = id("conditional");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
