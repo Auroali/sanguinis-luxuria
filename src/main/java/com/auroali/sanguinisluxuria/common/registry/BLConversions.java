@@ -10,6 +10,7 @@ import com.auroali.sanguinisluxuria.common.conversions.transformers.ConditionalT
 import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransformer;
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
+import com.google.common.collect.HashMultimap;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -28,11 +29,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 public class BLConversions implements IdentifiableResourceReloadListener {
-    private static final HashMap<EntityType<?>, List<EntityConversionData>> CONVERSIONS = new HashMap<>();
+    private static final HashMultimap<EntityType<?>, EntityConversionData> CONVERSIONS = HashMultimap.create();
     private static final ResourceFinder FINDER = new ResourceFinder("vampire_conversions", "json");
     private static final Gson GSON = new Gson();
 
@@ -64,8 +66,8 @@ public class BLConversions implements IdentifiableResourceReloadListener {
     }
 
     public static boolean convertEntity(ConversionContext context) {
-        List<EntityConversionData> conversions = CONVERSIONS.get(context.entity().getType());
-        if (conversions == null || conversions.isEmpty())
+        Set<EntityConversionData> conversions = CONVERSIONS.get(context.entity().getType());
+        if (conversions.isEmpty())
             return false;
 
         if (!VampireConversionEvents.ALLOW_CONVERSION.invoker().allowConversion(context))
@@ -113,8 +115,7 @@ public class BLConversions implements IdentifiableResourceReloadListener {
           .thenAcceptAsync(conversions -> {
               CONVERSIONS.clear();
               for (EntityConversionData data : conversions) {
-                  CONVERSIONS.computeIfAbsent(data.getEntity(), key -> new ArrayList<>())
-                    .add(data);
+                  CONVERSIONS.put(data.getEntity(), data);
               }
           }, applyExecutor);
     }
