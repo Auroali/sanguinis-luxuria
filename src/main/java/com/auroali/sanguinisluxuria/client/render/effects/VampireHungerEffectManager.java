@@ -18,19 +18,21 @@ public class VampireHungerEffectManager {
     private static final int MAX_TICKS = 20;
     private static final int MAX_TICKS_ENTITY = 40;
     private int ticks;
-    private int maxTicks;
+    private int prevTicks;
+    // used for the timing of the wobble effect
     private int renderTicks;
     private boolean render;
 
     public void tick(PlayerEntity entity) {
         HungerManager manager = entity.getHungerManager();
         this.renderTicks++;
+        this.prevTicks = this.ticks;
         if (manager.getFoodLevel() <= HUNGER_LIMIT) {
             this.render = true;
-            this.maxTicks = this.shouldFadeIn(entity) ? this.getMaxTicksEntity(manager.getFoodLevel()) : this.getMaxTicks(manager.getFoodLevel());
-            if (this.ticks < this.maxTicks)
+            int maxTicks = this.shouldFadeIn(entity) ? this.getMaxTicksEntity(manager.getFoodLevel()) : this.getMaxTicks(manager.getFoodLevel());
+            if (this.ticks < maxTicks)
                 this.ticks++;
-            if (this.ticks > this.maxTicks)
+            if (this.ticks > maxTicks)
                 this.ticks--;
             return;
         }
@@ -43,20 +45,18 @@ public class VampireHungerEffectManager {
         if (!this.render && this.ticks == 0)
             return;
 
-        float renderTick = this.ticks == this.maxTicks
-          ? this.ticks
-          : this.ticks > this.maxTicks ? this.ticks - tickDelta : this.ticks + tickDelta;
+        float renderTick = MathHelper.lerp(tickDelta, this.prevTicks, this.ticks);
         RENDER_TIME.set((this.renderTicks + tickDelta) / 20.f);
         PERCENT.set(MathHelper.clamp(1.f - renderTick / (float) MAX_TICKS_ENTITY, 0.3f, 1.f));
         SHADER.render(tickDelta);
     }
 
     public int getMaxTicks(int hunger) {
-        return MAX_TICKS - 3 * hunger;
+        return MAX_TICKS - 2 * hunger;
     }
 
     public int getMaxTicksEntity(int hunger) {
-        return MAX_TICKS_ENTITY - 3 * hunger;
+        return MAX_TICKS_ENTITY - 2 * hunger;
     }
 
     public boolean shouldFadeIn(PlayerEntity entity) {
