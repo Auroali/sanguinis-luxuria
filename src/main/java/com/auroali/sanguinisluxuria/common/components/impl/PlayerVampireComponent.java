@@ -8,6 +8,7 @@ import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.EntityTrackingDrainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.enchantments.SunProtectionEnchantment;
 import com.auroali.sanguinisluxuria.common.events.VampireSunEvents;
 import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
@@ -366,7 +367,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
 
     @Override
     public int getMaxTimeInSun() {
-        int time = (int) this.holder.getAttributeValue(BLEntityAttributes.SUN_RESISTANCE);
+        int time = (int) (this.holder.getAttributeValue(BLEntityAttributes.SUN_RESISTANCE) + SunProtectionEnchantment.calculateForEntity(this.holder));
         return VampireSunEvents.MODIFY_SUN_TIME.invoker().getMaxTimeInSun(this.holder, this, time);
     }
 
