@@ -14,7 +14,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:1}]},minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:2}]},minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:3}]},minecraft:enchanted_book{Enchantments:[{id:\"sanguinisluxuria:sun_protection\", lvl:4}]}",
-      "text": "Sun Protection is an enchantment that can be applied to any helmet. It provides an extra second per level of time without burning in the sun, while also stacking with other methods."
+      "text": "Sun Protection is an enchantment that can be applied to any helmet. It provides up to an extra 2 seconds of time in the sun."
     }
   ]
 }
