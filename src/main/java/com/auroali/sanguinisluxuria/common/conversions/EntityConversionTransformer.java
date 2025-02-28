@@ -1,12 +1,10 @@
 package com.auroali.sanguinisluxuria.common.conversions;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
 
 import java.util.HashMap;
 import java.util.function.Function;

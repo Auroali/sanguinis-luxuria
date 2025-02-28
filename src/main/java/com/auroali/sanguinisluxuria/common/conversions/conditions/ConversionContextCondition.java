@@ -8,9 +8,14 @@ import com.google.gson.JsonParseException;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.server.world.ServerWorld;
 
+/**
+ * Condition that operates off of the Conversion Context.
+ * Allows specifying either a conversion type (converting/deconverting),
+ * an entity predicate, or both
+ */
 public class ConversionContextCondition implements EntityConversionCondition {
-    final ConversionContext.Conversion conversion;
-    final EntityPredicate predicate;
+    private final ConversionContext.Conversion conversion;
+    private final EntityPredicate predicate;
 
     public ConversionContextCondition(ConversionContext.Conversion conversion, EntityPredicate predicate) {
         this.conversion = conversion;

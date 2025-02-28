@@ -15,22 +15,6 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:snowy_plains"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:snow\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
             "biome": "minecraft:eroded_badlands"
           }
         }
@@ -39,6 +23,22 @@
         "type": "sanguinisluxuria:set",
         "dst": "VillagerData.type",
         "nbt": "\"minecraft:desert\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:frozen_ocean"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:snow\""
       }
     },
     {
@@ -79,7 +79,7 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:old_growth_spruce_taiga"
+            "biome": "minecraft:windswept_forest"
           }
         }
       },
@@ -95,14 +95,14 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:frozen_river"
+            "biome": "minecraft:desert"
           }
         }
       },
       "transformer": {
         "type": "sanguinisluxuria:set",
         "dst": "VillagerData.type",
-        "nbt": "\"minecraft:snow\""
+        "nbt": "\"minecraft:desert\""
       }
     },
     {
@@ -127,23 +127,7 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:frozen_ocean"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:snow\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:taiga"
+            "biome": "minecraft:old_growth_pine_taiga"
           }
         }
       },
@@ -159,23 +143,7 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:sparse_jungle"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:jungle\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:frozen_peaks"
+            "biome": "minecraft:snowy_plains"
           }
         }
       },
@@ -191,55 +159,7 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:savanna"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:savanna\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:snowy_taiga"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:snow\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:windswept_gravelly_hills"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:taiga\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:swamp"
+            "biome": "minecraft:mangrove_swamp"
           }
         }
       },
@@ -255,14 +175,14 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:badlands"
+            "biome": "minecraft:jungle"
           }
         }
       },
       "transformer": {
         "type": "sanguinisluxuria:set",
         "dst": "VillagerData.type",
-        "nbt": "\"minecraft:desert\""
+        "nbt": "\"minecraft:jungle\""
       }
     },
     {
@@ -303,6 +223,38 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
+            "biome": "minecraft:sparse_jungle"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:jungle\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:savanna"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:savanna\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
             "biome": "minecraft:wooded_badlands"
           }
         }
@@ -319,7 +271,7 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
-            "biome": "minecraft:snowy_beach"
+            "biome": "minecraft:frozen_peaks"
           }
         }
       },
@@ -327,102 +279,6 @@
         "type": "sanguinisluxuria:set",
         "dst": "VillagerData.type",
         "nbt": "\"minecraft:snow\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:desert"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:desert\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:jungle"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:jungle\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:snowy_slopes"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:snow\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:old_growth_pine_taiga"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:taiga\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:windswept_forest"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:taiga\""
-      }
-    },
-    {
-      "type": "sanguinisluxuria:conditional",
-      "condition": {
-        "type": "sanguinisluxuria:context",
-        "predicate": {
-          "location": {
-            "biome": "minecraft:mangrove_swamp"
-          }
-        }
-      },
-      "transformer": {
-        "type": "sanguinisluxuria:set",
-        "dst": "VillagerData.type",
-        "nbt": "\"minecraft:swamp\""
       }
     },
     {
@@ -463,6 +319,86 @@
         "type": "sanguinisluxuria:context",
         "predicate": {
           "location": {
+            "biome": "minecraft:old_growth_spruce_taiga"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:taiga\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:windswept_gravelly_hills"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:taiga\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:snowy_slopes"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:snow\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:frozen_river"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:snow\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:taiga"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:taiga\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
             "biome": "minecraft:windswept_savanna"
           }
         }
@@ -471,6 +407,70 @@
         "type": "sanguinisluxuria:set",
         "dst": "VillagerData.type",
         "nbt": "\"minecraft:savanna\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:snowy_beach"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:snow\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:badlands"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:desert\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:snowy_taiga"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:snow\""
+      }
+    },
+    {
+      "type": "sanguinisluxuria:conditional",
+      "condition": {
+        "type": "sanguinisluxuria:context",
+        "predicate": {
+          "location": {
+            "biome": "minecraft:swamp"
+          }
+        }
+      },
+      "transformer": {
+        "type": "sanguinisluxuria:set",
+        "dst": "VillagerData.type",
+        "nbt": "\"minecraft:swamp\""
       }
     }
   ]

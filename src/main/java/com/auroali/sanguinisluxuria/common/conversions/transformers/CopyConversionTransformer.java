@@ -8,6 +8,10 @@ import com.google.gson.JsonParseException;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
+/**
+ * Transformer that copies an NBT field from the source entity to the target entity,
+ * with the specified NBT paths
+ */
 public class CopyConversionTransformer implements EntityConversionTransformer {
     final NbtTreeLocation srcPath;
     final NbtTreeLocation dstPath;

@@ -15,7 +15,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.village.VillagerType;
-import net.minecraft.world.biome.BiomeKeys;
 
 import java.util.function.Consumer;
 

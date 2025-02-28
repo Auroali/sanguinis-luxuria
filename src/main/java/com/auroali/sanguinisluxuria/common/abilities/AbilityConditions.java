@@ -55,9 +55,9 @@ public class AbilityConditions {
     }
 
     public static VampireAbility.VampireAbilityCondition and(VampireAbility.VampireAbilityCondition... conditions) {
+        if (conditions.length == 0)
+            return (entity, vampire, container) -> false;
         return (entity, vampire, container) -> {
-            if (conditions.length == 0)
-                return false;
             boolean result = true;
             for (VampireAbility.VampireAbilityCondition condition : conditions) {
                 result = result && condition.test(entity, vampire, container);

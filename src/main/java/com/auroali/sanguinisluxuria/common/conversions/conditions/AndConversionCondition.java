@@ -7,24 +7,24 @@ import com.auroali.sanguinisluxuria.common.registry.BLConversions;
 import java.util.List;
 
 /**
- * Composite condition that only succeeds if at least one of the conditions that make up this one succeed
+ * Composite condition that only succeeds if all conditions that make up this one succeed
  */
-public class OrConversionCondition extends CompositeConversionCondition {
-    public OrConversionCondition(List<EntityConversionCondition> conditions) {
+public class AndConversionCondition extends CompositeConversionCondition {
+    public AndConversionCondition(List<EntityConversionCondition> conditions) {
         super(conditions);
     }
 
     @Override
     public boolean test(ConversionContext context) {
         for (EntityConversionCondition condition : this.conditions) {
-            if (condition.test(context))
-                return true;
+            if (!condition.test(context))
+                return false;
         }
-        return false;
+        return true;
     }
 
     @Override
     public Serializer<?> getSerializer() {
-        return BLConversions.OR_CONDITION;
+        return BLConversions.AND_CONDITION;
     }
 }

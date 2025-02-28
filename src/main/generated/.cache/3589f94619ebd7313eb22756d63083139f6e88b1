@@ -1,4 +1,4 @@
-// 1.20.1	2025-02-26T19:59:40.806526646	Sanguinis Luxuria/Recipes
+// 1.20.1	2025-02-27T22:43:14.057786152	Sanguinis Luxuria/Recipes
 6743f234851f6553c2bd57007383515893b68cae data/sanguinisluxuria/advancements/recipes/decorations/grafted_sapling.json
 6259d5231dfcd88cd6d915e51537135efda354cf data/sanguinisluxuria/advancements/recipes/redstone/decayed_door.json
 88e1ee3b634ca842f44edee1d5f6478c9fea0012 data/sanguinisluxuria/recipes/altar.json
@@ -56,8 +56,8 @@ b14b326673f89725b1fd83bbfa5548e420937081 data/sanguinisluxuria/advancements/reci
 ab4a616cca01cb39356332a83e4c672ad80e34e6 data/sanguinisluxuria/advancements/recipes/misc/rituals/vulnerability.json
 2cb188b7d8e0a1e3aba87309878e28ae11907140 data/sanguinisluxuria/recipes/rituals/deconversion.json
 1b43ca8be0d7800ed35c97e648d4b6e7e46011f8 data/sanguinisluxuria/recipes/silver_hoe.json
-9fd5d4ce71caa95b13db317ee07fcf8669405dcf data/sanguinisluxuria/advancements/recipes/building_blocks/decayed_planks.json
 2c68adfe5b64344d3b9274fe080bc675d8a4abab data/sanguinisluxuria/advancements/recipes/tools/silver_shovel.json
+9fd5d4ce71caa95b13db317ee07fcf8669405dcf data/sanguinisluxuria/advancements/recipes/building_blocks/decayed_planks.json
 bbeeb986a6b06f8e9aad70b4a6cf640e0a2300b1 data/sanguinisluxuria/recipes/silver_pressure_plate.json
 66355b8a1fc3d74dfd828e50f89e73fcadef46b9 data/sanguinisluxuria/recipes/decayed_trapdoor.json
 e56f1a4ad0bac693f3dd9289c9da42ee647e7149 data/sanguinisluxuria/recipes/decayed_stairs.json

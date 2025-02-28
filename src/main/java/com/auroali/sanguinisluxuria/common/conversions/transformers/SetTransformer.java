@@ -3,8 +3,6 @@ package com.auroali.sanguinisluxuria.common.conversions.transformers;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.brigadier.StringReader;
@@ -12,14 +10,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.nbt.*;
 import net.minecraft.util.JsonHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
+/**
+ * Sets the NBT field at the specified path to the provided value for the new entity
+ */
 public class SetTransformer implements EntityConversionTransformer {
     final NbtTreeLocation dst;
     final NbtElement element;

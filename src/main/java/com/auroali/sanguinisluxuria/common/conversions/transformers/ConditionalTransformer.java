@@ -5,16 +5,17 @@ import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.ConversionContextCondition;
 import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 
+/**
+ * Transformer that only runs the provided transformer if some condition succeeds
+ */
 public class ConditionalTransformer implements EntityConversionTransformer {
     private final EntityConversionTransformer transformer;
     private final EntityConversionCondition condition;
