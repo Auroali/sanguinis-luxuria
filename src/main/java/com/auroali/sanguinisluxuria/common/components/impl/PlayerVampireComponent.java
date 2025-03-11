@@ -275,18 +275,18 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         buf.writeBoolean(this.isDowned);
         buf.writeBoolean(this.isMist);
         // sync blood drain info
-        buf.writeBoolean(this.shouldSync(SYNC_BLOOD_DRAIN));
-        if (this.shouldSync(SYNC_BLOOD_DRAIN)) {
+        buf.writeBoolean(this.shouldSync(SYNC_BLOOD_DRAIN, recipient));
+        if (this.shouldSync(SYNC_BLOOD_DRAIN, recipient)) {
             buf.writeVarInt(this.bloodDrainTimer);
             buf.writeBoolean(this.targetHasBleeding);
         }
         // sync time in sun
-        buf.writeBoolean(this.shouldSync(SYNC_SUN_TICKS));
-        if (this.shouldSync(SYNC_SUN_TICKS))
+        buf.writeBoolean(this.shouldSync(SYNC_SUN_TICKS, recipient));
+        if (this.shouldSync(SYNC_SUN_TICKS, recipient))
             buf.writeVarInt(this.timeInSun);
         // sync abilities
-        buf.writeBoolean(this.shouldSync(SYNC_ABILITIES));
-        if (this.shouldSync(SYNC_ABILITIES)) {
+        buf.writeBoolean(this.shouldSync(SYNC_ABILITIES, recipient));
+        if (this.shouldSync(SYNC_ABILITIES, recipient)) {
             this.abilities.writePacket(buf);
             this.abilities.setShouldSync(false);
         }
@@ -455,7 +455,10 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         this.needsSync = true;
     }
 
-    private boolean shouldSync(int flag) {
+    private boolean shouldSync(int flag, LivingEntity recipient) {
+        // don't send additional data to non-holder recipients
+        if (recipient != this.holder)
+            return false;
         return this.syncType == 0 || (this.syncType & flag) != 0;
     }
 
