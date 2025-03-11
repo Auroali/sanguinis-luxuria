@@ -66,8 +66,6 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
     private LivingEntity target;
     private int bloodDrainTimer;
     private int timeInSun;
-    private int skillPoints;
-    private int level;
     private boolean isDowned;
     private boolean isMist;
     private Entity lastDrainedEntity;
@@ -106,8 +104,6 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
     public void readFromNbt(NbtCompound tag) {
         this.isVampire = tag.getBoolean("IsVampire");
         this.timeInSun = tag.getInt("TimeInSun");
-        this.skillPoints = tag.getInt("SkillPoints");
-        this.level = tag.getInt("Level");
         this.isDowned = tag.getBoolean("IsDowned");
         this.isMist = tag.getBoolean("IsMist");
         this.abilities.load(tag);
@@ -119,8 +115,6 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("IsVampire", this.isVampire);
         tag.putInt("TimeInSun", this.timeInSun);
-        tag.putInt("SkillPoints", this.skillPoints);
-        tag.putInt("Level", this.level);
         tag.putBoolean("IsDowned", this.isDowned);
         tag.putBoolean("IsMist", this.isMist);
         this.abilities.save(tag);
@@ -293,8 +287,6 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         // sync abilities
         buf.writeBoolean(this.shouldSync(SYNC_ABILITIES));
         if (this.shouldSync(SYNC_ABILITIES)) {
-            buf.writeInt(this.level);
-            buf.writeInt(this.skillPoints);
             this.abilities.writePacket(buf);
             this.abilities.setShouldSync(false);
         }
@@ -316,8 +308,6 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
             this.timeInSun = buf.readVarInt();
 
         if (buf.readBoolean()) {
-            this.level = buf.readInt();
-            this.skillPoints = buf.readInt();
             this.abilities.readPacket(buf);
         }
     }
