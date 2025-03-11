@@ -29,7 +29,7 @@ public abstract class ItemStackMixin {
         return ImmutableMultimap
           .<EntityAttribute, EntityAttributeModifier>builder()
           .putAll(original)
-          .put(BLEntityAttributes.SUN_RESISTANCE, new EntityAttributeModifier("Sun Resistance", 1.5d, EntityAttributeModifier.Operation.MULTIPLY_BASE))
+          .put(BLEntityAttributes.SUN_RESISTANCE, new EntityAttributeModifier("Sun Resistance", 0.75d, EntityAttributeModifier.Operation.MULTIPLY_BASE))
           .build();
     }
 }

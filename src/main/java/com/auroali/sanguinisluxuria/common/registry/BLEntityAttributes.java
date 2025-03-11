@@ -14,7 +14,7 @@ public class BLEntityAttributes {
     public static final EntityAttribute BLESSED_DAMAGE = new ClampedEntityAttribute(transFromId(BLResources.BLESSED_DAMAGE_ID), 0.0d, 0.0d, 2048.d);
     public static final EntityAttribute BLINK_COOLDOWN = new ClampedEntityAttribute(transFromId(BLResources.BLINK_COOLDOWN_ID), 250.0d, 0.0d, 2048.d);
     public static final EntityAttribute BLINK_RANGE = new ClampedEntityAttribute(transFromId(BLResources.BLINK_RANGE_ID), 12, 0, 2048.d);
-    public static final EntityAttribute SUN_RESISTANCE = new ClampedEntityAttribute(transFromId(BLResources.SUN_RESISTANCE_ID), 40.d, 0.d, 1024.d).setTracked(true);
+    public static final EntityAttribute SUN_RESISTANCE = new ClampedEntityAttribute(transFromId(BLResources.SUN_RESISTANCE_ID), 2.d, 0.d, 1024.d).setTracked(true);
     public static final EntityAttribute VULNERABILITY = new ClampedEntityAttribute(transFromId(BLResources.VULNERABILITY_ID), 1.5d, 0.d, 4.d).setTracked(true);
 
     public static void register() {
