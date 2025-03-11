@@ -167,7 +167,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         buf.writeBoolean(this.isVampire);
         buf.writeBoolean(this.isDowned);
         buf.writeBoolean(this.isMist);
-        buf.writeVarInt(this.syncType);
+        buf.writeVarInt(recipient != this.holder ? 0 : this.resolveSyncFlags());
         // sync blood drain info
         if (this.shouldSync(SYNC_BLOOD_DRAIN, recipient)) {
             buf.writeVarInt(this.bloodDrainTimer);
@@ -473,6 +473,12 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
     }
 
     private boolean shouldRead(int received, int flag) {
-        return received == 0 || (received & flag) != 0;
+        return (received & flag) != 0;
+    }
+
+    private int resolveSyncFlags() {
+        if (this.syncType == 0)
+            return SYNC_BLOOD_DRAIN & SYNC_SUN_TICKS & SYNC_ABILITIES;
+        return this.syncType;
     }
 }
