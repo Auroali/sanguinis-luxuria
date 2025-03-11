@@ -161,131 +161,22 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
             BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
     }
 
-    private void removeModifiers() {
-        AttributeContainer attributes = this.holder.getAttributes();
-        EntityAttributeInstance speedInstance = attributes.getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-        if (speedInstance != null && speedInstance.hasModifier(SPEED_ATTRIBUTE))
-            speedInstance.removeModifier(SPEED_ATTRIBUTE);
-    }
-
-    private void tickBloodEffects() {
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this.holder);
-
-        if (blood.getBlood() < 6)
-            this.holder.addStatusEffect(new StatusEffectInstance(
-              StatusEffects.WEAKNESS,
-              4,
-              0,
-              true,
-              true
-            ));
-
-        VampireHelper.applyModifierFromBlood(this.holder, EntityAttributes.GENERIC_MOVEMENT_SPEED, SPEED_ATTRIBUTE, blood, b -> b.getBlood() >= 4);
-        VampireHelper.applyModifierFromBlood(this.holder, EntityAttributes.GENERIC_MAX_HEALTH, HEALTH_ATTRIBUTE, blood, b -> b.getBlood() >= 2);
-    }
-
-    private void tickSunEffects() {
-        if (!this.isAffectedByDaylight()) {
-            if (this.timeInSun > 0) {
-                this.timeInSun = 0;
-                this.requestSync(SYNC_SUN_TICKS);
-            }
-            return;
-        }
-
-        if (this.timeInSun >= 1)
-            this.holder.addStatusEffect(new StatusEffectInstance(
-              StatusEffects.WEAKNESS,
-              4,
-              0,
-              true,
-              true
-            ));
-
-
-        if (this.timeInSun < this.getMaxTimeInSun()) {
-            this.timeInSun++;
-            this.requestSync(SYNC_SUN_TICKS);
-            return;
-        }
-
-        this.holder.setOnFireFor(6);
-    }
-
-    private void tickBloodDrain() {
-        this.updateTarget();
-        if (this.target == null) {
-            this.bloodDrainTimer = 0;
-            this.requestSync(SYNC_BLOOD_DRAIN);
-            return;
-        }
-
-        this.targetHasBleeding = this.target.hasStatusEffect(BLStatusEffects.BLEEDING);
-        this.bloodDrainTimer++;
-
-        this.target.addStatusEffect(new StatusEffectInstance(
-          StatusEffects.SLOWNESS,
-          2,
-          4,
-          true,
-          false,
-          false
-        ));
-
-        if (this.bloodDrainTimer % 4 == 0)
-            this.holder.getWorld().playSound(
-              null,
-              this.holder.getX(),
-              this.holder.getY(),
-              this.holder.getZ(),
-              BLSounds.DRAIN_BLOOD,
-              SoundCategory.PLAYERS,
-              0.5f,
-              1.0f
-            );
-
-        // need to implement faster draining with bleeding
-        int timeToDrain = this.targetHasBleeding ? BloodConstants.BLOOD_DRAIN_TIME_BLEEDING : BloodConstants.BLOOD_DRAIN_TIME;
-        if (this.bloodDrainTimer >= timeToDrain) {
-            this.drainBloodFrom(this.target);
-            this.bloodDrainTimer = 0;
-        }
-
-        this.requestSync(SYNC_BLOOD_DRAIN);
-    }
-
-    // from MobEntity
-    private boolean isAffectedByDaylight() {
-        if (this.holder.getWorld().isDay() && !this.holder.getWorld().isClient) {
-            float f = this.holder.getBrightnessAtEyes();
-            BlockPos blockPos = BlockPos.ofFloored(this.holder.getX(), this.holder.getEyeY(), this.holder.getZ());
-            boolean bl = this.holder.isWet() || this.holder.inPowderSnow || this.holder.wasInPowderSnow;
-            return f > 0.5F
-              && !bl
-              && this.holder.getWorld().isSkyVisible(blockPos)
-              && VampireSunEvents.CAN_BURN.invoker().canBurn(this.holder.getWorld(), this.holder, this);
-        }
-        return false;
-    }
-
     @Override
     public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
         this.needsSync = false;
         buf.writeBoolean(this.isVampire);
         buf.writeBoolean(this.isDowned);
         buf.writeBoolean(this.isMist);
+        buf.writeVarInt(this.syncType);
         // sync blood drain info
-        buf.writeBoolean(this.shouldSync(SYNC_BLOOD_DRAIN, recipient));
         if (this.shouldSync(SYNC_BLOOD_DRAIN, recipient)) {
             buf.writeVarInt(this.bloodDrainTimer);
             buf.writeBoolean(this.targetHasBleeding);
         }
         // sync time in sun
-        buf.writeBoolean(this.shouldSync(SYNC_SUN_TICKS, recipient));
         if (this.shouldSync(SYNC_SUN_TICKS, recipient))
             buf.writeVarInt(this.timeInSun);
         // sync abilities
-        buf.writeBoolean(this.shouldSync(SYNC_ABILITIES, recipient));
         if (this.shouldSync(SYNC_ABILITIES, recipient)) {
             this.abilities.writePacket(buf);
             this.abilities.setShouldSync(false);
@@ -299,15 +190,17 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         this.isDowned = buf.readBoolean();
         this.isMist = buf.readBoolean();
 
-        if (buf.readBoolean()) {
+        int receivedFlags = buf.readVarInt();
+
+        if (this.shouldRead(receivedFlags, SYNC_BLOOD_DRAIN)) {
             this.bloodDrainTimer = buf.readVarInt();
             this.targetHasBleeding = buf.readBoolean();
         }
 
-        if (buf.readBoolean())
+        if (this.shouldRead(receivedFlags, SYNC_SUN_TICKS))
             this.timeInSun = buf.readVarInt();
 
-        if (buf.readBoolean()) {
+        if (this.shouldRead(receivedFlags, SYNC_ABILITIES)) {
             this.abilities.readPacket(buf);
         }
     }
@@ -321,34 +214,12 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         }
     }
 
-    private void tryToFillStorage() {
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this.holder);
-        if (blood.getBlood() == 0)
-            return;
-
-        int amountToFill = Math.min(blood.getBlood(), BloodConstants.BLOOD_PER_BOTTLE);
-        int amountFilled = VampireHelper.fillHeldBloodStorage(this.holder, amountToFill, stack -> {
-            if (EntityTrackingItem.canTrackEntity(stack) && EntityTrackingItem.getEntity(stack) == null && this.getLastDrained() != null) {
-                EntityTrackingItem.setEntity(stack, this.getLastDrained());
-                this.setLastDrained(null);
-            }
-        });
-
-        if (amountFilled != 0) {
-            blood.drainBlood(amountFilled);
-        }
-    }
-
     @Override
     public void stopSuckingBlood() {
         this.target = null;
         this.bloodDrainTimer = 0;
         this.requestSync(SYNC_BLOOD_DRAIN);
         BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
-    }
-
-    private boolean canDrainBlood() {
-        return !VampireHelper.isMasked(this.holder) && !this.isMist();
     }
 
     @Override
@@ -402,6 +273,67 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
     }
 
+    @Override
+    public void setLastDrained(Entity entity) {
+        this.lastDrainedEntity = entity;
+    }
+
+    @Override
+    public Entity getLastDrained() {
+        return this.lastDrainedEntity;
+    }
+
+    private void removeModifiers() {
+        AttributeContainer attributes = this.holder.getAttributes();
+        EntityAttributeInstance speedInstance = attributes.getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        if (speedInstance != null && speedInstance.hasModifier(SPEED_ATTRIBUTE))
+            speedInstance.removeModifier(SPEED_ATTRIBUTE);
+    }
+
+    private void tickBloodEffects() {
+        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this.holder);
+
+        if (blood.getBlood() < 6)
+            this.holder.addStatusEffect(new StatusEffectInstance(
+              StatusEffects.WEAKNESS,
+              4,
+              0,
+              true,
+              true
+            ));
+
+        VampireHelper.applyModifierFromBlood(this.holder, EntityAttributes.GENERIC_MOVEMENT_SPEED, SPEED_ATTRIBUTE, blood, b -> b.getBlood() >= 4);
+        VampireHelper.applyModifierFromBlood(this.holder, EntityAttributes.GENERIC_MAX_HEALTH, HEALTH_ATTRIBUTE, blood, b -> b.getBlood() >= 2);
+    }
+
+    private void tickSunEffects() {
+        if (!this.isAffectedByDaylight()) {
+            if (this.timeInSun > 0) {
+                this.timeInSun = 0;
+                this.requestSync(SYNC_SUN_TICKS);
+            }
+            return;
+        }
+
+        if (this.timeInSun >= 1)
+            this.holder.addStatusEffect(new StatusEffectInstance(
+              StatusEffects.WEAKNESS,
+              4,
+              0,
+              true,
+              true
+            ));
+
+
+        if (this.timeInSun < this.getMaxTimeInSun()) {
+            this.timeInSun++;
+            this.requestSync(SYNC_SUN_TICKS);
+            return;
+        }
+
+        this.holder.setOnFireFor(6);
+    }
+
     private void updateTarget() {
         HitResult result = this.getTarget();
         if (!this.canDrainBlood() || result.getType() != HitResult.Type.ENTITY) {
@@ -421,6 +353,48 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         }
 
         this.target = entity;
+    }
+
+    private void tickBloodDrain() {
+        this.updateTarget();
+        if (this.target == null) {
+            this.bloodDrainTimer = 0;
+            this.requestSync(SYNC_BLOOD_DRAIN);
+            return;
+        }
+
+        this.targetHasBleeding = this.target.hasStatusEffect(BLStatusEffects.BLEEDING);
+        this.bloodDrainTimer++;
+
+        this.target.addStatusEffect(new StatusEffectInstance(
+          StatusEffects.SLOWNESS,
+          2,
+          4,
+          true,
+          false,
+          false
+        ));
+
+        if (this.bloodDrainTimer % 4 == 0)
+            this.holder.getWorld().playSound(
+              null,
+              this.holder.getX(),
+              this.holder.getY(),
+              this.holder.getZ(),
+              BLSounds.DRAIN_BLOOD,
+              SoundCategory.PLAYERS,
+              0.5f,
+              1.0f
+            );
+
+        // need to implement faster draining with bleeding
+        int timeToDrain = this.targetHasBleeding ? BloodConstants.BLOOD_DRAIN_TIME_BLEEDING : BloodConstants.BLOOD_DRAIN_TIME;
+        if (this.bloodDrainTimer >= timeToDrain) {
+            this.drainBloodFrom(this.target);
+            this.bloodDrainTimer = 0;
+        }
+
+        this.requestSync(SYNC_BLOOD_DRAIN);
     }
 
     private HitResult getTarget() {
@@ -450,6 +424,42 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         return result;
     }
 
+    // from MobEntity
+    private boolean isAffectedByDaylight() {
+        if (this.holder.getWorld().isDay() && !this.holder.getWorld().isClient) {
+            float f = this.holder.getBrightnessAtEyes();
+            BlockPos blockPos = BlockPos.ofFloored(this.holder.getX(), this.holder.getEyeY(), this.holder.getZ());
+            boolean bl = this.holder.isWet() || this.holder.inPowderSnow || this.holder.wasInPowderSnow;
+            return f > 0.5F
+              && !bl
+              && this.holder.getWorld().isSkyVisible(blockPos)
+              && VampireSunEvents.CAN_BURN.invoker().canBurn(this.holder.getWorld(), this.holder, this);
+        }
+        return false;
+    }
+
+    private void tryToFillStorage() {
+        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this.holder);
+        if (blood.getBlood() == 0)
+            return;
+
+        int amountToFill = Math.min(blood.getBlood(), BloodConstants.BLOOD_PER_BOTTLE);
+        int amountFilled = VampireHelper.fillHeldBloodStorage(this.holder, amountToFill, stack -> {
+            if (EntityTrackingItem.canTrackEntity(stack) && EntityTrackingItem.getEntity(stack) == null && this.getLastDrained() != null) {
+                EntityTrackingItem.setEntity(stack, this.getLastDrained());
+                this.setLastDrained(null);
+            }
+        });
+
+        if (amountFilled != 0) {
+            blood.drainBlood(amountFilled);
+        }
+    }
+
+    private boolean canDrainBlood() {
+        return !VampireHelper.isMasked(this.holder) && !this.isMist();
+    }
+
     private void requestSync(int flags) {
         this.syncType |= flags;
         this.needsSync = true;
@@ -462,13 +472,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         return this.syncType == 0 || (this.syncType & flag) != 0;
     }
 
-    @Override
-    public void setLastDrained(Entity entity) {
-        this.lastDrainedEntity = entity;
-    }
-
-    @Override
-    public Entity getLastDrained() {
-        return this.lastDrainedEntity;
+    private boolean shouldRead(int received, int flag) {
+        return received == 0 || (received & flag) != 0;
     }
 }
