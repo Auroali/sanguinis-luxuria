@@ -65,6 +65,7 @@ public class BLItems {
     public static final Item DECAYED_SIGN = new SignItem(new Item.Settings().maxCount(16), BLBlocks.DECAYED_SIGN, BLBlocks.DECAYED_WALL_SIGN);
     public static final Item DECAYED_HANGING_SIGN = new HangingSignItem(BLBlocks.DECAYED_HANGING_SIGN, BLBlocks.DECAYED_WALL_HANGING_SIGN, new Item.Settings().maxCount(16));
     public static final Item SILVER_PRESSURE_PLATE = createBlock(BLBlocks.SILVER_PRESSURE_PLATE);
+    public static final Item SILVER_BARS = createBlock(BLBlocks.SILVER_BARS);
 
     public static void register() {
         Registry.register(Registries.ITEM, BLResources.MASK_ONE_ID, MASK_1);
@@ -113,6 +114,7 @@ public class BLItems {
         Registry.register(Registries.ITEM, BLResources.DECAYED_TRAPDOOR_ID, DECAYED_TRAPDOOR);
         Registry.register(Registries.ITEM, BLResources.DECAYED_SIGN_ID, DECAYED_SIGN);
         Registry.register(Registries.ITEM, BLResources.DECAYED_HANGING_SIGN_ID, DECAYED_HANGING_SIGN);
+        Registry.register(Registries.ITEM, BLResources.SILVER_BARS_ID, SILVER_BARS);
 
         CompostingChanceRegistry.INSTANCE.add(BLBlocks.DECAYED_TWIGS, 0.15f);
         CompostingChanceRegistry.INSTANCE.add(BLBlocks.GRAFTED_SAPLING, 0.3f);

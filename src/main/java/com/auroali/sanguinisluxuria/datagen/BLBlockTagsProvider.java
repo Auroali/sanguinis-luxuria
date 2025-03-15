@@ -23,11 +23,11 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
         this.getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
           .add(
             BLBlocks.ALTAR,
-            BLBlocks.PEDESTAL,
             BLBlocks.SILVER_ORE,
             BLBlocks.DEEPSLATE_SILVER_ORE,
             BLBlocks.SILVER_BLOCK,
-            BLBlocks.RAW_SILVER_BLOCK
+            BLBlocks.RAW_SILVER_BLOCK,
+            BLBlocks.SILVER_BARS
           );
         this.getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
           .add(
@@ -117,6 +117,10 @@ public class BLBlockTagsProvider extends FabricTagProvider<Block> {
           );
         this.getOrCreateTagBuilder(BlockTags.SAPLINGS)
           .add(BLBlocks.GRAFTED_SAPLING);
+        this.getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS)
+          .add(BLBlocks.DECAYED_STAIRS);
+        this.getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
+          .add(BLBlocks.PEDESTAL);
         this.getOrCreateTagBuilder(BLTags.Blocks.NO_MIST_COLLISION)
           .add(
             Blocks.IRON_BARS,

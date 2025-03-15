@@ -173,6 +173,9 @@ public class BLBlocks {
       .nonOpaque()
       .pistonBehavior(PistonBehavior.DESTROY)
     );
+    public static final Block SILVER_BARS = new PaneBlock(AbstractBlock.Settings.copy(Blocks.IRON_BARS)
+      .sounds(BlockSoundGroup.NETHERITE)
+    );
 
     public static void register() {
         Registry.register(Registries.BLOCK, BLResources.BLOOD_SPLATTER_ID, BLOOD_SPLATTER);
@@ -206,6 +209,7 @@ public class BLBlocks {
         Registry.register(Registries.BLOCK, BLResources.DECAYED_DOOR_ID, DECAYED_DOOR);
         Registry.register(Registries.BLOCK, BLResources.DECAYED_TRAPDOOR_ID, DECAYED_TRAPDOOR);
         Registry.register(Registries.BLOCK, BLResources.POTTED_GRAFTED_SAPLING_ID, POTTED_GRAFTED_SAPLING);
+        Registry.register(Registries.BLOCK, BLResources.SILVER_BARS_ID, SILVER_BARS);
 
         StrippableBlockRegistry.register(HUNGRY_DECAYED_LOG, STRIPPED_HUNGRY_DECAYED_LOG);
         StrippableBlockRegistry.register(DECAYED_LOG, STRIPPED_DECAYED_LOG);

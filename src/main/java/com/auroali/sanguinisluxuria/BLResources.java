@@ -159,6 +159,7 @@ public class BLResources {
     public static final Identifier POTTED_GRAFTED_SAPLING_ID = id("potted_grafted_sapling");
     public static final Identifier CONDITIONAL_TRANSFORMER_ID = id("conditional");
     public static final Identifier AND_CONDITION_ID = id("and");
+    public static final Identifier SILVER_BARS_ID = id("silver_bars");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

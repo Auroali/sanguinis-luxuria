@@ -3,15 +3,13 @@
   "category": "building",
   "key": {
     "l": {
-      "tag": "sanguinisluxuria:decayed_logs"
-    },
-    "s": {
-      "item": "minecraft:blackstone_wall"
+      "item": "sanguinisluxuria:decayed_planks"
     }
   },
   "pattern": [
-    " l ",
-    " s "
+    "l",
+    "l",
+    "l"
   ],
   "result": {
     "item": "sanguinisluxuria:pedestal"

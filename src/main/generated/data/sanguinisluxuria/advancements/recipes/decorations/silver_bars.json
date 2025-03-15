@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_decayed_plans": {
+    "has_silver": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "sanguinisluxuria:decayed_planks"
-            ]
+            "tag": "c:silver_ingots"
           }
         ]
       },
@@ -15,20 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "sanguinisluxuria:pedestal"
+        "recipe": "sanguinisluxuria:silver_bars"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_decayed_plans",
+      "has_silver",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "sanguinisluxuria:pedestal"
+      "sanguinisluxuria:silver_bars"
     ]
   },
   "sends_telemetry_event": false

@@ -5,7 +5,7 @@
     32
   ],
   "textures": {
-    "0": "sanguinisluxuria:item/mask_1",
+    "layer0": "sanguinisluxuria:item/mask_1",
     "particle": "sanguinisluxuria:item/mask_1"
   },
   "elements": [

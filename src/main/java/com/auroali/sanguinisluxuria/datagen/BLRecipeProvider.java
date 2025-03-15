@@ -89,11 +89,11 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
           .offerTo(exporter);
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BLItems.PEDESTAL)
-          .pattern(" l ")
-          .pattern(" s ")
-          .input('s', Items.BLACKSTONE_WALL)
-          .input('l', BLTags.Items.DECAYED_LOGS)
-          .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
+          .pattern("l")
+          .pattern("l")
+          .pattern("l")
+          .input('l', BLItems.DECAYED_PLANKS)
+          .criterion("has_decayed_plans", conditionsFromItem(BLItems.DECAYED_PLANKS))
           .offerTo(exporter);
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, BLItems.SILVER_SWORD)
           .pattern("I")
@@ -150,6 +150,12 @@ public class BLRecipeProvider extends FabricRecipeProvider {
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BLItems.RAW_SILVER_BLOCK)
           .input(BLItems.RAW_SILVER, 9)
           .criterion("has_silver", conditionsFromItem(BLItems.RAW_SILVER))
+          .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, BLItems.SILVER_BARS)
+          .pattern("###")
+          .pattern("###")
+          .input('#', BLTags.Items.SILVER_INGOTS)
+          .criterion("has_silver", conditionsFromTag(BLTags.Items.SILVER_INGOTS))
           .offerTo(exporter);
     }
 

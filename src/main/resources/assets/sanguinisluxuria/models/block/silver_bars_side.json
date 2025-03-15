@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/iron_bars_side",
+  "textures": {
+    "particle": "sanguinisluxuria:block/silver_bars",
+    "bars": "sanguinisluxuria:block/silver_bars",
+    "edge": "sanguinisluxuria:block/silver_bars"
+  }
+}

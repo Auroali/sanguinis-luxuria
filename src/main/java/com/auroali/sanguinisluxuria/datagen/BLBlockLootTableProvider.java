@@ -69,6 +69,19 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
         this.addDrop(BLBlocks.DECAYED_PRESSURE_PLATE);
         this.addDrop(BLBlocks.SILVER_PRESSURE_PLATE);
 
+        this.addDrop(BLBlocks.DECAYED_PLANKS);
+        this.addDrop(BLBlocks.DECAYED_STAIRS);
+        this.addDrop(BLBlocks.DECAYED_DOOR);
+        this.addDrop(BLBlocks.DECAYED_SIGN);
+        this.addDrop(BLBlocks.DECAYED_HANGING_SIGN);
+        this.addDrop(BLBlocks.DECAYED_WALL_HANGING_SIGN);
+        this.addDrop(BLBlocks.DECAYED_WALL_SIGN);
+        this.addDrop(BLBlocks.DECAYED_FENCE);
+        this.addDrop(BLBlocks.DECAYED_FENCE_GATE);
+        this.addDrop(BLBlocks.DECAYED_SLAB);
+        this.addDrop(BLBlocks.DECAYED_BUTTON);
+        this.addDrop(BLBlocks.SILVER_BARS);
+
         this.addPottedPlantDrops(BLBlocks.POTTED_GRAFTED_SAPLING);
     }
 }
