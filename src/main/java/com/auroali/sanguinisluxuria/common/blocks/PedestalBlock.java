@@ -7,22 +7,32 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public class PedestalBlock extends BlockWithEntity {
+public class PedestalBlock extends BlockWithEntity implements Waterloggable {
     private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 9, 12);
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public PedestalBlock(Settings settings) {
         super(settings);
+        this.setDefaultState(this.getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
 
     @Override
@@ -37,24 +47,13 @@ public class PedestalBlock extends BlockWithEntity {
             return super.onUse(state, world, pos, player, hand, hit);
 
         ItemStack stack = player.getStackInHand(hand);
-        if (stack.isEmpty() && !entity.getItem().isEmpty()) {
-            if (!world.isClient) {
-                player.setStackInHand(hand, entity.getItem());
-                entity.setItem(ItemStack.EMPTY);
-            }
-            return ActionResult.success(world.isClient);
-        }
+        ItemStack storedStack = entity.getItem();
 
-        if (!stack.isEmpty() && entity.getItem().isEmpty()) {
-            if (!world.isClient) {
-                player.setStackInHand(hand, ItemStack.EMPTY);
-                entity.setItem(stack);
-            }
-            return ActionResult.success(world.isClient);
-        }
-
-        return super.onUse(state, world, pos, player, hand, hit);
+        player.setStackInHand(hand, storedStack);
+        entity.setItem(stack);
+        return ActionResult.success(world.isClient);
     }
+
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
@@ -86,5 +85,32 @@ public class PedestalBlock extends BlockWithEntity {
         if (world.isClient)
             return checkType(type, BLBlockEntities.PEDESTAL, PedestalBlockEntity::tickClient);
         return super.getTicker(world, state, type);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockState state = super.getPlacementState(ctx);
+        if (state != null)
+            return state.with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).isOf(Fluids.WATER));
+        return null;
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        if (state.get(WATERLOGGED))
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(WATERLOGGED);
     }
 }

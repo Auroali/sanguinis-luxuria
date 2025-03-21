@@ -479,6 +479,6 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
     private int resolveSyncFlags() {
         if (this.syncType == 0)
             return SYNC_BLOOD_DRAIN & SYNC_SUN_TICKS & SYNC_ABILITIES;
-        return this.syncType;
+        return this.syncType & (this.abilities.needsSync() ? SYNC_ABILITIES : 0);
     }
 }

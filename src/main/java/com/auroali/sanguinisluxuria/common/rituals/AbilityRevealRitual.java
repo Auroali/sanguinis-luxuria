@@ -24,7 +24,7 @@ public class AbilityRevealRitual extends ItemRitual {
     public static final Codec<AbilityRevealRitual> CODEC = Codec.unit(() -> INSTANCE);
 
     protected AbilityRevealRitual() {
-        super(OUTPUT);
+        super(OUTPUT, false);
     }
 
     @Override

@@ -172,20 +172,20 @@ public class BLRecipeProvider extends FabricRecipeProvider {
     }
 
     public void generateRitualRecipes(Consumer<RecipeJsonProvider> exporter) {
-        RitualRecipeJsonBuilder.create(RecipeCategory.BREWING, new ItemRitual(BLItems.TWISTED_BLOOD))
+        RitualRecipeJsonBuilder.create(RecipeCategory.BREWING, ItemRitual.create(BLItems.TWISTED_BLOOD))
           .catalyst(BLItems.BLOOD_BOTTLE)
           .input(Items.NETHER_WART)
           .input(Items.FERMENTED_SPIDER_EYE)
           .input(BLItems.BLOOD_PETAL)
           .criterion("is_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .offerTo(exporter);
-        RitualRecipeJsonBuilder.create(RecipeCategory.TOOLS, new ItemRitual(BLItems.BLOOD_BAG))
+        RitualRecipeJsonBuilder.create(RecipeCategory.TOOLS, ItemRitual.create(BLItems.BLOOD_BAG))
           .catalyst(Items.GLASS_BOTTLE)
           .input(Items.GLASS)
           .input(Items.GLASS)
           .criterion("has_twisted_blood", conditionsFromItem(BLItems.TWISTED_BLOOD))
           .offerTo(exporter);
-        RitualRecipeJsonBuilder.create(RecipeCategory.TOOLS, new ItemRitual(BLItems.PENDANT_OF_PIERCING))
+        RitualRecipeJsonBuilder.create(RecipeCategory.TOOLS, ItemRitual.create(BLItems.PENDANT_OF_PIERCING))
           .catalyst(Items.ARROW)
           .input(BLItems.TWISTED_BLOOD)
           .input(Items.GOLD_INGOT)

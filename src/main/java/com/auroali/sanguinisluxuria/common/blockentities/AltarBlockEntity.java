@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -159,7 +160,19 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
                   PedestalBlockEntity entity = ((PedestalBlockEntity) world.getBlockEntity(position));
                   if (entity == null)
                       return;
-                  entity.getItem().decrement(1);
+                  // spawn the item remainder, if there are any
+                  ItemStack stack = entity.getItem().split(1);
+                  ItemStack remainder = stack.getRecipeRemainder();
+                  if (!remainder.isEmpty()) {
+                      ItemEntity itemEntity = new ItemEntity(
+                        world,
+                        position.getX() + 0.5,
+                        position.getY() + 1.0,
+                        position.getZ() + 0.5,
+                        remainder
+                      );
+                      world.spawnEntity(itemEntity);
+                  }
                   entity.inv.markDirty();
               });
 

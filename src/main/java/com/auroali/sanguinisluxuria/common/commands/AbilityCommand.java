@@ -12,15 +12,18 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class AbilityCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal("ability")
           .then(CommandManager.argument("ability", VampireAbilityArgument.argument())
+            .executes(ctx -> grantAbility(ctx, Collections.singleton(ctx.getSource().getPlayer())))
             .then(CommandManager.argument("targets", EntityArgumentType.players())
               .executes(ctx -> grantAbility(ctx, EntityArgumentType.getPlayers(ctx, "targets")))
             )
           ).then(CommandManager.literal("reset")
+            .executes(ctx -> resetAbilities(ctx, Collections.singleton(ctx.getSource().getPlayer())))
             .then(CommandManager.argument("targets", EntityArgumentType.players())
               .executes(ctx -> resetAbilities(ctx, EntityArgumentType.getPlayers(ctx, "targets")))
             )
@@ -44,7 +47,7 @@ public class AbilityCommand {
             VampireAbility ability = VampireAbilityArgument.getAbility(ctx, "ability");
             VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
             if (ability.testConditions(player, component, component.getAbilties())) {
-                component.getAbilties().addAbility(ability);
+                component.unlockAbility(ability);
                 BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
             }
         }

@@ -11,22 +11,17 @@ import net.minecraft.util.math.Vec3d;
 public class ItemRitual implements Ritual, ItemCreatingRitual {
     public static final Codec<ItemRitual> CODEC = RecordCodecBuilder.create(instance -> instance
       .group(
-        ItemStack.CODEC.fieldOf("result").forGetter(ItemRitual::getOutput)
+        ItemStack.CODEC.fieldOf("result").forGetter(ItemRitual::getOutput),
+        Codec.BOOL.optionalFieldOf("preserveCatalystNbt", false).forGetter(ritual -> ritual.preserveCatalystNbt)
       ).apply(instance, ItemRitual::new)
     );
 
     protected final ItemStack output;
+    protected final boolean preserveCatalystNbt;
 
-    public ItemRitual(ItemStack stack) {
+    protected ItemRitual(ItemStack stack, boolean preserveCatalystNbt) {
         this.output = stack;
-    }
-
-    public ItemRitual(ItemConvertible item, int output) {
-        this(new ItemStack(item, output));
-    }
-
-    public ItemRitual(ItemConvertible item) {
-        this(item, 1);
+        this.preserveCatalystNbt = preserveCatalystNbt;
     }
 
     @Override
@@ -35,7 +30,13 @@ public class ItemRitual implements Ritual, ItemCreatingRitual {
     }
 
     protected ItemStack createResultItem(RitualParameters parameters) {
-        return this.getOutput();
+        ItemStack outItem = this.getOutput();
+        ItemStack catalyst = parameters.inventory().getStack(0);
+        if (this.preserveCatalystNbt && catalyst.hasNbt()) {
+            outItem.getOrCreateNbt().copyFrom(catalyst.getNbt());
+        }
+
+        return outItem;
     }
 
     protected void spawnResultItem(RitualParameters parameters, ItemStack stack) {
@@ -57,5 +58,21 @@ public class ItemRitual implements Ritual, ItemCreatingRitual {
     @Override
     public ItemStack getOutput() {
         return this.output.copy();
+    }
+
+    public static ItemRitual create(ItemConvertible item, boolean preserveCatalystNbt) {
+        return create(new ItemStack(item), preserveCatalystNbt);
+    }
+
+    public static ItemRitual create(ItemConvertible item) {
+        return create(item, false);
+    }
+
+    public static ItemRitual create(ItemStack stack) {
+        return create(stack, false);
+    }
+
+    public static ItemRitual create(ItemStack stack, boolean preserveCatalystNbt) {
+        return new ItemRitual(stack, preserveCatalystNbt);
     }
 }

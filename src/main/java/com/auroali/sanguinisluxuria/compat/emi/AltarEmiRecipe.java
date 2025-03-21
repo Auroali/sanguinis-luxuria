@@ -19,6 +19,7 @@ import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -51,6 +52,20 @@ public class AltarEmiRecipe implements EmiRecipe {
           ? EmiStack.of(itemRitual.getOutput())
           : EmiStack.EMPTY;
         this.ritualTranslationKey = Util.createTranslationKey("altar_ritual", BLRegistries.RITUAL_TYPES.getId(this.ritual.getType()));
+        this.calculateRemainders();
+    }
+
+    private void calculateRemainders() {
+        for (EmiIngredient ingredient : this.inputs) {
+            for (EmiStack stack : ingredient.getEmiStacks()) {
+                if (stack.isEmpty())
+                    continue;
+
+                ItemStack recipeRemainder = stack.getItemStack().getRecipeRemainder();
+                if (!recipeRemainder.isEmpty())
+                    stack.setRemainder(EmiStack.of(recipeRemainder));
+            }
+        }
     }
 
     @Override
