@@ -94,9 +94,9 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
             world.playSound(null, pos, BLSounds.ALTAR_BEATS, SoundCategory.BLOCKS);
             serverWorld.spawnParticles(
               new DelayedParticleEffect(BLParticles.ALTAR_BEAT, 2),
-              altar.getPos().getX(),
+              altar.getPos().getX() + 0.5,
               altar.getPos().getY() + 0.05,
-              altar.getPos().getZ(),
+              altar.getPos().getZ() + 0.5,
               0,
               0,
               0,
