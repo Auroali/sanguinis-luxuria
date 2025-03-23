@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "became_vampire": {
+      "conditions": {
+        "conversion": "converting"
+      },
+      "trigger": "sanguinisluxuria:converted"
+    },
+    "has_magma_cream": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:magma_cream"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "sanguinisluxuria:rituals/lesser_fire_resistance"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_magma_cream",
+      "became_vampire",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "sanguinisluxuria:rituals/lesser_fire_resistance"
+    ]
+  },
+  "sends_telemetry_event": true
+}

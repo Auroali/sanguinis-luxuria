@@ -5,13 +5,10 @@ import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.network.HungryDecayedLogVFXS2C;
 import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLParticles;
 import com.auroali.sanguinisluxuria.common.registry.BLSounds;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -126,9 +123,19 @@ public class HungryDecayedLogBlock extends PillarBlock {
                 if (component.drainBlood()) {
                     world.playSound(null, pos, BLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     world.setBlockState(pos, state.with(BLOOD_LEVEL, newLevel));
-                    HungryDecayedLogVFXS2C packet = new HungryDecayedLogVFXS2C(entity.getId());
-                    PlayerLookup.tracking(world, pos)
-                      .forEach(p -> ServerPlayNetworking.send(p, packet));
+                    Box entityBox = entity.getBoundingBox();
+
+                    world.spawnParticles(
+                      BLParticles.DRIPPING_BLOOD,
+                      entityBox.getCenter().getX(),
+                      entityBox.getCenter().getY(),
+                      entityBox.getCenter().getZ(),
+                      20,
+                      entityBox.getXLength() / 2.d,
+                      entityBox.getYLength() / 2.d,
+                      entityBox.getZLength() / 2.d,
+                      0.d
+                    );
                     return;
                 }
             }

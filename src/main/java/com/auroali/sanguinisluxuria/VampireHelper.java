@@ -30,6 +30,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -104,18 +106,21 @@ public class VampireHelper {
      * @param to   the entity to transfer effects to
      */
     public static void transferStatusEffects(LivingEntity from, LivingEntity to) {
+        List<StatusEffectInstance> transferredEffects = new ArrayList<>(from.getStatusEffects().size());
         for (StatusEffectInstance instance : from.getStatusEffects()) {
             if (instance.isAmbient() || Registries.STATUS_EFFECT.getEntry(instance.getEffectType()).isIn(BLTags.StatusEffects.NON_TRANSFERABLE))
                 continue;
 
             to.addStatusEffect(instance);
+            transferredEffects.add(instance);
         }
 
         if (from instanceof ServerPlayerEntity player) {
-            BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, player.getStatusEffects().size());
+            BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, transferredEffects);
         }
 
-        from.clearStatusEffects();
+        // prevent removing effects that weren't transferred
+        transferredEffects.forEach(effect -> from.removeStatusEffect(effect.getEffectType()));
     }
 
     /**

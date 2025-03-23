@@ -81,6 +81,7 @@ public class CauldronInfusingEmiRecipe implements EmiRecipe {
             stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45));
             blockRenderer.renderBlockAsEntity(state, stack, drawContext.getVertexConsumers(), LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV);
             stack.pop();
+            drawContext.draw();
         }).tooltip(List.of(TooltipComponent.of(Text.translatable("gui.sanguinisluxuria.blood_bottle_tooltip", this.recipe.getCauldronLevel()).asOrderedText())));
         widgets.addTexture(EmiTexture.EMPTY_ARROW, 24, 36);
         widgets.addSlot(this.outputs.get(0), 47, 36).drawBack(false).recipeContext(this);

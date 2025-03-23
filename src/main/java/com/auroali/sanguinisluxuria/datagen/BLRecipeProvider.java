@@ -14,14 +14,19 @@ import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronRecipeJsonBuil
 import com.auroali.sanguinisluxuria.datagen.builders.RitualRecipeJsonBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.data.server.recipe.*;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.tag.ItemTags;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class BLRecipeProvider extends FabricRecipeProvider {
@@ -83,7 +88,7 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .pattern("lbl")
           .pattern("sss")
           .input('b', BLItems.BLOOD_BOTTLE)
-          .input('s', Items.BLACKSTONE)
+          .input('s', BLItems.DECAYED_PLANKS)
           .input('l', BLTags.Items.DECAYED_LOGS)
           .criterion("is_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE))
@@ -168,6 +173,9 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .offerTo(exporter);
         BloodCauldronFillRecipeJsonBuilder.create(RecipeCategory.BREWING, BLItems.BLOOD_BAG)
           .criterion("has_item", conditionsFromItem(BLItems.BLOOD_BAG))
+          .offerTo(exporter);
+        BloodCauldronRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.ofItems(Items.GUNPOWDER), Items.REDSTONE)
+          .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
           .offerTo(exporter);
     }
 
@@ -257,5 +265,34 @@ public class BLRecipeProvider extends FabricRecipeProvider {
           .input(BLItems.SILVER_INGOT)
           .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .offerTo(exporter, BLResources.id("rituals/deconversion"));
+
+        // effects
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.FIRE_RESISTANCE).duration(1900).build())
+          .catalyst(PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+          .input(Items.MAGMA_CREAM)
+          .input(Items.MAGMA_CREAM)
+          .criterion(hasItem(Items.MAGMA_CREAM), conditionsFromItem(Items.MAGMA_CREAM))
+          .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
+          .offerTo(exporter, BLResources.id("rituals/lesser_fire_resistance"));
+
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.FIRE_RESISTANCE).target(StatusEffectRitual.Target.ALL).duration(3600).build())
+          .catalyst(BLItems.TWISTED_BLOOD)
+          .input(Items.MAGMA_CREAM)
+          .input(Items.NETHER_WART)
+          .input(Items.MAGMA_CREAM)
+          .input(Items.NETHER_WART)
+          .criterion(hasItem(BLItems.TWISTED_BLOOD), conditionsFromItem(BLItems.TWISTED_BLOOD))
+          .criterion(hasItem(Items.MAGMA_CREAM), conditionsFromItem(Items.MAGMA_CREAM))
+          .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
+          .offerTo(exporter, BLResources.id("rituals/greater_fire_resistance"));
+
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.RESISTANCE).duration(1200).build())
+          .catalyst(PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
+          .input(Items.IRON_CHESTPLATE)
+          .input(ConventionalItemTags.IRON_INGOTS)
+          .input(ConventionalItemTags.IRON_INGOTS)
+          .criterion(hasItem(Items.IRON_CHESTPLATE), conditionsFromItem(Items.IRON_CHESTPLATE))
+          .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
+          .offerTo(exporter, BLResources.id("rituals/lesser_resistance"));
     }
 }

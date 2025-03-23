@@ -1,0 +1,29 @@
+{
+  "type": "sanguinisluxuria:ritual",
+  "catalyst": {
+    "item": "sanguinisluxuria:twisted_blood_bottle"
+  },
+  "category": "misc",
+  "inputs": [
+    {
+      "item": "minecraft:magma_cream"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "minecraft:magma_cream"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    }
+  ],
+  "ritual": {
+    "type": "sanguinisluxuria:effect",
+    "amplifier": 3600,
+    "effect": [
+      "minecraft:fire_resistance"
+    ],
+    "target": "all"
+  }
+}

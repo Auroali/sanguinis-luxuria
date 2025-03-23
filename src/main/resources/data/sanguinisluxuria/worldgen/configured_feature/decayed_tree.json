@@ -4,7 +4,7 @@
     "decorators": [
       {
         "type": "sanguinisluxuria:decayed_twigs",
-        "chance": 0.34
+        "chance": 0.23
       }
     ],
     "dirt_provider": {

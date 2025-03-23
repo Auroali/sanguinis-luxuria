@@ -123,6 +123,7 @@ public class AltarEmiRecipe implements EmiRecipe {
             stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45));
             blockRenderer.renderBlockAsEntity(state, stack, drawContext.getVertexConsumers(), LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV);
             stack.pop();
+            drawContext.draw();
         });
         widgets.addFillingArrow(84, 40, 15000)
           .tooltip(List.of(TooltipComponent.of(Text.translatable("emi.cooking.time", 15).asOrderedText())));

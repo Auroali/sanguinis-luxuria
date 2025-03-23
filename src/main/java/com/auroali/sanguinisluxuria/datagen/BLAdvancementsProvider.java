@@ -16,6 +16,7 @@ import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
@@ -210,6 +211,51 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
           .criterion("transfer_effects", TransferEffectsCriterion.Conditions.create(4))
           .build(BLResources.id("transfer_more_effects"));
 
+        Advancement transferTheMostEffects = Advancement.Builder
+          .create()
+          .display(
+            Items.BUCKET,
+            Text.translatable(title("transfer_all_effects")),
+            Text.translatable(desc("transfer_all_effects")),
+            null,
+            AdvancementFrame.CHALLENGE,
+            true,
+            true,
+            false
+          )
+          .parent(transferMoreEffects)
+          .criterion("all_effects", TransferEffectsCriterion.Conditions.create(
+            EntityEffectPredicate.create()
+              .withEffect(StatusEffects.SPEED)
+              .withEffect(StatusEffects.SLOWNESS)
+              .withEffect(StatusEffects.STRENGTH)
+              .withEffect(StatusEffects.JUMP_BOOST)
+              .withEffect(StatusEffects.REGENERATION)
+              .withEffect(StatusEffects.FIRE_RESISTANCE)
+              .withEffect(StatusEffects.WATER_BREATHING)
+              .withEffect(StatusEffects.INVISIBILITY)
+              .withEffect(StatusEffects.NIGHT_VISION)
+              .withEffect(StatusEffects.WEAKNESS)
+              .withEffect(StatusEffects.POISON)
+              .withEffect(StatusEffects.WITHER)
+              .withEffect(StatusEffects.HASTE)
+              .withEffect(StatusEffects.MINING_FATIGUE)
+              .withEffect(StatusEffects.LEVITATION)
+              .withEffect(StatusEffects.GLOWING)
+              .withEffect(StatusEffects.ABSORPTION)
+              .withEffect(StatusEffects.HUNGER)
+              .withEffect(StatusEffects.NAUSEA)
+              .withEffect(StatusEffects.RESISTANCE)
+              .withEffect(StatusEffects.SLOW_FALLING)
+              .withEffect(StatusEffects.CONDUIT_POWER)
+              .withEffect(StatusEffects.DOLPHINS_GRACE)
+              .withEffect(StatusEffects.BLINDNESS)
+              .withEffect(StatusEffects.BAD_OMEN)
+              .withEffect(StatusEffects.HERO_OF_THE_VILLAGE)
+              .withEffect(StatusEffects.DARKNESS)
+          ))
+          .build(BLResources.id("transfer_all_effects"));
+
         Advancement resetAbilities = Advancement.Builder
           .create()
           .display(
@@ -234,6 +280,7 @@ public class BLAdvancementsProvider extends FabricAdvancementProvider {
         consumer.accept(infectOther);
         consumer.accept(transferEffects);
         consumer.accept(transferMoreEffects);
+        consumer.accept(transferTheMostEffects);
         consumer.accept(unbecomeVampire);
         consumer.accept(craftHungrySapling);
         consumer.accept(growDecayedTree);

@@ -177,7 +177,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
         if (this.shouldSync(SYNC_SUN_TICKS, recipient))
             buf.writeVarInt(this.timeInSun);
         // sync abilities
-        if (this.shouldSync(SYNC_ABILITIES, recipient)) {
+        if (this.getAbilties().needsSync() || this.shouldSync(SYNC_ABILITIES, recipient)) {
             this.abilities.writePacket(buf);
             this.abilities.setShouldSync(false);
         }
@@ -478,7 +478,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
 
     private int resolveSyncFlags() {
         if (this.syncType == 0)
-            return SYNC_BLOOD_DRAIN & SYNC_SUN_TICKS & SYNC_ABILITIES;
-        return this.syncType & (this.abilities.needsSync() ? SYNC_ABILITIES : 0);
+            return SYNC_BLOOD_DRAIN | SYNC_SUN_TICKS | SYNC_ABILITIES;
+        return this.syncType | (this.abilities.needsSync() ? SYNC_ABILITIES : 0);
     }
 }

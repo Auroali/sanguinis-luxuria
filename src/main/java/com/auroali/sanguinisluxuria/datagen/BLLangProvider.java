@@ -104,6 +104,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         generateRitualKey(builder, BLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
         builder.add("altar_ritual.sanguinisluxuria.convert.converting", "Converting");
         builder.add("altar_ritual.sanguinisluxuria.convert.deconverting", "Deconverting");
+        builder.add("altar_ritual.sanguinisluxuria.effects", "Applies the effects to %s for %.1ds");
     }
 
     private static void generateRitualKey(TranslationBuilder builder, RitualType<?> type, String entry) {
@@ -265,7 +266,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLAdvancementsProvider.desc("blood_sickness"), "Get blood sickness from drinking blood");
 
         translationBuilder.add(BLAdvancementsProvider.title("unlock_ability"), "Abilities");
-        translationBuilder.add(BLAdvancementsProvider.desc("unlock_ability"), "Allocate a skill point to an ability");
+        translationBuilder.add(BLAdvancementsProvider.desc("unlock_ability"), "Perform the Ritual of Transformation");
 
         translationBuilder.add(BLAdvancementsProvider.title("reset_abilities"), "Clean Slate");
         translationBuilder.add(BLAdvancementsProvider.desc("reset_abilities"), "Convert unlocked abilities back into skill points using blessed blood");
@@ -290,6 +291,9 @@ public class BLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(BLAdvancementsProvider.title("obtain_hungry_decayed_log"), "Blood Collector");
         translationBuilder.add(BLAdvancementsProvider.desc("obtain_hungry_decayed_log"), "Obtain a Hungry Decayed Log");
+
+        translationBuilder.add(BLAdvancementsProvider.title("transfer_all_effects"), "How did we get there?");
+        translationBuilder.add(BLAdvancementsProvider.desc("transfer_all_effects"), "Transfer every effect at once via Infectious");
     }
 
     public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {

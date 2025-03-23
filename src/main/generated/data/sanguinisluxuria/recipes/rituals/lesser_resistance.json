@@ -1,0 +1,33 @@
+{
+  "type": "sanguinisluxuria:ritual",
+  "catalyst": {
+    "fabric:type": "fabric:nbt",
+    "base": {
+      "item": "minecraft:potion"
+    },
+    "nbt": {
+      "Potion": "minecraft:water"
+    },
+    "strict": false
+  },
+  "category": "misc",
+  "inputs": [
+    {
+      "item": "minecraft:iron_chestplate"
+    },
+    {
+      "tag": "c:iron_ingots"
+    },
+    {
+      "tag": "c:iron_ingots"
+    }
+  ],
+  "ritual": {
+    "type": "sanguinisluxuria:effect",
+    "amplifier": 1200,
+    "duration": 1200,
+    "effect": [
+      "minecraft:resistance"
+    ]
+  }
+}

@@ -4,11 +4,8 @@ import com.auroali.sanguinisluxuria.BloodlustClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.network.AltarRecipeStartS2C;
-import com.auroali.sanguinisluxuria.common.network.SpawnAltarBeatParticleS2C;
-import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
+import com.auroali.sanguinisluxuria.common.particles.DelayedParticleEffect;
+import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.common.rituals.ActiveRitualData;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
@@ -29,6 +26,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -92,11 +90,19 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
             return;
         }
 
-        if (world.getTime() % 20 == 0) {
+        if (world.getTime() % 20 == 0 && altar.getWorld() instanceof ServerWorld serverWorld) {
             world.playSound(null, pos, BLSounds.ALTAR_BEATS, SoundCategory.BLOCKS);
-            SpawnAltarBeatParticleS2C packet = new SpawnAltarBeatParticleS2C(altar.pos);
-            PlayerLookup.tracking(altar)
-              .forEach(player -> ServerPlayNetworking.send(player, packet));
+            serverWorld.spawnParticles(
+              new DelayedParticleEffect(BLParticles.ALTAR_BEAT, 2),
+              altar.getPos().getX(),
+              altar.getPos().getY() + 0.05,
+              altar.getPos().getZ(),
+              0,
+              0,
+              0,
+              0,
+              0
+            );
         }
 
         if (altar.ticksProcessing < 300) {

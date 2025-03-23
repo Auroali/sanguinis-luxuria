@@ -1,0 +1,11 @@
+{
+  "type": "sanguinisluxuria:blood_cauldron",
+  "category": "misc",
+  "input": {
+    "item": "minecraft:gunpowder"
+  },
+  "level": 1,
+  "result": {
+    "item": "minecraft:redstone"
+  }
+}

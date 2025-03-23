@@ -163,26 +163,6 @@ public class BloodlustClient implements ClientModInitializer {
                 }
             }
         });
-
-        ClientPlayNetworking.registerGlobalReceiver(SpawnAltarBeatParticleS2C.ID, (packet, player, responseSender) -> {
-            BlockPos pos = packet.pos();
-            player.getWorld().addParticle(new DelayedParticleEffect(BLParticles.ALTAR_BEAT, 2), pos.getX() + 0.5, pos.getY() + 0.05f, pos.getZ() + 0.5, 0, 0, 0);
-        });
-
-        ClientPlayNetworking.registerGlobalReceiver(HungryDecayedLogVFXS2C.ID, (packet, player, responseSender) -> {
-            Entity entity = player.getWorld().getEntityById(packet.entityId());
-            if (entity == null || entity.getBoundingBox() == null)
-                return;
-
-            Box boundingBox = entity.getBoundingBox();
-            Random random = player.getRandom();
-            for (int i = 0; i < 15; i++) {
-                double x = boundingBox.minX + boundingBox.getXLength() * random.nextDouble();
-                double y = boundingBox.minY + boundingBox.getYLength() * random.nextDouble();
-                double z = boundingBox.minZ + boundingBox.getZLength() * random.nextDouble();
-                player.getWorld().addParticle(DustParticleEffect.DEFAULT, x, y, z, 0, 0, 0);
-            }
-        });
     }
 
     public void registerBindings() {
