@@ -1,23 +1,27 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffectType;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionType;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.mojang.serialization.Lifecycle;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.SimpleRegistry;
 
 public class BLRegistries {
     public static final Registry<VampireAbility> VAMPIRE_ABILITIES = FabricRegistryBuilder.from(
-      new SimpleRegistry<>(
-        BLRegistryKeys.VAMPIRE_ABILITIES,
-        Lifecycle.stable(),
-        true
+        new SimpleRegistry<>(
+          BLRegistryKeys.VAMPIRE_ABILITIES,
+          Lifecycle.stable(),
+          true
+        )
       )
-    ).buildAndRegister();
+      .attribute(RegistryAttribute.SYNCED)
+      .buildAndRegister();
     public static final Registry<RitualType<?>> RITUAL_TYPES = FabricRegistryBuilder
       .createSimple(BLRegistryKeys.RITUAL_TYPES)
       .buildAndRegister();
@@ -29,6 +33,9 @@ public class BLRegistries {
       .buildAndRegister();
     public static final Registry<EntityConversionCondition.Serializer<?>> CONVERSION_CONDITIONS = FabricRegistryBuilder
       .createSimple(BLRegistryKeys.CONVERSION_CONDITIONS)
+      .buildAndRegister();
+    public static final Registry<BloodDrainEffectType<?>> BLOOD_DRAIN_EFFECTS = FabricRegistryBuilder
+      .createSimple(BLRegistryKeys.BLOOD_DRAIN_EFFECTS)
       .buildAndRegister();
 
     // called to cause the class the load

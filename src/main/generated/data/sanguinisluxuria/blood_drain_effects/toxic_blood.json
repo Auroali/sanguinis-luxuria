@@ -1,10 +1,12 @@
 {
   "effects": [
     {
+      "type": "sanguinisluxuria:status_effect",
       "chance": 0.9,
       "effect": "minecraft:hunger"
     },
     {
+      "type": "sanguinisluxuria:status_effect",
       "chance": 0.73,
       "duration": 100,
       "effect": "minecraft:weakness"

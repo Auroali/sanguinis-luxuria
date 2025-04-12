@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffectType;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionType;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
@@ -15,4 +16,5 @@ public class BLRegistryKeys {
     public static final RegistryKey<Registry<EntityConversionTransformer.Serializer<?>>> CONVERSION_TRANSFORMERS = RegistryKey.ofRegistry(BLResources.CONVERSION_TRANSFORMERS);
     public static final RegistryKey<Registry<EntityConversionCondition.Serializer<?>>> CONVERSION_CONDITIONS = RegistryKey.ofRegistry(BLResources.CONVERSION_CONDITIONS);
     public static final RegistryKey<Registry<ConversionType>> CONVERSION_TYPES = RegistryKey.ofRegistry(BLResources.CONVERSION_TYPES);
+    public static final RegistryKey<Registry<BloodDrainEffectType<?>>> BLOOD_DRAIN_EFFECTS = RegistryKey.ofRegistry(BLResources.BLOOD_DRAIN_EFFECTS);
 }

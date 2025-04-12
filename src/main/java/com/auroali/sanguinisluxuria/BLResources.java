@@ -160,6 +160,7 @@ public class BLResources {
     public static final Identifier CONDITIONAL_TRANSFORMER_ID = id("conditional");
     public static final Identifier AND_CONDITION_ID = id("and");
     public static final Identifier SILVER_BARS_ID = id("silver_bars");
+    public static final Identifier STATUS_EFFECT_ID = id("status_effect");
     // used to try to run events after other mods
     public static final Identifier AFTER_EVENT_PHASE = id("after");
 

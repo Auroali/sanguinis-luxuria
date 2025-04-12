@@ -17,8 +17,8 @@ public class BLBloodEffectProvider extends SanguinisLuxuriaBloodEffectsProvider 
     @Override
     protected void generateEffects(Consumer<BloodDrainEffectBuilder.Provider> exporter) {
         BloodDrainEffectBuilder.create(BLTags.Entities.TOXIC_BLOOD)
-          .effect(StatusEffects.HUNGER, 0.9f)
-          .effect(StatusEffects.WEAKNESS, 100, 0.73f)
+          .statusEffect(StatusEffects.HUNGER, 0.9f)
+          .statusEffect(StatusEffects.WEAKNESS, 100, 0.73f)
           .offerTo(exporter, BLResources.id("toxic_blood"));
     }
 }
