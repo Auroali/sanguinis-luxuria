@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.abilities;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.components.EntityTrackingDrainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLParticles;
@@ -53,6 +54,9 @@ public class BiteAbility extends VampireAbility {
         if (component.getAbilties().hasAbility(BLVampireAbilities.INFECTIOUS)) {
             SyncableVampireAbility.syncAbility(entity, BLVampireAbilities.INFECTIOUS, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
             VampireHelper.transferStatusEffects(entity, target);
+        }
+        if (component instanceof EntityTrackingDrainer drainer && target.isAlive()) {
+            drainer.setLastDrained(target);
         }
         component.getAbilties().setCooldown(this, 220);
     }
