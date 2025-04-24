@@ -13,7 +13,6 @@
     "AbstractBlockStateMixin",
     "BlockEntityTypeMixin",
     "CakeBlockMixin",
-    "DatapackContentsMixin",
     "HungerManagerMixin",
     "IronGolemEntityMixin",
     "ItemStackMixin",

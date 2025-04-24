@@ -9,9 +9,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
+import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
+import net.fabricmc.fabric.api.tag.client.v1.ClientTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -33,8 +36,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadListener {
-    private static final HashMap<EntityType<?>, List<BloodDrainEffectInstance>> EFFECT_MAP = new HashMap<>();
-    private static final List<LoadedEffects> UNRESOLVED_EFFECTS = new ArrayList<>();
+    private static HashMap<EntityType<?>, List<BloodDrainEffectInstance>> EFFECT_MAP = new HashMap<>();
+    private static List<LoadedEffects> UNRESOLVED_EFFECTS = new ArrayList<>();
     private static final Gson GSON = new Gson();
     private static final ResourceFinder FINDER = new ResourceFinder("blood_drain_effects", "json");
 
@@ -57,10 +60,14 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
     public static void init() {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
           .registerReloadListener(new BLEntityBloodDrainEffects());
+
+        CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
+            if (!client) resolveReferences();
+        });
     }
 
-    public static void resolveReferences() {
-        EFFECT_MAP.clear();
+    private static void resolveReferences() {
+        EFFECT_MAP = new HashMap<>();
         for (LoadedEffects entry : UNRESOLVED_EFFECTS) {
             List<EntityType<?>> targets = entry.resolveTargets();
             List<BloodDrainEffectInstance> effects = entry.effects();
@@ -68,7 +75,7 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
               mergeEffects(effects, EFFECT_MAP.computeIfAbsent(entity, key -> new ArrayList<>()))
             );
         }
-        UNRESOLVED_EFFECTS.clear();
+        UNRESOLVED_EFFECTS = null;
     }
 
     @Override
@@ -102,7 +109,11 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
           // wait for apply stage
           .thenCompose(synchronizer::whenPrepared)
           // tags aren't loaded yet, so store the loaded effects into a cache
-          .thenAcceptAsync(UNRESOLVED_EFFECTS::addAll, applyExecutor);
+          .thenAcceptAsync(BLEntityBloodDrainEffects::storeUnresolvedEffects, applyExecutor);
+    }
+
+    private static void storeUnresolvedEffects(List<LoadedEffects> effects) {
+        UNRESOLVED_EFFECTS = effects;
     }
 
     private static void mergeEffects(List<BloodDrainEffectInstance> from, List<BloodDrainEffectInstance> to) {
