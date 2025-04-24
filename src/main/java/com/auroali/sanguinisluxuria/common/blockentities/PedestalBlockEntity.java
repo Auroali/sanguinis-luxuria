@@ -18,14 +18,16 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlockEntity extends BlockEntity implements Clearable, ItemDisplayingBlockEntity {
-    final SimpleInventory inv = new SimpleInventory(ItemStack.EMPTY);
-    int spinTicks = 0;
+    private static final Vec3d ITEM_OFFSET = new Vec3d(0.5d, 0.6d, 0.5d);
+    private final SimpleInventory inv = new SimpleInventory(ItemStack.EMPTY);
+    private int spinTicks = 0;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.PEDESTAL, pos, state);
         this.inv.addListener(inv -> {
             if (this.world != null && !this.world.isClient)
                 this.world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+            this.markDirty();
         });
     }
 
@@ -92,6 +94,6 @@ public class PedestalBlockEntity extends BlockEntity implements Clearable, ItemD
 
     @Override
     public Vec3d getDisplayOffset() {
-        return new Vec3d(0.5, 0.8, 0.5);
+        return ITEM_OFFSET;
     }
 }

@@ -39,14 +39,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisplayingBlockEntity {
+    private static final Vec3d ITEM_OFFSET = new Vec3d(0.5, 0.45, 0.5);
     public static final int INVENTORY_SIZE = 1;
     public static final int PEDESTAL_SEARCH_RADIUS = 8;
-    DefaultedList<ItemStack> inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
-    int ticks;
-    LivingEntity cachedInitiator;
-    LivingEntity cachedTarget;
-    ActiveRitualData ritualData;
-    int ticksProcessing;
+
+    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
+    protected int ticks;
+    private LivingEntity cachedInitiator;
+    private LivingEntity cachedTarget;
+    private ActiveRitualData ritualData;
+    private int ticksProcessing;
 
     public AltarBlockEntity(BlockPos pos, BlockState state) {
         super(BLBlockEntities.ALTAR, pos, state);
@@ -71,10 +73,8 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
 
     public static void tickClient(World world, BlockPos pos, BlockState state, AltarBlockEntity altar) {
         altar.ticks++;
-        if (!state.get(AltarBlock.ACTIVE))
-            return;
-
-        BloodlustClient.isAltarActive = true;
+        if (state.get(AltarBlock.ACTIVE))
+            BloodlustClient.isAltarActive = true;
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, AltarBlockEntity altar) {
@@ -179,7 +179,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
                       );
                       world.spawnEntity(itemEntity);
                   }
-                  entity.inv.markDirty();
+                  entity.getInventory().markDirty();
               });
 
               world.setBlockState(pos, state.with(AltarBlock.ACTIVE, true));
@@ -300,6 +300,6 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
 
     @Override
     public Vec3d getDisplayOffset() {
-        return new Vec3d(0.5, 0.45, 0.5);
+        return ITEM_OFFSET;
     }
 }

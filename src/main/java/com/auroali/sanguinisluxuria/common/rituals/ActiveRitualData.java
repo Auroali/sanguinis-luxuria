@@ -17,13 +17,12 @@ public record ActiveRitualData(Ritual ritual, UUID initiator, UUID target) {
     public static void writeNbt(NbtCompound compound, ActiveRitualData data) {
         if (data == null)
             return;
-        NbtCompound ritualTag = new NbtCompound();
         Ritual.RITUAL_CODEC.encodeStart(NbtOps.INSTANCE, data.ritual())
           .resultOrPartial(Bloodlust.LOGGER::error)
           .ifPresent(element -> {
-              ritualTag.putUuid("initiator", data.initiator);
-              ritualTag.putUuid("target", data.target);
-              ritualTag.put("ritual", element);
+              compound.putUuid("initiator", data.initiator);
+              compound.putUuid("target", data.target);
+              compound.put("ritual", element);
           });
     }
 
