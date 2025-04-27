@@ -4,19 +4,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.MatchToolLootCondition;
-import net.minecraft.loot.entry.AlternativeEntry;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.loot.function.ExplosionDecayLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.predicate.NumberRange;
-import net.minecraft.predicate.item.EnchantmentPredicate;
-import net.minecraft.predicate.item.ItemPredicate;
 
 public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
     public BLBlockLootTableProvider(FabricDataOutput dataGenerator) {
@@ -28,7 +16,7 @@ public class BLBlockLootTableProvider extends FabricBlockLootTableProvider {
         this.addDrop(BLBlocks.ALTAR);
         this.addDrop(BLBlocks.PEDESTAL);
         this.addDrop(BLBlocks.BLOOD_CAULDRON, Items.CAULDRON);
-        
+
         this.oreDrops(BLBlocks.SILVER_ORE, BLItems.RAW_SILVER);
         this.oreDrops(BLBlocks.DEEPSLATE_SILVER_ORE, BLItems.RAW_SILVER);
 

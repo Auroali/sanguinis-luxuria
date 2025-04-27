@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -112,11 +113,23 @@ public class ConversionJsonBuilder {
         return new Identifier(namespace, path);
     }
 
+    /**
+     * Adds a transformer
+     *
+     * @param transformer the transformer to add
+     * @return this instance, for chaining
+     */
     public ConversionJsonBuilder transformer(EntityConversionTransformer transformer) {
         this.transformers.add(transformer);
         return this;
     }
 
+    /**
+     * Adds many transformers at once
+     *
+     * @param transformers the transformers to add
+     * @return this instance, for chaining
+     */
     public ConversionJsonBuilder transformers(EntityConversionTransformer... transformers) {
         for (EntityConversionTransformer transformer : transformers) {
             this.transformer(transformer);
@@ -124,10 +137,36 @@ public class ConversionJsonBuilder {
         return this;
     }
 
+    /**
+     * Builds many transformers from a single collection, sorting the transformers order with a key
+     *
+     * @param collection         the collection to build from
+     * @param transformerBuilder the function to convert each element in the collection to a transformer
+     * @param <T>                the type of the elements in the collection
+     * @return this instance, for chaining
+     */
     public <T> ConversionJsonBuilder transformers(Collection<T> collection, Function<T, EntityConversionTransformer> transformerBuilder) {
         for (T obj : collection) {
             this.transformer(transformerBuilder.apply(obj));
         }
+        return this;
+    }
+
+    /**
+     * Builds many transformers from a single collection, sorting the transformers order with a key
+     *
+     * @param collection         the collection to build from
+     * @param transformerBuilder the function to convert each element in the collection to a transformer
+     * @param keyExtractor       the key extractor function
+     * @param <T>                the type of the elements in the collection
+     * @param <U>                the type of the sorting key
+     * @return this instance, for chaining
+     */
+    public <T, U extends Comparable<U>> ConversionJsonBuilder sortedTransformers(Collection<T> collection, Function<T, EntityConversionTransformer> transformerBuilder, Function<T, U> keyExtractor) {
+        collection.stream().sorted(Comparator.comparing(keyExtractor))
+          .forEach(obj ->
+            this.transformer(transformerBuilder.apply(obj))
+          );
         return this;
     }
 

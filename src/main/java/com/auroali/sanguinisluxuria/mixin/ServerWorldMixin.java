@@ -38,7 +38,7 @@ public abstract class ServerWorldMixin extends World {
     @Shadow
     public abstract void setTimeOfDay(long timeOfDay);
 
-
+    // make sleeping during day as a vampire set it to night
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/MutableWorldProperties;getTimeOfDay()J", ordinal = 0))
     public void sanguinisluxuria$modifySleep(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("time") LocalLongRef time) {
         if (this.isDay() && this.players.stream().filter(VampireHelper::isVampire).anyMatch(PlayerEntity::isSleeping)) {
@@ -47,6 +47,7 @@ public abstract class ServerWorldMixin extends World {
         }
     }
 
+    // make sleeping during day as a vampire set it to night
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
     public void sanguinisluxuria$setTimeOfDay(BooleanSupplier shouldKeepTicking, CallbackInfo ci, @Share("hasSetTime") LocalBooleanRef hasSetTime, @Share("time") LocalLongRef time) {
         if (hasSetTime.get()) {

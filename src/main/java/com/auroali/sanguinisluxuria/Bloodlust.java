@@ -22,6 +22,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
@@ -111,9 +112,14 @@ public class Bloodlust implements ModInitializer {
 
         ServerLivingEntityEvents.AFTER_DEATH.register(Bloodlust::dropBlood);
 
-        EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, pos, vanilla) -> {
+        // run the sleep event after other mods, to allow things like
+        // spectrum's somnolence effect to allow sleep during night
+        EntitySleepEvents.ALLOW_SLEEP_TIME.addPhaseOrdering(Event.DEFAULT_PHASE, BLResources.AFTER_EVENT_PHASE);
+        EntitySleepEvents.ALLOW_SLEEP_TIME.register(BLResources.AFTER_EVENT_PHASE, (player, pos, vanilla) -> {
             if (VampireHelper.isVampire(player)) {
-                return vanilla ? ActionResult.FAIL : ActionResult.SUCCESS;
+                // invert the vanilla check (can only sleep at night)
+                // also makes sure to allow sleeping while thundering
+                return !player.getWorld().isThundering() && vanilla ? ActionResult.FAIL : ActionResult.SUCCESS;
             }
             return ActionResult.PASS;
         });

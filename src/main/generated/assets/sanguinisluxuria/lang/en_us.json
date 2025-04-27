@@ -37,6 +37,7 @@
   "altar_ritual.sanguinisluxuria.reset_abilities": "Ritual of Cleansing",
   "argument.sanguinisluxuria.id.invalid": "'%s' is not a valid id!",
   "block.sanguinisluxuria.altar": "Altar",
+  "block.sanguinisluxuria.bed.no_sleep": "You can sleep only at day or during thunderstorms",
   "block.sanguinisluxuria.blood_cauldron": "Blood Cauldron",
   "block.sanguinisluxuria.blood_splatter": "Blood",
   "block.sanguinisluxuria.decayed_button": "Decayed Button",

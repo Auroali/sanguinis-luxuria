@@ -9,7 +9,6 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
-import net.minecraft.text.Texts;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;

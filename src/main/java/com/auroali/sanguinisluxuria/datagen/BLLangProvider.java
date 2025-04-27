@@ -218,6 +218,7 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(BLBlocks.DECAYED_HANGING_SIGN, "Decayed Hanging Sign");
         translationBuilder.add(BLBlocks.DECAYED_STAIRS, "Decayed Stairs");
         translationBuilder.add(BLBlocks.POTTED_GRAFTED_SAPLING, "Potted Grafted Sapling");
+        translationBuilder.add("block.sanguinisluxuria.bed.no_sleep", "You can sleep only at day or during thunderstorms");
     }
 
     private static void items(TranslationBuilder translationBuilder) {

@@ -55,12 +55,13 @@ public class BLConversionProvider extends SanguinisLuxuriaConversionsProvider {
 
         ConversionJsonBuilder.create(EntityType.WITCH, EntityType.VILLAGER)
           .type(BLConversions.SPAWN_TYPE)
-          .transformers(
+          .sortedTransformers(
             VillagerType.BIOME_TO_TYPE.entrySet(),
             entry -> ConditionalTransformer.biome(
               SetTransformer.create("VillagerData.type", Registries.VILLAGER_TYPE.getId(entry.getValue()).toString()),
               entry.getKey()
-            )
+            ),
+            e -> e.getKey().getValue()
           )
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter, Bloodlust.MODID);

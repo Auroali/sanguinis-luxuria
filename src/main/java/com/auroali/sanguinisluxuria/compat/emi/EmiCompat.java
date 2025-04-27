@@ -21,7 +21,7 @@ public class EmiCompat implements EmiPlugin {
     public static final EmiStack ALTAR = EmiStack.of(BLItems.ALTAR);
     public static final EmiStack PEDESTAL = EmiStack.of(BLItems.PEDESTAL);
     public static final EmiStack CAULDRON = EmiStack.of(Items.CAULDRON);
-    public static final EmiRecipeCategory ALTAR_RECIPE_CATEGORY = new EmiRecipeCategory(BLResources.ALTAR_ID, ALTAR, new EmiTexture(TEXTURES, 0, 16, 16, 16), EmiRecipeSorting.compareOutputThenInput());
+    public static final EmiRecipeCategory ALTAR_RECIPE_CATEGORY = new EmiRecipeCategory(BLResources.ALTAR_RECIPE_ID, ALTAR, new EmiTexture(TEXTURES, 0, 16, 16, 16), EmiRecipeSorting.compareOutputThenInput());
     public static final EmiRecipeCategory BLOOD_CAULDRON_RECIPE_CATEGORY = new EmiRecipeCategory(BLResources.BLOOD_CAULDRON_ID, CAULDRON, new EmiTexture(BLResources.id("textures/gui/emi.png"), 0, 0, 16, 16), EmiRecipeSorting.compareOutputThenInput());
 
     @Override

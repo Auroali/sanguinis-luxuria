@@ -9,8 +9,9 @@ import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRender
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.network.*;
-import com.auroali.sanguinisluxuria.common.particles.DelayedParticleEffect;
+import com.auroali.sanguinisluxuria.common.network.ActivateAbilityC2S;
+import com.auroali.sanguinisluxuria.common.network.AltarRecipeStartS2C;
+import com.auroali.sanguinisluxuria.common.network.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
@@ -30,16 +31,13 @@ import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
