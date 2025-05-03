@@ -165,7 +165,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         // handle differences between adding blood to the player and regular entities
         // (such as saturation)
         if (vampireEntity instanceof PlayerEntity player)
-            ((VampireHungerManager) player.getHungerManager()).sanguinisluxuria$addHunger(1, 0.125f);
+            ((VampireHungerManager) player.getHungerManager()).sanguinisluxuria$addHunger(1, 0.25f);
         else BLEntityComponents.BLOOD_COMPONENT.get(vampireEntity).addBlood(1);
 
         BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(vampireEntity, target, 1);
