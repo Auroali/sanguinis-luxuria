@@ -4,6 +4,8 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
@@ -42,5 +44,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Inject(method = "<init>", at = @At("RETURN"))
     public void sanguinisluxuria$setVampireHungerManagerPlayer(World world, BlockPos pos, float yaw, GameProfile gameProfile, CallbackInfo ci) {
         ((VampireHungerManager) this.hungerManager).sanguinisluxuria$setPlayer((PlayerEntity) (Object) this);
+    }
+
+    @ModifyExpressionValue(method = "canConsume", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;isNotFull()Z"))
+    public boolean sanguinisluxuria$allowEatingWhileHungerFull(boolean original) {
+        // vampire's don't receive hunger or saturation from eating food so
+        // letting them eat while hunger is full should be fine
+        return original || VampireHelper.isVampire(this);
     }
 }
