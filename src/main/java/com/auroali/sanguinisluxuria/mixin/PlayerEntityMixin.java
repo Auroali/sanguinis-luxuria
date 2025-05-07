@@ -48,7 +48,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @ModifyExpressionValue(method = "canConsume", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;isNotFull()Z"))
     public boolean sanguinisluxuria$allowEatingWhileHungerFull(boolean original) {
-        // vampire's don't receive hunger or saturation from eating food so
+        // vampires don't receive hunger or saturation from eating food so
         // letting them eat while hunger is full should be fine
         return original || VampireHelper.isVampire(this);
     }
