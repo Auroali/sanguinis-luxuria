@@ -77,7 +77,7 @@ public class BloodDrainEffectBuilder {
         public void serialize(JsonObject object) {
             this.target
               .ifLeft(key -> object.addProperty("entity", "#" + key.id().toString()))
-              .ifRight(entity -> object.addProperty("entity", Registries.ENTITY_TYPE.getId(entity).toString()));
+              .ifRight(entity -> object.addProperty("entity", EntityType.getId(entity).toString()));
 
             BloodDrainEffectInstance.CODEC.listOf()
               .encodeStart(JsonOps.INSTANCE, this.effects)

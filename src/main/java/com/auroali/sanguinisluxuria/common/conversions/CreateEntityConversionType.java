@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class CreateEntityConversionType implements ConversionType {
     @Override
     public Entity apply(World world, Entity original, EntityType<?> targetType, NbtCompound tag) {
-        tag.putString("id", Registries.ENTITY_TYPE.getId(targetType).toString());
+        tag.putString("id", EntityType.getId(targetType).toString());
 
         return EntityType.getEntityFromNbt(tag, world)
           .map(newEntity -> {

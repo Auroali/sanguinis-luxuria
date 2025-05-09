@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -94,8 +95,20 @@ public class EntityConversionData {
         if (type == null)
             throw new JsonParseException("Could not get type " + object.get("type"));
 
-        EntityType<?> entity = Registries.ENTITY_TYPE.get(Identifier.tryParse(object.get("entity").getAsString()));
-        EntityType<?> target = Registries.ENTITY_TYPE.get(Identifier.tryParse(object.get("target").getAsString()));
+        Identifier entityId = Identifier.tryParse(object.get("entity").getAsString());
+        if (entityId == null)
+            throw new JsonParseException("Failed to parse id " + object.get("entity"));
+        if (!Registries.ENTITY_TYPE.containsId(entityId))
+            throw new JsonParseException(entityId + " is not a valid entity");
+
+        Identifier targetId = Identifier.tryParse(object.get("target").getAsString());
+        if (targetId == null)
+            throw new JsonParseException("Failed to parse id " + object.get("target"));
+        if (!Registries.ENTITY_TYPE.containsId(targetId))
+            throw new JsonParseException(targetId + " is not a valid entity");
+
+        EntityType<?> entity = Registries.ENTITY_TYPE.get(entityId);
+        EntityType<?> target = Registries.ENTITY_TYPE.get(targetId);
         // if the transformers field is present, parse it
         List<EntityConversionTransformer> transformers = object.has("transformers") && object.get("transformers").isJsonArray()
           ? parseTransformers(object.getAsJsonArray("transformers"))
