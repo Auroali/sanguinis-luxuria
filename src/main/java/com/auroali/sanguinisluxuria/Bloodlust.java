@@ -82,7 +82,7 @@ public class Bloodlust implements ModInitializer {
         BLWorldgen.register();
         BLParticles.register();
         BLRitualTypes.register();
-        BLEntityBloodDrainEffects.init();
+        BLBloodDrainEffects.init();
         BLConversions.register();
         BLLootFunctions.register();
 

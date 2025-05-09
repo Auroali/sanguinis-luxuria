@@ -18,10 +18,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.profiler.Profiler;
 
 import java.io.IOException;
@@ -29,14 +31,17 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadListener {
+public class BLBloodDrainEffects extends JsonDataLoader implements IdentifiableResourceReloadListener {
     private static Map<EntityType<?>, List<BloodDrainEffectInstance>> EFFECT_MAP = Collections.emptyMap();
     private static final TagResolvingMapBuilder<EntityType<?>, List<BloodDrainEffectInstance>> RESOLVER = new TagResolvingMapBuilder<>(
       HashMap::new,
       BLEntityBloodDrainEffects::mergeEffects
     );
     private static final Gson GSON = new Gson();
-    private static final ResourceFinder FINDER = new ResourceFinder("blood_drain_effects", "json");
+
+    public BLBloodDrainEffects() {
+        super(GSON, "blood_drain_effects");
+    }
 
     public static List<BloodDrainEffect> getFor(EntityType<?> type) {
         return EFFECT_MAP.get(type);
@@ -54,14 +59,15 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
 
     public static void init() {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
-          .registerReloadListener(new BLEntityBloodDrainEffects());
-        CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
-            if (!client) EFFECT_MAP = RESOLVER.resolveAndBuild(Registries.ENTITY_TYPE);
-        });
+          .registerReloadListener(new BLBloodDrainEffects());
 
         Registry.register(BLRegistries.BLOOD_DRAIN_EFFECTS, BLResources.STATUS_EFFECT_ID, BloodDrainStatusEffect.CODEC);
         Registry.register(BLRegistries.BLOOD_DRAIN_EFFECTS, BLResources.TELEPORT_ID, BloodDrainTeleportEffect.CODEC);
         Registry.register(BLRegistries.BLOOD_DRAIN_EFFECTS, BLResources.IGNITE_EFFECT_ID, BloodDrainIgniteEffect.CODEC);
+        CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
+            if (!client)
+                resolveReferences();
+        });
     }
 
     @Override
@@ -70,36 +76,16 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
     }
 
     @Override
-    public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
-        // this is terrible
-        // awful code
-        // but at least it works!
-        // someday i will make it not terrible
-        return CompletableFuture.supplyAsync(() -> FINDER.findResources(manager), prepareExecutor)
-          // read effect files
-          .thenApply(resources -> {
-              List<LoadedEffects> entries = new ArrayList<>();
-              resources.forEach((id, resource) -> {
-                  try {
-                      JsonObject object = GSON.fromJson(resource.getReader(), JsonObject.class);
-                      if (object.has(ResourceConditions.CONDITIONS_KEY) && !ResourceConditions.objectMatchesConditions(object))
-                          return;
+    protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler) {
+        prepared.forEach((id, element) -> {
+            try {
+                JsonObject object = JsonHelper.asObject(element, "top object");
+                UNRESOLVED_EFFECTS.add(LoadedEffects.fromJson(object));
+            } catch (IllegalArgumentException | JsonParseException e) {
+                Bloodlust.LOGGER.error("Error loading blood drain effect {}", id, e);
+            }
+        });
 
-                      entries.add(LoadedEffects.fromJson(object));
-                  } catch (JsonParseException | IllegalArgumentException | IOException e) {
-                      Bloodlust.LOGGER.error("Could not parse entity blood drain effect {}", id, e);
-                  }
-              });
-              return entries;
-          })
-          // wait for apply stage
-          .thenCompose(synchronizer::whenPrepared)
-          // tags aren't loaded yet, so store the loaded effects into a cache
-          .thenAcceptAsync(effects -> effects.forEach(
-            effect -> effect.targets()
-              .ifLeft(tag -> RESOLVER.add(tag, effect.effects()))
-              .ifRight(type -> RESOLVER.add(type, effect.effects()))
-          ), applyExecutor);
     }
 
     private static List<BloodDrainEffectInstance> mergeEffects(List<BloodDrainEffectInstance> from, List<BloodDrainEffectInstance> to) {
@@ -108,16 +94,16 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
         for (BloodDrainEffectInstance effect : from) {
             boolean hasMerged = false;
             for (int i = 0; i < to.size(); i++) {
-                BloodDrainEffectInstance existing = to.get(i);
-                if (effect.effect() != existing.effect())
+                BloodDrainEffect existing = to.get(i);
+                if (!effect.canMerge(existing))
                     continue;
-                result.set(i, BloodDrainEffectInstance.merge(effect, existing));
+                to.set(i, effect.merge(existing));
                 hasMerged = true;
             }
             if (hasMerged)
                 continue;
 
-            result.add(effect);
+            to.add(effect);
         }
 
         return result;
@@ -166,6 +152,9 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
                 Identifier id = Identifier.tryParse(targetString);
                 if (id == null)
                     throw new JsonParseException("Failed to parse id " + targetString + " for entity");
+                if (!Registries.ENTITY_TYPE.containsId(id))
+                    throw new JsonParseException(id + " is not a valid entity");
+
                 EntityType<?> type = Registries.ENTITY_TYPE.get(id);
                 targets = Either.right(type);
             }

@@ -184,7 +184,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
             VampireHelper.transferStatusEffects(vampireEntity, target);
         }
 
-        BLEntityBloodDrainEffects.applyTo(vampireEntity, target);
+        BLBloodDrainEffects.applyTo(vampireEntity, target);
 
         // allow conversion of entities with weakness
         if (!VampireHelper.isVampire(target) && target.hasStatusEffect(StatusEffects.WEAKNESS)) {
