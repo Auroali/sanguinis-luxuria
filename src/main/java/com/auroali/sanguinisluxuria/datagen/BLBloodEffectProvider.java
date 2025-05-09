@@ -8,6 +8,8 @@ import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodDrainEffectBuilder;
 import com.auroali.sanguinisluxuria.datagen.generators.SanguinisLuxuriaBloodEffectsProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
 
@@ -31,6 +33,6 @@ public class BLBloodEffectProvider extends SanguinisLuxuriaBloodEffectsProvider 
 
         BloodDrainEffectBuilder.createOptional(new Identifier("spectrum", "kindling"))
           .effect(new BloodDrainIgniteEffect(8, 0.4f))
-          .offerTo(exporter, BLResources.id("compat/spectrum/kindling_effects"));
+          .offerTo(withConditions(exporter, DefaultResourceConditions.allModsLoaded("spectrum")), BLResources.id("compat/spectrum/kindling_effects"));
     }
 }
