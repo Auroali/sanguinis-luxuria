@@ -10,6 +10,7 @@ import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransform
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
 import com.google.common.collect.HashMultimap;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -17,22 +18,24 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registry;
+import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.profiler.Profiler;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-public class BLConversions implements IdentifiableResourceReloadListener {
+public class BLConversions extends JsonDataLoader implements IdentifiableResourceReloadListener {
     private static final HashMultimap<EntityType<?>, EntityConversionData> CONVERSIONS = HashMultimap.create();
-    private static final ResourceFinder FINDER = new ResourceFinder("vampire_conversions", "json");
     private static final Gson GSON = new Gson();
 
     public static final ConversionType SET_VAMPIRE_TYPE = new VampireSettingConversionType(true);
@@ -82,40 +85,25 @@ public class BLConversions implements IdentifiableResourceReloadListener {
         return false;
     }
 
-    @Override
-    public Identifier getFabricId() {
-        return BLResources.CONVERSION_DATA;
+    public BLConversions() {
+        super(GSON, "vampire_conversions");
     }
 
     @Override
-    public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
-        return CompletableFuture.supplyAsync(() -> FINDER.findResources(manager), prepareExecutor)
-          .thenApply(resources -> {
-              List<EntityConversionData> data = new ArrayList<>();
-              EntityConversionTransformer.Serializer.initCache();
-              EntityConversionCondition.Serializer.initCache();
-              resources.forEach((identifier, resource) -> {
-                  try {
-                      JsonObject object = GSON.fromJson(resource.getReader(), JsonObject.class);
-                      if (object.has(ResourceConditions.CONDITIONS_KEY) && !ResourceConditions.objectMatchesConditions(object))
-                          return;
+    protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler) {
+        CONVERSIONS.clear();
+        prepared.forEach((id, element) -> {
+            try {
+                EntityConversionData conversionData = EntityConversionData.fromJson(JsonHelper.asObject(element, "top object"));
+                CONVERSIONS.put(conversionData.getEntity(), conversionData);
+            } catch (IllegalArgumentException | JsonParseException e) {
+                Bloodlust.LOGGER.error("Failed to read conversion {}", id, e);
+            }
+        });
+    }
 
-                      EntityConversionData conversionData = EntityConversionData.fromJson(object);
-                      data.add(conversionData);
-                  } catch (IOException | IllegalArgumentException | JsonParseException e) {
-                      Bloodlust.LOGGER.error("Failed to read conversion {}", identifier, e);
-                  }
-              });
-              EntityConversionTransformer.Serializer.dropCache();
-              EntityConversionCondition.Serializer.dropCache();
-              return data;
-          })
-          .thenCompose(synchronizer::whenPrepared)
-          .thenAcceptAsync(conversions -> {
-              CONVERSIONS.clear();
-              for (EntityConversionData data : conversions) {
-                  CONVERSIONS.put(data.getEntity(), data);
-              }
-          }, applyExecutor);
+    @Override
+    public Identifier getFabricId() {
+        return BLResources.CONVERSION_DATA;
     }
 }

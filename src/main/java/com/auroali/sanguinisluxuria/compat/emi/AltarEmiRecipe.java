@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.auroali.sanguinisluxuria.common.rituals.ItemCreatingRitual;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
+import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.google.common.collect.Lists;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -51,7 +52,7 @@ public class AltarEmiRecipe implements EmiRecipe {
         this.output = this.ritual instanceof ItemCreatingRitual itemRitual
           ? EmiStack.of(itemRitual.getOutput())
           : EmiStack.EMPTY;
-        this.ritualTranslationKey = Util.createTranslationKey("altar_ritual", BLRegistries.RITUAL_TYPES.getId(this.ritual.getType()));
+        this.ritualTranslationKey = Util.createTranslationKey("altar_ritual", RitualType.getId(this.ritual.getType()));
         this.calculateRemainders();
     }
 

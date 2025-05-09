@@ -107,8 +107,8 @@ public class ConversionJsonBuilder {
     }
 
     protected Identifier getIdFromEntities(String namespace) {
-        Identifier fromId = Registries.ENTITY_TYPE.getId(this.from);
-        Identifier toId = Registries.ENTITY_TYPE.getId(this.to);
+        Identifier fromId = EntityType.getId(this.from);
+        Identifier toId = EntityType.getId(this.to);
         String path = fromId.getNamespace() + "_" + fromId.getPath() + "_to_" + toId.getNamespace() + "_" + toId.getPath();
         return new Identifier(namespace, path);
     }
@@ -189,9 +189,9 @@ public class ConversionJsonBuilder {
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         public void serialize(JsonObject object) {
-            Identifier fromId = Registries.ENTITY_TYPE.getId(this.from);
-            Identifier toId = Registries.ENTITY_TYPE.getId(this.to);
-            Identifier typeId = BLRegistries.CONVERSION_TYPES.getId(this.type);
+            Identifier fromId = EntityType.getId(this.from);
+            Identifier toId = EntityType.getId(this.to);
+            Identifier typeId = ConversionType.getId(this.type);
 
             object.addProperty("entity", fromId.toString());
             object.addProperty("target", toId.toString());

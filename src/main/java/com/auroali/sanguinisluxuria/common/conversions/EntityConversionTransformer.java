@@ -16,6 +16,10 @@ public interface EntityConversionTransformer {
 
     Serializer<?> getSerializer();
 
+    static <T extends EntityConversionTransformer> Identifier getId(Serializer<T> serializer) {
+        return BLRegistries.CONVERSION_TRANSFORMERS.getId(serializer);
+    }
+
     static EntityConversionTransformer fromJson(JsonObject object) {
         if (Serializer.CACHE != null && Serializer.CACHE.containsKey(object)) {
             return Serializer.CACHE.get(object);
@@ -49,7 +53,7 @@ public interface EntityConversionTransformer {
 
         public JsonObject toJson(T object) {
             JsonObject json = this.toJson.apply(object);
-            Identifier id = BLRegistries.CONVERSION_TRANSFORMERS.getId(this);
+            Identifier id = EntityConversionTransformer.getId(this);
             if (id == null)
                 throw new IllegalStateException("Attempted to save transformer using unregistered serializer!");
             json.addProperty("type", id.toString());

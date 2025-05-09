@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.compat.patchouli;
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRitualRecipe;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.Text;
@@ -48,7 +49,7 @@ public class AltarRecipeProcessor implements IComponentProcessor {
             return IVariable.from(this.recipe.getCatalyst().getMatchingStacks());
         }
         if (key.startsWith("ritual_name")) {
-            Identifier id = BLRegistries.RITUAL_TYPES.getId(this.recipe.getRitual().getType());
+            Identifier id = RitualType.getId(this.recipe.getRitual().getType());
             if (id == null)
                 return IVariable.empty();
             Text name = Text.translatable(Util.createTranslationKey("altar_ritual", id)).formatted(Formatting.GOLD, Formatting.BOLD);

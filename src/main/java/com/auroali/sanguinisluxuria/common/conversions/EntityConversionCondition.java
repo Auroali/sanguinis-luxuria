@@ -15,6 +15,10 @@ public interface EntityConversionCondition {
 
     Serializer<?> getSerializer();
 
+    static <T extends EntityConversionCondition> Identifier getId(Serializer<T> serializer) {
+        return BLRegistries.CONVERSION_CONDITIONS.getId(serializer);
+    }
+
     static EntityConversionCondition fromJson(JsonObject object) {
         if (Serializer.CACHE != null && Serializer.CACHE.containsKey(object)) {
             return Serializer.CACHE.get(object);
@@ -48,7 +52,7 @@ public interface EntityConversionCondition {
 
         public JsonObject toJson(T object) {
             JsonObject json = this.toJson.apply(object);
-            Identifier id = BLRegistries.CONVERSION_CONDITIONS.getId(this);
+            Identifier id = EntityConversionCondition.getId(this);
             if (id == null)
                 throw new IllegalStateException("Attempted to save condition using unregistered serializer!");
             json.addProperty("type", id.toString());

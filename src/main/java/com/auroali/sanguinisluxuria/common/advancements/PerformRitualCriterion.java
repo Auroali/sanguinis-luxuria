@@ -111,7 +111,7 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
         public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
             JsonObject object = super.toJson(predicateSerializer);
             if (this.ritual != null) {
-                object.addProperty("ritual", BLRegistries.RITUAL_TYPES.getId(this.ritual).toString());
+                object.addProperty("ritual", RitualType.getId(this.ritual).toString());
                 if (this.nbt != null) {
                     NbtCompound.CODEC.encodeStart(JsonOps.INSTANCE, this.nbt)
                       .resultOrPartial(Bloodlust.LOGGER::error)

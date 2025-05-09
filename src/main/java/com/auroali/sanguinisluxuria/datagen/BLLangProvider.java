@@ -95,20 +95,16 @@ public class BLLangProvider extends FabricLanguageProvider {
     }
 
     public static void rituals(TranslationBuilder builder) {
-        generateRitualKey(builder, BLRitualTypes.ABILITY_RITUAL_TYPE, "Ritual of Transformation");
-        generateRitualKey(builder, BLRitualTypes.ABILITY_RESET_RITUAL_TYPE, "Ritual of Cleansing");
-        generateRitualKey(builder, BLRitualTypes.ITEM_RITUAL_TYPE, "Ritual of Transmutation");
-        generateRitualKey(builder, BLRitualTypes.ABILITY_REVEAL_RITUAL_TYPE, "Ritual of Revealing");
-        generateRitualKey(builder, BLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE, "Ritual of Summoning");
-        generateRitualKey(builder, BLRitualTypes.STATUS_EFFECT_RITUAL_TYPE, "Ritual of Alchemy");
-        generateRitualKey(builder, BLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
+        builder.add(BLRitualTypes.ABILITY_RITUAL_TYPE.getTranslationKey(), "Ritual of Transformation");
+        builder.add(BLRitualTypes.ABILITY_RESET_RITUAL_TYPE.getTranslationKey(), "Ritual of Cleansing");
+        builder.add(BLRitualTypes.ITEM_RITUAL_TYPE.getTranslationKey(), "Ritual of Transmutation");
+        builder.add(BLRitualTypes.ABILITY_REVEAL_RITUAL_TYPE.getTranslationKey(), "Ritual of Revealing");
+        builder.add(BLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE.getTranslationKey(), "Ritual of Summoning");
+        builder.add(BLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey(), "Ritual of Alchemy");
+        builder.add(BLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey(), "Ritual of Conversion");
         builder.add("altar_ritual.sanguinisluxuria.convert.converting", "Converting");
         builder.add("altar_ritual.sanguinisluxuria.convert.deconverting", "Deconverting");
         builder.add("altar_ritual.sanguinisluxuria.effects", "Applies the effects to %s for %.1ds");
-    }
-
-    private static void generateRitualKey(TranslationBuilder builder, RitualType<?> type, String entry) {
-        builder.add(Util.createTranslationKey("altar_ritual", BLRegistries.RITUAL_TYPES.getId(type)), entry);
     }
 
     private static void potions(TranslationBuilder translationBuilder) {
