@@ -4,10 +4,12 @@ import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.mojang.serialization.Codec;
 import net.minecraft.entity.LivingEntity;
 
+import java.util.function.Function;
+
 public interface BloodDrainEffect {
     Codec<BloodDrainEffect> CODEC = BLRegistries.BLOOD_DRAIN_EFFECTS
       .getCodec()
-      .dispatch("type", BloodDrainEffect::getType, BloodDrainEffectType::getCodec);
+      .dispatch("type", BloodDrainEffect::getCodec, Function.identity());
 
     void apply(LivingEntity entity);
 
@@ -15,5 +17,5 @@ public interface BloodDrainEffect {
 
     BloodDrainEffect merge(BloodDrainEffect other);
 
-    BloodDrainEffectType<?> getType();
+    Codec<? extends BloodDrainEffect> getCodec();
 }

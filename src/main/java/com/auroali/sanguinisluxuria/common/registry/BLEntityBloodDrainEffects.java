@@ -15,7 +15,6 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
@@ -39,29 +38,30 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
     private static final Gson GSON = new Gson();
     private static final ResourceFinder FINDER = new ResourceFinder("blood_drain_effects", "json");
 
-    public static List<BloodDrainEffectInstance> getFor(EntityType<?> type) {
+    public static List<BloodDrainEffect> getFor(EntityType<?> type) {
         return EFFECT_MAP.get(type);
     }
 
     public static void applyTo(LivingEntity drainer, LivingEntity entity) {
-        List<BloodDrainEffectInstance> effects = getFor(entity.getType());
+        List<BloodDrainEffect> effects = getFor(entity.getType());
         if (effects == null)
             return;
 
         effects.forEach(effect -> {
-            if (drainer.getRandom().nextFloat() > effect.chance())
-                return;
-            drainer.addStatusEffect(new StatusEffectInstance(effect.effect(), effect.duration(), effect.amplifier()));
+            effect.apply(entity);
         });
     }
 
     public static void init() {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
           .registerReloadListener(new BLEntityBloodDrainEffects());
-
         CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
             if (!client) EFFECT_MAP = RESOLVER.resolveAndBuild(Registries.ENTITY_TYPE);
         });
+
+        Registry.register(BLRegistries.BLOOD_DRAIN_EFFECTS, BLResources.STATUS_EFFECT_ID, BloodDrainStatusEffect.CODEC);
+        Registry.register(BLRegistries.BLOOD_DRAIN_EFFECTS, BLResources.TELEPORT_ID, BloodDrainTeleportEffect.CODEC);
+        Registry.register(BLRegistries.BLOOD_DRAIN_EFFECTS, BLResources.IGNITE_EFFECT_ID, BloodDrainIgniteEffect.CODEC);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
      * @param effects the list of effects
      */
     private record LoadedEffects(Either<TagKey<EntityType<?>>, EntityType<?>> targets,
-                                 List<BloodDrainEffectInstance> effects) {
+                                 List<BloodDrainEffect> effects) {
         List<EntityType<?>> resolveTargets() {
             return this.targets().map(
               tag -> BLTags.getAllEntriesInTag(tag, Registries.ENTITY_TYPE),
@@ -142,12 +142,12 @@ public class BLEntityBloodDrainEffects implements IdentifiableResourceReloadList
 
         public static LoadedEffects fromJson(JsonObject object) {
             // handle effects
-            List<BloodDrainEffectInstance> effects = new ArrayList<>();
+            List<BloodDrainEffect> effects = new ArrayList<>();
             for (JsonElement element : object.getAsJsonArray("effects")) {
                 if (!element.isJsonObject())
                     throw new JsonParseException("Expected json object but got " + element);
 
-                BloodDrainEffectInstance.CODEC.parse(JsonOps.INSTANCE, element)
+                BloodDrainEffect.CODEC.parse(JsonOps.INSTANCE, element)
                   .resultOrPartial(Bloodlust.LOGGER::error)
                   .ifPresent(effects::add);
             }

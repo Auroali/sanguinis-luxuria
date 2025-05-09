@@ -128,20 +128,20 @@ public class VampireHelper {
      *
      * @param entity the entity to teleport
      */
-    public static void teleportRandomly(LivingEntity entity) {
+    public static void teleportRandomly(LivingEntity entity, int radius) {
         World world = entity.getWorld();
         double x = entity.getX();
         double y = entity.getY();
         double z = entity.getZ();
 
         for (int i = 0; i < 16; ++i) {
-            double newPosX = entity.getX() + (entity.getRandom().nextDouble() - 0.5) * 16.0;
+            double newPosX = entity.getX() + (entity.getRandom().nextDouble() - 0.5) * radius;
             double newPosY = MathHelper.clamp(
-              entity.getY() + (double) (entity.getRandom().nextInt(16) - 8),
+              entity.getY() + (double) (entity.getRandom().nextInt(radius) - radius / 2.f),
               world.getBottomY(),
               (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1)
             );
-            double newPosZ = entity.getZ() + (entity.getRandom().nextDouble() - 0.5) * 16.0;
+            double newPosZ = entity.getZ() + (entity.getRandom().nextDouble() - 0.5) * radius;
             if (entity.hasVehicle()) {
                 entity.stopRiding();
             }

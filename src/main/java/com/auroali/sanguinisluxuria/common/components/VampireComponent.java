@@ -201,9 +201,5 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
 
         if (vampireEntity.getRandom().nextDouble() > 0.5f)
             target.wakeUp();
-
-        if (target.getType().isIn(BLTags.Entities.TELEPORTS_ON_DRAIN)) {
-            VampireHelper.teleportRandomly(vampireEntity);
-        }
     }
 }

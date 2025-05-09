@@ -2,8 +2,6 @@ package com.auroali.sanguinisluxuria.common.blood.effects;
 
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
-import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffectType;
-import com.auroali.sanguinisluxuria.common.registry.BLEntityBloodDrainEffects;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.LivingEntity;
@@ -49,7 +47,7 @@ public record BloodDrainStatusEffect(StatusEffect effect, int duration, int ampl
     }
 
     @Override
-    public BloodDrainEffectType<?> getType() {
-        return BLEntityBloodDrainEffects.STATUS_EFFECT;
+    public Codec<BloodDrainStatusEffect> getCodec() {
+        return CODEC;
     }
 }

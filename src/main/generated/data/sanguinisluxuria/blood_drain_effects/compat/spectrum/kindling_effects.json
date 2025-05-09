@@ -1,0 +1,10 @@
+{
+  "effects": [
+    {
+      "type": "sanguinisluxuria:ignite",
+      "chance": 0.4,
+      "time": 8
+    }
+  ],
+  "entity": "spectrum:kindling"
+}

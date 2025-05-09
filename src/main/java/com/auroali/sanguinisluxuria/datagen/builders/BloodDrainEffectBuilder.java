@@ -8,6 +8,7 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
@@ -16,10 +17,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class BloodDrainEffectBuilder {
-    final Either<TagKey<EntityType<?>>, EntityType<?>> target;
+    final Either<TagKey<EntityType<?>>, Identifier> target;
     final List<BloodDrainEffect> effects;
 
-    protected BloodDrainEffectBuilder(Either<TagKey<EntityType<?>>, EntityType<?>> target) {
+    protected BloodDrainEffectBuilder(Either<TagKey<EntityType<?>>, Identifier> target) {
         this.target = target;
         this.effects = new ArrayList<>();
     }
@@ -29,7 +30,17 @@ public class BloodDrainEffectBuilder {
     }
 
     public static BloodDrainEffectBuilder create(EntityType<?> entity) {
-        return new BloodDrainEffectBuilder(Either.right(entity));
+        return create(EntityType.getId(entity));
+    }
+
+    public static BloodDrainEffectBuilder create(Identifier entityId) {
+        if (!Registries.ENTITY_TYPE.containsId(entityId))
+            throw new IllegalArgumentException(entityId + " is not present in the registry");
+        return new BloodDrainEffectBuilder(Either.right(entityId));
+    }
+
+    public static BloodDrainEffectBuilder createOptional(Identifier entityId) {
+        return new BloodDrainEffectBuilder(Either.right(entityId));
     }
 
     public BloodDrainEffectBuilder effect(BloodDrainEffect effect) {
@@ -70,10 +81,10 @@ public class BloodDrainEffectBuilder {
 
     public static class Provider {
         final Identifier id;
-        final Either<TagKey<EntityType<?>>, EntityType<?>> target;
+        final Either<TagKey<EntityType<?>>, Identifier> target;
         final List<BloodDrainEffect> effects;
 
-        protected Provider(Identifier id, Either<TagKey<EntityType<?>>, EntityType<?>> target, List<BloodDrainEffect> effects) {
+        protected Provider(Identifier id, Either<TagKey<EntityType<?>>, Identifier> target, List<BloodDrainEffect> effects) {
             this.id = id;
             this.target = target;
             this.effects = effects;
@@ -82,7 +93,7 @@ public class BloodDrainEffectBuilder {
         public void serialize(JsonObject object) {
             this.target
               .ifLeft(key -> object.addProperty("entity", "#" + key.id().toString()))
-              .ifRight(entity -> object.addProperty("entity", EntityType.getId(entity).toString()));
+              .ifRight(entity -> object.addProperty("entity", entity.toString()));
 
             BloodDrainEffect.CODEC.listOf()
               .encodeStart(JsonOps.INSTANCE, this.effects)

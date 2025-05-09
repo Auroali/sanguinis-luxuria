@@ -1,11 +1,12 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffectType;
+import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionType;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
@@ -34,7 +35,7 @@ public class BLRegistries {
     public static final Registry<EntityConversionCondition.Serializer<?>> CONVERSION_CONDITIONS = FabricRegistryBuilder
       .createSimple(BLRegistryKeys.CONVERSION_CONDITIONS)
       .buildAndRegister();
-    public static final Registry<BloodDrainEffectType<?>> BLOOD_DRAIN_EFFECTS = FabricRegistryBuilder
+    public static final Registry<Codec<? extends BloodDrainEffect>> BLOOD_DRAIN_EFFECTS = FabricRegistryBuilder
       .createSimple(BLRegistryKeys.BLOOD_DRAIN_EFFECTS)
       .buildAndRegister();
 

@@ -161,6 +161,7 @@ public class BLResources {
     public static final Identifier AND_CONDITION_ID = id("and");
     public static final Identifier SILVER_BARS_ID = id("silver_bars");
     public static final Identifier STATUS_EFFECT_ID = id("status_effect");
+    public static final Identifier IGNITE_EFFECT_ID = id("ignite");
     // used to try to run events after other mods
     public static final Identifier AFTER_EVENT_PHASE = id("after");
 

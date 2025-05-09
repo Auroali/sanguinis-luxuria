@@ -2,11 +2,12 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffectType;
+import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionType;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.mojang.serialization.Codec;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 
@@ -16,5 +17,5 @@ public class BLRegistryKeys {
     public static final RegistryKey<Registry<EntityConversionTransformer.Serializer<?>>> CONVERSION_TRANSFORMERS = RegistryKey.ofRegistry(BLResources.CONVERSION_TRANSFORMERS);
     public static final RegistryKey<Registry<EntityConversionCondition.Serializer<?>>> CONVERSION_CONDITIONS = RegistryKey.ofRegistry(BLResources.CONVERSION_CONDITIONS);
     public static final RegistryKey<Registry<ConversionType>> CONVERSION_TYPES = RegistryKey.ofRegistry(BLResources.CONVERSION_TYPES);
-    public static final RegistryKey<Registry<BloodDrainEffectType<?>>> BLOOD_DRAIN_EFFECTS = RegistryKey.ofRegistry(BLResources.BLOOD_DRAIN_EFFECTS);
+    public static final RegistryKey<Registry<Codec<? extends BloodDrainEffect>>> BLOOD_DRAIN_EFFECTS = RegistryKey.ofRegistry(BLResources.BLOOD_DRAIN_EFFECTS);
 }
