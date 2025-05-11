@@ -43,7 +43,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * or damaging them if the target has blood protection
      *
      * @param entity the entity to drain from
-     * @see BloodComponent#drainBlood(LivingEntity)
+     * @see BloodComponent#drainBlood(int, LivingEntity)
      */
     void drainBloodFrom(LivingEntity entity);
 

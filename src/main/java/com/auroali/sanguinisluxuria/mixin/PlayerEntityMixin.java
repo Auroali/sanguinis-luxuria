@@ -5,7 +5,6 @@ import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;

@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.compat.patchouli;
 
 import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRitualRecipe;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeManager;
