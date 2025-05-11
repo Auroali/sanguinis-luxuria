@@ -26,6 +26,6 @@ public class BleedingEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return duration % 15 == 0;
+        return duration % 20 == 0;
     }
 }

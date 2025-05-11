@@ -24,7 +24,7 @@ public class SerratedEnchantment extends Enchantment {
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         super.onTargetDamaged(user, target, level);
         if (target.getWorld().random.nextInt(25 / level) == 0 && target instanceof LivingEntity living) {
-            living.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLEEDING, 12 * level));
+            living.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLEEDING, 10 * level));
         }
     }
 
