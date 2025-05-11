@@ -28,7 +28,7 @@ public class PlayerBloodComponent implements BloodComponent {
 
     @Override
     public int getBlood() {
-        if (this.holder.getWorld().isClient) {
+        if (this.holder.getWorld().isClient && !this.holder.isMainPlayer()) {
             return this.blood;
         }
         return this.holder.getHungerManager().getFoodLevel();
@@ -93,6 +93,11 @@ public class PlayerBloodComponent implements BloodComponent {
     @Override
     public void applySyncPacket(PacketByteBuf buf) {
         this.blood = buf.readVarInt();
+    }
+
+    @Override
+    public boolean shouldSyncWith(ServerPlayerEntity player) {
+        return player != this.holder;
     }
 
     @Override
