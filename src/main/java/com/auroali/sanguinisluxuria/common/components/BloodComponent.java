@@ -16,19 +16,23 @@ public interface BloodComponent extends Component, AutoSyncedComponent {
     int getMaxBlood();
 
     /**
-     * Adds blood to the current amount
-     *
-     * @param amount the amount to add
-     * @return the amount actually added
-     */
-    int addBlood(int amount);
-
-    /**
      * Sets the current amount of blood
      *
      * @param amount the new amount of blood
      */
     void setBlood(int amount);
+
+    /**
+     * Adds blood to the current amount
+     *
+     * @param amount the amount to add
+     * @return the amount actually added
+     */
+    default int addBlood(int amount) {
+        int amountAdded = Math.min(amount, this.getMaxBlood() - this.getBlood());
+        this.setBlood(this.getBlood() + amountAdded);
+        return amountAdded;
+    }
 
     /**
      * Tries to drain a specified amount of blood
@@ -38,7 +42,16 @@ public interface BloodComponent extends Component, AutoSyncedComponent {
      * @return whether blood was actually drained
      * @see BloodComponent#drainBlood(int)
      */
-    boolean drainBlood(int amount, LivingEntity drainer);
+    default boolean drainBlood(int amount, LivingEntity drainer) {
+        if (this.isEmpty())
+            return false;
+
+        if (this.getBlood() < amount)
+            return false;
+
+        this.setBlood(this.getBlood() - amount);
+        return true;
+    }
 
     /**
      * Tries to drain a specified amount of blood
@@ -47,27 +60,14 @@ public interface BloodComponent extends Component, AutoSyncedComponent {
      * @return whether blood was actually drained
      * @see BloodComponent#drainBlood(int, LivingEntity)
      */
-    boolean drainBlood(int amount);
-
-    /**
-     * Tries to drain one unit of blood
-     *
-     * @param drainer the entity draining the component holder's blood
-     * @return whether blood was actually drained
-     * @see BloodComponent#drainBlood()
-     */
-    boolean drainBlood(LivingEntity drainer);
-
-    /**
-     * Tries to drain one unit of blood
-     *
-     * @return whether blood was actually drained
-     * @see BloodComponent#drainBlood(LivingEntity)
-     */
-    boolean drainBlood();
+    default boolean drainBlood(int amount) {
+        return this.drainBlood(amount, null);
+    }
 
     /**
      * @return whether the component holder has blood
      */
-    boolean isEmpty();
+    default boolean isEmpty() {
+        return this.getBlood() <= 0 || this.getMaxBlood() <= 0;
+    }
 }

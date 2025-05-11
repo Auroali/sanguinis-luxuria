@@ -120,7 +120,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
 
             for (LivingEntity entity : entities) {
                 BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-                if (component.drainBlood()) {
+                if (component.drainBlood(1)) {
                     world.playSound(null, pos, BLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     world.setBlockState(pos, state.with(BLOOD_LEVEL, newLevel));
                     Box entityBox = entity.getBoundingBox();

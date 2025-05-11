@@ -151,7 +151,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     static void handleBloodDrain(VampireComponent vampire, LivingEntity target, LivingEntity vampireEntity) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(target);
         // if the target doesn't have blood or cannot be drained, we can't fill hunger
-        if (!VampireHelper.hasBlood(target) || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(vampireEntity, target) || !blood.drainBlood(vampireEntity))
+        if (!VampireHelper.hasBlood(target) || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(vampireEntity, target) || !blood.drainBlood(1, vampireEntity))
             return;
 
         // damage the vampire and cancel filling up hunger if the target has blood protection

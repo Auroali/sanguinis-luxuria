@@ -52,7 +52,7 @@ public class GraftedSaplingBlock extends SaplingBlock {
         world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), box, VampireHelper::hasBlood)
           .forEach(entity -> {
               BloodComponent bloodComponent = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-              if (bloodComponent.drainBlood()) {
+              if (bloodComponent.drainBlood(1)) {
                   world.playSound(null, pos, BLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS);
                   hasDrainedBlood.set(true);
               }
