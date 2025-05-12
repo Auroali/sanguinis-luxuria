@@ -56,7 +56,7 @@ public class BLBloodDrainEffects extends JsonDataLoader implements IdentifiableR
             return;
 
         effects.forEach(effect -> {
-            effect.apply(entity);
+            effect.apply(drainer);
         });
     }
 
