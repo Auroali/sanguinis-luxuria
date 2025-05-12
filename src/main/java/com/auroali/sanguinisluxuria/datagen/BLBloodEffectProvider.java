@@ -2,14 +2,12 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainIgniteEffect;
-import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainStatusEffect;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainTeleportEffect;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodDrainEffectBuilder;
 import com.auroali.sanguinisluxuria.datagen.generators.SanguinisLuxuriaBloodEffectsProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
 
