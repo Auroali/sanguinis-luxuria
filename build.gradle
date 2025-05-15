@@ -81,7 +81,7 @@ dependencies {
         exclude module: 'modmenu'
     }
 
-    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}+${project.minecraft_version}-fabric"
 
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
@@ -94,7 +94,7 @@ dependencies {
         exclude module: 'fabric-loader'
     }
 
-    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
+    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}-FABRIC"
 
     modImplementation "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
     include "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
