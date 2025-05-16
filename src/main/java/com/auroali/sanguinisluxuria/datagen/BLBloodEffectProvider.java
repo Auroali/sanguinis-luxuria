@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainIgniteEffect;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainTeleportEffect;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;

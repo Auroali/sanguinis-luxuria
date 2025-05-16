@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.conversions.conditions;
 
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
-import com.auroali.sanguinisluxuria.common.registry.BLConversions;
+import com.mojang.serialization.Codec;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import java.util.List;
  * Composite condition that only succeeds if at least one of the conditions that make up this one succeed
  */
 public class OrConversionCondition extends CompositeConversionCondition {
+    public static final Codec<OrConversionCondition> CODEC = codec(OrConversionCondition::new);
+
     public OrConversionCondition(List<EntityConversionCondition> conditions) {
         super(conditions);
     }
@@ -24,7 +26,7 @@ public class OrConversionCondition extends CompositeConversionCondition {
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return BLConversions.OR_CONDITION;
+    public Codec<OrConversionCondition> getCodec() {
+        return CODEC;
     }
 }

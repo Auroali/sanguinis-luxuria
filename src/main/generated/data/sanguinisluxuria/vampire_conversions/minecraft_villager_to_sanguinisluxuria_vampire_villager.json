@@ -3,7 +3,9 @@
   "conditions": [
     {
       "type": "sanguinisluxuria:context",
-      "conversion": "converting"
+      "value": {
+        "conversion": "converting"
+      }
     }
   ],
   "entity": "minecraft:villager",
@@ -11,15 +13,15 @@
   "transformers": [
     {
       "type": "sanguinisluxuria:copy",
-      "src": "Offers"
+      "source": "Offers"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "Xp"
+      "source": "Xp"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "VillagerData"
+      "source": "VillagerData"
     }
   ]
 }

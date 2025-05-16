@@ -2,50 +2,54 @@ package com.auroali.sanguinisluxuria.common.conversions.transformers;
 
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
-import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.*;
-import net.minecraft.util.JsonHelper;
 
 /**
  * Sets the NBT field at the specified path to the provided value for the new entity
  */
-public class SetTransformer implements EntityConversionTransformer {
-    final NbtTreeLocation dst;
-    final NbtElement element;
-
-    public SetTransformer(NbtTreeLocation dst, NbtElement element) {
-        this.dst = dst;
-        this.element = element;
-    }
+public record SetTransformer(NbtTreeLocation destination, NbtElement element) implements EntityConversionTransformer {
+    public static Codec<SetTransformer> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+      NbtTreeLocation.CODEC.fieldOf("destination").forGetter(SetTransformer::destination),
+      // snbt codec, to allow specifying types
+      Codec.STRING.flatXmap(
+        str -> {
+            try {
+                return DataResult.success(new StringNbtReader(new StringReader(str)).parseElement());
+            } catch (CommandSyntaxException e) {
+                return DataResult.error(e::getMessage);
+            }
+        },
+        nbt -> DataResult.success(nbt.toString())
+      ).fieldOf("nbt").forGetter(SetTransformer::element)
+    ).apply(instance, SetTransformer::new));
 
     @Override
     public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut) {
-        this.dst.insertInto(nbtOut, this.element);
+        this.destination.insertInto(nbtOut, this.element);
     }
 
     @Override
-    public JsonObject toJson() {
-        JsonObject object = new JsonObject();
-        nbtToJson(this.element, object);
-        object.addProperty("dst", this.dst.toString());
-        return object;
+    public Codec<SetTransformer> getCodec() {
+        return CODEC;
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return BLConversions.SET_TRANSFORMER;
+    public int hashCode() {
+        return 31 * this.destination.hashCode() + 7 * this.element.hashCode();
     }
 
-    public static SetTransformer fromJson(JsonObject object) {
-        NbtElement element = nbtFromJson(object);
-        NbtTreeLocation dst = NbtTreeLocation.fromString(object.get("dst").getAsString());
-        if (dst == null)
-            throw new JsonParseException("Failed to parse nbt tree location");
-        return new SetTransformer(dst, element);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        return o instanceof SetTransformer other
+          && other.destination.equals(this.destination)
+          && other.element.equals(this.element);
     }
 
     public static SetTransformer create(String dst, NbtElement element) {
@@ -78,18 +82,5 @@ public class SetTransformer implements EntityConversionTransformer {
 
     public static EntityConversionTransformer create(String dst, double element) {
         return new SetTransformer(NbtTreeLocation.fromString(dst), NbtDouble.of(element));
-    }
-
-
-    protected static NbtElement nbtFromJson(JsonObject object) {
-        try {
-            return new StringNbtReader(new StringReader(JsonHelper.getString(object, "nbt"))).parseElement();
-        } catch (CommandSyntaxException e) {
-            throw new JsonParseException("Failed to parse nbt field", e);
-        }
-    }
-
-    protected static void nbtToJson(NbtElement element, JsonObject object) {
-        object.addProperty("nbt", element.toString());
     }
 }

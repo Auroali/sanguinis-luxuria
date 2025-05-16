@@ -2,9 +2,8 @@ package com.auroali.sanguinisluxuria.common.conversions.transformers;
 
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
-import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
@@ -12,14 +11,17 @@ import net.minecraft.nbt.NbtElement;
  * Transformer that copies an NBT field from the source entity to the target entity,
  * with the specified NBT paths
  */
-public class CopyConversionTransformer implements EntityConversionTransformer {
-    final NbtTreeLocation srcPath;
-    final NbtTreeLocation dstPath;
-
-    public CopyConversionTransformer(NbtTreeLocation srcPath, NbtTreeLocation dstPath) {
-        this.srcPath = srcPath;
-        this.dstPath = dstPath;
-    }
+public record CopyConversionTransformer(NbtTreeLocation source,
+                                        NbtTreeLocation destination) implements EntityConversionTransformer {
+    public static final Codec<CopyConversionTransformer> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+      NbtTreeLocation.CODEC.fieldOf("source").forGetter(CopyConversionTransformer::source),
+      NbtTreeLocation.CODEC.optionalFieldOf("destination", NbtTreeLocation.empty()).forGetter(
+        condition -> condition.destination.equals(condition.source) ? NbtTreeLocation.empty() : condition.destination
+      )
+    ).apply(instance, (src, dst) -> new CopyConversionTransformer(
+      src,
+      dst == NbtTreeLocation.empty() ? src : dst
+    )));
 
     public static CopyConversionTransformer create(String src) {
         return create(src, src);
@@ -31,34 +33,27 @@ public class CopyConversionTransformer implements EntityConversionTransformer {
 
     @Override
     public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut) {
-        NbtElement element = this.srcPath.get(nbtIn);
+        NbtElement element = this.source.get(nbtIn);
         if (element != null)
-            this.dstPath.insertInto(nbtOut, element);
+            this.destination.insertInto(nbtOut, element);
     }
 
     @Override
-    public JsonObject toJson() {
-        JsonObject object = new JsonObject();
-        object.addProperty("src", this.srcPath.toString());
-        if (!this.dstPath.equals(this.srcPath))
-            object.addProperty("dst", this.dstPath.toString());
-        return object;
+    public Codec<CopyConversionTransformer> getCodec() {
+        return CODEC;
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return BLConversions.COPY_TRANSFORMER;
+    public int hashCode() {
+        return 31 * this.source.hashCode() + 7 * this.destination.hashCode();
     }
 
-    public static CopyConversionTransformer fromJson(JsonObject object) {
-        String srcPath = object.get("src").getAsString();
-        String dstPath = srcPath;
-        if (object.has("dst"))
-            dstPath = object.get("dst").getAsString();
-        NbtTreeLocation src = NbtTreeLocation.fromString(srcPath);
-        NbtTreeLocation dst = NbtTreeLocation.fromString(dstPath);
-        if (src == null)
-            throw new JsonParseException("Could not parse nbt tree location " + srcPath);
-        return new CopyConversionTransformer(src, dst);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        return o instanceof CopyConversionTransformer other
+          && other.source.equals(this.source)
+          && other.destination.equals(this.destination);
     }
 }

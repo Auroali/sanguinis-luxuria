@@ -3,20 +3,17 @@ package com.auroali.sanguinisluxuria.common.conversions.conditions;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
-import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 /**
  * Condition that succeeds if the target entity's current vampire status matches the specified vampire status
  * <br> i.e. if the target entity is a vampire and the isVampire field is true, this condition succeeds
  */
-public class VampireConversionCondition implements EntityConversionCondition {
-    private final boolean isVampire;
-
-    public VampireConversionCondition(boolean isVampire) {
-        this.isVampire = isVampire;
-    }
+public record VampireConversionCondition(boolean isVampire) implements EntityConversionCondition {
+    public static Codec<VampireConversionCondition> CODEC = RecordCodecBuilder.create(instance -> instance
+      .ap(VampireConversionCondition::new, Codec.BOOL.fieldOf("isVampire").forGetter(VampireConversionCondition::isVampire))
+    );
 
     @Override
     public boolean test(ConversionContext context) {
@@ -24,22 +21,21 @@ public class VampireConversionCondition implements EntityConversionCondition {
     }
 
     @Override
-    public JsonObject toJson() {
-        JsonObject object = new JsonObject();
-        object.addProperty("isVampire", this.isVampire);
-        return object;
-    }
-
-    public static VampireConversionCondition fromJson(JsonObject object) {
-        if (!object.has("isVampire"))
-            throw new JsonParseException("Missing isVampire field");
-
-        return new VampireConversionCondition(object.get("isVampire").getAsBoolean());
+    public Codec<VampireConversionCondition> getCodec() {
+        return CODEC;
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return BLConversions.VAMPIRE_CONDITION;
+    public int hashCode() {
+        return this.isVampire ? 1231 : 1237;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        return o instanceof VampireConversionCondition other
+          && other.isVampire == this.isVampire;
     }
 
     public static VampireConversionCondition vampire() {

@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.conversions;
 
+import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
@@ -10,6 +11,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
@@ -20,6 +23,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EntityConversionData {
     protected final ConversionType type;
@@ -78,7 +83,7 @@ public class EntityConversionData {
         VampireConversionEvents.AFTER_CONVERSION.invoker().afterConversion(context, newEntity);
     }
 
-    public static EntityConversionData fromJson(JsonObject object) {
+    public static EntityConversionData fromJson(JsonObject object, CachedParser<EntityConversionTransformer> transformerCache, CachedParser<EntityConversionCondition> conditionCache) {
         if (!object.has("type"))
             throw new JsonParseException("Missing type field");
         if (!object.has("entity"))
@@ -110,30 +115,45 @@ public class EntityConversionData {
         EntityType<?> target = Registries.ENTITY_TYPE.get(targetId);
         // if the transformers field is present, parse it
         List<EntityConversionTransformer> transformers = object.has("transformers") && object.get("transformers").isJsonArray()
-          ? parseTransformers(object.getAsJsonArray("transformers"))
+          ? parseWithCache(object.getAsJsonArray("transformers"), transformerCache)
           : Collections.emptyList();
 
         // if the conditions field is present, parse it
         List<EntityConversionCondition> conditions = object.has("conditions") && object.get("conditions").isJsonArray()
-          ? parseConditions(object.getAsJsonArray("conditions"))
+          ? parseWithCache(object.getAsJsonArray("conditions"), conditionCache)
           : Collections.emptyList();
 
         return new EntityConversionData(type, entity, target, transformers, conditions);
     }
 
-    public static List<EntityConversionCondition> parseConditions(JsonArray json) {
-        List<EntityConversionCondition> conditions = new ArrayList<>(json.size());
-        for (JsonElement element : json) {
-            conditions.add(EntityConversionCondition.fromJson(element.getAsJsonObject()));
+    private static <T> List<T> parseWithCache(JsonArray array, CachedParser<T> cache) {
+        List<T> result = new ArrayList<>(array.size());
+        for (JsonElement element : array) {
+            cache.parse(element).ifPresent(result::add);
         }
-        return conditions;
+        return result;
     }
 
-    public static List<EntityConversionTransformer> parseTransformers(JsonArray json) {
-        List<EntityConversionTransformer> transformers = new ArrayList<>(json.size());
-        for (JsonElement element : json) {
-            transformers.add(EntityConversionTransformer.fromJson(element.getAsJsonObject()));
+    public static <T> CachedParser<T> makeCachedParser(Codec<T> codec) {
+        return new CachedParser<>(codec);
+    }
+
+    public static class CachedParser<T> {
+        private final Codec<T> codec;
+        private final ConcurrentHashMap<T, T> cache;
+
+        protected CachedParser(Codec<T> codec) {
+            this.codec = codec;
+            this.cache = new ConcurrentHashMap<>();
         }
-        return transformers;
+
+        public Optional<T> parse(JsonElement element) {
+            return this.codec.parse(JsonOps.INSTANCE, element)
+              .resultOrPartial(Bloodlust.LOGGER::error)
+              .map(result -> this.cache.containsKey(result)
+                ? this.cache.get(result)
+                : this.cache.put(result, result)
+              );
+        }
     }
 }

@@ -12,12 +12,12 @@ import net.minecraft.util.math.Vec3d;
 public record EntitySpawningRitual(EntityType<?> type, NbtCompound nbt, boolean autoTame) implements Ritual {
     public static final Codec<EntitySpawningRitual> CODEC = RecordCodecBuilder.create(instance -> instance.group(
       Registries.ENTITY_TYPE.getCodec().fieldOf("id").forGetter(EntitySpawningRitual::type),
-      NbtCompound.CODEC.optionalFieldOf("nbt", null).forGetter(EntitySpawningRitual::nbt),
+      NbtCompound.CODEC.optionalFieldOf("nbt", new NbtCompound()).forGetter(EntitySpawningRitual::nbt),
       Codec.BOOL.optionalFieldOf("autoTame", false).forGetter(EntitySpawningRitual::autoTame)
     ).apply(instance, EntitySpawningRitual::new));
 
     public static EntitySpawningRitual create(EntityType<?> entity) {
-        return new EntitySpawningRitual(entity, null, false);
+        return new EntitySpawningRitual(entity, new NbtCompound(), false);
     }
 
     public static EntitySpawningRitual create(EntityType<?> entity, NbtCompound compound) {
@@ -25,7 +25,7 @@ public record EntitySpawningRitual(EntityType<?> type, NbtCompound nbt, boolean 
     }
 
     public static EntitySpawningRitual create(EntityType<?> entity, boolean autoTame) {
-        return new EntitySpawningRitual(entity, null, autoTame);
+        return new EntitySpawningRitual(entity, new NbtCompound(), autoTame);
     }
 
 

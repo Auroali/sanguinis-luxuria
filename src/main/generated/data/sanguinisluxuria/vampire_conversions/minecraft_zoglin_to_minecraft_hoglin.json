@@ -3,7 +3,9 @@
   "conditions": [
     {
       "type": "sanguinisluxuria:context",
-      "conversion": "deconverting"
+      "value": {
+        "conversion": "deconverting"
+      }
     }
   ],
   "entity": "minecraft:zoglin",

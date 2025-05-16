@@ -29,10 +29,10 @@ public class BLRegistries {
     public static final Registry<ConversionType> CONVERSION_TYPES = FabricRegistryBuilder
       .createSimple(BLRegistryKeys.CONVERSION_TYPES)
       .buildAndRegister();
-    public static final Registry<EntityConversionTransformer.Serializer<?>> CONVERSION_TRANSFORMERS = FabricRegistryBuilder
+    public static final Registry<Codec<? extends EntityConversionTransformer>> CONVERSION_TRANSFORMERS = FabricRegistryBuilder
       .createSimple(BLRegistryKeys.CONVERSION_TRANSFORMERS)
       .buildAndRegister();
-    public static final Registry<EntityConversionCondition.Serializer<?>> CONVERSION_CONDITIONS = FabricRegistryBuilder
+    public static final Registry<Codec<? extends EntityConversionCondition>> CONVERSION_CONDITIONS = FabricRegistryBuilder
       .createSimple(BLRegistryKeys.CONVERSION_CONDITIONS)
       .buildAndRegister();
     public static final Registry<Codec<? extends BloodDrainEffect>> BLOOD_DRAIN_EFFECTS = FabricRegistryBuilder

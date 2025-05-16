@@ -2,69 +2,62 @@ package com.auroali.sanguinisluxuria.common.conversions.conditions;
 
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
-import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.dynamic.Codecs;
+
+import java.util.Objects;
 
 /**
  * Condition that operates off of the Conversion Context.
  * Allows specifying either a conversion type (converting/deconverting),
  * an entity predicate, or both
  */
-public class ConversionContextCondition implements EntityConversionCondition {
-    private final ConversionContext.Conversion conversion;
-    private final EntityPredicate predicate;
-
-    public ConversionContextCondition(ConversionContext.Conversion conversion, EntityPredicate predicate) {
-        this.conversion = conversion;
-        this.predicate = predicate;
-    }
+public record ConversionContextCondition(ConversionContext.Conversion conversion,
+                                         EntityPredicate predicate) implements EntityConversionCondition {
+    private static final Codec<EntityPredicate> PREDICATE_CODEC = Codecs.JSON_ELEMENT.xmap(
+      EntityPredicate::fromJson,
+      EntityPredicate::toJson
+    );
+    public static final Codec<ConversionContextCondition> CODEC = RecordCodecBuilder.<ConversionContextCondition>create(instance -> instance.group(
+        ConversionContext.Conversion.CODEC.optionalFieldOf("conversion", ConversionContext.Conversion.NONE).forGetter(ConversionContextCondition::conversion),
+        PREDICATE_CODEC.optionalFieldOf("predicate", EntityPredicate.ANY).forGetter(ConversionContextCondition::predicate)
+      ).apply(instance, ConversionContextCondition::new))
+      .flatXmap(
+        condition -> condition.conversion() == ConversionContext.Conversion.NONE && condition.predicate() == EntityPredicate.ANY
+          ? DataResult.error(() -> "Expected either a conversion or predicate field")
+          : DataResult.success(condition),
+        DataResult::success
+      );
 
     @Override
     public boolean test(ConversionContext context) {
         boolean result = true;
-        if (this.conversion != null)
+        if (this.conversion != ConversionContext.Conversion.NONE)
             result = this.conversion == context.conversion();
-        if (this.predicate != null && context.world() instanceof ServerWorld world)
+        if (this.predicate != EntityPredicate.ANY && context.world() instanceof ServerWorld world)
             result = result && this.predicate.test(world, context.entity().getPos(), context.entity());
         return result;
     }
 
     @Override
-    public JsonObject toJson() {
-        JsonObject object = new JsonObject();
-        if (this.conversion != null)
-            object.addProperty("conversion", this.conversion.asString());
-        if (this.predicate != null)
-            object.add("predicate", this.predicate.toJson());
-        return object;
-    }
-
-    @Override
-    public EntityConversionCondition.Serializer<?> getSerializer() {
-        return BLConversions.CONVERSION_CONTEXT_CONDITION;
-    }
-
-    public static ConversionContextCondition fromJson(JsonObject object) {
-        ConversionContext.Conversion conversion = object.has("conversion") ? ConversionContext.Conversion.fromJson(object.get("conversion")) : null;
-        EntityPredicate predicate = object.has("predicate") ? EntityPredicate.fromJson(object.get("predicate")) : null;
-        if (conversion == null && predicate == null)
-            throw new JsonParseException("Expected either a predicate or conversion field");
-        return new ConversionContextCondition(conversion, predicate);
+    public Codec<ConversionContextCondition> getCodec() {
+        return CODEC;
     }
 
     public static ConversionContextCondition converting() {
-        return new ConversionContextCondition(ConversionContext.Conversion.CONVERTING, null);
+        return new ConversionContextCondition(ConversionContext.Conversion.CONVERTING, EntityPredicate.ANY);
     }
 
     public static ConversionContextCondition deconverting() {
-        return new ConversionContextCondition(ConversionContext.Conversion.DECONVERTING, null);
+        return new ConversionContextCondition(ConversionContext.Conversion.DECONVERTING, EntityPredicate.ANY);
     }
 
     public static ConversionContextCondition predicate(EntityPredicate predicate) {
-        return new ConversionContextCondition(null, predicate);
+        return new ConversionContextCondition(ConversionContext.Conversion.NONE, predicate);
     }
 
     public static ConversionContextConditionBuilder builder() {
@@ -72,24 +65,28 @@ public class ConversionContextCondition implements EntityConversionCondition {
     }
 
     public static class ConversionContextConditionBuilder {
-        ConversionContext.Conversion conversion;
-        EntityPredicate predicate;
+        private ConversionContext.Conversion conversion;
+        private EntityPredicate predicate;
 
         protected ConversionContextConditionBuilder() {
+            this.conversion = ConversionContext.Conversion.NONE;
+            this.predicate = EntityPredicate.ANY;
         }
 
         public ConversionContextConditionBuilder conversion(ConversionContext.Conversion conversion) {
+            Objects.requireNonNull(conversion);
             this.conversion = conversion;
             return this;
         }
 
         public ConversionContextConditionBuilder predicate(EntityPredicate predicate) {
+            Objects.requireNonNull(predicate);
             this.predicate = predicate;
             return this;
         }
 
         public ConversionContextCondition build() {
-            if (this.conversion == null && this.predicate == null)
+            if (this.conversion == ConversionContext.Conversion.NONE && this.predicate == EntityPredicate.ANY)
                 throw new IllegalStateException("ConversionContextCondition cannot be empty");
             return new ConversionContextCondition(this.conversion, this.predicate);
         }

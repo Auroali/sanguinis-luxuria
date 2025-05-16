@@ -1,12 +1,25 @@
 package com.auroali.sanguinisluxuria.common.conversions.transformers;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
 import java.util.Arrays;
 
-public class NbtTreeLocation {
-    final String[] nodes;
+public sealed class NbtTreeLocation permits NbtTreeLocation.Empty {
+    public static final Codec<NbtTreeLocation> CODEC = Codec.STRING
+      .flatXmap(
+        str -> {
+            NbtTreeLocation location = NbtTreeLocation.fromString(str);
+            return location == empty() ? DataResult.error(() -> "Invalid NBT path " + str) : DataResult.success(location);
+        },
+        tree -> tree == empty() ? DataResult.error(() -> "Cannot serialize empty path") : DataResult.success(tree.toString())
+      );
+
+    private static NbtTreeLocation EMPTY;
+
+    private final String[] nodes;
 
     private NbtTreeLocation(String[] pathEntries) {
         this.nodes = pathEntries;
@@ -15,8 +28,12 @@ public class NbtTreeLocation {
     public static NbtTreeLocation fromString(String path) {
         String[] nodes = path.split("\\.");
         if (nodes.length == 0)
-            return null;
+            return empty();
         return new NbtTreeLocation(nodes);
+    }
+
+    public static NbtTreeLocation empty() {
+        return EMPTY == null ? EMPTY = new Empty() : EMPTY;
     }
 
     protected NbtCompound getParent(NbtCompound tag) {
@@ -69,5 +86,41 @@ public class NbtTreeLocation {
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj instanceof NbtTreeLocation path && Arrays.equals(this.nodes, path.nodes);
+    }
+
+    protected static final class Empty extends NbtTreeLocation {
+        private Empty() {
+            super(null);
+        }
+
+        @Override
+        protected NbtCompound getParent(NbtCompound tag) {
+            return null;
+        }
+
+        @Override
+        public NbtElement get(NbtCompound tag) {
+            return null;
+        }
+
+        @Override
+        public void insertInto(NbtCompound tag, NbtElement element) {
+
+        }
+
+        @Override
+        public String toString() {
+            return "";
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return this == obj;
+        }
     }
 }

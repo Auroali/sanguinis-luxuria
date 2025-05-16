@@ -4,9 +4,8 @@ import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.ConversionContextCondition;
-import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LocationPredicate;
@@ -17,6 +16,11 @@ import net.minecraft.world.biome.Biome;
  * Transformer that only runs the provided transformer if some condition succeeds
  */
 public class ConditionalTransformer implements EntityConversionTransformer {
+    public static final Codec<ConditionalTransformer> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+      EntityConversionTransformer.CODEC.fieldOf("transformer").forGetter(t -> t.transformer),
+      EntityConversionCondition.CODEC.fieldOf("condition").forGetter(t -> t.condition)
+    ).apply(instance, ConditionalTransformer::new));
+
     private final EntityConversionTransformer transformer;
     private final EntityConversionCondition condition;
 
@@ -31,35 +35,23 @@ public class ConditionalTransformer implements EntityConversionTransformer {
             this.transformer.apply(context, nbtIn, nbtOut);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public JsonObject toJson() {
-        JsonObject object = new JsonObject();
-        object.add(
-          "transformer",
-          ((EntityConversionTransformer.Serializer) this.transformer.getSerializer()).toJson(this.transformer)
-        );
-        object.add(
-          "condition",
-          ((EntityConversionCondition.Serializer) this.condition.getSerializer()).toJson(this.condition)
-        );
-        return object;
-    }
-
-    public static ConditionalTransformer fromJson(JsonObject object) {
-        if (!object.has("condition"))
-            throw new JsonParseException("Missing condition field");
-        if (!object.has("transformer"))
-            throw new JsonParseException("Missing transformer field");
-        EntityConversionTransformer transformer = EntityConversionTransformer.fromJson(object.getAsJsonObject("transformer"));
-        EntityConversionCondition condition = EntityConversionCondition.fromJson(object.getAsJsonObject("condition"));
-
-        return new ConditionalTransformer(transformer, condition);
+    public Codec<ConditionalTransformer> getCodec() {
+        return CODEC;
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return BLConversions.CONDITIONAL_TRANSFORMER;
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        return obj instanceof ConditionalTransformer other
+          && other.transformer.equals(this.transformer)
+          && other.condition.equals(this.condition);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * this.condition.hashCode() + this.transformer.hashCode();
     }
 
     public static ConditionalTransformer biome(EntityConversionTransformer transformer, RegistryKey<Biome> biome) {

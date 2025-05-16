@@ -67,6 +67,7 @@
   "block.sanguinisluxuria.stripped_decayed_wood": "Stripped Decayed Wood",
   "block.sanguinisluxuria.stripped_hungry_decayed_log": "Stripped Hungry Decayed Log",
   "category.sanguinisluxuria.sanguinisluxuria": "Sanguinis Luxuria",
+  "commands.sanguinisluxuria.convert.invalid_conversion": "Invalid conversion type \"%s\"",
   "death.attack.sanguinisluxuria.bite": "%s was bitten by %s",
   "death.attack.sanguinisluxuria.bite.item": "%s was bitten by %s using %s",
   "death.attack.sanguinisluxuria.blessed_water": "%s was burned by blessed water",

@@ -1,10 +1,12 @@
 package com.auroali.sanguinisluxuria.datagen.builders;
 
+import com.auroali.sanguinisluxuria.Bloodlust;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionType;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
-import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
 
@@ -200,21 +202,15 @@ public class ConversionJsonBuilder {
             object.addProperty("type", typeId.toString());
 
             if (!this.transformers.isEmpty()) {
-                JsonArray serializedTransformers = new JsonArray();
-                this.transformers.forEach(transformer -> {
-                    JsonObject transformerJson = ((EntityConversionTransformer.Serializer) transformer.getSerializer()).toJson(transformer);
-                    serializedTransformers.add(transformerJson);
-                });
-                object.add("transformers", serializedTransformers);
+                JsonElement transformersJson = EntityConversionTransformer.LIST_CODEC.encodeStart(JsonOps.INSTANCE, this.transformers)
+                  .getOrThrow(false, Bloodlust.LOGGER::error);
+                object.add("transformers", transformersJson);
             }
 
             if (!this.conditions.isEmpty()) {
-                JsonArray serializedConditions = new JsonArray();
-                this.conditions.forEach(condition -> {
-                    JsonObject conditionJson = ((EntityConversionCondition.Serializer) condition.getSerializer()).toJson(condition);
-                    serializedConditions.add(conditionJson);
-                });
-                object.add("conditions", serializedConditions);
+                JsonElement conditionsJson = EntityConversionCondition.LIST_CODEC.encodeStart(JsonOps.INSTANCE, this.conditions)
+                  .getOrThrow(false, Bloodlust.LOGGER::error);
+                object.add("conditions", conditionsJson);
             }
         }
 

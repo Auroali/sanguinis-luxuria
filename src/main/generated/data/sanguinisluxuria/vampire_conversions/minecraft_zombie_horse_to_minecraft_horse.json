@@ -3,7 +3,9 @@
   "conditions": [
     {
       "type": "sanguinisluxuria:context",
-      "conversion": "deconverting"
+      "value": {
+        "conversion": "deconverting"
+      }
     }
   ],
   "entity": "minecraft:zombie_horse",
@@ -11,31 +13,31 @@
   "transformers": [
     {
       "type": "sanguinisluxuria:copy",
-      "src": "Owner"
+      "source": "Owner"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "Bred"
+      "source": "Bred"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "EatingHaystack"
+      "source": "EatingHaystack"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "SaddleItem"
+      "source": "SaddleItem"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "Tame"
+      "source": "Tame"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "Temper"
+      "source": "Temper"
     },
     {
       "type": "sanguinisluxuria:copy",
-      "src": "attributes"
+      "source": "attributes"
     }
   ]
 }

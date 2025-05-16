@@ -3,7 +3,9 @@
   "conditions": [
     {
       "type": "sanguinisluxuria:context",
-      "conversion": "converting"
+      "value": {
+        "conversion": "converting"
+      }
     },
     {
       "type": "sanguinisluxuria:vampire",
