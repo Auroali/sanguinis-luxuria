@@ -1,2 +1,5 @@
-// 1.20.1	2025-05-09T19:48:36.37308841	Sanguinis Luxuria/Blood Drain Effects
-243f66fe93fdd2ff1ffeb27974d77584b4c77ee1 data/sanguinisluxuria/blood_drain_effects/toxic_blood.json
+// 1.20.1	2025-05-16T13:02:45.786037896	Sanguinis Luxuria/Blood Drain Effects
+a011f7fe627e64ce6441753a4cfc6d25932c9e99 data/sanguinisluxuria/blood_drain_effects/toxic_blood.json
+bbbf1771922618244f786e50417641c0c414b3a1 data/sanguinisluxuria/blood_drain_effects/witch.json
+12cf1919deb58e01e9e0a0c9d35d69082e2e9beb data/sanguinisluxuria/blood_drain_effects/compat/spectrum/kindling_effects.json
+a699bf8e5d1590de21971458f57793c0f94c1516 data/sanguinisluxuria/blood_drain_effects/teleport_on_drain.json

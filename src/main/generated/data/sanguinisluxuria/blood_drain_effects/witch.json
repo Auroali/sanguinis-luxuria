@@ -1,0 +1,15 @@
+{
+  "effects": [
+    {
+      "type": "sanguinisluxuria:status_effect",
+      "chance": 0.025,
+      "effect": "minecraft:weakness"
+    },
+    {
+      "type": "sanguinisluxuria:status_effect",
+      "chance": 0.025,
+      "effect": "minecraft:slowness"
+    }
+  ],
+  "entity": "minecraft:witch"
+}
