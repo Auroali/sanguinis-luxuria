@@ -1,4 +1,6 @@
 jdk:
   - openjdk17
 install:
-  - ./gradlew clean -Pgroup=$GROUP -Pversion=$VERSION runDatagen -xtest assemble publishToMavenLocal
+  - ./gradlew clean
+  - ./gradlew -Pgroup=$GROUP -Pversion=$VERSION runDatagen
+  - ./gradlew -Pgroup=$GROUP -Pversion=$VERSION -xtest assemble publishToMavenLocal
