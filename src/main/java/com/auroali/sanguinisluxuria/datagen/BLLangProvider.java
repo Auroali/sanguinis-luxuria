@@ -53,7 +53,7 @@ public class BLLangProvider extends FabricLanguageProvider {
     }
 
     private static void emiTranslations(TranslationBuilder builder) {
-        builder.add("emi.category.sanguinisluxuria.altar", "Altar");
+        builder.add("emi.category.sanguinisluxuria.ritual", "Rituals");
         builder.add("emi.category.sanguinisluxuria.blood_cauldron", "Cauldron Infusing");
     }
 
