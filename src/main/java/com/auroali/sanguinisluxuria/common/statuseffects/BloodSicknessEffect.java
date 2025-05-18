@@ -39,7 +39,6 @@ public class BloodSicknessEffect extends StatusEffect {
         if (duration == 1 && this.isRightConditions(entity, amplifier) && BLConversions.convertEntity(ConversionContext.from(entity, ConversionContext.Conversion.CONVERTING))) {
             if (entity instanceof ServerPlayerEntity p)
                 BLAdvancementCriterion.CONVERT.trigger(p, ConversionContext.Conversion.CONVERTING);
-            entity.clearStatusEffects();
         }
     }
 
