@@ -137,7 +137,9 @@ public class AltarRitualRecipe implements Recipe<Inventory> {
             Ritual ritual = buf.decodeAsJson(Ritual.RITUAL_CODEC);
 
             Ingredient catalyst = Ingredient.fromPacket(buf);
-            DefaultedList<Ingredient> inputs = buf.readCollection(size -> DefaultedList.ofSize(size, Ingredient.EMPTY), Ingredient::fromPacket);
+            DefaultedList<Ingredient> inputs = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);//buf.readCollection(size -> DefaultedList.ofSize(size, Ingredient.EMPTY), Ingredient::fromPacket);
+            inputs.replaceAll(ignored -> Ingredient.fromPacket(buf));
+
             return new AltarRitualRecipe(id, ritual, catalyst, inputs);
         }
 
@@ -148,7 +150,8 @@ public class AltarRitualRecipe implements Recipe<Inventory> {
               recipe.ritual
             );
             recipe.catalyst.write(buf);
-            buf.writeCollection(recipe.inputs, (buffer, ingredient) -> ingredient.write(buffer));
+            buf.writeVarInt(recipe.inputs.size());
+            recipe.inputs.forEach(i -> i.write(buf));
         }
     }
 }
