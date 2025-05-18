@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.components;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
-import com.auroali.sanguinisluxuria.common.abilities.InfectiousAbility;
+import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;

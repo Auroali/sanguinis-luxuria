@@ -1,5 +1,8 @@
-package com.auroali.sanguinisluxuria.common.abilities;
+package com.auroali.sanguinisluxuria.common.abilities.active;
 
+import com.auroali.sanguinisluxuria.common.abilities.EntitySyncableVampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particle.ParticleTypes;

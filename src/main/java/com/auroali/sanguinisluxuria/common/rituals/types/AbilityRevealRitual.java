@@ -1,9 +1,11 @@
-package com.auroali.sanguinisluxuria.common.rituals;
+package com.auroali.sanguinisluxuria.common.rituals.types;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
+import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.mojang.serialization.Codec;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

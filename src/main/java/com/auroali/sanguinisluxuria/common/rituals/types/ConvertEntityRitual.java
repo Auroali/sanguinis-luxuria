@@ -1,9 +1,12 @@
-package com.auroali.sanguinisluxuria.common.rituals;
+package com.auroali.sanguinisluxuria.common.rituals.types;
 
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
 import com.auroali.sanguinisluxuria.common.registry.BLConversions;
 import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.rituals.Ritual;
+import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
+import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.LivingEntity;

@@ -4,6 +4,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.world.World;
 
+/**
+ * Variant of {@link SyncableVampireAbility} that handles entities by default
+ *
+ * @param <T> the entity class to use
+ */
 public interface EntitySyncableVampireAbility<T extends Entity> extends SyncableVampireAbility<T> {
     @Override
     default void writePacket(PacketByteBuf buf, World world, T data) {

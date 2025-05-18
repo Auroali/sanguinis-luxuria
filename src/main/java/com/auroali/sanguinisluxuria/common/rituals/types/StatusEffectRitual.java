@@ -1,6 +1,9 @@
-package com.auroali.sanguinisluxuria.common.rituals;
+package com.auroali.sanguinisluxuria.common.rituals.types;
 
 import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.rituals.Ritual;
+import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
+import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

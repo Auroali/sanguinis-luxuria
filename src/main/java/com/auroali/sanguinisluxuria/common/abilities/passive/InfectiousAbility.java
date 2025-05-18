@@ -1,5 +1,7 @@
-package com.auroali.sanguinisluxuria.common.abilities;
+package com.auroali.sanguinisluxuria.common.abilities.passive;
 
+import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.network.PacketByteBuf;

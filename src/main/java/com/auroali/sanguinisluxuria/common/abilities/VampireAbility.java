@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.abilities;
 
+import com.auroali.sanguinisluxuria.common.abilities.active.VampireTeleportAbility;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
@@ -108,11 +109,11 @@ public class VampireAbility {
     public void onAbilityRemoved(LivingEntity entity, VampireComponent vampire) {
     }
 
-    void playSound(LivingEntity entity, SoundEvent event) {
+    protected void playSound(LivingEntity entity, SoundEvent event) {
         this.playSound(entity, event, 0.f);
     }
 
-    void playSound(LivingEntity entity, SoundEvent event, float pitchVariance) {
+    protected void playSound(LivingEntity entity, SoundEvent event, float pitchVariance) {
         float basePitch = 1.f - pitchVariance / 2.f;
         float pitch = basePitch + entity.getRandom().nextFloat() * pitchVariance;
         entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), event, SoundCategory.PLAYERS, 1.0f, pitch);

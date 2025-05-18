@@ -1,5 +1,7 @@
-package com.auroali.sanguinisluxuria.common.abilities;
+package com.auroali.sanguinisluxuria.common.abilities.active;
 
+import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;

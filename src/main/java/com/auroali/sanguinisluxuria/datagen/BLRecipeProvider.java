@@ -8,7 +8,7 @@ import com.auroali.sanguinisluxuria.common.registry.BLItems;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.BLTags;
 import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
-import com.auroali.sanguinisluxuria.common.rituals.*;
+import com.auroali.sanguinisluxuria.common.rituals.types.*;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronFillRecipeJsonBuilder;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronRecipeJsonBuilder;
 import com.auroali.sanguinisluxuria.datagen.builders.RitualRecipeJsonBuilder;
