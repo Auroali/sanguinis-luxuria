@@ -104,8 +104,9 @@ public class VampireHelper {
      *
      * @param from the entity to transfer effects from
      * @param to   the entity to transfer effects to
+     * @return the list of successfully transferred status effect instances
      */
-    public static void transferStatusEffects(LivingEntity from, LivingEntity to) {
+    public static List<StatusEffectInstance> transferStatusEffects(LivingEntity from, LivingEntity to) {
         List<StatusEffectInstance> transferredEffects = new ArrayList<>(from.getStatusEffects().size());
         for (StatusEffectInstance instance : from.getStatusEffects()) {
             if (instance.isAmbient() || Registries.STATUS_EFFECT.getEntry(instance.getEffectType()).isIn(BLTags.StatusEffects.NON_TRANSFERABLE))
@@ -121,6 +122,7 @@ public class VampireHelper {
 
         // prevent removing effects that weren't transferred
         transferredEffects.forEach(effect -> from.removeStatusEffect(effect.getEffectType()));
+        return transferredEffects;
     }
 
     /**

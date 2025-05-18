@@ -9,12 +9,15 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class InfectiousAbility extends VampireAbility implements SyncableVampireAbility<InfectiousAbility.InfectiousData> {
+    @Override
+    public void sync(LivingEntity entity, InfectiousData data) {
+        if (!data.colours.isEmpty())
+            SyncableVampireAbility.super.sync(entity, data);
+    }
+
     @Override
     public void writePacket(PacketByteBuf buf, World world, InfectiousData data) {
         buf.writeVarInt(data.target.getId());
@@ -68,6 +71,9 @@ public class InfectiousAbility extends VampireAbility implements SyncableVampire
 
     public record InfectiousData(LivingEntity target, List<Vector3f> colours) {
         public static InfectiousData create(LivingEntity target, Collection<StatusEffectInstance> statusEffects) {
+            if (statusEffects.isEmpty()) {
+                return new InfectiousData(target, Collections.emptyList());
+            }
             List<Vector3f> colours = new ArrayList<>(statusEffects.size());
             for (StatusEffectInstance effect : statusEffects) {
                 float r = (effect.getEffectType().getColor() >> 16 & 0xFF) / 255.0f;

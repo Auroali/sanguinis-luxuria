@@ -51,8 +51,11 @@ public class BiteAbility extends VampireAbility {
             );
         }
         if (component.getAbilties().hasAbility(BLVampireAbilities.INFECTIOUS)) {
-            SyncableVampireAbility.syncAbility(entity, BLVampireAbilities.INFECTIOUS, InfectiousAbility.InfectiousData.create(target, entity.getStatusEffects()));
-            VampireHelper.transferStatusEffects(entity, target);
+            SyncableVampireAbility.syncAbility(
+              entity,
+              BLVampireAbilities.INFECTIOUS,
+              InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(entity, target))
+            );
         }
         if (component instanceof EntityTrackingDrainer drainer && target.isAlive()) {
             drainer.setLastDrained(target);
