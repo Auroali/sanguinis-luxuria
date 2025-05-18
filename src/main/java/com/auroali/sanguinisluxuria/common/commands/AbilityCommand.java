@@ -33,8 +33,8 @@ public class AbilityCommand {
     private static int resetAbilities(CommandContext<ServerCommandSource> ctx, Collection<ServerPlayerEntity> targets) {
         for (ServerPlayerEntity player : targets) {
             VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-            for (VampireAbility a : component.getAbilties()) {
-                a.onAbilityRemoved(ctx.getSource().getPlayer(), component);
+            for (VampireAbility a : component.getAbilties().abilities()) {
+                a.onAbilityRemoved(player, component);
                 component.getAbilties().removeAbility(a);
             }
             BLEntityComponents.VAMPIRE_COMPONENT.sync(player);

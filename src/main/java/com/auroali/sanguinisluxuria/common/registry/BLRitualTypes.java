@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.rituals.*;
+import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.auroali.sanguinisluxuria.common.rituals.types.*;
 import net.minecraft.registry.Registry;
 

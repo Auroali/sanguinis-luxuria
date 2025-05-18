@@ -26,7 +26,11 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
         if (!container.hasAbility(BLVampireAbilities.TELEPORT))
             return false;
 
-        if (livingEntity == null || !this.mob.getVisibilityCache().canSee(livingEntity) || container.isOnCooldown(BLVampireAbilities.TELEPORT) || livingEntity.getPos().distanceTo(this.mob.getPos()) < VampireTeleportAbility.getRange(this.mob)) {
+        VampireAbilityContainer.AbilityEntry entry = container.getAbility(BLVampireAbilities.TELEPORT);
+        if (entry == null)
+            return false;
+
+        if (livingEntity == null || !this.mob.getVisibilityCache().canSee(livingEntity) || entry.isOnCooldown() || livingEntity.getPos().distanceTo(this.mob.getPos()) < VampireTeleportAbility.getRange(this.mob)) {
             return false;
         } else {
             this.target = livingEntity;
@@ -39,9 +43,13 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
         VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob).getAbilties();
         double teleportRange = Math.pow(VampireTeleportAbility.getRange(this.mob), 2);
 
+        VampireAbilityContainer.AbilityEntry entry = container.getAbility(BLVampireAbilities.TELEPORT);
+        if (entry == null)
+            return false;
+
         if (!this.target.isAlive()) {
             return false;
-        } else if (!this.mob.getVisibilityCache().canSee(this.target) || container.isOnCooldown(BLVampireAbilities.TELEPORT) || this.mob.squaredDistanceTo(this.target) < teleportRange) {
+        } else if (!this.mob.getVisibilityCache().canSee(this.target) || entry.isOnCooldown() || this.mob.squaredDistanceTo(this.target) < teleportRange) {
             return false;
         } else {
             return !this.mob.getNavigation().isIdle() || this.canStart();

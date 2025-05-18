@@ -1,9 +1,10 @@
 package com.auroali.sanguinisluxuria.common.abilities.active;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
+import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.components.EntityTrackingDrainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
@@ -24,7 +25,8 @@ import net.minecraft.world.RaycastContext;
 public class BiteAbility extends VampireAbility {
     @Override
     public void activate(LivingEntity entity, VampireComponent component) {
-        if (component.getAbilties().isOnCooldown(this) || VampireHelper.isMasked(entity))
+        VampireAbilityContainer.AbilityEntry entry = component.getAbilties().getAbility(this);
+        if (entry.isOnCooldown() || VampireHelper.isMasked(entity))
             return;
 
         HitResult result = this.getTarget(entity);
@@ -63,7 +65,7 @@ public class BiteAbility extends VampireAbility {
         if (component instanceof EntityTrackingDrainer drainer && target.isAlive()) {
             drainer.setLastDrained(target);
         }
-        component.getAbilties().setCooldown(this, 220);
+        entry.setCooldown(220);
     }
 
     private HitResult getTarget(LivingEntity entity) {

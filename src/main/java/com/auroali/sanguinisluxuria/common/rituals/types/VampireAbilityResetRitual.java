@@ -26,7 +26,7 @@ public class VampireAbilityResetRitual implements Ritual {
 
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(parameters.target());
         VampireAbilityContainer abilities = vampire.getAbilties();
-        for (VampireAbility ability : abilities) {
+        for (VampireAbility ability : abilities.abilities()) {
             ability.onAbilityRemoved(parameters.target(), vampire);
             abilities.removeAbility(ability);
             parameters.applyToPlayerTarget(BLAdvancementCriterion.RESET_ABILITIES::trigger);

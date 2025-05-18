@@ -87,7 +87,7 @@ public class PlayerVampireComponent implements VampireComponent, EntityTrackingD
             this.timeInSun = 0;
             this.bloodDrainTimer = 0;
             this.isDowned = false;
-            for (VampireAbility a : this.abilities) {
+            for (VampireAbility a : this.abilities.abilities()) {
                 a.onUnVampire(this.holder, this);
             }
         }

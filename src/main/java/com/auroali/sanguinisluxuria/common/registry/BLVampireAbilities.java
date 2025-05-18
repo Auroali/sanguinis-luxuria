@@ -1,7 +1,9 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.abilities.*;
+import com.auroali.sanguinisluxuria.common.abilities.AbilityConditions;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAttributeModifierAbility;
 import com.auroali.sanguinisluxuria.common.abilities.active.BiteAbility;
 import com.auroali.sanguinisluxuria.common.abilities.active.MistAbility;
 import com.auroali.sanguinisluxuria.common.abilities.active.VampireTeleportAbility;

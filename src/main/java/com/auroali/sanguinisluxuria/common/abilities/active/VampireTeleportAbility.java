@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.abilities.active;
 
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
@@ -25,7 +26,8 @@ import net.minecraft.world.event.GameEvent;
 public class VampireTeleportAbility extends VampireAbility implements SyncableVampireAbility<VampireTeleportAbility.TeleportData> {
     @Override
     public void activate(LivingEntity entity, VampireComponent component) {
-        if (component.getAbilties().isOnCooldown(this))
+        VampireAbilityContainer.AbilityEntry entry = component.getAbilties().getAbility(this);
+        if (entry.isOnCooldown())
             return;
 
         Vec3d start = entity.getPos();
@@ -57,7 +59,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
 
         this.sync(entity, new TeleportData(start, entity.getPos()));
 
-        component.getAbilties().setCooldown(this, getCooldown(entity));
+        entry.setCooldown(getCooldown(entity));
     }
 
     public void damageEntitiesBetween(LivingEntity entity, Vec3d start, Vec3d end) {

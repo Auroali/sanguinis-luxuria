@@ -23,6 +23,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
 
+import java.util.Map;
+
 public class BLHud {
     public static void render(DrawContext context, float deltaTick) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -81,12 +83,15 @@ public class BLHud {
         TextRenderer renderer = client.textRenderer;
         context.getMatrices().push();
         context.getMatrices().translate(2, -2, 0);
-        for (VampireAbility ability : container) {
-            if (!container.isOnCooldown(ability))
+        for (Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry> entry : container) {
+            VampireAbility ability = entry.getKey();
+            VampireAbilityContainer.AbilityEntry abilityEntry = entry.getValue();
+
+            if (!abilityEntry.isOnCooldown())
                 continue;
 
-            int cooldown = container.getCooldown(ability);
-            int maxCooldown = container.getMaxCooldown(ability);
+            int cooldown = abilityEntry.getCooldown();
+            int maxCooldown = abilityEntry.getMaxCooldown();
             float cooldownPercent = MathHelper.clamp(cooldown / (float) maxCooldown, 0.f, 1.f);
             context.drawTexture(BLResources.ICONS, 0, height - 17, 0, 46, 64, 17);
             context.drawText(client.textRenderer, Text.translatable(ability.getTranslationKey()), 4, height - 13, -1, false);

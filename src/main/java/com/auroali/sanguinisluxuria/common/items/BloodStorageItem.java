@@ -52,6 +52,9 @@ public interface BloodStorageItem {
         NbtCompound bloodTag = stack.getOrCreateSubNbt(BLOOD_KEY);
         bloodTag.putInt(CURRENT_BLOOD_KEY, 0);
         bloodTag.putInt(MAX_BLOOD_KEY, stack.getItem() instanceof BloodStorageItem item ? item.getDefaultMaxBlood() : 0);
+        if (stack.hasNbt() && stack.getNbt().contains("StoredBlood", NbtElement.INT_TYPE) && stack.getNbt().getInt("StoredBlood") > 0) {
+            bloodTag.putInt(CURRENT_BLOOD_KEY, bloodTag.getInt("StoredBlood"));
+        }
         return bloodTag;
     }
 
