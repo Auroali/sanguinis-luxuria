@@ -86,7 +86,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         int bloodToFill = MathHelper.clamp(
           Math.min(userBlood.getMaxBlood() - userBlood.getBlood(), BloodStorageItem.getItemBlood(stack)),
           0,
-          4
+          8
         );
 
         if (!(user instanceof PlayerEntity player && player.isCreative()))
