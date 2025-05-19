@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "spectrum:somnolence",
+      "required": false
+    },
+    {
+      "id": "spectrum:eternal_slumber",
+      "required": false
+    },
+    {
+      "id": "spectrum:fatal_slumber",
+      "required": false
+    },
+    {
+      "id": "spectrum:divinity",
+      "required": false
+    }
+  ]
+}
