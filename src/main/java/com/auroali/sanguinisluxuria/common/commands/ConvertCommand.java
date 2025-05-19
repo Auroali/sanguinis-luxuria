@@ -31,7 +31,8 @@ public class ConvertCommand {
             throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.invalid_conversion", conversion));
         }
         for (Entity entity : entities) {
-            BLConversions.convertEntity(ConversionContext.from(entity, conversion));
+            if (!BLConversions.convertEntity(ConversionContext.from(entity, conversion)))
+                throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.invalid_conversion", entity.getName()));
         }
         return 0;
     }

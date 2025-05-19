@@ -4,12 +4,15 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -46,10 +49,18 @@ public class AbilityCommand {
         for (ServerPlayerEntity player : targets) {
             VampireAbility ability = VampireAbilityArgument.getAbility(ctx, "ability");
             VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-            if (ability.testConditions(player, component, component.getAbilties())) {
-                component.unlockAbility(ability);
-                BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
+            if (!ability.testConditions(player, component, component.getAbilties())) {
+                throw new CommandException(
+                  Text.translatable(
+                    "commands.sanguinisluxuria.ability.failed_conditions",
+                    BLRegistries.VAMPIRE_ABILITIES.getId(ability),
+                    player.getName()
+                  )
+                );
             }
+
+            component.unlockAbility(ability);
+            BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
         }
         return 0;
     }

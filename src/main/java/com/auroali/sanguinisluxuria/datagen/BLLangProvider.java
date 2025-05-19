@@ -29,6 +29,8 @@ public class BLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("fluids.sanguinisluxuria.blood", "Blood");
         translationBuilder.add("argument.sanguinisluxuria.id.invalid", "'%s' is not a valid id!");
         translationBuilder.add("commands.sanguinisluxuria.convert.invalid_conversion", "Invalid conversion type \"%s\"");
+        translationBuilder.add("commands.sanguinisluxuria.convert.failed", "Failed to convert %s");
+        translationBuilder.add("commands.sanguinisluxuria.ability.failed_conditions", "Failed to add %s to %s");
         tags(translationBuilder);
         subtitles(translationBuilder);
         keybindings(translationBuilder);
