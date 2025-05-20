@@ -24,18 +24,49 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.event.GameEvent;
 
 public interface VampireComponent extends Component, AutoSyncedComponent, ServerTickingComponent {
+    /**
+     * @return if the holding entity is a vampire
+     */
     boolean isVampire();
 
+    /**
+     * Set the vampire state of the holding entity
+     *
+     * @param vampire the new vampire state
+     * @apiNote this will not have an effect on all vampire components,
+     * as some have a fixed state (such as {@link com.auroali.sanguinisluxuria.common.components.impl.EntityVampireComponent})
+     */
     void setVampire(boolean vampire);
 
+    /**
+     * @return if the holding entity is currently misted
+     */
     boolean isMist();
 
+    /**
+     * Sets the mist state of the holding entity
+     *
+     * @param mist the new mist state
+     */
     void setMist(boolean mist);
 
+    /**
+     * @return if the holding entity is downed
+     */
     boolean isDowned();
 
+    /**
+     * Sets the downed state of the holding entity
+     *
+     * @param downed the new downed state
+     */
     void setDowned(boolean downed);
 
+    /**
+     * Returns the {@link VampireAbilityContainer} containing all of this component's abilities
+     *
+     * @return this component's ability container
+     */
     VampireAbilityContainer getAbilityContainer();
 
     /**

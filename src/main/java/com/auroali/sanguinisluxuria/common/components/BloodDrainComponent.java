@@ -27,27 +27,45 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
         this.holder = holder;
     }
 
+    /**
+     * Begins draining an entity
+     *
+     * @param entity the entity to drain
+     */
     public void beginDrain(LivingEntity entity) {
-        if (!VampireHelper.isVampire(this.holder) || VampireHelper.isMasked(this.holder))
+        if (!VampireHelper.isVampire(this.holder) || VampireHelper.isMasked(this.holder) || !VampireHelper.hasBlood(entity))
             return;
 
         this.target = entity;
+        this.ticksDraining = 0;
         this.targetHasBleeding = entity.hasStatusEffect(BLStatusEffects.BLEEDING);
         BLEntityComponents.BLOOD_DRAIN_COMPONENT.sync(this.holder);
     }
 
+    /**
+     * Cancels the current drain, clearing the target entity
+     * and drain timer
+     */
     public void cancelDrain() {
         this.target = null;
         this.ticksDraining = 0;
         BLEntityComponents.BLOOD_DRAIN_COMPONENT.sync(this.holder);
     }
 
+    /**
+     * @return the amount of time required to drain one unit of blood
+     * from the target entity
+     */
     public int getTimeToDrain() {
         return this.targetHasBleeding
           ? BloodConstants.BLOOD_DRAIN_TIME_BLEEDING
           : BloodConstants.BLOOD_DRAIN_TIME;
     }
 
+    /**
+     * @return the current amount of time the holding entity has
+     * been draining the target entity for
+     */
     public int getTimeDraining() {
         return this.ticksDraining;
     }
@@ -108,16 +126,17 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-
+        // do nothing
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-
+        // do nothing
     }
 
     @Override
     public boolean shouldSyncWith(ServerPlayerEntity player) {
+        // only sync with the holding player
         return player == this.holder;
     }
 
