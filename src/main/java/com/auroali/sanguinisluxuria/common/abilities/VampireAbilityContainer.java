@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry>> {
     private static final Runnable EMPTY_CALLBACK = () -> {
@@ -37,7 +38,10 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
 
     public void tick(LivingEntity entity, VampireComponent vampire) {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-        this.abilities.values().forEach(entry -> entry.tick(entity, vampire, blood));
+        boolean[] shouldSync = new boolean[1];
+        this.abilities.values().forEach(entry -> entry.tick(entity, vampire, blood, () -> shouldSync[0] = true));
+        if (shouldSync[0])
+            this.requestClientSync();
     }
 
     public void addAbility(VampireAbility ability) {
@@ -155,7 +159,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
             this.ticker = (VampireAbility.AbilityTicker<VampireAbility>) ability.createTicker();
         }
 
-        public void tick(LivingEntity entity, VampireComponent vampire, BloodComponent blood) {
+        private void tick(LivingEntity entity, VampireComponent vampire, BloodComponent blood, EntrySync sync) {
             if (this.ticker != null)
                 this.ticker.tick(this.ability, entity.getWorld(), entity, vampire, VampireAbilityContainer.this, blood);
 
@@ -164,7 +168,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
                     this.maxCooldownTicks = 0;
                     this.ability.onCooldownEnd(entity, vampire, VampireAbilityContainer.this);
                 }
-                VampireAbilityContainer.this.requestClientSync();
+                sync.request();
             }
         }
 
@@ -240,5 +244,9 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         public boolean isOnCooldown() {
             return this.cooldownTicks > 0 && this.maxCooldownTicks > 0;
         }
+    }
+
+    private interface EntrySync {
+        void request();
     }
 }
