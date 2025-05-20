@@ -161,8 +161,8 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
 
             if (this.cooldownTicks > 0) {
                 if (--this.cooldownTicks == 0) {
-                    this.ability.onCooldownEnd(entity, vampire, VampireAbilityContainer.this);
                     this.maxCooldownTicks = 0;
+                    this.ability.onCooldownEnd(entity, vampire, VampireAbilityContainer.this);
                 }
                 VampireAbilityContainer.this.requestClientSync();
             }
