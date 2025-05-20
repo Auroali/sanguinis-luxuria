@@ -20,12 +20,12 @@ public class VampireHungerEffectManager {
     private int ticks;
     private int prevTicks;
     // used for the timing of the wobble effect
-    private int renderTicks;
+    private int totalRenderTicks;
     private boolean render;
 
     public void tick(PlayerEntity entity) {
         HungerManager manager = entity.getHungerManager();
-        this.renderTicks++;
+        this.totalRenderTicks++;
         this.prevTicks = this.ticks;
         if (manager.getFoodLevel() <= HUNGER_LIMIT) {
             this.render = true;
@@ -46,7 +46,7 @@ public class VampireHungerEffectManager {
             return;
 
         float renderTick = MathHelper.lerp(tickDelta, this.prevTicks, this.ticks);
-        RENDER_TIME.set((this.renderTicks + tickDelta) / 20.f);
+        RENDER_TIME.set((this.totalRenderTicks + tickDelta) / 20.f);
         PERCENT.set(MathHelper.clamp(1.f - renderTick / (float) MAX_TICKS_ENTITY, 0.3f, 1.f));
         SHADER.render(tickDelta);
     }
