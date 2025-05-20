@@ -8,12 +8,14 @@ import com.auroali.sanguinisluxuria.common.commands.arguments.ConversionArgument
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
 import com.auroali.sanguinisluxuria.common.items.storage.BloodItemFluidStorage;
-import com.auroali.sanguinisluxuria.common.network.ActivateAbilityC2S;
-import com.auroali.sanguinisluxuria.common.network.DrainBloodC2S;
+import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
+import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
@@ -45,6 +47,8 @@ import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.village.VillagerProfession;
@@ -200,18 +204,35 @@ public class Bloodlust implements ModInitializer {
             if (!VampireHelper.isVampire(player))
                 return;
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-            VampireAbilityContainer container = vampire.getAbilties();
+            VampireAbilityContainer container = vampire.getAbilityContainer();
             if (container.hasAbility(packet.ability()))
                 packet.ability().activate(player, vampire);
         });
         ServerPlayNetworking.registerGlobalReceiver(DrainBloodC2S.ID, (packet, player, responseSender) -> {
             if (!VampireHelper.isVampire(player))
                 return;
-            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-            if (packet.draining())
-                vampire.tryStartSuckingBlood();
-            else
-                vampire.stopSuckingBlood();
+            BloodDrainComponent drainer = BLEntityComponents.BLOOD_DRAIN_COMPONENT.get(player);
+            HitResult result = VampireHelper.raycastEntity(player, player.getRotationVector(), e -> e instanceof LivingEntity && VampireHelper.hasBlood(e));
+            if (result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() instanceof LivingEntity target && VampireHelper.hasBlood(target)) {
+                if (packet.draining())
+                    drainer.beginDrain(target);
+                else
+                    drainer.cancelDrain();
+                return;
+            }
+
+            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(player);
+            if (blood.getBlood() == 0)
+                return;
+
+            int filled = VampireHelper.fillHeldBloodStorage(player, 1, stack -> {
+                if (EntityTrackingItem.canTrackEntity(stack) && drainer.getLastDrained() != null) {
+                    EntityTrackingItem.setEntity(stack, drainer.getLastDrained());
+                    drainer.setLastDrained(null);
+                }
+            });
+
+            blood.setBlood(blood.getBlood() - filled);
         });
     }
 }

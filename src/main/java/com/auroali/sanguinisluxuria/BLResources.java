@@ -39,7 +39,7 @@ public class BLResources {
     public static final Identifier TRANSFER_EFFECTS_ID = id("transfer_effects");
     public static final Identifier BITE_ID = id("bite");
     public static final Identifier SUN_PROTECTION_ID = id("sun_protection");
-    public static final Identifier BLOOD_DRAIN_ID = id("blood_drain");
+    public static final Identifier BLOOD_TRANSFER_COMPONENT_ID = id("blood_transfer");
     public static final Identifier ALTAR_BEATS_SOUND = id("altar_beats");
     public static final Identifier BLOOD_STILL = id("blood");
     public static final Identifier BLOOD_STILL_TEXTURE = id("block/blood_still");
@@ -164,6 +164,7 @@ public class BLResources {
     public static final Identifier IGNITE_EFFECT_ID = id("ignite");
     // used to try to run events after other mods
     public static final Identifier AFTER_EVENT_PHASE = id("after");
+    public static final Identifier BLOOD_DRAIN_COMPONENT_ID = id("blood_drain");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);

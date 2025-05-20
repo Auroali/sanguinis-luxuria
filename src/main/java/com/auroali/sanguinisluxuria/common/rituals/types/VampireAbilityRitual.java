@@ -29,12 +29,11 @@ public record VampireAbilityRitual(VampireAbility ability) implements Ritual {
             return;
 
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(parameters.target());
-        VampireAbilityContainer abilities = vampire.getAbilties();
+        VampireAbilityContainer abilities = vampire.getAbilityContainer();
         if (abilities.hasAbility(this.ability) || !this.ability.testConditions(parameters.target(), vampire, abilities))
             // todo: add feedback
             return;
-
-        vampire.unlockAbility(this.ability);
+        abilities.addAbility(this.ability);
         parameters.applyToPlayerTarget(player -> BLAdvancementCriterion.UNLOCK_ABILITY.trigger(player, this.ability));
     }
 

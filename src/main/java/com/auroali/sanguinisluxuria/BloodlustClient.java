@@ -9,9 +9,9 @@ import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRender
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.network.ActivateAbilityC2S;
-import com.auroali.sanguinisluxuria.common.network.AltarRecipeStartS2C;
-import com.auroali.sanguinisluxuria.common.network.DrainBloodC2S;
+import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
+import com.auroali.sanguinisluxuria.common.network.packets.AltarRecipeStartS2C;
+import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;

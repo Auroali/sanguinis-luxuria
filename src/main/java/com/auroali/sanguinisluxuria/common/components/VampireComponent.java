@@ -3,10 +3,8 @@ package com.auroali.sanguinisluxuria.common.components;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
-import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
-import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.onyxstudios.cca.api.v3.component.Component;
@@ -26,89 +24,19 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.event.GameEvent;
 
 public interface VampireComponent extends Component, AutoSyncedComponent, ServerTickingComponent {
-    /**
-     * @return if the component holder is a vampire
-     */
     boolean isVampire();
 
-    /**
-     * Sets whether the component holder is a vampire
-     *
-     * @param isVampire whether the holder is a vampire
-     */
-    void setIsVampire(boolean isVampire);
-
-    /**
-     * Drains blood from a target entity, filling up the component holder's blood
-     * or damaging them if the target has blood protection
-     *
-     * @param entity the entity to drain from
-     * @see BloodComponent#drainBlood(int, LivingEntity)
-     */
-    void drainBloodFrom(LivingEntity entity);
-
-    /**
-     * Attempts to find a valid target to drain blood from, and start draining blood
-     * if one is found. If a valid target cannot be found, it will instead attempt to
-     * fill any blood storage items in the component holder's hands
-     */
-    void tryStartSuckingBlood();
-
-    /**
-     * Cancels any blood draining
-     */
-    void stopSuckingBlood();
-
-    /**
-     * Gets the current blood draining progress
-     *
-     * @return the amount of time blood has been draining for, in ticks
-     * @see BloodConstants#BLOOD_DRAIN_TIME
-     * @see BloodConstants#BLOOD_DRAIN_TIME_BLEEDING
-     */
-    int getBloodDrainTimer();
-
-    /**
-     * Gets the max time that can be spent in the sun before burning
-     *
-     * @return the amount of time that can be spent in the sun, in ticks
-     */
-    int getMaxTimeInSun();
-
-    /**
-     * Gets the amount of time spent in the sun
-     *
-     * @return how long the component holder has been in the sun, in ticks
-     */
-    int getTimeInSun();
-
-    /**
-     * Gets the ability container for this component, which tracks unlocked abilities,
-     * ability cooldowns and what abilities are bound to keys
-     *
-     * @return this component's ability container
-     */
-    VampireAbilityContainer getAbilties();
-
-    void unlockAbility(VampireAbility ability);
-
-    /**
-     * Gets the downed state of this component
-     *
-     * @return the downed state
-     */
-    boolean isDown();
-
-    /**
-     * Sets the 'downed' state of this component
-     *
-     * @param down whether downed or not
-     */
-    void setDowned(boolean down);
+    void setVampire(boolean vampire);
 
     boolean isMist();
 
-    void setMist(boolean isMist);
+    void setMist(boolean mist);
+
+    boolean isDowned();
+
+    void setDowned(boolean downed);
+
+    VampireAbilityContainer getAbilityContainer();
 
     /**
      * Calculates the amount of damage taken by a vampire for a given damage source
@@ -179,7 +107,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         vampireEntity.getWorld().emitGameEvent(vampireEntity, GameEvent.DRINK, vampireEntity.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
-        if (vampire.getAbilties().hasAbility(BLVampireAbilities.INFECTIOUS)) {
+        if (vampire.getAbilityContainer().hasAbility(BLVampireAbilities.INFECTIOUS)) {
             SyncableVampireAbility.syncAbility(
               target,
               BLVampireAbilities.INFECTIOUS,

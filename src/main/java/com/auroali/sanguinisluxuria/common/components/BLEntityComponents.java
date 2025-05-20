@@ -19,14 +19,16 @@ import net.minecraft.entity.projectile.TridentEntity;
 public class BLEntityComponents implements EntityComponentInitializer {
     public static final ComponentKey<BloodComponent> BLOOD_COMPONENT = ComponentRegistry.getOrCreate(BLResources.BLOOD_COMPONENT_ID, BloodComponent.class);
     public static final ComponentKey<VampireComponent> VAMPIRE_COMPONENT = ComponentRegistry.getOrCreate(BLResources.VAMPIRE_COMPONENT_ID, VampireComponent.class);
+    public static final ComponentKey<BloodDrainComponent> BLOOD_DRAIN_COMPONENT = ComponentRegistry.getOrCreate(BLResources.BLOOD_DRAIN_COMPONENT_ID, BloodDrainComponent.class);
 
-    public static final ComponentKey<BloodTransferComponent> BLOOD_TRANSFER_COMPONENT = ComponentRegistry.getOrCreate(BLResources.BLOOD_DRAIN_ID, BloodTransferComponent.class);
+    public static final ComponentKey<BloodTransferComponent> BLOOD_TRANSFER_COMPONENT = ComponentRegistry.getOrCreate(BLResources.BLOOD_TRANSFER_COMPONENT_ID, BloodTransferComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         // we don't need to copy the player component, as it stores no actual data
         registry.registerForPlayers(BLOOD_COMPONENT, PlayerBloodComponent::new, RespawnCopyStrategy.NEVER_COPY);
         registry.registerForPlayers(VAMPIRE_COMPONENT, PlayerVampireComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(BLOOD_DRAIN_COMPONENT, BloodDrainComponent::new, RespawnCopyStrategy.NEVER_COPY);
         registry.beginRegistration(LivingEntity.class, BLOOD_COMPONENT)
           .impl(EntityBloodComponent.class)
           .end(EntityBloodComponent::new);

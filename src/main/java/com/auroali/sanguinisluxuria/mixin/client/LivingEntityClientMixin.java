@@ -6,7 +6,6 @@ import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.option.Perspective;
-import net.minecraft.client.particle.CampfireSmokeParticle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

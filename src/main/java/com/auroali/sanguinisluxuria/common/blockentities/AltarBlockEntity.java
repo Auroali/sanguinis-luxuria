@@ -3,7 +3,7 @@ package com.auroali.sanguinisluxuria.common.blockentities;
 import com.auroali.sanguinisluxuria.BloodlustClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
-import com.auroali.sanguinisluxuria.common.network.AltarRecipeStartS2C;
+import com.auroali.sanguinisluxuria.common.network.packets.AltarRecipeStartS2C;
 import com.auroali.sanguinisluxuria.common.particles.DelayedParticleEffect;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.common.rituals.ActiveRitualData;

@@ -58,7 +58,7 @@ public class VampireVillagerEntity extends HostileEntity {
             this.bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
         }
 
-        if (this.getWorld().isClient && vampire.isDown()) {
+        if (this.getWorld().isClient && vampire.isDowned()) {
             Box box = this.getBoundingBox();
             int max = 3;
             for (int i = 0; i < max; i++) {
@@ -88,7 +88,7 @@ public class VampireVillagerEntity extends HostileEntity {
     @Override
     public float getMovementSpeed() {
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
-        return vampire.isDown() ? 0.5f * super.getMovementSpeed() : super.getMovementSpeed();
+        return vampire.isDowned() ? 0.5f * super.getMovementSpeed() : super.getMovementSpeed();
     }
 
     @Override
@@ -117,7 +117,7 @@ public class VampireVillagerEntity extends HostileEntity {
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
         if (target instanceof LivingEntity entity && VampireHelper.hasBlood(target) && !vampire.isMist() && this.bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
-            vampire.drainBloodFrom(entity);
+            VampireComponent.handleBloodDrain(vampire, entity, this);
             this.playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
             this.bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
             this.onAttacking(target);

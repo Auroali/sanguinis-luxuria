@@ -17,7 +17,7 @@ public class BLEnchantments {
 
     public static void register() {
         Registry.register(Registries.ENCHANTMENT, BLResources.SUN_PROTECTION_ID, SUN_PROTECTION);
-        Registry.register(Registries.ENCHANTMENT, BLResources.BLOOD_DRAIN_ID, BLOOD_DRAIN);
+        Registry.register(Registries.ENCHANTMENT, BLResources.BLOOD_TRANSFER_COMPONENT_ID, BLOOD_DRAIN);
         Registry.register(Registries.ENCHANTMENT, BLResources.SERRATED_ID, SERRATED);
     }
 }

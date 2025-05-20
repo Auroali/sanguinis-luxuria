@@ -26,7 +26,7 @@ import net.minecraft.world.event.GameEvent;
 public class VampireTeleportAbility extends VampireAbility implements SyncableVampireAbility<VampireTeleportAbility.TeleportData> {
     @Override
     public void activate(LivingEntity entity, VampireComponent component) {
-        VampireAbilityContainer.AbilityEntry entry = component.getAbilties().getAbility(this);
+        VampireAbilityContainer.AbilityEntry entry = component.getAbilityContainer().getAbility(this);
         if (entry.isOnCooldown())
             return;
 

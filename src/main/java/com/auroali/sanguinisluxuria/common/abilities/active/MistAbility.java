@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class MistAbility extends VampireAbility implements EntitySyncableVampireAbility<LivingEntity> {
     @Override
     public void activate(LivingEntity entity, VampireComponent component) {
-        VampireAbilityContainer.AbilityEntry entry = component.getAbilties().getAbility(this);
+        VampireAbilityContainer.AbilityEntry entry = component.getAbilityContainer().getAbility(this);
         if (!component.isMist() && entry.isOnCooldown())
             return;
 

@@ -24,7 +24,7 @@ public class VampireSettingConversionType implements ConversionType {
         if (isVampire == this.setToVampire)
             return original;
 
-        vampire.setIsVampire(this.setToVampire);
+        vampire.setVampire(this.setToVampire);
         return original;
     }
 }

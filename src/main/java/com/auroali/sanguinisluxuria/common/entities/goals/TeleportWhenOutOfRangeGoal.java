@@ -22,7 +22,7 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
     @Override
     public boolean canStart() {
         LivingEntity livingEntity = this.mob.getTarget();
-        VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob).getAbilties();
+        VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob).getAbilityContainer();
         if (!container.hasAbility(BLVampireAbilities.TELEPORT))
             return false;
 
@@ -40,7 +40,7 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
 
     @Override
     public boolean shouldContinue() {
-        VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob).getAbilties();
+        VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob).getAbilityContainer();
         double teleportRange = Math.pow(VampireTeleportAbility.getRange(this.mob), 2);
 
         VampireAbilityContainer.AbilityEntry entry = container.getAbility(BLVampireAbilities.TELEPORT);

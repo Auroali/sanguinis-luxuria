@@ -21,11 +21,18 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry>> {
+    private static final Runnable EMPTY_CALLBACK = () -> {
+    };
     private Map<VampireAbility, AbilityEntry> abilities;
-    private boolean shouldSync = true;
+    private final Runnable syncCallback;
 
     public VampireAbilityContainer() {
+        this(EMPTY_CALLBACK);
+    }
+
+    public VampireAbilityContainer(Runnable syncCallback) {
         this.abilities = new Object2ObjectOpenHashMap<>();
+        this.syncCallback = syncCallback;
     }
 
     public void tick(LivingEntity entity, VampireComponent vampire) {
@@ -35,12 +42,12 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
 
     public void addAbility(VampireAbility ability) {
         this.abilities.put(ability, new AbilityEntry(ability));
-        this.setShouldSync(true);
+        this.requestClientSync();
     }
 
     public void removeAbility(VampireAbility ability) {
         this.abilities.remove(ability);
-        this.setShouldSync(true);
+        this.requestClientSync();
     }
 
     public AbilityEntry getAbility(VampireAbility ability) {
@@ -81,7 +88,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         }
 
         this.abilities = abilities;
-        this.setShouldSync(true);
+        this.requestClientSync();
     }
 
     public void writePacket(PacketByteBuf buf) {
@@ -100,12 +107,8 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         this.abilities = abilities;
     }
 
-    public boolean needsSync() {
-        return this.shouldSync;
-    }
-
-    public void setShouldSync(boolean shouldSync) {
-        this.shouldSync = shouldSync;
+    public void requestClientSync() {
+        this.syncCallback.run();
     }
 
     @NotNull
@@ -137,7 +140,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         }
 
         container.abilities = abilityMap;
-        container.setShouldSync(true);
+        container.requestClientSync();
     }
 
     public class AbilityEntry {
@@ -161,14 +164,14 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
                     this.ability.onCooldownEnd(entity, vampire, VampireAbilityContainer.this);
                     this.maxCooldownTicks = 0;
                 }
-                VampireAbilityContainer.this.setShouldSync(true);
+                VampireAbilityContainer.this.requestClientSync();
             }
         }
 
         public void setCooldown(int cooldown) {
             this.maxCooldownTicks = cooldown;
             this.cooldownTicks = cooldown;
-            VampireAbilityContainer.this.setShouldSync(true);
+            VampireAbilityContainer.this.requestClientSync();
         }
 
         public int getCooldown() {

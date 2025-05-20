@@ -59,6 +59,7 @@
     "cardinal-components": [
       "sanguinisluxuria:blood",
       "sanguinisluxuria:vampire",
+      "sanguinisluxuria:blood_transfer",
       "sanguinisluxuria:blood_drain"
     ]
   }

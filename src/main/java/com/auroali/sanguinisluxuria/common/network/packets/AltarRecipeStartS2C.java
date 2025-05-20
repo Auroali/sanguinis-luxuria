@@ -1,4 +1,4 @@
-package com.auroali.sanguinisluxuria.common.network;
+package com.auroali.sanguinisluxuria.common.network.packets;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import net.fabricmc.fabric.api.networking.v1.FabricPacket;

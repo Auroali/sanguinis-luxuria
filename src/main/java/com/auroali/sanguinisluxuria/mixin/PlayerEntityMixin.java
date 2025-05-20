@@ -34,7 +34,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             return;
 
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
-        if (!this.hasVehicle() && vampire.isDown()) {
+        if (!this.hasVehicle() && vampire.isDowned()) {
             this.setPose(EntityPose.SWIMMING);
             ci.cancel();
         }

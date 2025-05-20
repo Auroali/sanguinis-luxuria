@@ -37,7 +37,7 @@ public class FleeWhenDownedGoal extends Goal {
             return false;
 
         VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob);
-        if (component.isDown() && this.mob.getAttacker() != null && this.mob.getAttacker().squaredDistanceTo(this.mob) < MAX_DISTANCE) {
+        if (component.isDowned() && this.mob.getAttacker() != null && this.mob.getAttacker().squaredDistanceTo(this.mob) < MAX_DISTANCE) {
             Vec3d target = NoPenaltyTargeting.find(this.mob, 16, 6);
             if (target == null)
                 return false;

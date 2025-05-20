@@ -1,4 +1,4 @@
-package com.auroali.sanguinisluxuria.common.network;
+package com.auroali.sanguinisluxuria.common.network.packets;
 
 import com.auroali.sanguinisluxuria.BLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;

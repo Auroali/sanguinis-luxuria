@@ -33,11 +33,11 @@ public class AcivateAbilityWhenDownedGoal extends Goal {
             return false;
 
         VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(this.entity);
-        if (this.isDowned == component.isDown())
+        if (this.isDowned == component.isDowned())
             return false;
 
-        this.isDowned = component.isDown();
-        return (this.shouldActivateWhenRecovered || component.isDown()) && component.getAbilties().hasAbility(this.ability);
+        this.isDowned = component.isDowned();
+        return (this.shouldActivateWhenRecovered || component.isDowned()) && component.getAbilityContainer().hasAbility(this.ability);
     }
 
     @Override

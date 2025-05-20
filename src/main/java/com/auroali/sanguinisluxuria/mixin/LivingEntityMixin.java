@@ -1,10 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
-import com.auroali.sanguinisluxuria.common.components.BloodComponent;
-import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
-import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.components.*;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -74,11 +71,11 @@ public abstract class LivingEntityMixin extends Entity {
       value = "INVOKE",
       target = "Lnet/minecraft/entity/LivingEntity;setHealth(F)V"))
     public void sanguinisluxuria$cancelBloodDrainOnDamageTaken(DamageSource source, float amount, CallbackInfo ci) {
-        if (!VampireHelper.isVampire((LivingEntity) (Object) this))
+        if (!BLEntityComponents.BLOOD_DRAIN_COMPONENT.isProvidedBy(this))
             return;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
-        vampire.stopSuckingBlood();
+        BloodDrainComponent vampire = BLEntityComponents.BLOOD_DRAIN_COMPONENT.get(this);
+        vampire.cancelDrain();
     }
 
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tryUseTotem(Lnet/minecraft/entity/damage/DamageSource;)Z"))
@@ -123,7 +120,7 @@ public abstract class LivingEntityMixin extends Entity {
             return;
 
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(target);
-        if (vampire.isDown())
+        if (vampire.isDowned())
             cir.setReturnValue(false);
     }
 

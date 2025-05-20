@@ -60,7 +60,7 @@ public class VampireMerchant extends MerchantEntity {
             this,
             BloodStorageItem.createStack(BLItems.BLOOD_BOTTLE),
             BLSounds.DRAIN_BLOOD,
-            merchant -> VampireHelper.isVampire(merchant) && BLEntityComponents.VAMPIRE_COMPONENT.get(merchant).isDown()
+            merchant -> VampireHelper.isVampire(merchant) && BLEntityComponents.VAMPIRE_COMPONENT.get(merchant).isDowned()
           ));
         this.goalSelector.add(3, new StopFollowingCustomerGoal(this));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f));

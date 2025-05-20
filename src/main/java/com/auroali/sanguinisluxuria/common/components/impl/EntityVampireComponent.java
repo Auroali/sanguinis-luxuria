@@ -15,16 +15,17 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class EntityVampireComponent<T extends LivingEntity> implements VampireComponent {
-    final Predicate<T> vampirePredicate;
-    final T holder;
-    final VampireAbilityContainer abilities = new VampireAbilityContainer();
-    final List<VampireAbility> defaultAbilities;
-    boolean downed;
-    boolean isMist;
+    private final Predicate<T> vampirePredicate;
+    private final T holder;
+    private final VampireAbilityContainer abilities;
+    private final List<VampireAbility> defaultAbilities;
+    private boolean downed;
+    private boolean isMist;
 
     public EntityVampireComponent(T holder, Predicate<T> vampirePredicate, VampireAbility... abilities) {
         this.holder = holder;
         this.vampirePredicate = vampirePredicate;
+        this.abilities = new VampireAbilityContainer(() -> BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder));
         this.defaultAbilities = Arrays.stream(abilities).toList();
         this.defaultAbilities.forEach(this.abilities::addAbility);
     }
@@ -39,52 +40,17 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     }
 
     @Override
-    public void setIsVampire(boolean isVampire) {
+    public void setVampire(boolean isVampire) {
 
     }
 
     @Override
-    public void drainBloodFrom(LivingEntity entity) {
-        VampireComponent.handleBloodDrain(this, entity, this.holder);
-    }
-
-    @Override
-    public void tryStartSuckingBlood() {
-
-    }
-
-    @Override
-    public void stopSuckingBlood() {
-
-    }
-
-    @Override
-    public int getBloodDrainTimer() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxTimeInSun() {
-        return 0;
-    }
-
-    @Override
-    public int getTimeInSun() {
-        return 0;
-    }
-
-    @Override
-    public VampireAbilityContainer getAbilties() {
+    public VampireAbilityContainer getAbilityContainer() {
         return this.abilities;
     }
 
     @Override
-    public void unlockAbility(VampireAbility ability) {
-        this.abilities.addAbility(ability);
-    }
-
-    @Override
-    public boolean isDown() {
+    public boolean isDowned() {
         return this.downed;
     }
 

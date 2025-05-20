@@ -5,12 +5,10 @@ import com.auroali.sanguinisluxuria.BloodlustClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.components.impl.PlayerVampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -18,7 +16,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
@@ -34,11 +31,7 @@ public class BLHud {
         if (!vampire.isVampire())
             return;
         drawBloodDrainIndicator(context, client, vampire, context.getScaledWindowWidth(), context.getScaledWindowHeight());
-        showAbilityCooldowns(context, client, context.getScaledWindowHeight(), vampire.getAbilties());
-    }
-
-    private static boolean targetHasBleeding(VampireComponent component, LivingEntity entity) {
-        return component instanceof PlayerVampireComponent p ? p.targetHasBleeding : entity.hasStatusEffect(BLStatusEffects.BLEEDING);
+        showAbilityCooldowns(context, client, context.getScaledWindowHeight(), vampire.getAbilityContainer());
     }
 
     private static void drawBloodDrainIndicator(DrawContext context, MinecraftClient client, VampireComponent vampire, int width, int height) {
@@ -54,12 +47,10 @@ public class BLHud {
 
         Entity targetedEntity = ((EntityHitResult) client.crosshairTarget).getEntity();
         BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(targetedEntity);
+        BloodDrainComponent drainer = BLEntityComponents.BLOOD_DRAIN_COMPONENT.get(client.player);
+        int timeToDrain = drainer.getTimeToDrain();
 
-        int timeToDrain = BloodConstants.BLOOD_DRAIN_TIME;
-        if (targetedEntity instanceof LivingEntity entity && targetHasBleeding(vampire, entity))
-            timeToDrain = BloodConstants.BLOOD_DRAIN_TIME_BLEEDING;
-
-        double drainPercent = (double) vampire.getBloodDrainTimer() / timeToDrain;
+        double drainPercent = (double) drainer.getTimeDraining() / timeToDrain;
         double bloodPercent = (double) blood.getBlood() / blood.getMaxBlood();
 
         int fangX = (width - 26) / 2;

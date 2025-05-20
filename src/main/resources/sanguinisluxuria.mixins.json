@@ -7,8 +7,8 @@
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.LightmapTextureManagerMixin",
-    "client.LivingEntityRendererMixin",
-    "client.LivingEntityClientMixin"
+    "client.LivingEntityClientMixin",
+    "client.LivingEntityRendererMixin"
   ],
   "mixins": [
     "AbstractBlockStateMixin",

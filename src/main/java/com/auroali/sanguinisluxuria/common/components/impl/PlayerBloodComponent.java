@@ -34,7 +34,7 @@ public class PlayerBloodComponent implements BloodComponent {
     public void setBlood(int amount) {
         if (this.getBlood() < amount && VampireHelper.isVampire(this.holder)) {
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this.holder);
-            if (vampire.isDown())
+            if (vampire.isDowned())
                 vampire.setDowned(false);
         }
         this.holder.getHungerManager().setFoodLevel(amount);

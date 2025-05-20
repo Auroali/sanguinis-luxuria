@@ -37,7 +37,7 @@ public class HungerManagerMixin implements VampireHungerManager {
       constant = @Constant(floatValue = 1.0f, ordinal = 1)
     )
     public float sanguinisluxuria$stopStarvingDamageWhenDowned(float constant) {
-        if (VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer) && BLEntityComponents.VAMPIRE_COMPONENT.get(this.sanguinisluxuria$hmTrackedPlayer).isDown()) {
+        if (VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer) && BLEntityComponents.VAMPIRE_COMPONENT.get(this.sanguinisluxuria$hmTrackedPlayer).isDowned()) {
             return 0;
         }
         return constant;

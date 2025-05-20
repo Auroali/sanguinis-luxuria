@@ -36,9 +36,9 @@ public class AbilityCommand {
     private static int resetAbilities(CommandContext<ServerCommandSource> ctx, Collection<ServerPlayerEntity> targets) {
         for (ServerPlayerEntity player : targets) {
             VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-            for (VampireAbility a : component.getAbilties().abilities()) {
+            for (VampireAbility a : component.getAbilityContainer().abilities()) {
                 a.onAbilityRemoved(player, component);
-                component.getAbilties().removeAbility(a);
+                component.getAbilityContainer().removeAbility(a);
             }
             BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
         }
@@ -49,7 +49,7 @@ public class AbilityCommand {
         for (ServerPlayerEntity player : targets) {
             VampireAbility ability = VampireAbilityArgument.getAbility(ctx, "ability");
             VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-            if (!ability.testConditions(player, component, component.getAbilties())) {
+            if (!ability.testConditions(player, component, component.getAbilityContainer())) {
                 throw new CommandException(
                   Text.translatable(
                     "commands.sanguinisluxuria.ability.failed_conditions",
@@ -58,8 +58,7 @@ public class AbilityCommand {
                   )
                 );
             }
-
-            component.unlockAbility(ability);
+            component.getAbilityContainer().addAbility(ability);
             BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
         }
         return 0;
