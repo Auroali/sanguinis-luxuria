@@ -19,10 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
-    @Shadow
-    @Final
-    private static Identifier ICONS;
-
     @ModifyArg(method = "renderStatusBars", at = @At(
       value = "INVOKE",
       target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V"
