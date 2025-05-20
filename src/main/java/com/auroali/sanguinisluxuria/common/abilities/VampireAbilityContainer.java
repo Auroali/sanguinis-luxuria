@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry>> {
     private static final Runnable EMPTY_CALLBACK = () -> {
@@ -111,7 +110,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         this.abilities = abilities;
     }
 
-    public void requestClientSync() {
+    protected void requestClientSync() {
         this.syncCallback.run();
     }
 
@@ -159,7 +158,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
             this.ticker = (VampireAbility.AbilityTicker<VampireAbility>) ability.createTicker();
         }
 
-        private void tick(LivingEntity entity, VampireComponent vampire, BloodComponent blood, EntrySync sync) {
+        private void tick(LivingEntity entity, VampireComponent vampire, BloodComponent blood, ContainerSyncManager sync) {
             if (this.ticker != null)
                 this.ticker.tick(this.ability, entity.getWorld(), entity, vampire, VampireAbilityContainer.this, blood);
 
@@ -246,7 +245,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         }
     }
 
-    private interface EntrySync {
+    private interface ContainerSyncManager {
         void request();
     }
 }
