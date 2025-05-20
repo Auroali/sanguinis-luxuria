@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.mixin;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
@@ -130,5 +131,15 @@ public abstract class LivingEntityMixin extends Entity {
     public void sanguinisluxuria$preventBloodLustEffectForVampires(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
         if (effect.getEffectType() == BLStatusEffects.BLOOD_LUST && (VampireHelper.isVampire(this) || this.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)))
             cir.setReturnValue(false);
+    }
+
+    @Inject(method = "<init>", at = @At("RETURN"))
+    public void sanguinisluxuria$initBloodComponents(EntityType<?> entityType, World world, CallbackInfo ci) {
+        if (BLEntityComponents.BLOOD_COMPONENT.isProvidedBy(this)) {
+            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
+            if (blood instanceof InitializableBloodComponent init && !init.hasInitialized()) {
+                init.initializeBloodValues();
+            }
+        }
     }
 }

@@ -71,7 +71,7 @@ public class EntityConversionData {
         if (VampireHelper.hasBlood(newEntity) && VampireHelper.hasBlood(entity)) {
             BloodComponent oldBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
             BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(newEntity);
-            if (newBlood instanceof InitializableBloodComponent initializable)
+            if (newBlood instanceof InitializableBloodComponent initializable && !initializable.hasInitialized())
                 initializable.initializeBloodValues();
 
             newBlood.setBlood(Math.min(oldBlood.getBlood(), newBlood.getMaxBlood()));
