@@ -86,7 +86,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         int bloodToFill = MathHelper.clamp(
           Math.min(userBlood.getMaxBlood() - userBlood.getBlood(), BloodStorageItem.getItemBlood(stack)),
           0,
-          8
+          this.maxBloodPerDrink()
         );
 
         if (!(user instanceof PlayerEntity player && player.isCreative()))
@@ -207,5 +207,12 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         if (this.getBlood(stack) > blood)
             EntityTrackingItem.clearEntity(stack);
         BloodStorageItem.super.setBlood(stack, blood);
+    }
+
+    /**
+     * @return the maximum amount of blood that can be drained in a single drink
+     */
+    protected int maxBloodPerDrink() {
+        return 8;
     }
 }
