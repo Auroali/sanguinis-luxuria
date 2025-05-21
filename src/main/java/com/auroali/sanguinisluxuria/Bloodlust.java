@@ -39,6 +39,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.AutomaticItemPlacementContext;
@@ -212,7 +213,7 @@ public class Bloodlust implements ModInitializer {
             if (!VampireHelper.isVampire(player))
                 return;
             BloodDrainComponent drainer = BLEntityComponents.BLOOD_DRAIN_COMPONENT.get(player);
-            HitResult result = VampireHelper.raycastEntity(player, player.getRotationVector(), e -> e instanceof LivingEntity && VampireHelper.hasBlood(e));
+            HitResult result = VampireHelper.raycastEntity(player, player.getRotationVector(), Entity::isAlive);
             if (result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() instanceof LivingEntity target && VampireHelper.hasBlood(target)) {
                 if (packet.draining())
                     drainer.beginDrain(target);

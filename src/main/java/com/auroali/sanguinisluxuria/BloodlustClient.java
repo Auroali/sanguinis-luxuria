@@ -8,6 +8,7 @@ import com.auroali.sanguinisluxuria.client.render.entities.VampireMerchantRender
 import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRenderer;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.AltarRecipeStartS2C;
@@ -180,9 +181,25 @@ public class BloodlustClient implements ClientModInitializer {
                 ClientPlayNetworking.send(new ActivateAbilityC2S(BLVampireAbilities.MIST));
             }
             if (SUCK_BLOOD.isPressed()) {
-                if (isLookingAtValidTarget() || !VampireHelper.getItemInHand(client.player, Hand.MAIN_HAND, stack -> stack.getItem() instanceof BloodStorageItem || stack.isIn(BLTags.Items.BLOOD_STORING_BOTTLES)).isEmpty()) {
+                // todo: cleanup
+                // todo: should the packet be split into DrainBloodC2S and FillItemC2S
+                // if the player is looking at a valid target, only send the packet once to notify the server of a blood
+                // drain start
+                if (isLookingAtValidTarget()) {
+                    if (!this.drainingBlood) {
+                        ClientPlayNetworking.send(new DrainBloodC2S(true));
+                        this.drainingBlood = true;
+                    }
+                }
+                // if the player is holding a fillable item, send the packet as long as the key is held down
+                else if (!VampireHelper.getItemInHand(
+                    client.player,
+                    Hand.MAIN_HAND,
+                    stack -> stack.getItem() instanceof BloodStorageItem
+                      || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(client.player, stack)
+                  )
+                  .isEmpty()) {
                     ClientPlayNetworking.send(new DrainBloodC2S(true));
-                    this.drainingBlood = true;
                 }
             } else if (this.drainingBlood) {
                 this.drainingBlood = false;

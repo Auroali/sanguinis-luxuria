@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.components;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
+import com.auroali.sanguinisluxuria.common.registry.BLSounds;
 import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -33,7 +34,7 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
      * @param entity the entity to drain
      */
     public void beginDrain(LivingEntity entity) {
-        if (!VampireHelper.isVampire(this.holder) || VampireHelper.isMasked(this.holder) || !VampireHelper.hasBlood(entity))
+        if (!VampireHelper.isVampire(this.holder) || VampireHelper.isMasked(this.holder) || !VampireHelper.hasBlood(entity) || this.target == entity)
             return;
 
         this.target = entity;
@@ -94,12 +95,13 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
         );
         switch (result.getType()) {
             case ENTITY -> {
-                if (((EntityHitResult) result).getEntity() != this.target && ((EntityHitResult) result).getEntity() instanceof LivingEntity newTarget) {
-                    if (!VampireHelper.hasBlood(newTarget)) {
+                Entity entity = ((EntityHitResult) result).getEntity();
+                if (entity != this.target) {
+                    if (!(entity instanceof LivingEntity) || !VampireHelper.hasBlood(entity)) {
                         this.cancelDrain();
                         return;
                     }
-                    this.target = newTarget;
+                    this.target = (LivingEntity) entity;
                     this.ticksDraining = 0;
                 }
             }
@@ -112,6 +114,16 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
         this.targetHasBleeding = this.target.hasStatusEffect(BLStatusEffects.BLEEDING);
 
         if (++this.ticksDraining >= this.getTimeToDrain()) {
+            this.holder.getWorld().playSound(
+              null,
+              this.holder.getX(),
+              this.holder.getY(),
+              this.holder.getZ(),
+              BLSounds.DRAIN_BLOOD,
+              this.holder.getSoundCategory(),
+              1.0f,
+              0.9f + this.holder.getRandom().nextFloat() * 0.1f
+            );
             VampireComponent.handleBloodDrain(
               BLEntityComponents.VAMPIRE_COMPONENT.get(this.holder),
               this.target,
