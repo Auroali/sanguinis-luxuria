@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.google.common.base.Predicates;
+import dev.onyxstudios.cca.api.v3.component.ComponentProvider;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
@@ -18,16 +19,13 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     private final Predicate<T> vampirePredicate;
     private final T holder;
     private final VampireAbilityContainer abilities;
-    private final List<VampireAbility> defaultAbilities;
     private boolean downed;
     private boolean isMist;
 
     public EntityVampireComponent(T holder, Predicate<T> vampirePredicate, VampireAbility... abilities) {
         this.holder = holder;
         this.vampirePredicate = vampirePredicate;
-        this.abilities = new VampireAbilityContainer(() -> BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder));
-        this.defaultAbilities = Arrays.stream(abilities).toList();
-        this.defaultAbilities.forEach(this.abilities::addAbility);
+        this.abilities = new VampireAbilityContainer(Arrays.asList(abilities), () -> BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder));
     }
 
     public EntityVampireComponent(T holder, VampireAbility... abilities) {
