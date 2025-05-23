@@ -9,6 +9,8 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -71,6 +73,11 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
         return this.ticksDraining;
     }
 
+    private void applyDrainEffects() {
+        if (this.target.getWorld().getTime() % 2 == 0)
+            this.target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 4, 6, true, false, false));
+    }
+
     @Override
     public void serverTick() {
         if (this.getLastDrained() != null && !this.getLastDrained().isAlive() || this.lastDrainedTimer <= 0) {
@@ -112,6 +119,8 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
         }
 
         this.targetHasBleeding = this.target.hasStatusEffect(BLStatusEffects.BLEEDING);
+
+        this.applyDrainEffects();
 
         if (++this.ticksDraining >= this.getTimeToDrain()) {
             this.holder.getWorld().playSound(

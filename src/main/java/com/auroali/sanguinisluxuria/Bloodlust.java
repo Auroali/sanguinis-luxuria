@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria;
 
-import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
 import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
 import com.auroali.sanguinisluxuria.common.commands.BloodlustCommand;
@@ -8,14 +7,11 @@ import com.auroali.sanguinisluxuria.common.commands.arguments.ConversionArgument
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
-import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
 import com.auroali.sanguinisluxuria.common.items.storage.BloodItemFluidStorage;
-import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
-import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
+import com.auroali.sanguinisluxuria.common.network.BLNetwork;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import net.fabricmc.api.ModInitializer;
@@ -25,7 +21,6 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
@@ -39,7 +34,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.AutomaticItemPlacementContext;
@@ -48,8 +42,6 @@ import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.village.VillagerProfession;
@@ -90,7 +82,7 @@ public class Bloodlust implements ModInitializer {
         BLBloodDrainEffects.init();
         BLConversions.register();
         BLLootFunctions.register();
-
+        BLNetwork.init();
 
         ArgumentTypeRegistry.registerArgumentType(
           BLResources.VAMPIRE_ABILITY_ARGUMENT_ID,
@@ -105,8 +97,6 @@ public class Bloodlust implements ModInitializer {
         );
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(BloodlustCommand.register()));
-
-        registerNetworkHandlers();
 
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
             if (VampireHelper.isVampire(newPlayer)) {
@@ -129,7 +119,10 @@ public class Bloodlust implements ModInitializer {
             return ActionResult.PASS;
         });
 
-        BloodStorageFillEvents.ALLOW_ITEM.register((entity, stack) -> stack.isIn(BLTags.Items.BLOOD_STORING_BOTTLES));
+        BloodStorageFillEvents.ALLOW_ITEM.register((entity, stack) ->
+          stack.isIn(BLTags.Items.BLOOD_STORING_BOTTLES)
+            || (stack.getItem() instanceof BloodStorageItem item && item.canFill())
+        );
         BloodStorageFillEvents.TRANSFORM_STACK.register((entity, stack) ->
           stack.isIn(BLTags.Items.BLOOD_STORING_BOTTLES)
             ? new ItemStack(BLItems.BLOOD_BOTTLE)
@@ -197,43 +190,5 @@ public class Bloodlust implements ModInitializer {
             return true;
         }
         return false;
-    }
-
-
-    public static void registerNetworkHandlers() {
-        ServerPlayNetworking.registerGlobalReceiver(ActivateAbilityC2S.ID, (packet, player, responseSender) -> {
-            if (!VampireHelper.isVampire(player))
-                return;
-            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
-            VampireAbilityContainer container = vampire.getAbilityContainer();
-            if (container.hasAbility(packet.ability()))
-                packet.ability().activate(player, vampire);
-        });
-        ServerPlayNetworking.registerGlobalReceiver(DrainBloodC2S.ID, (packet, player, responseSender) -> {
-            if (!VampireHelper.isVampire(player))
-                return;
-            BloodDrainComponent drainer = BLEntityComponents.BLOOD_DRAIN_COMPONENT.get(player);
-            HitResult result = VampireHelper.raycastEntity(player, player.getRotationVector(), Entity::isAlive);
-            if (result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() instanceof LivingEntity target && VampireHelper.hasBlood(target)) {
-                if (packet.draining())
-                    drainer.beginDrain(target);
-                else
-                    drainer.cancelDrain();
-                return;
-            }
-
-            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(player);
-            if (blood.getBlood() == 0)
-                return;
-
-            int filled = VampireHelper.fillHeldBloodStorage(player, 1, stack -> {
-                if (EntityTrackingItem.canTrackEntity(stack) && drainer.getLastDrained() != null) {
-                    EntityTrackingItem.setEntity(stack, drainer.getLastDrained());
-                    drainer.setLastDrained(null);
-                }
-            });
-
-            blood.setBlood(blood.getBlood() - filled);
-        });
     }
 }

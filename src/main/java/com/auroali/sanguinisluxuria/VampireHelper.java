@@ -232,9 +232,21 @@ public class VampireHelper {
      * @return the amount of blood successfully filled
      */
     public static int fillHeldBloodStorage(LivingEntity entity, int amount, Consumer<ItemStack> consumer) {
-        ItemStack stack = getItemInHand(entity, Hand.MAIN_HAND, s -> s.getItem() instanceof BloodStorageItem || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(entity, s));
+        ItemStack stack = getItemInHand(entity, Hand.MAIN_HAND, s -> BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(entity, s));
         Hand hand = getHandForStack(entity, stack);
 
+        return fillHeldBloodStorage(entity, stack, hand, amount, consumer);
+    }
+
+    /**
+     * Attempts to fill a held blood storage item
+     *
+     * @param entity   the entity holding the item
+     * @param amount   the amount to try and fill
+     * @param consumer the consumer to call once the item is filled
+     * @return the amount of blood successfully filled
+     */
+    public static int fillHeldBloodStorage(LivingEntity entity, ItemStack stack, Hand hand, int amount, Consumer<ItemStack> consumer) {
         ItemStack resultStack = stack;
         if (!(resultStack.getItem() instanceof BloodStorageItem)) {
             resultStack = BloodStorageFillEvents.TRANSFORM_STACK.invoker().createFrom(entity, resultStack);

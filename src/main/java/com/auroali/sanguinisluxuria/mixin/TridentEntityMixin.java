@@ -55,7 +55,6 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             }
 
             BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(latched);
-            BloodComponent ownerBlood = BLEntityComponents.BLOOD_COMPONENT.get(owner);
 
             if ((latched instanceof LivingEntity livingTarget && livingTarget.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) || blood.getBlood() <= Math.max(1, blood.getMaxBlood() / (1 + bloodDrainLevel))) {
                 bloodTransfer.setLatchedEntity(null);
@@ -67,10 +66,8 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             this.setVelocity(Vec3d.ZERO);
 
             int timeToDrain = latched instanceof LivingEntity e && e.hasStatusEffect(BLStatusEffects.BLEEDING) ? 20 : 40;
-            if (this.sanguinisluxuria$latchedTicks % timeToDrain == 0 && !this.getWorld().isClient && blood.drainBlood(1, owner instanceof LivingEntity living ? living : null)) {
-                if (!(owner instanceof LivingEntity entity && VampireHelper.fillHeldBloodStorage(entity, 1) != 0) && VampireHelper.isVampire(owner)) {
-                    ownerBlood.addBlood(1);
-                }
+            if (this.sanguinisluxuria$latchedTicks % timeToDrain == 0 && !this.getWorld().isClient && blood.drainBlood(1, this.sanguinisluxuria$getOwnerAsLiving(owner))) {
+                this.sanguinisluxuria$transferBloodToOwner(owner, 1);
                 this.playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
             }
 
@@ -88,5 +85,21 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
             bloodTransfer.setLatchedEntity(target);
             this.sanguinisluxuria$latchedTicks = 0;
         }
+    }
+
+    @Unique
+    private void sanguinisluxuria$transferBloodToOwner(Entity owner, int amount) {
+        LivingEntity livingOwner = this.sanguinisluxuria$getOwnerAsLiving(owner);
+        if (livingOwner != null && VampireHelper.fillHeldBloodStorage(livingOwner, amount) != 0)
+            return;
+
+        if (VampireHelper.consumesBlood(owner) && VampireHelper.hasBlood(owner)) {
+            BLEntityComponents.BLOOD_COMPONENT.get(owner).addBlood(amount);
+        }
+    }
+
+    @Unique
+    private LivingEntity sanguinisluxuria$getOwnerAsLiving(Entity owner) {
+        return owner instanceof LivingEntity living ? living : null;
     }
 }

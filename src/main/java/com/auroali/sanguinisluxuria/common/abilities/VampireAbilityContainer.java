@@ -15,7 +15,10 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
 
 public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry>> {
     private static final Runnable EMPTY_CALLBACK = () -> {

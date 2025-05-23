@@ -5,14 +5,12 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.google.common.base.Predicates;
-import dev.onyxstudios.cca.api.v3.component.ComponentProvider;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class EntityVampireComponent<T extends LivingEntity> implements VampireComponent {

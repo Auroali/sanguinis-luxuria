@@ -6,13 +6,12 @@ import com.auroali.sanguinisluxuria.client.particles.DrippingBloodParticle;
 import com.auroali.sanguinisluxuria.client.render.blocks.ItemDisplayingBlockEntityRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireMerchantRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRenderer;
-import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
-import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.network.BLClientNetwork;
 import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
-import com.auroali.sanguinisluxuria.common.network.packets.AltarRecipeStartS2C;
 import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
+import com.auroali.sanguinisluxuria.common.network.packets.FillBloodItemC2S;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
@@ -33,13 +32,10 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
 public class BloodlustClient implements ClientModInitializer {
@@ -77,6 +73,7 @@ public class BloodlustClient implements ClientModInitializer {
         this.registerBindings();
 
         BLModelLayers.register();
+        BLClientNetwork.init();
 
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_1, BLItems.MASK_1);
         TrinketRendererRegistry.registerRenderer(BLItems.MASK_2, BLItems.MASK_2);
@@ -132,36 +129,6 @@ public class BloodlustClient implements ClientModInitializer {
             return particle;
         });
         ParticleFactoryRegistry.getInstance().register(BLParticles.ALTAR_BEAT, AltarBeatParticle.Factory::new);
-
-        ClientPlayNetworking.registerGlobalReceiver(BLResources.ABILITY_SYNC_CHANNEL, (client, handler, buf, responseSender) -> {
-            int id = buf.readVarInt();
-            VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
-            if (client.world != null && client.world.getEntityById(id) instanceof LivingEntity entity && ability instanceof SyncableVampireAbility<?> s)
-                s.handlePacket(entity, buf, client::execute);
-        });
-
-        ClientPlayNetworking.registerGlobalReceiver(AltarRecipeStartS2C.ID, (packet, player, responseSender) -> {
-            World world = player.getWorld();
-            final int density = 4;
-            for (BlockPos pedestalPos : packet.pedestals()) {
-                for (int i = 0; i < pedestalPos.getManhattanDistance(packet.pos()) * density; i++) {
-                    Vec3d pos = pedestalPos.toCenterPos();
-                    Vec3d offset = packet.pos().toCenterPos().subtract(pedestalPos.toCenterPos())
-                      .normalize()
-                      .multiply((double) i / density);
-                    pos = pos.add(offset);
-                    world.addParticle(
-                      DustParticleEffect.DEFAULT,
-                      pos.getX() + world.getRandom().nextGaussian() * 0.07,
-                      pos.getY() + world.getRandom().nextGaussian() * 0.07,
-                      pos.getZ() + world.getRandom().nextGaussian() * 0.07,
-                      0,
-                      0,
-                      0
-                    );
-                }
-            }
-        });
     }
 
     public void registerBindings() {
@@ -181,32 +148,41 @@ public class BloodlustClient implements ClientModInitializer {
                 ClientPlayNetworking.send(new ActivateAbilityC2S(BLVampireAbilities.MIST));
             }
             if (SUCK_BLOOD.isPressed()) {
-                // todo: cleanup
-                // todo: should the packet be split into DrainBloodC2S and FillItemC2S
-                // if the player is looking at a valid target, only send the packet once to notify the server of a blood
-                // drain start
-                if (isLookingAtValidTarget()) {
-                    if (!this.drainingBlood) {
-                        ClientPlayNetworking.send(new DrainBloodC2S(true));
-                        this.drainingBlood = true;
-                    }
-                }
-                // if the player is holding a fillable item, send the packet as long as the key is held down
-                else if (!VampireHelper.getItemInHand(
-                    client.player,
-                    Hand.MAIN_HAND,
-                    stack -> stack.getItem() instanceof BloodStorageItem
-                      || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(client.player, stack)
-                  )
-                  .isEmpty()) {
-                    ClientPlayNetworking.send(new DrainBloodC2S(true));
-                }
+                this.handeBloodDrainPress(client);
             } else if (this.drainingBlood) {
-                this.drainingBlood = false;
-                ClientPlayNetworking.send(new DrainBloodC2S(false));
+                this.cancelBloodDrain();
             }
         });
+    }
 
+    private void handeBloodDrainPress(MinecraftClient client) {
+        // handle draining blood from entities
+        if (isLookingAtValidTarget()) {
+            if (!this.drainingBlood) {
+                ClientPlayNetworking.send(new DrainBloodC2S(true));
+                this.drainingBlood = true;
+            }
+            return;
+        }
+
+        // otherwise, handle filling blood storing items
+        if (this.drainingBlood)
+            this.cancelBloodDrain();
+        // if the player is holding a fillable item, send the packet as long as the key is held down
+        ItemStack toFill = VampireHelper.getItemInHand(
+          client.player,
+          Hand.MAIN_HAND,
+          stack -> stack.getItem() instanceof BloodStorageItem
+            || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(client.player, stack)
+        );
+
+        if (!toFill.isEmpty())
+            ClientPlayNetworking.send(new FillBloodItemC2S(VampireHelper.getHandForStack(client.player, toFill)));
+    }
+
+    private void cancelBloodDrain() {
+        this.drainingBlood = false;
+        ClientPlayNetworking.send(new DrainBloodC2S(false));
     }
 
     public static boolean isLookingAtValidTarget() {

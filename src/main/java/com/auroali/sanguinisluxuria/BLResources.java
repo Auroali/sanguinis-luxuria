@@ -165,6 +165,7 @@ public class BLResources {
     // used to try to run events after other mods
     public static final Identifier AFTER_EVENT_PHASE = id("after");
     public static final Identifier BLOOD_DRAIN_COMPONENT_ID = id("blood_drain");
+    public static final Identifier FILL_BLOOD_ITEM_C2S = id("fill_blood_item_c2s");
 
     public static Identifier id(String path) {
         return new Identifier(Bloodlust.MODID, path);
