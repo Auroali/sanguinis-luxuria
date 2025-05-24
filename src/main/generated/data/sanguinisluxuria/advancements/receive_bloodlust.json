@@ -1,0 +1,34 @@
+{
+  "parent": "sanguinisluxuria:blood_sickness",
+  "criteria": {
+    "status_effect_non_vampire": {
+      "conditions": {
+        "effects": {
+          "sanguinisluxuria:bloodlust": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.receive_bloodlust.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "sanguinisluxuria:vampire_fang"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.receive_bloodlust.title"
+    }
+  },
+  "requirements": [
+    [
+      "status_effect_non_vampire"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.common.advancements.*;
+import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
@@ -19,9 +20,12 @@ import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
+import net.minecraft.predicate.NbtPredicate;
 import net.minecraft.predicate.entity.EntityEffectPredicate;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -272,6 +276,25 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
           .criterion("reset_abilities", ResetAbilitiesCriterion.Conditions.create())
           .build(SLResources.id("reset_abilities"));
 
+        Advancement getBloodlustEffect = Advancement.Builder
+          .create()
+          .display(
+            SLItems.VAMPIRE_FANG,
+            Text.translatable(title("receive_bloodlust")),
+            Text.translatable(desc("receive_bloodlust")),
+            null,
+            AdvancementFrame.TASK,
+            true,
+            true,
+            false
+          )
+          .parent(bloodSickness)
+          .criterion("status_effect_non_vampire", EffectsChangedCriterion.Conditions.create(
+            EntityEffectPredicate.create()
+              .withEffect(SLStatusEffects.BLOOD_LUST)
+          ))
+          .build(SLResources.id("receive_bloodlust"));
+
         consumer.accept(becomeVampire);
         consumer.accept(bloodSickness);
         consumer.accept(drinkTwistedBlood);
@@ -285,6 +308,7 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
         consumer.accept(craftHungrySapling);
         consumer.accept(growDecayedTree);
         consumer.accept(obtainHungryLog);
+        consumer.accept(getBloodlustEffect);
 
         generateUnlockAdvancements(consumer);
     }
@@ -307,4 +331,9 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
         return "advancements.%s.%s.description".formatted(SanguinisLuxuria.MODID, name.replaceAll("/", "."));
     }
 
+    private NbtCompound buildNbt(Consumer<NbtCompound> builder) {
+        NbtCompound tag = new NbtCompound();
+        builder.accept(tag);
+        return tag;
+    }
 }

@@ -150,10 +150,12 @@ public class EntityConversionData {
         public Optional<T> parse(JsonElement element) {
             return this.codec.parse(JsonOps.INSTANCE, element)
               .resultOrPartial(SanguinisLuxuria.LOGGER::error)
-              .map(result -> this.cache.containsKey(result)
-                ? this.cache.get(result)
-                : this.cache.put(result, result)
-              );
+              .map(result -> {
+                  if (this.cache.containsKey(result))
+                      return this.cache.get(result);
+                  this.cache.put(result, result);
+                  return result;
+              });
         }
     }
 }
