@@ -21,11 +21,11 @@ public class AbilityConditions {
     }
 
     public static VampireAbility.VampireAbilityCondition hasAbility(Supplier<VampireAbility> ability) {
-        return (entity, vampire, container) -> container.hasAbility(ability.get());
+        return (entity, vampire, container) -> container.has(ability.get());
     }
 
     public static VampireAbility.VampireAbilityCondition lacksAbility(Supplier<VampireAbility> ability) {
-        return (entity, vampire, container) -> !container.hasAbility(ability.get());
+        return (entity, vampire, container) -> !container.has(ability.get());
     }
 
     public static VampireAbility.VampireAbilityCondition hasAdvancement(Identifier advancementId) {

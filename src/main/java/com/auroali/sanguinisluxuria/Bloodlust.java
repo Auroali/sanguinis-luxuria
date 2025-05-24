@@ -56,6 +56,7 @@ public class Bloodlust implements ModInitializer {
     public static final String MODID = "sanguinisluxuria";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
+    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onInitialize() {
         BLRegistries.init();

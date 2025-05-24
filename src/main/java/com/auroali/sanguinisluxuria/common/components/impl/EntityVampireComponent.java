@@ -90,13 +90,13 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     public void readFromNbt(NbtCompound tag) {
         this.downed = tag.getBoolean("Downed");
         this.isMist = tag.getBoolean("IsMist");
-        this.abilities.load(tag);
+        this.abilities.readNbt(tag);
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("Downed", this.downed);
         tag.putBoolean("IsMist", this.isMist);
-        this.abilities.save(tag);
+        this.abilities.writeNbt(tag);
     }
 }

@@ -99,7 +99,7 @@ public class PlayerVampireComponent implements VampireComponent {
         this.sunTicks = tag.getInt("TimeInSun");
         this.isDowned = tag.getBoolean("IsDowned");
         this.isMist = tag.getBoolean("IsMist");
-        this.container.load(tag);
+        this.container.readNbt(tag);
         this.state.updateAll();
         BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
     }
@@ -110,7 +110,7 @@ public class PlayerVampireComponent implements VampireComponent {
         tag.putInt("TimeInSun", this.sunTicks);
         tag.putBoolean("IsDowned", this.isDowned);
         tag.putBoolean("IsMist", this.isMist);
-        this.container.save(tag);
+        this.container.writeNbt(tag);
     }
 
     @Override

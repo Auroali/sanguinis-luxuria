@@ -15,10 +15,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry>> {
     private static final Runnable EMPTY_CALLBACK = () -> {
@@ -59,17 +56,17 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         this.requestClientSync();
     }
 
-    public AbilityEntry getAbility(VampireAbility ability) {
+    public AbilityEntry get(VampireAbility ability) {
         return this.abilities.get(ability);
     }
 
-    public boolean hasAbility(VampireAbility ability) {
+    public boolean has(VampireAbility ability) {
         if (ability == null)
             return false;
         return this.abilities.containsKey(ability);
     }
 
-    public void save(NbtCompound compound) {
+    public void writeNbt(NbtCompound compound) {
         NbtList abilities = new NbtList();
         this.abilities.values().forEach(entry -> {
             NbtCompound tag = new NbtCompound();
@@ -80,7 +77,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         compound.put("Abilities", abilities);
     }
 
-    public void load(NbtCompound compound) {
+    public void readNbt(NbtCompound compound) {
         if (compound.contains("VampireAbilities", NbtElement.LIST_TYPE)) {
             loadLegacy(compound, this);
             return;
@@ -228,6 +225,9 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
 
         public static AbilityEntry read(PacketByteBuf buf, VampireAbilityContainer container) {
             VampireAbility ability = buf.readRegistryValue(BLRegistries.VAMPIRE_ABILITIES);
+            if (ability == null)
+                throw new NoSuchElementException("Received unknown ability");
+
             int cooldown = buf.readVarInt();
             int maxCooldown = buf.readVarInt();
             AbilityEntry entry = container.new AbilityEntry(ability);

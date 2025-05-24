@@ -37,7 +37,7 @@ public class AcivateAbilityWhenDownedGoal extends Goal {
             return false;
 
         this.isDowned = component.isDowned();
-        return (this.shouldActivateWhenRecovered || component.isDowned()) && component.getAbilityContainer().hasAbility(this.ability);
+        return (this.shouldActivateWhenRecovered || component.isDowned()) && component.getAbilityContainer().has(this.ability);
     }
 
     @Override

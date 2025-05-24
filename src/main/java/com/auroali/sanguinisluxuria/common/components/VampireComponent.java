@@ -138,7 +138,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         vampireEntity.getWorld().emitGameEvent(vampireEntity, GameEvent.DRINK, vampireEntity.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
-        if (vampire.getAbilityContainer().hasAbility(BLVampireAbilities.INFECTIOUS)) {
+        if (vampire.getAbilityContainer().has(BLVampireAbilities.INFECTIOUS)) {
             SyncableVampireAbility.syncAbility(
               target,
               BLVampireAbilities.INFECTIOUS,

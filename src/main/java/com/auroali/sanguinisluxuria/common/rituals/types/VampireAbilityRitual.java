@@ -30,7 +30,7 @@ public record VampireAbilityRitual(VampireAbility ability) implements Ritual {
 
         VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(parameters.target());
         VampireAbilityContainer abilities = vampire.getAbilityContainer();
-        if (abilities.hasAbility(this.ability) || !this.ability.testConditions(parameters.target(), vampire, abilities))
+        if (abilities.has(this.ability) || !this.ability.testConditions(parameters.target(), vampire, abilities))
             // todo: add feedback
             return;
         abilities.addAbility(this.ability);

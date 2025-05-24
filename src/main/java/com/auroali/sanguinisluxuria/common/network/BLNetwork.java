@@ -24,7 +24,7 @@ public class BLNetwork {
                 return;
             VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
             VampireAbilityContainer container = vampire.getAbilityContainer();
-            if (container.hasAbility(packet.ability()))
+            if (container.has(packet.ability()))
                 packet.ability().activate(player, vampire);
         });
 

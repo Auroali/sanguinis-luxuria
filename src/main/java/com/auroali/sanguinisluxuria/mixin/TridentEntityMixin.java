@@ -34,7 +34,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
         super(entityType, world);
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/TridentEntity;getOwner()Lnet/minecraft/entity/Entity;", shift = At.Shift.BY, by = 2), cancellable = true)
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/data/DataTracker;get(Lnet/minecraft/entity/data/TrackedData;)Ljava/lang/Object;", ordinal = 0), cancellable = true)
     public void sanguinisluxuria$handleBloodDrainLogic(CallbackInfo ci, @Local(ordinal = 0) Entity owner) {
         BloodTransferComponent bloodTransfer = BLEntityComponents.BLOOD_TRANSFER_COMPONENT.get(this);
         int bloodDrainLevel = bloodTransfer.getBloodTransferLevel();

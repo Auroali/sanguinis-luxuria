@@ -21,7 +21,7 @@ import net.minecraft.util.math.Box;
 public class BiteAbility extends VampireAbility {
     @Override
     public void activate(LivingEntity entity, VampireComponent component) {
-        VampireAbilityContainer.AbilityEntry entry = component.getAbilityContainer().getAbility(this);
+        VampireAbilityContainer.AbilityEntry entry = component.getAbilityContainer().get(this);
         if (entry.isOnCooldown() || VampireHelper.isMasked(entity))
             return;
 
@@ -51,7 +51,7 @@ public class BiteAbility extends VampireAbility {
               0.d
             );
         }
-        if (component.getAbilityContainer().hasAbility(BLVampireAbilities.INFECTIOUS)) {
+        if (component.getAbilityContainer().has(BLVampireAbilities.INFECTIOUS)) {
             SyncableVampireAbility.syncAbility(
               entity,
               BLVampireAbilities.INFECTIOUS,

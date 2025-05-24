@@ -227,7 +227,7 @@ public class BloodSplatterBlock extends Block {
 
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return context.getStack().isEmpty() || !context.getStack().isOf(this.asItem());
+        return context.getStack().isEmpty() || !BloodStorageItem.isItemDrainable(context.getStack());
     }
 
     @Override

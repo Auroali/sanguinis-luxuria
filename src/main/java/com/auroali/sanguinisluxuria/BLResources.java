@@ -31,7 +31,6 @@ public class BLResources {
     public static final Identifier VAMPIRE_ABILITY_REGISTRY_ID = id("vampire_ability");
     public static final Identifier VAMPIRE_ABILITY_ARGUMENT_ID = id("ability_argument");
     public static final Identifier TELEPORT_ID = id("teleport");
-    public static final Identifier BECOME_VAMPIRE_CRITERION_ID = id("become_vampire");
     public static final Identifier ALTAR_ID = id("altar");
     public static final Identifier ALTAR_RECIPE_ID = id("ritual");
     public static final Identifier TWISTED_BLOOD_ID = id("twisted_blood_bottle");
@@ -59,7 +58,6 @@ public class BLResources {
     public static final Identifier VAMPIRE_VILLAGER_SPAWN_ID = id("vampire_villager_spawn");
     public static final Identifier VAMPIRE_CONVERT_SOUND = id("entity_converted_to_vampire");
     public static final Identifier PENDANT_OF_PIERCING = id("pendant_of_piercing");
-    public static final Identifier UNBECOME_VAMPIRE_CRITERION_ID = id("unbecome_vampire");
     public static final Identifier BLESSED_WATER_TWO_ID = id("strong_blessed_water");
     public static final Identifier SERRATED_ID = id("serrated");
     public static final Identifier VAMPIRE_MERCHANT = id("vampire_merchant");
@@ -96,7 +94,6 @@ public class BLResources {
     public static final Identifier DECAYED_LOGS_ID = id("decayed_logs");
     public static final Identifier DECAYED_TWIGS_ID = id("decayed_twigs");
     public static final Identifier GRAFTED_SAPLING_ID = id("grafted_sapling");
-    public static final Identifier HUNGRY_DECAYED_LOG_VFX_S2C = id("hungry_decayed_log_vfx");
     public static final Identifier SILVER_BLOCK_SET = id("silver");
     public static final Identifier DECAYED_WOOD_BLOCK_SET = id("decayed");
     public static final Identifier SILVER_PRESSURE_PLATE_ID = id("silver_pressure_plate");
@@ -111,7 +108,6 @@ public class BLResources {
     public static final Identifier ABILITY_RITUAL_TYPE = id("ability");
     public static final Identifier ABILITY_RESET_RITUAL_TYPE = id("reset_abilities");
     public static final Identifier ALTAR_BEAT_PARTICLE = id("altar_beat");
-    public static final Identifier SPAWN_ALTAR_BEAT_PARTICLE_S2C = id("spawn_altar_beat_particle_s2c");
     public static final Identifier DECAYED_TREE = id("decayed_tree");
     public static final Identifier ABILITY_REVEAL_RITUAL_TYPE = id("ability_reveal");
     public static final Identifier ENTITY_SPAWNING_RITUAL_TYPE = id("entity");
