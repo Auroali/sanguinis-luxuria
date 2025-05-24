@@ -1,12 +1,12 @@
 package com.auroali.sanguinisluxuria.common.conversions;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -69,8 +69,8 @@ public class EntityConversionData {
         }
 
         if (VampireHelper.hasBlood(newEntity) && VampireHelper.hasBlood(entity)) {
-            BloodComponent oldBlood = BLEntityComponents.BLOOD_COMPONENT.get(entity);
-            BloodComponent newBlood = BLEntityComponents.BLOOD_COMPONENT.get(newEntity);
+            BloodComponent oldBlood = BloodComponent.KEY.get(entity);
+            BloodComponent newBlood = BloodComponent.KEY.get(newEntity);
             if (newBlood instanceof InitializableBloodComponent initializable && !initializable.hasInitialized())
                 initializable.initializeBloodValues();
 
@@ -95,7 +95,7 @@ public class EntityConversionData {
         if (!object.get("entity").isJsonPrimitive() || !object.get("entity").getAsJsonPrimitive().isString())
             throw new JsonParseException("Expected string for entity, got " + object.get("entity"));
 
-        ConversionType type = BLRegistries.CONVERSION_TYPES.get(Identifier.tryParse(object.get("type").getAsString()));
+        ConversionType type = SLRegistries.CONVERSION_TYPES.get(Identifier.tryParse(object.get("type").getAsString()));
         if (type == null)
             throw new JsonParseException("Could not get type " + object.get("type"));
 
@@ -149,7 +149,7 @@ public class EntityConversionData {
 
         public Optional<T> parse(JsonElement element) {
             return this.codec.parse(JsonOps.INSTANCE, element)
-              .resultOrPartial(Bloodlust.LOGGER::error)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
               .map(result -> this.cache.containsKey(result)
                 ? this.cache.get(result)
                 : this.cache.put(result, result)

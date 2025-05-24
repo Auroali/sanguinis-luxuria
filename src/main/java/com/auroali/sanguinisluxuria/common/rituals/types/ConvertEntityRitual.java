@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
-import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.BLConversions;
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
+import com.auroali.sanguinisluxuria.common.registry.SLConversions;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
@@ -30,8 +30,8 @@ public class ConvertEntityRitual implements Ritual {
     @Override
     public void onCompleted(RitualParameters parameters) {
         LivingEntity target = parameters.target();
-        if (BLConversions.convertEntity(ConversionContext.from(target, this.conversion)))
-            parameters.applyToPlayerTarget(player -> BLAdvancementCriterion.CONVERT.trigger(player, this.conversion));
+        if (SLConversions.convertEntity(ConversionContext.from(target, this.conversion)))
+            parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.CONVERT.trigger(player, this.conversion));
     }
 
     public ConversionContext.Conversion getConversion() {
@@ -48,6 +48,6 @@ public class ConvertEntityRitual implements Ritual {
 
     @Override
     public RitualType<?> getType() {
-        return BLRitualTypes.CONVERT_ENTITY_RITUAL;
+        return SLRitualTypes.CONVERT_ENTITY_RITUAL;
     }
 }

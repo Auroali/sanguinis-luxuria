@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.advancements;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
@@ -29,7 +29,7 @@ public class TransferEffectsCriterion extends AbstractCriterion<TransferEffectsC
 
     @Override
     public Identifier getId() {
-        return BLResources.TRANSFER_EFFECTS_ID;
+        return SLResources.TRANSFER_EFFECTS_ID;
     }
 
     public void trigger(ServerPlayerEntity entity, Collection<StatusEffectInstance> effects) {
@@ -41,7 +41,7 @@ public class TransferEffectsCriterion extends AbstractCriterion<TransferEffectsC
         final EntityEffectPredicate statusEffects;
 
         public Conditions(LootContextPredicate entity, EntityEffectPredicate effects, int minCount) {
-            super(BLResources.TRANSFER_EFFECTS_ID, entity);
+            super(SLResources.TRANSFER_EFFECTS_ID, entity);
             this.minCount = minCount;
             this.statusEffects = effects;
         }

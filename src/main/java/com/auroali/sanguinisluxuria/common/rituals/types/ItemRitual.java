@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.ItemCreatingRitual;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
@@ -56,7 +56,7 @@ public class ItemRitual implements Ritual, ItemCreatingRitual {
 
     @Override
     public RitualType<?> getType() {
-        return BLRitualTypes.ITEM_RITUAL_TYPE;
+        return SLRitualTypes.ITEM_RITUAL_TYPE;
     }
 
     @Override

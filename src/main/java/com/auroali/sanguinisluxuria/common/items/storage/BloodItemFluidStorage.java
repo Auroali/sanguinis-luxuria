@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.items.storage;
 
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLFluids;
+import com.auroali.sanguinisluxuria.common.registry.SLFluids;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -77,7 +77,7 @@ public class BloodItemFluidStorage implements Storage<FluidVariant>, StorageView
 
     @Override
     public FluidVariant getResource() {
-        return FluidVariant.of(BLFluids.BLOOD);
+        return FluidVariant.of(SLFluids.BLOOD);
     }
 
     @Override

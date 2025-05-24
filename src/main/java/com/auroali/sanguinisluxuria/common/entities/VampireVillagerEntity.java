@@ -1,13 +1,13 @@
 package com.auroali.sanguinisluxuria.common.entities;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.goals.TeleportWhenOutOfRangeGoal;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
+import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -52,7 +52,7 @@ public class VampireVillagerEntity extends HostileEntity {
         if (this.bloodDrainTimer > 0)
             this.bloodDrainTimer--;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        VampireComponent vampire = VampireComponent.KEY.get(this);
         if (this.canHealWithBlood()) {
             this.setHealth(this.getHealth() + 1);
             this.bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
@@ -79,7 +79,7 @@ public class VampireVillagerEntity extends HostileEntity {
     }
 
     protected boolean canHealWithBlood() {
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
+        BloodComponent blood = BloodComponent.KEY.get(this);
         // only heal when healing wouldnt completely drain blood, health is less than max health, and blood could be drained
         // also prioritize draining blood when targeting an entity and health is above 50%
         return blood.getBlood() > 1 && this.getHealth() < this.getMaxHealth() && (this.getTarget() == null || blood.getBlood() >= blood.getMaxBlood() || this.getHealth() / this.getMaxHealth() < 0.5f) && blood.drainBlood(1);
@@ -87,7 +87,7 @@ public class VampireVillagerEntity extends HostileEntity {
 
     @Override
     public float getMovementSpeed() {
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        VampireComponent vampire = VampireComponent.KEY.get(this);
         return vampire.isDowned() ? 0.5f * super.getMovementSpeed() : super.getMovementSpeed();
     }
 
@@ -107,18 +107,18 @@ public class VampireVillagerEntity extends HostileEntity {
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(6, new ActiveTargetGoal<>(this, LivingEntity.class, true, e -> {
-            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
+            BloodComponent blood = BloodComponent.KEY.get(this);
             return VampireHelper.hasBlood(e) && ((double) blood.getBlood() / blood.getMaxBlood()) < 0.4;
         }));
     }
 
     @Override
     public boolean tryAttack(Entity target) {
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        BloodComponent blood = BloodComponent.KEY.get(this);
+        VampireComponent vampire = VampireComponent.KEY.get(this);
         if (target instanceof LivingEntity entity && VampireHelper.hasBlood(target) && !vampire.isMist() && this.bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
             VampireComponent.handleBloodDrain(vampire, entity, this);
-            this.playSound(BLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
+            this.playSound(SLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
             this.bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
             this.onAttacking(target);
             return true;
@@ -152,7 +152,7 @@ public class VampireVillagerEntity extends HostileEntity {
         nbt.putInt("BloodDrainTimer", this.bloodDrainTimer);
         if (this.villagerData != null)
             VillagerData.CODEC.encodeStart(NbtOps.INSTANCE, this.villagerData)
-              .resultOrPartial(Bloodlust.LOGGER::error)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
               .ifPresent(element -> nbt.put("VillagerData", element));
         if (this.offers != null)
             nbt.put("Offers", this.offers);
@@ -165,7 +165,7 @@ public class VampireVillagerEntity extends HostileEntity {
         this.bloodDrainTimer = nbt.getInt("BloodDrainTimer");
         if (nbt.contains("VillagerData"))
             VillagerData.CODEC.parse(NbtOps.INSTANCE, nbt.get("VillagerData"))
-              .resultOrPartial(Bloodlust.LOGGER::error)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
               .ifPresent(this::setVillagerData);
         if (nbt.contains("Offers"))
             this.offers = nbt.getCompound("Offers");

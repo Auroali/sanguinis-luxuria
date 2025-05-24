@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.conversions;
 
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import com.mojang.serialization.Codec;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public interface EntityConversionTransformer {
-    Codec<EntityConversionTransformer> CODEC = BLRegistries.CONVERSION_TRANSFORMERS
+    Codec<EntityConversionTransformer> CODEC = SLRegistries.CONVERSION_TRANSFORMERS
       .getCodec()
       .dispatch("type", EntityConversionTransformer::getCodec, Function.identity());
     Codec<List<EntityConversionTransformer>> LIST_CODEC = Codec.list(CODEC);
@@ -23,6 +23,6 @@ public interface EntityConversionTransformer {
     boolean equals(Object other);
 
     static <T extends EntityConversionTransformer> Identifier getId(EntityConversionTransformer transformer) {
-        return BLRegistries.CONVERSION_TRANSFORMERS.getId(transformer.getCodec());
+        return SLRegistries.CONVERSION_TRANSFORMERS.getId(transformer.getCodec());
     }
 }

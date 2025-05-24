@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.enchantments;
 
-import com.auroali.sanguinisluxuria.common.registry.BLEnchantments;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.SLEnchantments;
+import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.Enchantments;
@@ -24,12 +24,12 @@ public class SerratedEnchantment extends Enchantment {
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         super.onTargetDamaged(user, target, level);
         if (target.getWorld().random.nextInt(25 / level) == 0 && target instanceof LivingEntity living) {
-            living.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLEEDING, 10 * level));
+            living.addStatusEffect(new StatusEffectInstance(SLStatusEffects.BLEEDING, 10 * level));
         }
     }
 
     @Override
     protected boolean canAccept(Enchantment other) {
-        return other != BLEnchantments.BLOOD_DRAIN && other != Enchantments.IMPALING;
+        return other != SLEnchantments.BLOOD_DRAIN && other != Enchantments.IMPALING;
     }
 }

@@ -2,10 +2,10 @@ package com.auroali.sanguinisluxuria.common.items;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
+import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
+import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -77,7 +77,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
             return stack;
         }
 
-        BloodComponent userBlood = BLEntityComponents.BLOOD_COMPONENT.get(user);
+        BloodComponent userBlood = BloodComponent.KEY.get(user);
         // calculate the blood to drain by taking the minimum of the
         // amount of additional blood the entity's blood component can store
         // and the amount of blood in the blood storage item. this value
@@ -112,12 +112,12 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
 
     @Override
     public SoundEvent getDrinkSound() {
-        return BLSounds.DRAIN_BLOOD;
+        return SLSounds.DRAIN_BLOOD;
     }
 
     @Override
     public SoundEvent getEatSound() {
-        return BLSounds.DRAIN_BLOOD;
+        return SLSounds.DRAIN_BLOOD;
     }
 
     @Override
@@ -145,7 +145,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
             return super.useOnBlock(context);
 
         BlockPos pos = placementContext.getBlockPos();
-        BlockState bloodState = BLBlocks.BLOOD_SPLATTER.getPlacementState(placementContext);
+        BlockState bloodState = SLBlocks.BLOOD_SPLATTER.getPlacementState(placementContext);
         ShapeContext shapeContext = ShapeContext.of(player);
         // check to make sure the blockstate isn't null and that it can be placed at
         // the location. returns fail here if it can't be placed

@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.enchantments;
 
-import com.auroali.sanguinisluxuria.common.registry.BLEnchantments;
+import com.auroali.sanguinisluxuria.common.registry.SLEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -45,7 +45,7 @@ public class SunProtectionEnchantment extends Enchantment {
     public static double calculateForEntity(LivingEntity entity) {
         double sunProt = 0.0d;
         for (ItemStack stack : entity.getArmorItems()) {
-            int level = EnchantmentHelper.getLevel(BLEnchantments.SUN_PROTECTION, stack);
+            int level = EnchantmentHelper.getLevel(SLEnchantments.SUN_PROTECTION, stack);
             if (level > 0) {
                 sunProt += getForLevel(level);
             }

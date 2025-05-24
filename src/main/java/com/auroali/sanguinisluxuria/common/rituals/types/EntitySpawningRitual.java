@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
@@ -48,6 +48,6 @@ public record EntitySpawningRitual(EntityType<?> type, NbtCompound nbt, boolean 
 
     @Override
     public RitualType<?> getType() {
-        return BLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE;
+        return SLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE;
     }
 }

@@ -1,10 +1,15 @@
 package com.auroali.sanguinisluxuria.common.components;
 
+import com.auroali.sanguinisluxuria.SLResources;
 import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.LivingEntity;
 
 public interface BloodComponent extends Component, AutoSyncedComponent {
+    ComponentKey<BloodComponent> KEY = ComponentRegistry.getOrCreate(SLResources.BLOOD_COMPONENT_ID, BloodComponent.class);
+
     /**
      * @return the amount of blood the component holder has
      */

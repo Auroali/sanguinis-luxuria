@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.recipes;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeSerializers;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -93,12 +93,12 @@ public class AltarRitualRecipe implements Recipe<Inventory> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BLRecipeSerializers.ALTAR_RECIPE_SERIALIZER;
+        return SLRecipeSerializers.ALTAR_RECIPE_SERIALIZER;
     }
 
     @Override
     public RecipeType<?> getType() {
-        return BLRecipeTypes.ALTAR_RECIPE;
+        return SLRecipeTypes.ALTAR_RECIPE;
     }
 
     public static class Serializer implements RecipeSerializer<AltarRitualRecipe> {
@@ -110,7 +110,7 @@ public class AltarRitualRecipe implements Recipe<Inventory> {
             JsonObject ritualData = json.get("ritual").getAsJsonObject();
             Ritual ritual = Ritual.RITUAL_CODEC
               .parse(JsonOps.INSTANCE, ritualData)
-              .resultOrPartial(Bloodlust.LOGGER::error)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
               .orElseThrow(() -> new JsonParseException("Failed to deserialize ritual, see above for information"));
 
             Ingredient catalyst = Ingredient.fromJson(json.get("catalyst"));

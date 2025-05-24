@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.items;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -235,7 +235,7 @@ public interface BloodStorageItem {
 
     static void registerModelPredicate(Item item) {
         if (item instanceof BloodStorageItem bloodStorage) {
-            ModelPredicateProviderRegistry.register(BLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, (stack, world, entity, seed) -> {
+            ModelPredicateProviderRegistry.register(SLResources.BLOOD_STORAGE_ITEM_MODEL_PREDICATE, (stack, world, entity, seed) -> {
                 int blood = bloodStorage.getBlood(stack);
                 int maxBlood = bloodStorage.getMaxBlood(stack);
                 if (maxBlood == 0)

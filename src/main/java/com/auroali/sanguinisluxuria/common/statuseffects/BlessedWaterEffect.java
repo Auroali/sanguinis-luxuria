@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.statuseffects;
 
-import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
+import com.auroali.sanguinisluxuria.SLResources;
+import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
@@ -19,7 +19,7 @@ public class BlessedWaterEffect extends StatusEffect {
     public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
         super.applyInstantEffect(source, attacker, target, amplifier, proximity);
         if (!target.isUndead()) {
-            target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_PROTECTION, 3600, amplifier));
+            target.addStatusEffect(new StatusEffectInstance(SLStatusEffects.BLOOD_PROTECTION, 3600, amplifier));
             return;
         }
 
@@ -28,9 +28,9 @@ public class BlessedWaterEffect extends StatusEffect {
         target.setOnFireFor(20 + 2 * amplifier);
 
         if (source != null)
-            target.damage(BLDamageSources.blessedWater(source, attacker), damage);
+            target.damage(SLDamageSources.blessedWater(source, attacker), damage);
         else
-            target.damage(BLDamageSources.get(target.getWorld(), BLResources.BLESSED_WATER_DAMAGE_KEY), damage);
+            target.damage(SLDamageSources.get(target.getWorld(), SLResources.BLESSED_WATER_DAMAGE_KEY), damage);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
-import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
+import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -84,8 +84,8 @@ public class AltarBlock extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if (world.isClient)
-            return checkType(type, BLBlockEntities.ALTAR, AltarBlockEntity::tickClient);
-        return checkType(type, BLBlockEntities.ALTAR, AltarBlockEntity::tick);
+            return checkType(type, SLBlockEntities.ALTAR, AltarBlockEntity::tickClient);
+        return checkType(type, SLBlockEntities.ALTAR, AltarBlockEntity::tick);
     }
 
     @Override

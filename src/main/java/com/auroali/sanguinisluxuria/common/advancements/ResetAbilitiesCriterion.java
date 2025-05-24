@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.advancements;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
@@ -18,7 +18,7 @@ public class ResetAbilitiesCriterion extends AbstractCriterion<ResetAbilitiesCri
 
     @Override
     public Identifier getId() {
-        return BLResources.RESET_ABILITIES_ID;
+        return SLResources.RESET_ABILITIES_ID;
     }
 
     public void trigger(ServerPlayerEntity entity) {
@@ -28,7 +28,7 @@ public class ResetAbilitiesCriterion extends AbstractCriterion<ResetAbilitiesCri
     public static class Conditions extends AbstractCriterionConditions {
 
         public Conditions(LootContextPredicate entity) {
-            super(BLResources.RESET_ABILITIES_ID, entity);
+            super(SLResources.RESET_ABILITIES_ID, entity);
         }
 
         public static Conditions create() {

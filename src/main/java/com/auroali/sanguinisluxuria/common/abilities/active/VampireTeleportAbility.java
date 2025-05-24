@@ -4,9 +4,9 @@ import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
-import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
+import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.SLItems;
 import com.auroali.sanguinisluxuria.config.BLConfig;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.LivingEntity;
@@ -52,7 +52,7 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         entity.getWorld().emitGameEvent(GameEvent.TELEPORT, start, GameEvent.Emitter.of(entity));
         this.playSound(entity, SoundEvents.ENTITY_ENDERMAN_TELEPORT, 0.05f);
         TrinketsApi.getTrinketComponent(entity).ifPresent(c -> {
-            if (c.isEquipped(BLItems.PENDANT_OF_PIERCING))
+            if (c.isEquipped(SLItems.PENDANT_OF_PIERCING))
                 this.damageEntitiesBetween(entity, start, newPos);
         });
 
@@ -66,17 +66,17 @@ public class VampireTeleportAbility extends VampireAbility implements SyncableVa
         Box box = new Box(start, end);
         entity.getWorld().getOtherEntities(entity, box, e -> e.isLiving() && e.isAlive())
           .forEach(e -> {
-              if (e.getBoundingBox().intersects(start, end) && e.damage(BLDamageSources.teleport(entity), 8) && entity instanceof PlayerEntity player)
+              if (e.getBoundingBox().intersects(start, end) && e.damage(SLDamageSources.teleport(entity), 8) && entity instanceof PlayerEntity player)
                   player.addExhaustion(BLConfig.INSTANCE.piercingExhaustion / BLConfig.INSTANCE.vampireExhaustionMultiplier);
           });
     }
 
     public static double getRange(LivingEntity entity) {
-        return entity.getAttributeValue(BLEntityAttributes.BLINK_RANGE);
+        return entity.getAttributeValue(SLEntityAttributes.BLINK_RANGE);
     }
 
     public static int getCooldown(LivingEntity entity) {
-        return (int) entity.getAttributeValue(BLEntityAttributes.BLINK_COOLDOWN);
+        return (int) entity.getAttributeValue(SLEntityAttributes.BLINK_COOLDOWN);
     }
 
     @Override

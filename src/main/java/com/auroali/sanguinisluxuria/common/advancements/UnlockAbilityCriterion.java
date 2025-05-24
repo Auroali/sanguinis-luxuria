@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.advancements;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
@@ -19,14 +19,14 @@ public class UnlockAbilityCriterion extends AbstractCriterion<UnlockAbilityCrite
         if (obj.has("ability")) {
             Identifier identifier = Identifier.tryParse(obj.get("ability").getAsString());
             if (identifier != null)
-                ability = BLRegistries.VAMPIRE_ABILITIES.get(identifier);
+                ability = SLRegistries.VAMPIRE_ABILITIES.get(identifier);
         }
         return new Conditions(playerPredicate, ability);
     }
 
     @Override
     public Identifier getId() {
-        return BLResources.UNLOCK_VAMPIRE_ABILITY_ID;
+        return SLResources.UNLOCK_VAMPIRE_ABILITY_ID;
     }
 
     public void trigger(ServerPlayerEntity entity, VampireAbility ability) {
@@ -37,7 +37,7 @@ public class UnlockAbilityCriterion extends AbstractCriterion<UnlockAbilityCrite
         final VampireAbility ability;
 
         public Conditions(LootContextPredicate entity, VampireAbility ability) {
-            super(BLResources.UNLOCK_VAMPIRE_ABILITY_ID, entity);
+            super(SLResources.UNLOCK_VAMPIRE_ABILITY_ID, entity);
             this.ability = ability;
         }
 

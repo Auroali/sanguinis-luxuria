@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.rituals;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -19,7 +19,7 @@ public record ActiveRitualData(Ritual ritual, UUID initiator, UUID target) {
         if (data == null)
             return;
         Ritual.RITUAL_CODEC.encodeStart(NbtOps.INSTANCE, data.ritual())
-          .resultOrPartial(Bloodlust.LOGGER::error)
+          .resultOrPartial(SanguinisLuxuria.LOGGER::error)
           .ifPresent(element -> {
               compound.putUuid(RITUAL_KEY, data.initiator);
               compound.putUuid(INITIATOR_KEY, data.target);
@@ -31,7 +31,7 @@ public record ActiveRitualData(Ritual ritual, UUID initiator, UUID target) {
         if (!compound.contains(RITUAL_KEY))
             return null;
         return Ritual.RITUAL_CODEC.parse(NbtOps.INSTANCE, compound.get(RITUAL_KEY))
-          .resultOrPartial(Bloodlust.LOGGER::error)
+          .resultOrPartial(SanguinisLuxuria.LOGGER::error)
           .map(ritual -> {
               UUID initiator = compound.getUuid(INITIATOR_KEY);
               UUID target = compound.getUuid(TARGET_KEY);

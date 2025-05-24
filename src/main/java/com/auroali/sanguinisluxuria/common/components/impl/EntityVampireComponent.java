@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.google.common.base.Predicates;
 import net.minecraft.entity.LivingEntity;
@@ -23,7 +23,7 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     public EntityVampireComponent(T holder, Predicate<T> vampirePredicate, VampireAbility... abilities) {
         this.holder = holder;
         this.vampirePredicate = vampirePredicate;
-        this.abilities = new VampireAbilityContainer(Arrays.asList(abilities), () -> BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder));
+        this.abilities = new VampireAbilityContainer(Arrays.asList(abilities), () -> VampireComponent.KEY.sync(this.holder));
     }
 
     public EntityVampireComponent(T holder, VampireAbility... abilities) {
@@ -53,7 +53,7 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     @Override
     public void setDowned(boolean down) {
         this.downed = down;
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
+        VampireComponent.KEY.sync(this.holder);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     @Override
     public void setMist(boolean isMist) {
         this.isMist = isMist;
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
+        VampireComponent.KEY.sync(this.holder);
     }
 
     @Override

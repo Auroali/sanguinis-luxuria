@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.worldgen;
 
 
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.BLWorldgen;
+import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
+import com.auroali.sanguinisluxuria.common.registry.SLWorldgen;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
@@ -30,12 +30,12 @@ public class DecayedTwigsDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> getType() {
-        return BLWorldgen.DECAYED_TWIGS_DECORATOR;
+        return SLWorldgen.DECAYED_TWIGS_DECORATOR;
     }
 
     @Override
     public void generate(Generator generator) {
-        BlockState state = BLBlocks.DECAYED_TWIGS.getDefaultState();
+        BlockState state = SLBlocks.DECAYED_TWIGS.getDefaultState();
         generator.getLogPositions().forEach(blockPos -> {
             for (Direction direction : Direction.values()) {
                 BlockPos pos = blockPos.offset(direction);

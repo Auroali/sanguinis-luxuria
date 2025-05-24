@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.compat.emi;
 
 import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
+import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
@@ -71,7 +71,7 @@ public class CauldronInfusingEmiRecipe implements EmiRecipe {
         widgets.addDrawable(4, 36, 16, 16, (drawContext, mouseX, mouseY, delta) -> {
             MatrixStack stack = drawContext.getMatrices();
             MinecraftClient client = MinecraftClient.getInstance();
-            BlockState state = BLBlocks.BLOOD_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, this.recipe.getCauldronLevel());
+            BlockState state = SLBlocks.BLOOD_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, this.recipe.getCauldronLevel());
             BlockRenderManager blockRenderer = client.getBlockRenderManager();
             stack.push();
             stack.translate(-3, 16, 140);

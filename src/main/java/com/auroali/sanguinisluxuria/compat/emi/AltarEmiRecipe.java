@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.compat.emi;
 
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRitualRecipe;
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
+import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
 import com.auroali.sanguinisluxuria.common.rituals.ItemCreatingRitual;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
@@ -113,7 +113,7 @@ public class AltarEmiRecipe implements EmiRecipe {
         widgets.addDrawable(30, 62, 16, 16, (drawContext, mouseX, mouseY, delta) -> {
             MatrixStack stack = drawContext.getMatrices();
             MinecraftClient client = MinecraftClient.getInstance();
-            BlockState state = BLBlocks.ALTAR.getDefaultState().with(AltarBlock.ACTIVE, true);
+            BlockState state = SLBlocks.ALTAR.getDefaultState().with(AltarBlock.ACTIVE, true);
             BlockRenderManager blockRenderer = client.getBlockRenderManager();
             stack.push();
             stack.translate(0, 0, 140);

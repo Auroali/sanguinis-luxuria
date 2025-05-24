@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.compat.patchouli;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
@@ -24,7 +24,7 @@ public class BloodCauldronProcessor implements IComponentProcessor {
           .flatMap(r -> r instanceof BloodCauldronRecipe bloodCauldronRecipe ? Optional.of(bloodCauldronRecipe) : Optional.empty())
           .orElse(null);
         if (this.recipe == null) {
-            Bloodlust.LOGGER.warn("Could not find blood cauldron recipe {} for patchouli entry", id);
+            SanguinisLuxuria.LOGGER.warn("Could not find blood cauldron recipe {} for patchouli entry", id);
         }
     }
 

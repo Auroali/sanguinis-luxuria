@@ -1,8 +1,11 @@
 package com.auroali.sanguinisluxuria.common.components;
 
-import com.auroali.sanguinisluxuria.common.registry.BLEnchantments;
+import com.auroali.sanguinisluxuria.SLResources;
+import com.auroali.sanguinisluxuria.common.registry.SLEnchantments;
 import com.auroali.sanguinisluxuria.mixin.PersistentProjectileEntityAccessor;
 import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -16,10 +19,11 @@ import net.minecraft.server.world.ServerWorld;
 import java.util.UUID;
 
 public class BloodTransferComponent implements Component, AutoSyncedComponent {
-    Entity latchedEntity = null;
-    UUID latchedEntityId = null;
-    final PersistentProjectileEntity holder;
-    int bloodTransferLevel = -1;
+    public static final ComponentKey<BloodTransferComponent> KEY = ComponentRegistry.getOrCreate(SLResources.BLOOD_TRANSFER_COMPONENT_ID, BloodTransferComponent.class);
+    private Entity latchedEntity = null;
+    private UUID latchedEntityId = null;
+    protected final PersistentProjectileEntity holder;
+    protected int bloodTransferLevel = -1;
 
     public BloodTransferComponent(PersistentProjectileEntity entity) {
         this.holder = entity;
@@ -32,7 +36,7 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
         this.bloodTransferLevel = 0;
         if (this.holder.getWorld().isClient)
             return this.bloodTransferLevel;
-        this.bloodTransferLevel = EnchantmentHelper.getLevel(BLEnchantments.BLOOD_DRAIN, ((PersistentProjectileEntityAccessor) this.holder).sanguinisluxuria$asItemStack());
+        this.bloodTransferLevel = EnchantmentHelper.getLevel(SLEnchantments.BLOOD_DRAIN, ((PersistentProjectileEntityAccessor) this.holder).sanguinisluxuria$asItemStack());
         return this.bloodTransferLevel;
     }
 
@@ -43,11 +47,11 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
             if (newEntity == null) {
                 this.latchedEntity = null;
                 this.latchedEntityId = null;
-                BLEntityComponents.BLOOD_TRANSFER_COMPONENT.sync(this.holder);
+                KEY.sync(this.holder);
                 return null;
             }
             this.latchedEntity = newEntity;
-            BLEntityComponents.BLOOD_TRANSFER_COMPONENT.sync(this.holder);
+            KEY.sync(this.holder);
         }
         return this.latchedEntity;
     }
@@ -57,7 +61,7 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
         this.latchedEntityId = null;
         if (entity != null)
             this.latchedEntityId = entity.getUuid();
-        BLEntityComponents.BLOOD_TRANSFER_COMPONENT.sync(this.holder);
+        KEY.sync(this.holder);
     }
 
     @Override

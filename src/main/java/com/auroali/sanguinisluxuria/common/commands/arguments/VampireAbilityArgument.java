@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.commands.arguments;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
-    public static final Collection<String> EXAMPLES = List.of(BLResources.TELEPORT_ID.toString(), BLResources.BITE_ID.toString());
+    public static final Collection<String> EXAMPLES = List.of(SLResources.TELEPORT_ID.toString(), SLResources.BITE_ID.toString());
     private static final DynamicCommandExceptionType ID_INVALID_EXCEPTION = new DynamicCommandExceptionType(
       id -> Text.translatable("argument.sanguinisluxuria.id.invalid", id)
     );
@@ -28,7 +28,7 @@ public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
     public VampireAbility parse(StringReader reader) throws CommandSyntaxException {
         int cursor = reader.getCursor();
         Identifier id = Identifier.fromCommandInput(reader);
-        VampireAbility ability = BLRegistries.VAMPIRE_ABILITIES.get(id);
+        VampireAbility ability = SLRegistries.VAMPIRE_ABILITIES.get(id);
         if (ability == null) {
             reader.setCursor(cursor);
             throw ID_INVALID_EXCEPTION.createWithContext(reader, id);
@@ -45,7 +45,7 @@ public class VampireAbilityArgument implements ArgumentType<VampireAbility> {
             return Suggestions.empty();
         } catch (Exception ignored) {
         }
-        return CommandSource.suggestIdentifiers(BLRegistries.VAMPIRE_ABILITIES.getIds(), builder.createOffset(stringReader.getCursor()));
+        return CommandSource.suggestIdentifiers(SLRegistries.VAMPIRE_ABILITIES.getIds(), builder.createOffset(stringReader.getCursor()));
     }
 
     @Override

@@ -3,10 +3,10 @@ package com.auroali.sanguinisluxuria.common.rituals.types;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
@@ -24,19 +24,19 @@ public class VampireAbilityResetRitual implements Ritual {
         if (!VampireHelper.isVampire(parameters.target()) || !parameters.targetWithin(32.d))
             return;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(parameters.target());
+        VampireComponent vampire = VampireComponent.KEY.get(parameters.target());
         VampireAbilityContainer abilities = vampire.getAbilityContainer();
         for (VampireAbility ability : abilities.abilities()) {
             ability.onAbilityRemoved(parameters.target(), vampire);
             abilities.removeAbility(ability);
-            parameters.applyToPlayerTarget(BLAdvancementCriterion.RESET_ABILITIES::trigger);
+            parameters.applyToPlayerTarget(SLAdvancementCriterion.RESET_ABILITIES::trigger);
         }
 
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(parameters.target());
+        VampireComponent.KEY.sync(parameters.target());
     }
 
     @Override
     public RitualType<?> getType() {
-        return BLRitualTypes.ABILITY_RESET_RITUAL_TYPE;
+        return SLRitualTypes.ABILITY_RESET_RITUAL_TYPE;
     }
 }

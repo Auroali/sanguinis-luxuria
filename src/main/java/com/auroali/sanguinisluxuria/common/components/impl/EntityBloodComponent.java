@@ -1,12 +1,13 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -29,10 +30,10 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
 
     @Override
     public void initializeBloodValues() {
-        if (!this.holder.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
+        if (!this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
             this.maxBlood = 0;
             this.currentBlood = 0;
-            BLEntityComponents.BLOOD_COMPONENT.sync(this.holder);
+            BloodComponent.KEY.sync(this.holder);
             return;
         }
         this.wasBaby = this.holder.isBaby();
@@ -45,14 +46,14 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
             this.currentBlood = this.maxBlood;
         this.currentBlood = Math.min(this.currentBlood, this.maxBlood);
 
-        BLEntityComponents.BLOOD_COMPONENT.sync(this.holder);
+        BloodComponent.KEY.sync(this.holder);
     }
 
     @Override
     public boolean hasInitialized() {
         if (this.currentBlood == -1 || this.maxBlood == -1)
             return false;
-        if (this.holder.getType().isIn(BLTags.Entities.HAS_BLOOD)) {
+        if (this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
             return this.maxBlood > 0;
         }
         return this.maxBlood == 0;
@@ -63,7 +64,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
             return 1;
 
         float maxBloodFromHealth = this.holder.getMaxHealth();
-        if (!this.holder.getType().isIn(BLTags.Entities.GOOD_BLOOD))
+        if (!this.holder.getType().isIn(SLTags.Entities.GOOD_BLOOD))
             maxBloodFromHealth = MathHelper.clamp(maxBloodFromHealth / 2.f, 1.f, Float.MAX_VALUE);
         return (int) Math.ceil(maxBloodFromHealth);
     }
@@ -98,7 +99,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         this.bloodGainTimer = 0;
         if (this.currentBlood == 0)
             this.killHolderFromBloodloss(null);
-        BLEntityComponents.BLOOD_COMPONENT.sync(this.holder);
+        BloodComponent.KEY.sync(this.holder);
     }
 
     @Override
@@ -118,13 +119,13 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
 
     protected void killHolderFromBloodloss(LivingEntity drainer) {
         // vampires can't die from blood loss
-        if (VampireHelper.isVampire(this.holder) || this.holder.getType().isIn(BLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
+        if (VampireHelper.isVampire(this.holder) || this.holder.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
             return;
 
         if (drainer == null)
-            this.holder.damage(BLDamageSources.get(this.holder.getWorld(), BLResources.BLOOD_DRAIN_DAMAGE_KEY), Float.MAX_VALUE);
+            this.holder.damage(SLDamageSources.get(this.holder.getWorld(), SLResources.BLOOD_DRAIN_DAMAGE_KEY), Float.MAX_VALUE);
         else
-            this.holder.damage(BLDamageSources.bloodDrain(drainer), Float.MAX_VALUE);
+            this.holder.damage(SLDamageSources.bloodDrain(drainer), Float.MAX_VALUE);
     }
 
     @Override
@@ -145,7 +146,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         if (this.bloodGainTimer >= BloodConstants.BLOOD_GAIN_RATE) {
             this.currentBlood++;
             this.bloodGainTimer = 0;
-            BLEntityComponents.BLOOD_COMPONENT.sync(this.holder);
+            BloodComponent.KEY.sync(this.holder);
         }
     }
 

@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.abilities;
 
-import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.SLResources;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -58,13 +58,13 @@ public interface SyncableVampireAbility<T> {
             throw new IllegalStateException("SyncableVampireAbility must be implemented on a VampireAbility!");
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeVarInt(entity.getId());
-        buf.writeRegistryValue(BLRegistries.VAMPIRE_ABILITIES, (VampireAbility) this);
+        buf.writeRegistryValue(SLRegistries.VAMPIRE_ABILITIES, (VampireAbility) this);
         this.writePacket(buf, entity.getWorld(), data);
         PlayerLookup.tracking(entity).forEach(p ->
-          ServerPlayNetworking.send(p, BLResources.ABILITY_SYNC_CHANNEL, buf)
+          ServerPlayNetworking.send(p, SLResources.ABILITY_SYNC_CHANNEL, buf)
         );
         if (entity instanceof ServerPlayerEntity p)
-            ServerPlayNetworking.send(p, BLResources.ABILITY_SYNC_CHANNEL, buf);
+            ServerPlayNetworking.send(p, SLResources.ABILITY_SYNC_CHANNEL, buf);
     }
 
     /**

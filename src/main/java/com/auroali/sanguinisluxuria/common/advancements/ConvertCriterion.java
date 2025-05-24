@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.advancements;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
@@ -20,7 +20,7 @@ public class ConvertCriterion extends AbstractCriterion<ConvertCriterion.Conditi
 
     @Override
     public Identifier getId() {
-        return BLResources.CONVERT_CRITERION_ID;
+        return SLResources.CONVERT_CRITERION_ID;
     }
 
     public void trigger(ServerPlayerEntity entity, ConversionContext.Conversion conversion) {
@@ -31,7 +31,7 @@ public class ConvertCriterion extends AbstractCriterion<ConvertCriterion.Conditi
         private final ConversionContext.Conversion conversion;
 
         public Conditions(ConversionContext.Conversion conversion, LootContextPredicate entity) {
-            super(BLResources.CONVERT_CRITERION_ID, entity);
+            super(SLResources.CONVERT_CRITERION_ID, entity);
             this.conversion = conversion;
         }
 

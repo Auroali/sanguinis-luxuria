@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.datagen.builders;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeSerializers;
 import com.auroali.sanguinisluxuria.common.rituals.ItemCreatingRitual;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.google.gson.JsonArray;
@@ -184,7 +184,7 @@ public class RitualRecipeJsonBuilder extends RecipeJsonBuilder {
 
             JsonElement ritualData = Ritual.RITUAL_CODEC
               .encodeStart(JsonOps.INSTANCE, this.ritual)
-              .resultOrPartial(Bloodlust.LOGGER::error)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
               .orElseThrow();
             json.add("ritual", ritualData);
         }
@@ -196,7 +196,7 @@ public class RitualRecipeJsonBuilder extends RecipeJsonBuilder {
 
         @Override
         public RecipeSerializer<?> getSerializer() {
-            return BLRecipeSerializers.ALTAR_RECIPE_SERIALIZER;
+            return SLRecipeSerializers.ALTAR_RECIPE_SERIALIZER;
         }
 
         @Nullable

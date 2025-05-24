@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
-import com.auroali.sanguinisluxuria.BloodlustClient;
+import com.auroali.sanguinisluxuria.SanguinisLuxuriaClient;
 import net.minecraft.client.gui.hud.BossBarHud;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BossBarHudMixin {
     @Inject(method = "shouldDarkenSky", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$makeSkyDarkDuringAltarCrafting(CallbackInfoReturnable<Boolean> cir) {
-        if (BloodlustClient.isAltarActive) {
-            BloodlustClient.isAltarActive = false;
+        if (SanguinisLuxuriaClient.isAltarActive) {
+            SanguinisLuxuriaClient.isAltarActive = false;
             cir.setReturnValue(true);
         }
     }

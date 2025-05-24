@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.blockentities;
 
-import com.auroali.sanguinisluxuria.BloodlustClient;
+import com.auroali.sanguinisluxuria.SanguinisLuxuriaClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.network.packets.AltarRecipeStartS2C;
@@ -51,7 +51,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
     private int ticksProcessing;
 
     public AltarBlockEntity(BlockPos pos, BlockState state) {
-        super(BLBlockEntities.ALTAR, pos, state);
+        super(SLBlockEntities.ALTAR, pos, state);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
     public static void tickClient(World world, BlockPos pos, BlockState state, AltarBlockEntity altar) {
         altar.ticks++;
         if (state.get(AltarBlock.ACTIVE))
-            BloodlustClient.isAltarActive = true;
+            SanguinisLuxuriaClient.isAltarActive = true;
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, AltarBlockEntity altar) {
@@ -91,9 +91,9 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         }
 
         if (world.getTime() % 20 == 0 && altar.getWorld() instanceof ServerWorld serverWorld) {
-            world.playSound(null, pos, BLSounds.ALTAR_BEATS, SoundCategory.BLOCKS);
+            world.playSound(null, pos, SLSounds.ALTAR_BEATS, SoundCategory.BLOCKS);
             serverWorld.spawnParticles(
-              new DelayedParticleEffect(BLParticles.ALTAR_BEAT, 2),
+              new DelayedParticleEffect(SLParticles.ALTAR_BEAT, 2),
               altar.getPos().getX() + 0.5,
               altar.getPos().getY() + 0.05,
               altar.getPos().getZ() + 0.5,
@@ -120,7 +120,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
           .target(target)
           .build();
         ritual.onCompleted(parameters);
-        parameters.applyToPlayerInitiator(player -> BLAdvancementCriterion.PERFORM_RITUAL.trigger(player, ritual));
+        parameters.applyToPlayerInitiator(player -> SLAdvancementCriterion.PERFORM_RITUAL.trigger(player, ritual));
         altar.getStack(0).decrement(1);
         altar.ritualData = null;
         altar.ticksProcessing = 0;
@@ -138,7 +138,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         List<ItemStack> pedestalItems = new ArrayList<>();
 
         BlockPos.streamOutwards(pos, PEDESTAL_SEARCH_RADIUS, PEDESTAL_SEARCH_RADIUS, PEDESTAL_SEARCH_RADIUS)
-          .map(position -> world.getBlockEntity(position, BLBlockEntities.PEDESTAL))
+          .map(position -> world.getBlockEntity(position, SLBlockEntities.PEDESTAL))
           .filter(Optional::isPresent)
           .map(Optional::get)
           .forEach(pedestal -> {
@@ -155,7 +155,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
             inventory.setStack(i + 1, pedestalItems.get(i));
         }
 
-        world.getRecipeManager().getFirstMatch(BLRecipeTypes.ALTAR_RECIPE, inventory, world)
+        world.getRecipeManager().getFirstMatch(SLRecipeTypes.ALTAR_RECIPE, inventory, world)
           .ifPresent(recipe -> {
               // send vfx packet
               AltarRecipeStartS2C packet = new AltarRecipeStartS2C(pos, pedestalPositions);

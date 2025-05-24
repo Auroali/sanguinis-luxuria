@@ -2,9 +2,9 @@ package com.auroali.sanguinisluxuria.common.commands;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandException;
@@ -35,12 +35,12 @@ public class AbilityCommand {
 
     private static int resetAbilities(CommandContext<ServerCommandSource> ctx, Collection<ServerPlayerEntity> targets) {
         for (ServerPlayerEntity player : targets) {
-            VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+            VampireComponent component = VampireComponent.KEY.get(player);
             for (VampireAbility a : component.getAbilityContainer().abilities()) {
                 a.onAbilityRemoved(player, component);
                 component.getAbilityContainer().removeAbility(a);
             }
-            BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
+            VampireComponent.KEY.sync(player);
         }
         return 0;
     }
@@ -48,18 +48,18 @@ public class AbilityCommand {
     private static int grantAbility(CommandContext<ServerCommandSource> ctx, Collection<ServerPlayerEntity> targets) {
         for (ServerPlayerEntity player : targets) {
             VampireAbility ability = VampireAbilityArgument.getAbility(ctx, "ability");
-            VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(player);
+            VampireComponent component = VampireComponent.KEY.get(player);
             if (!ability.testConditions(player, component, component.getAbilityContainer())) {
                 throw new CommandException(
                   Text.translatable(
                     "commands.sanguinisluxuria.ability.failed_conditions",
-                    BLRegistries.VAMPIRE_ABILITIES.getId(ability),
+                    SLRegistries.VAMPIRE_ABILITIES.getId(ability),
                     player.getName()
                   )
                 );
             }
             component.getAbilityContainer().addAbility(ability);
-            BLEntityComponents.VAMPIRE_COMPONENT.sync(player);
+            VampireComponent.KEY.sync(player);
         }
         return 0;
     }

@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
-import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
+import com.auroali.sanguinisluxuria.SLResources;
+import com.auroali.sanguinisluxuria.common.registry.SLItems;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -27,11 +27,11 @@ public class ItemRendererMixin {
     private ItemModels models;
 
     @Unique
-    private static final Identifier MASK_ONE_INVENTORY_MODEL = BLResources.MASK_ONE_ID.withPrefixedPath("item/").withSuffixedPath("_inventory");
+    private static final Identifier MASK_ONE_INVENTORY_MODEL = SLResources.MASK_ONE_ID.withPrefixedPath("item/").withSuffixedPath("_inventory");
     @Unique
-    private static final Identifier MASK_TWO_INVENTORY_MODEL = BLResources.MASK_TWO_ID.withPrefixedPath("item/").withSuffixedPath("_inventory");
+    private static final Identifier MASK_TWO_INVENTORY_MODEL = SLResources.MASK_TWO_ID.withPrefixedPath("item/").withSuffixedPath("_inventory");
     @Unique
-    private static final Identifier MASK_THREE_INVENTORY_MODEL = BLResources.MASK_THREE_ID.withPrefixedPath("item/").withSuffixedPath("_inventory");
+    private static final Identifier MASK_THREE_INVENTORY_MODEL = SLResources.MASK_THREE_ID.withPrefixedPath("item/").withSuffixedPath("_inventory");
 
     @Inject(
       method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V",
@@ -41,15 +41,15 @@ public class ItemRendererMixin {
         if (renderMode == ModelTransformationMode.HEAD)
             return;
 
-        if (stack.isOf(BLItems.MASK_1)) {
+        if (stack.isOf(SLItems.MASK_1)) {
             modelRef.set(this.models.getModelManager().getModel(MASK_ONE_INVENTORY_MODEL));
             return;
         }
-        if (stack.isOf(BLItems.MASK_2)) {
+        if (stack.isOf(SLItems.MASK_2)) {
             modelRef.set(this.models.getModelManager().getModel(MASK_TWO_INVENTORY_MODEL));
             return;
         }
-        if (stack.isOf(BLItems.MASK_3)) {
+        if (stack.isOf(SLItems.MASK_3)) {
             modelRef.set(this.models.getModelManager().getModel(MASK_THREE_INVENTORY_MODEL));
         }
     }

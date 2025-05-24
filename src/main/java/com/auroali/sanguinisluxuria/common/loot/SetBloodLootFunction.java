@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.loot;
 
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLLootFunctions;
+import com.auroali.sanguinisluxuria.common.registry.SLLootFunctions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -31,7 +31,7 @@ public class SetBloodLootFunction extends ConditionalLootFunction {
 
     @Override
     public LootFunctionType getType() {
-        return BLLootFunctions.SET_BLOOD;
+        return SLLootFunctions.SET_BLOOD;
     }
 
     public static class Serializer extends ConditionalLootFunction.Serializer<SetBloodLootFunction> {

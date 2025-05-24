@@ -3,13 +3,13 @@ package com.auroali.sanguinisluxuria.common.components.impl;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.enchantments.SunProtectionEnchantment;
 import com.auroali.sanguinisluxuria.common.events.VampireSunEvents;
 import com.auroali.sanguinisluxuria.common.network.ConditionalPacketWriter;
-import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -90,7 +90,7 @@ public class PlayerVampireComponent implements VampireComponent {
             }
         }
         this.state.defaultOnly();
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
+        VampireComponent.KEY.sync(this.holder);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class PlayerVampireComponent implements VampireComponent {
         this.isMist = tag.getBoolean("IsMist");
         this.container.readNbt(tag);
         this.state.updateAll();
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
+        VampireComponent.KEY.sync(this.holder);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class PlayerVampireComponent implements VampireComponent {
         }
 
         if (this.state.isSet())
-            BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
+            VampireComponent.KEY.sync(this.holder);
     }
 
     @Override
@@ -164,7 +164,7 @@ public class PlayerVampireComponent implements VampireComponent {
         this.isDowned = down;
         this.isMist = false;
         this.state.defaultOnly();
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
+        VampireComponent.KEY.sync(this.holder);
     }
 
     @Override
@@ -176,7 +176,7 @@ public class PlayerVampireComponent implements VampireComponent {
     public void setMist(boolean isMist) {
         this.isMist = isMist;
         this.state.defaultOnly();
-        BLEntityComponents.VAMPIRE_COMPONENT.sync(this.holder);
+        VampireComponent.KEY.sync(this.holder);
     }
 
     private void removeModifiers() {
@@ -187,7 +187,7 @@ public class PlayerVampireComponent implements VampireComponent {
     }
 
     private void tickBloodEffects() {
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this.holder);
+        BloodComponent blood = BloodComponent.KEY.get(this.holder);
 
         if (blood.getBlood() < 6)
             this.holder.addStatusEffect(new StatusEffectInstance(
@@ -246,7 +246,7 @@ public class PlayerVampireComponent implements VampireComponent {
 
     public int getMaxTimeInSun() {
         // combine sun resistance values and then convert from seconds to ticks
-        int time = (int) ((this.holder.getAttributeValue(BLEntityAttributes.SUN_RESISTANCE) + SunProtectionEnchantment.calculateForEntity(this.holder)) * 20.d);
+        int time = (int) ((this.holder.getAttributeValue(SLEntityAttributes.SUN_RESISTANCE) + SunProtectionEnchantment.calculateForEntity(this.holder)) * 20.d);
         return VampireSunEvents.MODIFY_SUN_TIME.invoker().getMaxTimeInSun(this.holder, this, time);
     }
 

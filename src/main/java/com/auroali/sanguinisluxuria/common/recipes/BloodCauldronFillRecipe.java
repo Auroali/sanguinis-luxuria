@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.recipes;
 
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeSerializers;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.SimpleInventory;
@@ -43,7 +43,7 @@ public class BloodCauldronFillRecipe extends BloodCauldronRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BLRecipeSerializers.BLOOD_CAULDRON_FILL_SERIALIZER;
+        return SLRecipeSerializers.BLOOD_CAULDRON_FILL_SERIALIZER;
     }
 
     public static class Serializer implements RecipeSerializer<BloodCauldronRecipe> {

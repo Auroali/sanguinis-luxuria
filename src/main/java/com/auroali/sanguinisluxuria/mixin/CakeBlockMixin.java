@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -23,7 +23,7 @@ public class CakeBlockMixin {
         }
 
         Item item = state.getBlock().asItem();
-        if (item != null && item.getRegistryEntry().isIn(BLTags.Items.VAMPIRES_GET_HUNGER_FROM))
+        if (item != null && item.getRegistryEntry().isIn(SLTags.Items.VAMPIRES_GET_HUNGER_FROM))
             ((VampireHungerManager) instance).sanguinisluxuria$addHunger(food, saturationModifier);
     }
 }

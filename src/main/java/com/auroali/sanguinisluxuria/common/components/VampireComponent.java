@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.components;
 
+import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
@@ -8,6 +9,8 @@ import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,6 +27,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.event.GameEvent;
 
 public interface VampireComponent extends Component, AutoSyncedComponent, ServerTickingComponent {
+    ComponentKey<VampireComponent> KEY = ComponentRegistry.getOrCreate(SLResources.VAMPIRE_COMPONENT_ID, VampireComponent.class);
+
     /**
      * @return if the holding entity is a vampire
      */
@@ -75,10 +80,10 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @param amount the initial amount of damage
      * @param source the damage source
      * @return the amount of damage that should be taken by the vampire
-     * @see BLEntityAttributes#VULNERABILITY
+     * @see SLEntityAttributes#VULNERABILITY
      */
     static float calculateDamage(float amount, float vulnerability, DamageSource source) {
-        if (source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
+        if (source.isIn(SLTags.DamageTypes.VAMPIRES_WEAK_TO))
             return amount * vulnerability;
 
         return amount;
@@ -91,10 +96,10 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @return whether the source is effective and damage should be increased
      */
     static boolean isEffectiveAgainstVampires(DamageSource source) {
-        if (source.isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO))
+        if (source.isIn(SLTags.DamageTypes.VAMPIRES_WEAK_TO))
             return true;
 
-        if (source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE) > 0) {
+        if (source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(SLEntityAttributes.BLESSED_DAMAGE) > 0) {
             return true;
         }
 
@@ -108,14 +113,14 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
     }
 
     static void handleBloodDrain(VampireComponent vampire, LivingEntity target, LivingEntity vampireEntity) {
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(target);
+        BloodComponent blood = BloodComponent.KEY.get(target);
         // if the target doesn't have blood or cannot be drained, we can't fill hunger
         if (!VampireHelper.hasBlood(target) || !BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(vampireEntity, target) || !blood.drainBlood(1, vampireEntity))
             return;
 
         // damage the vampire and cancel filling up hunger if the target has blood protection
-        if (target.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)) {
-            vampireEntity.damage(BLDamageSources.blessedWater(target), 2.f);
+        if (target.hasStatusEffect(SLStatusEffects.BLOOD_PROTECTION)) {
+            vampireEntity.damage(SLDamageSources.blessedWater(target), 2.f);
             vampireEntity.setOnFireFor(12);
             return;
         }
@@ -125,7 +130,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         // (such as saturation)
         if (vampireEntity instanceof PlayerEntity player)
             ((VampireHungerManager) player.getHungerManager()).sanguinisluxuria$addHunger(1, 0.25f);
-        else BLEntityComponents.BLOOD_COMPONENT.get(vampireEntity).addBlood(1);
+        else BloodComponent.KEY.get(vampireEntity).addBlood(1);
 
         BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(vampireEntity, target, 1);
 
@@ -138,20 +143,20 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         vampireEntity.getWorld().emitGameEvent(vampireEntity, GameEvent.DRINK, vampireEntity.getPos());
 
         // if the potion transfer ability is unlocked, transfer potion effects to the target
-        if (vampire.getAbilityContainer().has(BLVampireAbilities.INFECTIOUS)) {
+        if (vampire.getAbilityContainer().has(SLVampireAbilities.INFECTIOUS)) {
             SyncableVampireAbility.syncAbility(
               target,
-              BLVampireAbilities.INFECTIOUS,
+              SLVampireAbilities.INFECTIOUS,
               InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(vampireEntity, target))
             );
         }
 
-        BLBloodDrainEffects.applyTo(vampireEntity, target);
+        SLBloodDrainEffects.applyTo(vampireEntity, target);
 
         // allow conversion of entities with weakness
         if (!VampireHelper.isVampire(target) && target.hasStatusEffect(StatusEffects.WEAKNESS)) {
             if (vampireEntity instanceof ServerPlayerEntity player)
-                BLAdvancementCriterion.INFECT_ENTITY.trigger(player);
+                SLAdvancementCriterion.INFECT_ENTITY.trigger(player);
             VampireHelper.incrementBloodSickness(target);
         }
 

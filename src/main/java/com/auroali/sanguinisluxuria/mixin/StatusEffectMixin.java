@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,8 +24,8 @@ public class StatusEffectMixin {
 
     @Inject(method = "applyUpdateEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", ordinal = 0), cancellable = true)
     public void sanguinisluxuria$preventPoisonFromKilling(LivingEntity entity, int amplifier, CallbackInfo ci) {
-        if (VampireHelper.isVampire(entity) && entity.getDamageSources().magic().isIn(BLTags.DamageTypes.VAMPIRES_WEAK_TO)) {
-            float vulnerability = (float) entity.getAttributeValue(BLEntityAttributes.VULNERABILITY);
+        if (VampireHelper.isVampire(entity) && entity.getDamageSources().magic().isIn(SLTags.DamageTypes.VAMPIRES_WEAK_TO)) {
+            float vulnerability = (float) entity.getAttributeValue(SLEntityAttributes.VULNERABILITY);
             entity.damage(entity.getDamageSources().magic(), 1.0F / vulnerability);
             ci.cancel();
         }

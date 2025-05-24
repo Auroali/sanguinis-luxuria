@@ -3,11 +3,11 @@ package com.auroali.sanguinisluxuria.common.rituals.types;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public record VampireAbilityRitual(VampireAbility ability) implements Ritual {
     public static final Codec<VampireAbilityRitual> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-      BLRegistries.VAMPIRE_ABILITIES.getCodec().fieldOf("ability").forGetter(VampireAbilityRitual::ability)
+      SLRegistries.VAMPIRE_ABILITIES.getCodec().fieldOf("ability").forGetter(VampireAbilityRitual::ability)
     ).apply(instance, VampireAbilityRitual::new));
 
 
@@ -28,13 +28,13 @@ public record VampireAbilityRitual(VampireAbility ability) implements Ritual {
         if (!VampireHelper.isVampire(parameters.target()) || !parameters.targetWithin(32.d))
             return;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(parameters.target());
+        VampireComponent vampire = VampireComponent.KEY.get(parameters.target());
         VampireAbilityContainer abilities = vampire.getAbilityContainer();
         if (abilities.has(this.ability) || !this.ability.testConditions(parameters.target(), vampire, abilities))
             // todo: add feedback
             return;
         abilities.addAbility(this.ability);
-        parameters.applyToPlayerTarget(player -> BLAdvancementCriterion.UNLOCK_ABILITY.trigger(player, this.ability));
+        parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.UNLOCK_ABILITY.trigger(player, this.ability));
     }
 
     @Override
@@ -44,6 +44,6 @@ public record VampireAbilityRitual(VampireAbility ability) implements Ritual {
 
     @Override
     public RitualType<?> getType() {
-        return BLRitualTypes.ABILITY_RITUAL_TYPE;
+        return SLRitualTypes.ABILITY_RITUAL_TYPE;
     }
 }

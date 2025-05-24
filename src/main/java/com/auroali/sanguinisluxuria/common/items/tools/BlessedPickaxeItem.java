@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.items.tools;
 
-import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.EquipmentSlot;
@@ -26,8 +26,8 @@ public class BlessedPickaxeItem extends PickaxeItem {
           new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION)
         );
         builder.put(
-          BLEntityAttributes.BLESSED_DAMAGE,
-          new EntityAttributeModifier(BLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", blessedDamage, EntityAttributeModifier.Operation.ADDITION)
+          SLEntityAttributes.BLESSED_DAMAGE,
+          new EntityAttributeModifier(SLEntityAttributes.BLESSED_DAMAGE_UUID, "Tool Modifier", blessedDamage, EntityAttributeModifier.Operation.ADDITION)
         );
         this.attributeModifiers = builder.build();
     }

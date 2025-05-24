@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.blockentities;
 
-import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
+import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -23,7 +23,7 @@ public class PedestalBlockEntity extends BlockEntity implements Clearable, ItemD
     private int spinTicks = 0;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
-        super(BLBlockEntities.PEDESTAL, pos, state);
+        super(SLBlockEntities.PEDESTAL, pos, state);
         this.inv.addListener(inv -> {
             if (this.world != null && !this.world.isClient)
                 this.world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);

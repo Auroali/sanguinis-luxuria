@@ -53,7 +53,7 @@ public class TagResolvingMapBuilder<T, V> {
     protected record Entry<T, V>(Either<TagKey<T>, T> key, V value) {
         public List<T> getTargets(Registry<T> registry) {
             return this.key.map(
-              tag -> BLTags.getAllEntriesInTag(tag, registry),
+              tag -> SLTags.getAllEntriesInTag(tag, registry),
               List::of
             );
         }

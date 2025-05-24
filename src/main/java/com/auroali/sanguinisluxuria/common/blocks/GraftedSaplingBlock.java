@@ -1,10 +1,10 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
-import com.auroali.sanguinisluxuria.common.registry.BLWorldgen;
+import com.auroali.sanguinisluxuria.common.registry.SLSounds;
+import com.auroali.sanguinisluxuria.common.registry.SLWorldgen;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.sapling.SaplingGenerator;
@@ -51,9 +51,9 @@ public class GraftedSaplingBlock extends SaplingBlock {
         AtomicBoolean hasDrainedBlood = new AtomicBoolean();
         world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), box, VampireHelper::hasBlood)
           .forEach(entity -> {
-              BloodComponent bloodComponent = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+              BloodComponent bloodComponent = BloodComponent.KEY.get(entity);
               if (bloodComponent.drainBlood(1)) {
-                  world.playSound(null, pos, BLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS);
+                  world.playSound(null, pos, SLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS);
                   hasDrainedBlood.set(true);
               }
           });
@@ -64,7 +64,7 @@ public class GraftedSaplingBlock extends SaplingBlock {
         @Nullable
         @Override
         protected RegistryKey<ConfiguredFeature<?, ?>> getTreeFeature(Random random, boolean bees) {
-            return BLWorldgen.DECAYED_TREE;
+            return SLWorldgen.DECAYED_TREE;
         }
     }
 }

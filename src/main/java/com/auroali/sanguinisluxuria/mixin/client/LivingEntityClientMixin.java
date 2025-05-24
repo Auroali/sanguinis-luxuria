@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -33,7 +33,7 @@ public abstract class LivingEntityClientMixin extends Entity {
         if (!this.getWorld().isClient || !VampireHelper.isVampire(this))
             return;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        VampireComponent vampire = VampireComponent.KEY.get(this);
         if (!vampire.isMist())
             return;
 

@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.entities.goals;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.entity.ai.NoPenaltyTargeting;
 import net.minecraft.entity.ai.goal.Goal;
@@ -36,7 +36,7 @@ public class FleeWhenDownedGoal extends Goal {
         if (!VampireHelper.isVampire(this.mob))
             return false;
 
-        VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob);
+        VampireComponent component = VampireComponent.KEY.get(this.mob);
         if (component.isDowned() && this.mob.getAttacker() != null && this.mob.getAttacker().squaredDistanceTo(this.mob) < MAX_DISTANCE) {
             Vec3d target = NoPenaltyTargeting.find(this.mob, 16, 6);
             if (target == null)

@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.client.particles;
 
-import com.auroali.sanguinisluxuria.common.registry.BLFluids;
-import com.auroali.sanguinisluxuria.common.registry.BLParticles;
+import com.auroali.sanguinisluxuria.common.registry.SLFluids;
+import com.auroali.sanguinisluxuria.common.registry.SLParticles;
 import net.minecraft.client.particle.BlockLeakParticle;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.world.ClientWorld;
@@ -17,7 +17,7 @@ public class DrippingBloodParticle extends BlockLeakParticle.Dripping {
     public static SpriteBillboardParticle createDrippingBlood(
       DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ
     ) {
-        BlockLeakParticle particle = new BlockLeakParticle.Dripping(world, x, y, z, BLFluids.BLOOD, BLParticles.FALLING_BLOOD);
+        BlockLeakParticle particle = new BlockLeakParticle.Dripping(world, x, y, z, SLFluids.BLOOD, SLParticles.FALLING_BLOOD);
         particle.setColor(1.0f, 1.0f, 1.0f);
         return particle;
     }
@@ -25,7 +25,7 @@ public class DrippingBloodParticle extends BlockLeakParticle.Dripping {
     public static SpriteBillboardParticle createFallingBlood(
       DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ
     ) {
-        BlockLeakParticle particle = new BlockLeakParticle.ContinuousFalling(world, x, y, z, BLFluids.BLOOD, BLParticles.LANDING_BLOOD);
+        BlockLeakParticle particle = new BlockLeakParticle.ContinuousFalling(world, x, y, z, SLFluids.BLOOD, SLParticles.LANDING_BLOOD);
         particle.setColor(1.0f, 1.0f, 1.0f);
         return particle;
     }
@@ -33,7 +33,7 @@ public class DrippingBloodParticle extends BlockLeakParticle.Dripping {
     public static SpriteBillboardParticle createLandingBlood(
       DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ
     ) {
-        BlockLeakParticle particle = new BlockLeakParticle.Landing(world, x, y, z, BLFluids.BLOOD);
+        BlockLeakParticle particle = new BlockLeakParticle.Landing(world, x, y, z, SLFluids.BLOOD);
         particle.setColor(1.0f, 1.0f, 1.0f);
         return particle;
     }

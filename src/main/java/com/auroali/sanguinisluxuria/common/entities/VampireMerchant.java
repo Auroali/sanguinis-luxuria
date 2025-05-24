@@ -1,14 +1,15 @@
 package com.auroali.sanguinisluxuria.common.entities;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.goals.AcivateAbilityWhenDownedGoal;
 import com.auroali.sanguinisluxuria.common.entities.goals.FleeWhenDownedGoal;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
-import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
-import com.auroali.sanguinisluxuria.common.registry.BLVampireVillagerTrades;
+import com.auroali.sanguinisluxuria.common.registry.SLItems;
+import com.auroali.sanguinisluxuria.common.registry.SLSounds;
+import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
+import com.auroali.sanguinisluxuria.common.registry.SLVampireVillagerTrades;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -46,7 +47,7 @@ public class VampireMerchant extends MerchantEntity {
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(0, new AcivateAbilityWhenDownedGoal(this, BLVampireAbilities.MIST, true));
+        this.goalSelector.add(0, new AcivateAbilityWhenDownedGoal(this, SLVampireAbilities.MIST, true));
         this.goalSelector.add(1, new FleeWhenDownedGoal(this, 0.8d));
         this.goalSelector.add(1,
           new HoldInHandsGoal<>(
@@ -58,9 +59,9 @@ public class VampireMerchant extends MerchantEntity {
         this.goalSelector.add(2,
           new HoldInHandsGoal<>(
             this,
-            BloodStorageItem.createStack(BLItems.BLOOD_BOTTLE),
-            BLSounds.DRAIN_BLOOD,
-            merchant -> VampireHelper.isVampire(merchant) && BLEntityComponents.VAMPIRE_COMPONENT.get(merchant).isDowned()
+            BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE),
+            SLSounds.DRAIN_BLOOD,
+            merchant -> VampireHelper.isVampire(merchant) && VampireComponent.KEY.get(merchant).isDowned()
           ));
         this.goalSelector.add(3, new StopFollowingCustomerGoal(this));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f));
@@ -159,8 +160,8 @@ public class VampireMerchant extends MerchantEntity {
     protected void fillRecipes() {
         TradeOfferList offers = this.getOffers();
         if (offers != null) {
-            this.fillRecipesFromPool(offers, BLVampireVillagerTrades.TRADES.get(1), 3);
-            this.fillRecipesFromPool(offers, BLVampireVillagerTrades.TRADES.get(2), 1);
+            this.fillRecipesFromPool(offers, SLVampireVillagerTrades.TRADES.get(1), 3);
+            this.fillRecipesFromPool(offers, SLVampireVillagerTrades.TRADES.get(2), 1);
         }
     }
 

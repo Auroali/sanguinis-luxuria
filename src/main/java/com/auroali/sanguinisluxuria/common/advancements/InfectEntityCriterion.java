@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.advancements;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
@@ -18,7 +18,7 @@ public class InfectEntityCriterion extends AbstractCriterion<InfectEntityCriteri
 
     @Override
     public Identifier getId() {
-        return BLResources.INFECT_ENTITY_ID;
+        return SLResources.INFECT_ENTITY_ID;
     }
 
     public void trigger(ServerPlayerEntity entity) {
@@ -28,7 +28,7 @@ public class InfectEntityCriterion extends AbstractCriterion<InfectEntityCriteri
     public static class Conditions extends AbstractCriterionConditions {
 
         public Conditions(LootContextPredicate entity) {
-            super(BLResources.INFECT_ENTITY_ID, entity);
+            super(SLResources.INFECT_ENTITY_ID, entity);
         }
 
         public static Conditions create() {

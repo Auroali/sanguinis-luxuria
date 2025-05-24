@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.datagen.builders;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionType;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
@@ -203,13 +203,13 @@ public class ConversionJsonBuilder {
 
             if (!this.transformers.isEmpty()) {
                 JsonElement transformersJson = EntityConversionTransformer.LIST_CODEC.encodeStart(JsonOps.INSTANCE, this.transformers)
-                  .getOrThrow(false, Bloodlust.LOGGER::error);
+                  .getOrThrow(false, SanguinisLuxuria.LOGGER::error);
                 object.add("transformers", transformersJson);
             }
 
             if (!this.conditions.isEmpty()) {
                 JsonElement conditionsJson = EntityConversionCondition.LIST_CODEC.encodeStart(JsonOps.INSTANCE, this.conditions)
-                  .getOrThrow(false, Bloodlust.LOGGER::error);
+                  .getOrThrow(false, SanguinisLuxuria.LOGGER::error);
                 object.add("conditions", conditionsJson);
             }
         }

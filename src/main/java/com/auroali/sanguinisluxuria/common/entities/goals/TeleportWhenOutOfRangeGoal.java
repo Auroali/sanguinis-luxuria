@@ -2,8 +2,9 @@ package com.auroali.sanguinisluxuria.common.entities.goals;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.active.VampireTeleportAbility;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
-import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.MobEntity;
@@ -22,11 +23,11 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
     @Override
     public boolean canStart() {
         LivingEntity livingEntity = this.mob.getTarget();
-        VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob).getAbilityContainer();
-        if (!container.has(BLVampireAbilities.TELEPORT))
+        VampireAbilityContainer container = VampireComponent.KEY.get(this.mob).getAbilityContainer();
+        if (!container.has(SLVampireAbilities.TELEPORT))
             return false;
 
-        VampireAbilityContainer.AbilityEntry entry = container.get(BLVampireAbilities.TELEPORT);
+        VampireAbilityContainer.AbilityEntry entry = container.get(SLVampireAbilities.TELEPORT);
         if (entry == null)
             return false;
 
@@ -40,10 +41,10 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
 
     @Override
     public boolean shouldContinue() {
-        VampireAbilityContainer container = BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob).getAbilityContainer();
+        VampireAbilityContainer container = VampireComponent.KEY.get(this.mob).getAbilityContainer();
         double teleportRange = Math.pow(VampireTeleportAbility.getRange(this.mob), 2);
 
-        VampireAbilityContainer.AbilityEntry entry = container.get(BLVampireAbilities.TELEPORT);
+        VampireAbilityContainer.AbilityEntry entry = container.get(SLVampireAbilities.TELEPORT);
         if (entry == null)
             return false;
 
@@ -69,6 +70,6 @@ public class TeleportWhenOutOfRangeGoal extends Goal {
     @Override
     public void tick() {
         this.mob.getLookControl().lookAt(this.target, 360F, 360F);
-        BLVampireAbilities.TELEPORT.activate(this.mob, BLEntityComponents.VAMPIRE_COMPONENT.get(this.mob));
+        SLVampireAbilities.TELEPORT.activate(this.mob, VampireComponent.KEY.get(this.mob));
     }
 }

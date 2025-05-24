@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria.common.advancements;
 
-import com.auroali.sanguinisluxuria.BLResources;
-import com.auroali.sanguinisluxuria.Bloodlust;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.SLResources;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.google.gson.JsonObject;
@@ -30,11 +30,11 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
     protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         if (obj.has("ritual")) {
             Identifier id = Identifier.tryParse(obj.get("ritual").getAsString());
-            RitualType<?> ritualType = BLRegistries.RITUAL_TYPES.get(id);
+            RitualType<?> ritualType = SLRegistries.RITUAL_TYPES.get(id);
             NbtCompound nbt = null;
             if (obj.has("nbt")) {
                 nbt = NbtCompound.CODEC.parse(JsonOps.INSTANCE, obj.get("nbt"))
-                  .resultOrPartial(Bloodlust.LOGGER::error)
+                  .resultOrPartial(SanguinisLuxuria.LOGGER::error)
                   .orElseThrow(() -> new JsonParseException("Failed to deserialize nbt"));
             }
             return new Conditions(ritualType, nbt, playerPredicate);
@@ -48,7 +48,7 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
 
     @Override
     public Identifier getId() {
-        return BLResources.PERFORM_RITUAL_ID;
+        return SLResources.PERFORM_RITUAL_ID;
     }
 
     public static class Conditions extends AbstractCriterionConditions {
@@ -56,7 +56,7 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
         final NbtCompound nbt;
 
         public Conditions(RitualType<?> ritual, NbtCompound nbt, LootContextPredicate entity) {
-            super(BLResources.PERFORM_RITUAL_ID, entity);
+            super(SLResources.PERFORM_RITUAL_ID, entity);
             this.ritual = ritual;
             this.nbt = nbt;
         }
@@ -70,7 +70,7 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
                 return false;
 
             NbtCompound toCompare = ((Codec<Ritual>) ritual.getType().getCodec()).encodeStart(NbtOps.INSTANCE, ritual)
-              .resultOrPartial(Bloodlust.LOGGER::error)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
               .flatMap(nbtElement -> nbtElement instanceof NbtCompound compound ? Optional.of(compound) : Optional.empty())
               .orElse(null);
 
@@ -90,14 +90,14 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
             NbtCompound resultNbt = new NbtCompound();
             resultNbt.putString("id", Registries.ITEM.getId(item.asItem()).toString());
             nbt.put("result", resultNbt);
-            return create(BLRitualTypes.ITEM_RITUAL_TYPE, nbt);
+            return create(SLRitualTypes.ITEM_RITUAL_TYPE, nbt);
         }
 
         @SuppressWarnings("unchecked")
         public static Conditions create(Ritual ritual) {
             NbtCompound nbt = ((Codec<Ritual>) ritual.getType().getCodec())
               .encodeStart(NbtOps.INSTANCE, ritual)
-              .resultOrPartial(Bloodlust.LOGGER::error)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
               .flatMap(element -> element instanceof NbtCompound compound ? Optional.of(compound) : Optional.empty())
               .orElse(null);
             return new Conditions(ritual.getType(), nbt, LootContextPredicate.EMPTY);
@@ -114,7 +114,7 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
                 object.addProperty("ritual", RitualType.getId(this.ritual).toString());
                 if (this.nbt != null) {
                     NbtCompound.CODEC.encodeStart(JsonOps.INSTANCE, this.nbt)
-                      .resultOrPartial(Bloodlust.LOGGER::error)
+                      .resultOrPartial(SanguinisLuxuria.LOGGER::error)
                       .ifPresent(element -> object.add("nbt", element));
                 }
             }

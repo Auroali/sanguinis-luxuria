@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.compat.patchouli;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRitualRecipe;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import net.minecraft.recipe.Ingredient;
@@ -27,7 +27,7 @@ public class AltarRecipeProcessor implements IComponentProcessor {
           .flatMap(r -> r instanceof AltarRitualRecipe ritualRecipe ? Optional.of(ritualRecipe) : Optional.empty())
           .orElse(null);
         if (this.recipe == null) {
-            Bloodlust.LOGGER.warn("Could not find ritual recipe {} for patchouli entry", id);
+            SanguinisLuxuria.LOGGER.warn("Could not find ritual recipe {} for patchouli entry", id);
         }
     }
 

@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
-import com.auroali.sanguinisluxuria.common.registry.BLCauldronBehaviours;
-import com.auroali.sanguinisluxuria.common.registry.BLFluids;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLCauldronBehaviours;
+import com.auroali.sanguinisluxuria.common.registry.SLFluids;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeTypes;
 import com.google.common.base.Predicates;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
@@ -26,7 +26,7 @@ import java.util.Collections;
 
 public class BloodCauldronBlock extends LeveledCauldronBlock {
     public BloodCauldronBlock(Settings settings) {
-        super(settings, Predicates.alwaysFalse(), BLCauldronBehaviours.BLOOD_CAULDRON_BEHAVIOUR);
+        super(settings, Predicates.alwaysFalse(), SLCauldronBehaviours.BLOOD_CAULDRON_BEHAVIOUR);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BloodCauldronBlock extends LeveledCauldronBlock {
 
     @Override
     protected boolean canBeFilledByDripstone(Fluid fluid) {
-        return fluid == BLFluids.BLOOD;
+        return fluid == SLFluids.BLOOD;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class BloodCauldronBlock extends LeveledCauldronBlock {
         ItemEntity item = (ItemEntity) entity;
         ItemStack stack = item.getStack();
 
-        world.getRecipeManager().getFirstMatch(BLRecipeTypes.BLOOD_CAULDRON_TYPE, new SimpleInventory(stack), world)
+        world.getRecipeManager().getFirstMatch(SLRecipeTypes.BLOOD_CAULDRON_TYPE, new SimpleInventory(stack), world)
           .ifPresent(recipe -> {
               if (level < recipe.getCauldronLevel())
                   return;

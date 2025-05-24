@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.mojang.serialization.Codec;
@@ -31,7 +31,7 @@ public class AbilityRevealRitual extends ItemRitual {
 
     @Override
     protected ItemStack createResultItem(RitualParameters parameters) {
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(parameters.initiator());
+        VampireComponent vampire = VampireComponent.KEY.get(parameters.initiator());
         ItemStack outputStack = new ItemStack(Items.WRITTEN_BOOK);
         NbtCompound nbt = outputStack.getOrCreateNbt();
         nbt.putString(WrittenBookItem.AUTHOR_KEY, "Ritual of Revealing");
@@ -71,6 +71,6 @@ public class AbilityRevealRitual extends ItemRitual {
 
     @Override
     public RitualType<?> getType() {
-        return BLRitualTypes.ABILITY_REVEAL_RITUAL_TYPE;
+        return SLRitualTypes.ABILITY_REVEAL_RITUAL_TYPE;
     }
 }

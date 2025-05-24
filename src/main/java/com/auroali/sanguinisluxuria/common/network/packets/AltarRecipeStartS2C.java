@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.network.packets;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import net.fabricmc.fabric.api.networking.v1.FabricPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.PacketByteBuf;
@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.List;
 
 public record AltarRecipeStartS2C(BlockPos pos, List<BlockPos> pedestals) implements FabricPacket {
-    public static final PacketType<AltarRecipeStartS2C> ID = PacketType.create(BLResources.ALTAR_RECIPE_START_S2C, AltarRecipeStartS2C::new);
+    public static final PacketType<AltarRecipeStartS2C> ID = PacketType.create(SLResources.ALTAR_RECIPE_START_S2C, AltarRecipeStartS2C::new);
 
     public AltarRecipeStartS2C(PacketByteBuf buf) {
         this(buf.readBlockPos(), buf.readList(PacketByteBuf::readBlockPos));

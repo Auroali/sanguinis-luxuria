@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin;
 
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -25,6 +26,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
       slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/network/packet/s2c/play/HealthUpdateS2CPacket;<init>(FIF)V"))
     )
     public void sanguinisluxuria$syncBlood(CallbackInfo ci) {
-        BLEntityComponents.BLOOD_COMPONENT.sync(this);
+        BloodComponent.KEY.sync(this);
     }
 }

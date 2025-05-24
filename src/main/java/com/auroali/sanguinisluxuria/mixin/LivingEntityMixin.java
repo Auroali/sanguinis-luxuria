@@ -2,8 +2,8 @@ package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.*;
-import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -58,10 +58,10 @@ public abstract class LivingEntityMixin extends Entity {
     public float sanguinisluxuria$increaseDamage(float amount, @Local(argsOnly = true) DamageSource source) {
         float blessedDamageMod = 0.0f;
         if (this.isUndead() && source.getAttacker() instanceof LivingEntity entity) {
-            blessedDamageMod += (float) entity.getAttributeValue(BLEntityAttributes.BLESSED_DAMAGE);
+            blessedDamageMod += (float) entity.getAttributeValue(SLEntityAttributes.BLESSED_DAMAGE);
         }
         if (VampireHelper.isVampire(this)) {
-            double vulnerability = this.getAttributeValue(BLEntityAttributes.VULNERABILITY);
+            double vulnerability = this.getAttributeValue(SLEntityAttributes.VULNERABILITY);
             return blessedDamageMod + VampireComponent.calculateDamage(amount, (float) vulnerability, source);
         }
         return blessedDamageMod + amount;
@@ -71,10 +71,10 @@ public abstract class LivingEntityMixin extends Entity {
       value = "INVOKE",
       target = "Lnet/minecraft/entity/LivingEntity;setHealth(F)V"))
     public void sanguinisluxuria$cancelBloodDrainOnDamageTaken(DamageSource source, float amount, CallbackInfo ci) {
-        if (!BLEntityComponents.BLOOD_DRAIN_COMPONENT.isProvidedBy(this))
+        if (!BloodDrainComponent.KEY.isProvidedBy(this))
             return;
 
-        BloodDrainComponent vampire = BLEntityComponents.BLOOD_DRAIN_COMPONENT.get(this);
+        BloodDrainComponent vampire = BloodDrainComponent.KEY.get(this);
         vampire.cancelDrain();
     }
 
@@ -86,8 +86,8 @@ public abstract class LivingEntityMixin extends Entity {
         if (!VampireHelper.isVampire(instance))
             return false;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(instance);
-        BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(instance);
+        VampireComponent vampire = VampireComponent.KEY.get(instance);
+        BloodComponent blood = BloodComponent.KEY.get(instance);
 
         if (blood.getBlood() == 0 || VampireComponent.isEffectiveAgainstVampires(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
             return false;
@@ -107,11 +107,11 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void sanguinisluxuria$addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         cir.getReturnValue()
-          .add(BLEntityAttributes.BLESSED_DAMAGE)
-          .add(BLEntityAttributes.BLINK_RANGE)
-          .add(BLEntityAttributes.BLINK_COOLDOWN)
-          .add(BLEntityAttributes.SUN_RESISTANCE)
-          .add(BLEntityAttributes.VULNERABILITY);
+          .add(SLEntityAttributes.BLESSED_DAMAGE)
+          .add(SLEntityAttributes.BLINK_RANGE)
+          .add(SLEntityAttributes.BLINK_COOLDOWN)
+          .add(SLEntityAttributes.SUN_RESISTANCE)
+          .add(SLEntityAttributes.VULNERABILITY);
     }
 
     @Inject(method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("HEAD"), cancellable = true)
@@ -119,21 +119,21 @@ public abstract class LivingEntityMixin extends Entity {
         if (!VampireHelper.isVampire(target))
             return;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(target);
+        VampireComponent vampire = VampireComponent.KEY.get(target);
         if (vampire.isDowned())
             cir.setReturnValue(false);
     }
 
     @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$preventBloodLustEffectForVampires(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
-        if (effect.getEffectType() == BLStatusEffects.BLOOD_LUST && (VampireHelper.isVampire(this) || this.hasStatusEffect(BLStatusEffects.BLOOD_PROTECTION)))
+        if (effect.getEffectType() == SLStatusEffects.BLOOD_LUST && (VampireHelper.isVampire(this) || this.hasStatusEffect(SLStatusEffects.BLOOD_PROTECTION)))
             cir.setReturnValue(false);
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void sanguinisluxuria$initBloodComponents(EntityType<?> entityType, World world, CallbackInfo ci) {
-        if (BLEntityComponents.BLOOD_COMPONENT.isProvidedBy(this)) {
-            BloodComponent blood = BLEntityComponents.BLOOD_COMPONENT.get(this);
+        if (BloodComponent.KEY.isProvidedBy(this)) {
+            BloodComponent blood = BloodComponent.KEY.get(this);
             if (blood instanceof InitializableBloodComponent init && !init.hasInitialized()) {
                 init.initializeBloodValues();
             }

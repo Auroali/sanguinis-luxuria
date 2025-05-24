@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
-import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
+import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -83,7 +83,7 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if (world.isClient)
-            return checkType(type, BLBlockEntities.PEDESTAL, PedestalBlockEntity::tickClient);
+            return checkType(type, SLBlockEntities.PEDESTAL, PedestalBlockEntity::tickClient);
         return super.getTicker(world, state, type);
     }
 

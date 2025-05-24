@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.recipes;
 
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeSerializers;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeTypes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.SimpleInventory;
@@ -58,12 +58,12 @@ public class BloodCauldronRecipe implements Recipe<SimpleInventory> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BLRecipeSerializers.BLOOD_CAULDRON_SERIALIZER;
+        return SLRecipeSerializers.BLOOD_CAULDRON_SERIALIZER;
     }
 
     @Override
     public RecipeType<?> getType() {
-        return BLRecipeTypes.BLOOD_CAULDRON_TYPE;
+        return SLRecipeTypes.BLOOD_CAULDRON_TYPE;
     }
 
     public int getCauldronLevel() {

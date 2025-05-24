@@ -1,12 +1,13 @@
 package com.auroali.sanguinisluxuria;
 
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
+import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import com.google.common.base.Predicates;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.trinkets.api.TrinketsApi;
@@ -49,7 +50,7 @@ public class VampireHelper {
      * @return whether the entity is a vampire
      */
     public static boolean isVampire(Entity entity) {
-        return entity != null && BLEntityComponents.VAMPIRE_COMPONENT.isProvidedBy(entity) && BLEntityComponents.VAMPIRE_COMPONENT.get(entity).isVampire();
+        return entity != null && VampireComponent.KEY.isProvidedBy(entity) && VampireComponent.KEY.get(entity).isVampire();
     }
 
     /**
@@ -59,11 +60,11 @@ public class VampireHelper {
      * @return whether the entity has blood
      */
     public static boolean hasBlood(Entity entity) {
-        return entity != null && entity.getType().isIn(BLTags.Entities.HAS_BLOOD) && BLEntityComponents.BLOOD_COMPONENT.isProvidedBy(entity);
+        return entity != null && entity.getType().isIn(SLTags.Entities.HAS_BLOOD) && BloodComponent.KEY.isProvidedBy(entity);
     }
 
     /**
-     * Checks if an entity consumes blood (vampire, blood lust effect)
+     * Checks if an entity consumes blood (vampire, bloodlust effect)
      *
      * @param entity the entity to check
      * @return if the entity consumes blood
@@ -72,7 +73,7 @@ public class VampireHelper {
     public static boolean consumesBlood(Entity entity) {
         if (entity == null)
             return false;
-        return VampireHelper.isVampire(entity) || entity instanceof LivingEntity living && living.hasStatusEffect(BLStatusEffects.BLOOD_LUST);
+        return VampireHelper.isVampire(entity) || entity instanceof LivingEntity living && living.hasStatusEffect(SLStatusEffects.BLOOD_LUST);
     }
 
     /**
@@ -86,12 +87,12 @@ public class VampireHelper {
             return false;
 
         for (ItemStack stack : entity.getArmorItems()) {
-            if (stack.isIn(BLTags.Items.VAMPIRE_MASKS))
+            if (stack.isIn(SLTags.Items.VAMPIRE_MASKS))
                 return true;
         }
 
         return TrinketsApi.getTrinketComponent(entity)
-          .map(c -> c.isEquipped(i -> i.isIn(BLTags.Items.VAMPIRE_MASKS)))
+          .map(c -> c.isEquipped(i -> i.isIn(SLTags.Items.VAMPIRE_MASKS)))
           .orElse(false);
     }
 
@@ -101,8 +102,8 @@ public class VampireHelper {
      * @param entity the entity to increment the blood sickness level of
      */
     public static void incrementBloodSickness(LivingEntity entity) {
-        int level = entity.hasStatusEffect(BLStatusEffects.BLOOD_SICKNESS) ? entity.getStatusEffect(BLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1 : 0;
-        entity.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLOOD_SICKNESS, 3600, level));
+        int level = entity.hasStatusEffect(SLStatusEffects.BLOOD_SICKNESS) ? entity.getStatusEffect(SLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1 : 0;
+        entity.addStatusEffect(new StatusEffectInstance(SLStatusEffects.BLOOD_SICKNESS, 3600, level));
     }
 
     /**
@@ -115,7 +116,7 @@ public class VampireHelper {
     public static List<StatusEffectInstance> transferStatusEffects(LivingEntity from, LivingEntity to) {
         List<StatusEffectInstance> transferredEffects = new ArrayList<>(from.getStatusEffects().size());
         for (StatusEffectInstance instance : from.getStatusEffects()) {
-            if (instance.isAmbient() || Registries.STATUS_EFFECT.getEntry(instance.getEffectType()).isIn(BLTags.StatusEffects.NON_TRANSFERABLE))
+            if (instance.isAmbient() || Registries.STATUS_EFFECT.getEntry(instance.getEffectType()).isIn(SLTags.StatusEffects.NON_TRANSFERABLE))
                 continue;
 
             to.addStatusEffect(instance);
@@ -123,7 +124,7 @@ public class VampireHelper {
         }
 
         if (from instanceof ServerPlayerEntity player) {
-            BLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, transferredEffects);
+            SLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, transferredEffects);
         }
 
         // prevent removing effects that weren't transferred

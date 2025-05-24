@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.entities.goals;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.MobEntity;
@@ -32,7 +32,7 @@ public class AcivateAbilityWhenDownedGoal extends Goal {
         if (!VampireHelper.isVampire(this.entity))
             return false;
 
-        VampireComponent component = BLEntityComponents.VAMPIRE_COMPONENT.get(this.entity);
+        VampireComponent component = VampireComponent.KEY.get(this.entity);
         if (this.isDowned == component.isDowned())
             return false;
 
@@ -47,6 +47,6 @@ public class AcivateAbilityWhenDownedGoal extends Goal {
 
     @Override
     public void start() {
-        this.ability.activate(this.entity, BLEntityComponents.VAMPIRE_COMPONENT.get(this.entity));
+        this.ability.activate(this.entity, VampireComponent.KEY.get(this.entity));
     }
 }

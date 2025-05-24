@@ -18,16 +18,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.auroali.sanguinisluxuria.Bloodlust"
+      "com.auroali.sanguinisluxuria.SanguinisLuxuria"
     ],
     "client": [
-      "com.auroali.sanguinisluxuria.BloodlustClient"
+      "com.auroali.sanguinisluxuria.SanguinisLuxuriaClient"
     ],
     "fabric-datagen": [
-      "com.auroali.sanguinisluxuria.BloodlustDataGenerator"
+      "com.auroali.sanguinisluxuria.SanguinisLuxuriaDataGenerator"
     ],
     "cardinal-components": [
-      "com.auroali.sanguinisluxuria.common.components.BLEntityComponents"
+      "com.auroali.sanguinisluxuria.common.components.SLEntityComponents"
     ],
     "modmenu": [
       "com.auroali.sanguinisluxuria.compat.ModMenuCompat"

@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +33,7 @@ public class PlayerBloodComponent implements BloodComponent {
     @Override
     public void setBlood(int amount) {
         if (this.getBlood() < amount && VampireHelper.isVampire(this.holder)) {
-            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this.holder);
+            VampireComponent vampire = VampireComponent.KEY.get(this.holder);
             if (vampire.isDowned())
                 vampire.setDowned(false);
         }

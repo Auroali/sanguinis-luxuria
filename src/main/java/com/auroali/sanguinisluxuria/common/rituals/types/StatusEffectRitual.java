@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
-import com.auroali.sanguinisluxuria.common.registry.BLRitualTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
@@ -68,7 +68,7 @@ public record StatusEffectRitual(List<StatusEffect> effects, int duration, int a
 
     @Override
     public RitualType<?> getType() {
-        return BLRitualTypes.STATUS_EFFECT_RITUAL_TYPE;
+        return SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE;
     }
 
     public static Builder builder() {

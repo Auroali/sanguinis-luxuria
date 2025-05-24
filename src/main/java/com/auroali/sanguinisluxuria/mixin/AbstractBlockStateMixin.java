@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLTags;
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.EntityShapeContext;
@@ -26,9 +26,9 @@ public abstract class AbstractBlockStateMixin {
 
     @Inject(method = "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$handleCollisionWhileInMist(BlockView world, BlockPos pos, ShapeContext context, CallbackInfoReturnable<VoxelShape> cir) {
-        if(context instanceof EntityShapeContext entityShapeContext && VampireHelper.isVampire(entityShapeContext.getEntity())) {
-            VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(entityShapeContext.getEntity());
-            if(vampire.isMist() && this.isIn(BLTags.Blocks.NO_MIST_COLLISION))
+        if (context instanceof EntityShapeContext entityShapeContext && VampireHelper.isVampire(entityShapeContext.getEntity())) {
+            VampireComponent vampire = VampireComponent.KEY.get(entityShapeContext.getEntity());
+            if (vampire.isMist() && this.isIn(SLTags.Blocks.NO_MIST_COLLISION))
                 cir.setReturnValue(VoxelShapes.empty());
         }
     }

@@ -1,7 +1,8 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -15,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LivingEntityRendererMixin<T extends LivingEntity> {
     @Inject(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$stopRenderWhileMist(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
-        if (VampireHelper.isVampire(livingEntity) && BLEntityComponents.VAMPIRE_COMPONENT.get(livingEntity).isMist()) {
+        if (VampireHelper.isVampire(livingEntity) && VampireComponent.KEY.get(livingEntity).isMist()) {
             ci.cancel();
         }
     }

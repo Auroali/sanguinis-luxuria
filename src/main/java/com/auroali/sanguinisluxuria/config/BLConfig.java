@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.config;
 
 import com.auroali.configserializer.ConfigSerializer;
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -94,7 +94,7 @@ public class BLConfig {
         try {
             Files.writeString(CONFIG_FILE, GSON.toJson(root));
         } catch (IOException e) {
-            Bloodlust.LOGGER.warn("An error occurred whilst saving the config file!", e);
+            SanguinisLuxuria.LOGGER.warn("An error occurred whilst saving the config file!", e);
         }
     }
 
@@ -107,7 +107,7 @@ public class BLConfig {
         try {
             root = GSON.fromJson(Files.readString(CONFIG_FILE), JsonObject.class);
         } catch (IOException | JsonSyntaxException e) {
-            Bloodlust.LOGGER.warn("Failed to load config file!", e);
+            SanguinisLuxuria.LOGGER.warn("Failed to load config file!", e);
             return;
         }
 

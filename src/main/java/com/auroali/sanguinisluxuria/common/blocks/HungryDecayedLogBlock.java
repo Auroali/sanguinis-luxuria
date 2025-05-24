@@ -2,13 +2,13 @@ package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.BLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.BLItems;
-import com.auroali.sanguinisluxuria.common.registry.BLParticles;
-import com.auroali.sanguinisluxuria.common.registry.BLSounds;
+import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
+import com.auroali.sanguinisluxuria.common.registry.SLItems;
+import com.auroali.sanguinisluxuria.common.registry.SLParticles;
+import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,7 +59,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
         // fill glass bottles
         if (stack.isOf(Items.GLASS_BOTTLE) && state.get(BLOOD_LEVEL) >= 3) {
             stack.decrement(1);
-            ItemStack bloodBottle = BloodStorageItem.createStack(BLItems.BLOOD_BOTTLE);
+            ItemStack bloodBottle = BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE);
             if (stack.isEmpty())
                 player.setStackInHand(hand, bloodBottle);
             else if (!player.getInventory().insertStack(bloodBottle))
@@ -87,7 +87,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
 
     @Override
     public boolean hasRandomTicks(BlockState state) {
-        return (state.getBlock() == BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || state.get(BLOOD_LEVEL) < 3) && super.hasRandomTicks(state);
+        return (state.getBlock() == SLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || state.get(BLOOD_LEVEL) < 3) && super.hasRandomTicks(state);
     }
 
     @Override
@@ -101,12 +101,12 @@ public class HungryDecayedLogBlock extends PillarBlock {
                 if (!neighbourState.isAir())
                     continue;
 
-                if (lowerState.isOf(BLBlocks.BLOOD_CAULDRON) && lowerState.get(LeveledCauldronBlock.LEVEL) < 3) {
+                if (lowerState.isOf(SLBlocks.BLOOD_CAULDRON) && lowerState.get(LeveledCauldronBlock.LEVEL) < 3) {
                     int newLevel = lowerState.get(LeveledCauldronBlock.LEVEL) + 1;
                     world.setBlockState(lowerPosition.offset(direction), lowerState.with(LeveledCauldronBlock.LEVEL, newLevel));
                 }
                 if (lowerState.isOf(Blocks.CAULDRON)) {
-                    world.setBlockState(lowerPosition.offset(direction), BLBlocks.BLOOD_CAULDRON.getDefaultState());
+                    world.setBlockState(lowerPosition.offset(direction), SLBlocks.BLOOD_CAULDRON.getDefaultState());
                 }
             }
             world.setBlockState(pos, state.with(BLOOD_LEVEL, 0));
@@ -119,14 +119,14 @@ public class HungryDecayedLogBlock extends PillarBlock {
             List<LivingEntity> entities = world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), boundingBox, VampireHelper::hasBlood);
 
             for (LivingEntity entity : entities) {
-                BloodComponent component = BLEntityComponents.BLOOD_COMPONENT.get(entity);
+                BloodComponent component = BloodComponent.KEY.get(entity);
                 if (component.drainBlood(1)) {
-                    world.playSound(null, pos, BLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                    world.playSound(null, pos, SLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     world.setBlockState(pos, state.with(BLOOD_LEVEL, newLevel));
                     Box entityBox = entity.getBoundingBox();
 
                     world.spawnParticles(
-                      BLParticles.DRIPPING_BLOOD,
+                      SLParticles.DRIPPING_BLOOD,
                       entityBox.getCenter().getX(),
                       entityBox.getCenter().getY(),
                       entityBox.getCenter().getZ(),
@@ -151,7 +151,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (state.get(BLOOD_LEVEL) < 3 || this != BLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || random.nextInt(7) != 0)
+        if (state.get(BLOOD_LEVEL) < 3 || this != SLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || random.nextInt(7) != 0)
             return;
 
         for (Direction direction : Direction.values()) {
@@ -163,7 +163,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
             double y = axis == Direction.Axis.Y ? 0.5 + 0.5625 * direction.getOffsetY() : random.nextFloat();
             double z = axis == Direction.Axis.Z ? 0.5 + 0.5625 * direction.getOffsetZ() : random.nextFloat();
 
-            world.addParticle(BLParticles.DRIPPING_BLOOD, pos.getX() + x, pos.getY() + y, pos.getZ() + z, 0, 0, 0);
+            world.addParticle(SLParticles.DRIPPING_BLOOD, pos.getX() + x, pos.getY() + y, pos.getZ() + z, 0, 0, 0);
         }
     }
 }

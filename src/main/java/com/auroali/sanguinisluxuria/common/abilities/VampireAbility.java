@@ -3,7 +3,7 @@ package com.auroali.sanguinisluxuria.common.abilities;
 import com.auroali.sanguinisluxuria.common.abilities.active.VampireTeleportAbility;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLRegistries;
+import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
@@ -19,7 +19,7 @@ public class VampireAbility {
     private final List<VampireAbilityCondition> conditions = new ArrayList<>();
     private String transKey;
     private String descTransKey;
-    private final RegistryEntry.Reference<VampireAbility> holder = BLRegistries.VAMPIRE_ABILITIES.createEntry(this);
+    private final RegistryEntry.Reference<VampireAbility> holder = SLRegistries.VAMPIRE_ABILITIES.createEntry(this);
 
     public VampireAbility() {
     }

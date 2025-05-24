@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.items;
 
-import com.auroali.sanguinisluxuria.common.registry.BLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import com.google.common.collect.Multimap;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
@@ -19,8 +19,8 @@ public class PendantOfPiercingItem extends TrinketItem {
     @Override
     public Multimap<EntityAttribute, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
         Multimap<EntityAttribute, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, uuid);
-        modifiers.put(BLEntityAttributes.BLINK_RANGE, new EntityAttributeModifier(uuid, "sanguinisluxuria.reduce_range", -0.25, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
-        modifiers.put(BLEntityAttributes.BLINK_COOLDOWN, new EntityAttributeModifier(uuid, "sanguinisluxuria.increase_cooldown", 0.25, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+        modifiers.put(SLEntityAttributes.BLINK_RANGE, new EntityAttributeModifier(uuid, "sanguinisluxuria.reduce_range", -0.25, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+        modifiers.put(SLEntityAttributes.BLINK_COOLDOWN, new EntityAttributeModifier(uuid, "sanguinisluxuria.increase_cooldown", 0.25, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
         return modifiers;
     }
 }

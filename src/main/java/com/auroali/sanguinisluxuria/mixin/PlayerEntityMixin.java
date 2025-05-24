@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
-import com.auroali.sanguinisluxuria.common.components.BLEntityComponents;
+import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.authlib.GameProfile;
@@ -33,7 +33,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (!VampireHelper.isVampire(this))
             return;
 
-        VampireComponent vampire = BLEntityComponents.VAMPIRE_COMPONENT.get(this);
+        VampireComponent vampire = VampireComponent.KEY.get(this);
         if (!this.hasVehicle() && vampire.isDowned()) {
             this.setPose(EntityPose.SWIMMING);
             ci.cancel();

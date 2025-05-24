@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.mixin;
 
-import com.auroali.sanguinisluxuria.common.registry.BLBlockEntities;
+import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +21,7 @@ public class BlockEntityTypeMixin {
     ), index = 1)
     private static Block[] sanguinisluxuria$modifySignBlocks(Block[] original) {
         List<Block> newBlocks = new ArrayList<>(Arrays.asList(original));
-        newBlocks.addAll(BLBlockEntities.SIGNS);
+        newBlocks.addAll(SLBlockEntities.SIGNS);
         return newBlocks.toArray(new Block[0]);
     }
 
@@ -32,7 +32,7 @@ public class BlockEntityTypeMixin {
     ), index = 1)
     private static Block[] sanguinisluxuria$modifyHangingSignBlocks(Block[] original) {
         List<Block> newBlocks = new ArrayList<>(Arrays.asList(original));
-        newBlocks.addAll(BLBlockEntities.HANGING_SIGNS);
+        newBlocks.addAll(SLBlockEntities.HANGING_SIGNS);
         return newBlocks.toArray(new Block[0]);
     }
 }

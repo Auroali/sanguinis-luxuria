@@ -7,10 +7,10 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.components.EntityTrackingDrainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.registry.BLDamageSources;
-import com.auroali.sanguinisluxuria.common.registry.BLParticles;
-import com.auroali.sanguinisluxuria.common.registry.BLStatusEffects;
-import com.auroali.sanguinisluxuria.common.registry.BLVampireAbilities;
+import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.SLParticles;
+import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.server.world.ServerWorld;
@@ -33,14 +33,14 @@ public class BiteAbility extends VampireAbility {
         if (target == null)
             return;
 
-        target.damage(BLDamageSources.bite(entity), 3);
-        target.addStatusEffect(new StatusEffectInstance(BLStatusEffects.BLEEDING, 100, 0));
+        target.damage(SLDamageSources.bite(entity), 3);
+        target.addStatusEffect(new StatusEffectInstance(SLStatusEffects.BLEEDING, 100, 0));
         // spawn particles
         if (entity.getWorld() instanceof ServerWorld serverWorld) {
             Box entityBox = target.getBoundingBox();
 
             serverWorld.spawnParticles(
-              BLParticles.DRIPPING_BLOOD,
+              SLParticles.DRIPPING_BLOOD,
               entityBox.getCenter().getX(),
               entityBox.getCenter().getY(),
               entityBox.getCenter().getZ(),
@@ -51,10 +51,10 @@ public class BiteAbility extends VampireAbility {
               0.d
             );
         }
-        if (component.getAbilityContainer().has(BLVampireAbilities.INFECTIOUS)) {
+        if (component.getAbilityContainer().has(SLVampireAbilities.INFECTIOUS)) {
             SyncableVampireAbility.syncAbility(
               entity,
-              BLVampireAbilities.INFECTIOUS,
+              SLVampireAbilities.INFECTIOUS,
               InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(entity, target))
             );
         }

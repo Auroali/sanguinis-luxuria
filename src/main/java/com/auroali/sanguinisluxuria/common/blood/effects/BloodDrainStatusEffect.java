@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.common.blood.effects;
 
-import com.auroali.sanguinisluxuria.Bloodlust;
+import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -34,7 +34,7 @@ public record BloodDrainStatusEffect(StatusEffect effect, int duration, int ampl
     public BloodDrainEffect merge(BloodDrainEffect other) {
         BloodDrainStatusEffect otherEffect = (BloodDrainStatusEffect) other;
         if (this.effect() != otherEffect.effect()) {
-            Bloodlust.LOGGER.warn("Cannot merge two BloodDrainEffectInstances with different effects {} and {}", Registries.STATUS_EFFECT.getId(this.effect()), Registries.STATUS_EFFECT.getId(otherEffect.effect()));
+            SanguinisLuxuria.LOGGER.warn("Cannot merge two BloodDrainEffectInstances with different effects {} and {}", Registries.STATUS_EFFECT.getId(this.effect()), Registries.STATUS_EFFECT.getId(otherEffect.effect()));
             return this;
         }
         if (otherEffect.amplifier() > this.amplifier()) {

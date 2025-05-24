@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.datagen.builders;
 
-import com.auroali.sanguinisluxuria.common.registry.BLRecipeSerializers;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeSerializers;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementRewards;
@@ -136,7 +136,7 @@ public class BloodCauldronFillRecipeJsonBuilder extends RecipeJsonBuilder implem
 
         @Override
         public RecipeSerializer<?> getSerializer() {
-            return BLRecipeSerializers.BLOOD_CAULDRON_FILL_SERIALIZER;
+            return SLRecipeSerializers.BLOOD_CAULDRON_FILL_SERIALIZER;
         }
 
         @Nullable
