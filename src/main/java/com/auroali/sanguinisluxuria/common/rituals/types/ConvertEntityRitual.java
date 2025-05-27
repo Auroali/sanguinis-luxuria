@@ -41,8 +41,8 @@ public class ConvertEntityRitual implements Ritual {
     @Override
     public void appendTooltips(List<Text> tooltips) {
         switch (this.conversion) {
-            case CONVERTING -> tooltips.add(Text.translatable("altar_ritual.sanguinisluxuria.convert.converting"));
-            case DECONVERTING -> tooltips.add(Text.translatable("altar_ritual.sanguinisluxuria.convert.deconverting"));
+            case CONVERTING -> tooltips.add(Text.translatable(this.getType().getTranslationKey() + ".converting"));
+            case DECONVERTING -> tooltips.add(Text.translatable(this.getType().getTranslationKey() + ".deconverting"));
         }
     }
 

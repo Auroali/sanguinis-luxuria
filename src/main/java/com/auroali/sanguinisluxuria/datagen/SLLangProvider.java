@@ -11,6 +11,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.Identifier;
 
 public class SLLangProvider extends FabricLanguageProvider {
     public SLLangProvider(FabricDataOutput dataGenerator) {
@@ -43,7 +44,11 @@ public class SLLangProvider extends FabricLanguageProvider {
           new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.item".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.'))),
           new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.player".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.')))
         );
-        advancements(translationBuilder);
+        advancements(new GenericTranslationBuilder.DescriptionTranslationBuilder<>(
+          translationBuilder,
+          id -> "advancements." + id.getNamespace() + "." + id.getPath().replace('/', '.') + ".title",
+          id -> "advancements." + id.getNamespace() + "." + id.getPath().replace('/', '.') + ".description"
+        ));
         emiTranslations(translationBuilder);
         rituals(new GenericTranslationBuilder.RegistryTranslationBuilder<>(translationBuilder, SLRegistries.RITUAL_TYPES));
     }
@@ -93,9 +98,9 @@ public class SLLangProvider extends FabricLanguageProvider {
         builder.add(SLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE, "Ritual of Summoning");
         builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE, "Ritual of Alchemy");
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
-        builder.add("altar_ritual.sanguinisluxuria.convert.converting", "Converting");
-        builder.add("altar_ritual.sanguinisluxuria.convert.deconverting", "Deconverting");
-        builder.add("altar_ritual.sanguinisluxuria.effects", "Applies the effects to %s for %.1ds");
+        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".converting", "Purification");
+        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".deconverting", "Corrupting");
+        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effects", "Applies the effects to %s for %.1ds");
     }
 
     private static void potions(GenericTranslationBuilder.Potions builder) {
@@ -244,44 +249,67 @@ public class SLLangProvider extends FabricLanguageProvider {
         );
     }
 
-    public static void advancements(TranslationBuilder translationBuilder) {
-        translationBuilder.add(SLAdvancementsProvider.title("become_vampire"), "Bloodlust");
-        translationBuilder.add(SLAdvancementsProvider.desc("become_vampire"), "Transform into a vampire after drinking enough blood");
+    public static void advancements(GenericTranslationBuilder.DescriptionTranslationBuilder<Identifier> translationBuilder) {
+        translationBuilder.add(SLResources.id("become_vampire"), "Bloodlust", "Transform into a vampire after drinking enough blood");
 
-        translationBuilder.add(SLAdvancementsProvider.title("drink_twisted_blood"), "Consumption");
-        translationBuilder.add(SLAdvancementsProvider.desc("drink_twisted_blood"), "Drink twisted blood");
+        translationBuilder.add(SLResources.id("drink_twisted_blood"),
+          "Consumption",
+          "Drink twisted blood"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("blood_sickness"), "Feeling Ill");
-        translationBuilder.add(SLAdvancementsProvider.desc("blood_sickness"), "Get blood sickness from drinking blood");
+        translationBuilder.add(SLResources.id("blood_sickness"),
+          "Feeling Ill",
+          "Get blood sickness from drinking blood"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("unlock_ability"), "Abilities");
-        translationBuilder.add(SLAdvancementsProvider.desc("unlock_ability"), "Perform the Ritual of Transformation");
+        translationBuilder.add(SLResources.id("unlock_ability"),
+          "Abilities",
+          "Perform the Ritual of Transformation"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("reset_abilities"), "Clean Slate");
-        translationBuilder.add(SLAdvancementsProvider.desc("reset_abilities"), "Convert unlocked abilities back into skill points using blessed blood");
+        translationBuilder.add(SLResources.id("reset_abilities"),
+          "Clean Slate",
+          "Perform the Ritual of Cleansing"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("transfer_effects"), "No Need for Bottles");
-        translationBuilder.add(SLAdvancementsProvider.desc("transfer_effects"), "Transfer a potion effect while draining blood");
+        translationBuilder.add(SLResources.id("transfer_effects"),
+          "No Need for Bottles",
+          "Transfer a potion effect while draining blood"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("transfer_more_effects"), "Alchemist");
-        translationBuilder.add(SLAdvancementsProvider.desc("transfer_more_effects"), "Transfer 4 potions effects at once");
+        translationBuilder.add(SLResources.id("transfer_more_effects"),
+          "Alchemist",
+          "Transfer 4 potions effects at once"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("infect_other"), "Infectious");
-        translationBuilder.add(SLAdvancementsProvider.desc("infect_other"), "Inflict blood sickness on something with Weakness");
+        translationBuilder.add(SLResources.id("infect_other"),
+          "Infectious",
+          "Inflict blood sickness on something with Weakness"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("unbecome_vampire"), "Humanity");
-        translationBuilder.add(SLAdvancementsProvider.desc("unbecome_vampire"), "Become human again after drinking Blessed Water with weakness");
+        translationBuilder.add(SLResources.id("unbecome_vampire"),
+          "Humanity",
+          "Perform the Ritual of Purification"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("craft_hungry_sapling"), "Grafted Petal");
-        translationBuilder.add(SLAdvancementsProvider.desc("craft_hungry_sapling"), "Craft a Hungry Sapling");
+        translationBuilder.add(SLResources.id("craft_hungry_sapling"),
+          "Grafted Petal",
+          "Craft a Grafted Sapling"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("grow_decayed_tree"), "Decayed");
-        translationBuilder.add(SLAdvancementsProvider.desc("grow_decayed_tree"), "Grow a Grafted Sapling");
+        translationBuilder.add(SLResources.id("grow_decayed_tree"),
+          "Decayed",
+          "Grow a Grafted Sapling"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("obtain_hungry_decayed_log"), "Blood Collector");
-        translationBuilder.add(SLAdvancementsProvider.desc("obtain_hungry_decayed_log"), "Obtain a Hungry Decayed Log");
+        translationBuilder.add(SLResources.id("obtain_hungry_decayed_log"),
+          "Blood Collector",
+          "Obtain a Hungry Decayed Log"
+        );
 
-        translationBuilder.add(SLAdvancementsProvider.title("transfer_all_effects"), "How did we get there?");
-        translationBuilder.add(SLAdvancementsProvider.desc("transfer_all_effects"), "Transfer every effect at once via Infectious");
+        translationBuilder.add(SLResources.id("transfer_all_effects"),
+          "How did we get there?",
+          "Transfer every effect at once via Infectious"
+        );
     }
 }

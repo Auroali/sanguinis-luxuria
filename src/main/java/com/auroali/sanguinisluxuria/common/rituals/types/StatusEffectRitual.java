@@ -60,7 +60,7 @@ public record StatusEffectRitual(List<StatusEffect> effects, int duration, int a
     @Override
     public void appendTooltips(List<Text> tooltips) {
         Ritual.super.appendTooltips(tooltips);
-        tooltips.add(Text.translatable("altar_ritual.sanguinisluxuria.effects", this.target.asString(), this.duration / 20.f));
+        tooltips.add(Text.translatable(this.getType().getTranslationKey() + ".effects", this.target.asString(), this.duration / 20.f));
         for (StatusEffect effect : this.effects) {
             tooltips.add(Text.translatable(effect.getTranslationKey()));
         }

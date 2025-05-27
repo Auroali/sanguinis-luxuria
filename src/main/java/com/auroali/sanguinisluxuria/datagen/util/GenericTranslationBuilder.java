@@ -36,12 +36,19 @@ public class GenericTranslationBuilder<T> {
     }
 
     public static final class DescriptionTranslationBuilder<T> extends GenericTranslationBuilder<T> {
-        public DescriptionTranslationBuilder(FabricLanguageProvider.TranslationBuilder builder, Function<T, String> keyBuilder) {
+        private final Function<T, String> descriptionKeyBuilder;
+
+        public DescriptionTranslationBuilder(FabricLanguageProvider.TranslationBuilder builder, Function<T, String> keyBuilder, Function<T, String> descriptionKeyBuilder) {
             super(builder, keyBuilder);
+            this.descriptionKeyBuilder = descriptionKeyBuilder;
+        }
+
+        public DescriptionTranslationBuilder(FabricLanguageProvider.TranslationBuilder builder, Function<T, String> keyBuilder) {
+            this(builder, keyBuilder, object -> keyBuilder.apply(object) + ".desc");
         }
 
         public void desc(T object, String desc) {
-            this.add(this.keyBuilder.apply(object) + ".desc", desc);
+            this.add(this.descriptionKeyBuilder.apply(object), desc);
         }
 
         public void add(T object, String name, String desc) {
