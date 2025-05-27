@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.google.common.base.Predicates;
 import net.minecraft.entity.LivingEntity;

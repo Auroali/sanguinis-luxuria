@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.common.entities.goals;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.active.VampireTeleportAbility;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import net.minecraft.entity.LivingEntity;

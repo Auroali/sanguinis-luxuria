@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.common.commands;
 
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

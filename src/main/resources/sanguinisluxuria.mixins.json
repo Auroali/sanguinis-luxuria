@@ -27,7 +27,8 @@
     "TridentEntityMixin",
     "VillagerEntityMixin",
     "VillagerHostilesSensorMixin",
-    "WanderingTraderMixin"
+    "WanderingTraderMixin",
+    "legacy.SimpleRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,7 +3,6 @@ package com.auroali.sanguinisluxuria.common.rituals.types;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
 import com.auroali.sanguinisluxuria.common.registry.SLRegistries;

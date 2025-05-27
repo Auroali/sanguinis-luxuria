@@ -30,6 +30,6 @@ public class SerratedEnchantment extends Enchantment {
 
     @Override
     protected boolean canAccept(Enchantment other) {
-        return other != SLEnchantments.BLOOD_DRAIN && other != Enchantments.IMPALING;
+        return other != SLEnchantments.BLOOD_TRANSFER && other != Enchantments.IMPALING;
     }
 }

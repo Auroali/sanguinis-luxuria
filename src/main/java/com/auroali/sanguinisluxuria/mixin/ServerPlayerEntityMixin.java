@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.mixin;
 
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;

@@ -19,7 +19,7 @@ public class SLEnchantmentTagsProvider extends FabricTagProvider<Enchantment> {
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         this.getOrCreateTagBuilder(SLTags.Enchantments.VAMPIRE_MERCHANT_OFFERS)
           .add(
-            SLEnchantments.BLOOD_DRAIN,
+            SLEnchantments.BLOOD_TRANSFER,
             SLEnchantments.SERRATED,
             SLEnchantments.SUN_PROTECTION
           );

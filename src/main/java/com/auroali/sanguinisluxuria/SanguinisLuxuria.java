@@ -5,7 +5,6 @@ import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
 import com.auroali.sanguinisluxuria.common.commands.BloodlustCommand;
 import com.auroali.sanguinisluxuria.common.commands.arguments.ConversionArgument;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;

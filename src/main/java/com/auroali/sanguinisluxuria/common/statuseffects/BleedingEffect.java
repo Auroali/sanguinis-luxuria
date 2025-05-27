@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.common.statuseffects;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import net.minecraft.entity.LivingEntity;

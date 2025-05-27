@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.common.conversions;
 
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

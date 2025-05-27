@@ -36,7 +36,7 @@ public class BloodTransferComponent implements Component, AutoSyncedComponent {
         this.bloodTransferLevel = 0;
         if (this.holder.getWorld().isClient)
             return this.bloodTransferLevel;
-        this.bloodTransferLevel = EnchantmentHelper.getLevel(SLEnchantments.BLOOD_DRAIN, ((PersistentProjectileEntityAccessor) this.holder).sanguinisluxuria$asItemStack());
+        this.bloodTransferLevel = EnchantmentHelper.getLevel(SLEnchantments.BLOOD_TRANSFER, ((PersistentProjectileEntityAccessor) this.holder).sanguinisluxuria$asItemStack());
         return this.bloodTransferLevel;
     }
 

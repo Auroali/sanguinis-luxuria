@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.mixin.client;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.components.impl.PlayerVampireComponent;
 import net.minecraft.client.MinecraftClient;

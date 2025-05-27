@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import net.minecraft.entity.player.PlayerEntity;

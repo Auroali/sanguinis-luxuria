@@ -128,8 +128,8 @@ public class SLLangProvider extends FabricLanguageProvider {
     private static void enchantments(TranslationBuilder translationBuilder) {
         translationBuilder.add(SLEnchantments.SUN_PROTECTION, "Sun Protection");
         enchantmentDescription(translationBuilder, SLEnchantments.SUN_PROTECTION, "Increases the amount of time a vampire can stay in the sun");
-        translationBuilder.add(SLEnchantments.BLOOD_DRAIN, "Blood Transfer");
-        enchantmentDescription(translationBuilder, SLEnchantments.BLOOD_DRAIN, "Allows a trident to latch on and slowly transfer blood from a target to the thrower");
+        translationBuilder.add(SLEnchantments.BLOOD_TRANSFER, "Blood Transfer");
+        enchantmentDescription(translationBuilder, SLEnchantments.BLOOD_TRANSFER, "Allows a trident to latch on and slowly transfer blood from a target to the thrower");
         translationBuilder.add(SLEnchantments.SERRATED, "Serrated");
         enchantmentDescription(translationBuilder, SLEnchantments.SERRATED, "Has a chance of inflicting bleeding on targets");
     }

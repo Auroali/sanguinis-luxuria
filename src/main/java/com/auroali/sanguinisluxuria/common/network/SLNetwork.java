@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.common.network;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
-import com.auroali.sanguinisluxuria.common.components.SLEntityComponents;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
