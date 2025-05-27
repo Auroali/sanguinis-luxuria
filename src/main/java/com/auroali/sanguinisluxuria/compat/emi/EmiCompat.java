@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.common.recipes.AltarRitualRecipe;
 import com.auroali.sanguinisluxuria.common.recipes.BloodCauldronRecipe;
 import com.auroali.sanguinisluxuria.common.registry.SLItems;
 import com.auroali.sanguinisluxuria.common.registry.SLRecipeTypes;
+import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -34,7 +35,11 @@ public class EmiCompat implements EmiPlugin {
 
         RecipeManager manager = registry.getRecipeManager();
         for (AltarRitualRecipe recipe : manager.listAllOfType(SLRecipeTypes.ALTAR_RECIPE)) {
-            registry.addRecipe(new AltarEmiRecipe(recipe));
+            Ritual ritual = recipe.getRitual();
+            EmiStack output = RitualEmiStack.of(ritual);
+            registry.addRecipe(new AltarEmiRecipe(recipe, output));
+            if (output instanceof RitualEmiStack)
+                registry.addEmiStack(output);
         }
         for (BloodCauldronRecipe recipe : manager.listAllOfType(SLRecipeTypes.BLOOD_CAULDRON_TYPE)) {
             registry.addRecipe(new CauldronInfusingEmiRecipe(recipe, MinecraftClient.getInstance()));

@@ -68,6 +68,7 @@ public class SLLangProvider extends FabricLanguageProvider {
         builder.add(SLTags.Items.SILVER_ORES, "Silver Ores");
         builder.add(SLTags.Items.SILVER_BLOCKS, "Silver Blocks");
         builder.add(SLTags.Items.RAW_SILVER_BLOCKS, "Raw Silver Blocks");
+        builder.add(SLTags.Items.HUNGRY_DECAYED_LOGS, "Hungry Decayed Logs");
     }
 
     private static void deathMessages(GenericTranslationBuilder<RegistryKey<DamageType>> death, GenericTranslationBuilder<RegistryKey<DamageType>> afterDamage, GenericTranslationBuilder<RegistryKey<DamageType>> item) {

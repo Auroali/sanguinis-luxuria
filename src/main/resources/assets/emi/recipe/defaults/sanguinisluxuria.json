@@ -2,11 +2,8 @@
   "added": [
     "sanguinisluxuria:mask_1",
     "sanguinisluxuria:blood_petal",
-    "sanguinisluxuria:rituals/blood_bag",
     "sanguinisluxuria:raw_silver",
-    "sanguinisluxuria:rituals/twisted_blood",
     "sanguinisluxuria:silver_pickaxe",
-    "sanguinisluxuria:rituals/pendant_of_piercing",
     "sanguinisluxuria:mask_3",
     "sanguinisluxuria:silver_axe",
     "sanguinisluxuria:silver_hoe",
@@ -30,6 +27,9 @@
     "sanguinisluxuria:decayed_button",
     "sanguinisluxuria:decayed_slab",
     "sanguinisluxuria:decayed_stairs",
-    "sanguinisluxuria:silver_pressure_plate"
+    "sanguinisluxuria:silver_pressure_plate",
+    "sanguinisluxuria:pendant_of_piercing",
+    "sanguinisluxuria:blood_bag",
+    "sanguinisluxuria:twisted_blood_bottle"
   ]
 }
