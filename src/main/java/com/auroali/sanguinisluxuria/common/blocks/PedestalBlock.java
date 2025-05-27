@@ -11,6 +11,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -46,14 +47,57 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
         if (entity == null)
             return super.onUse(state, world, pos, player, hand, hit);
 
-        ItemStack stack = player.getStackInHand(hand);
-        ItemStack storedStack = entity.getItem();
+        ItemStack held = player.getStackInHand(hand);
+        ItemStack stored = entity.getItem();
+        if (held.isEmpty() || (!stored.isEmpty() && (!ItemStack.canCombine(held, stored) || stored.getCount() == stored.getMaxCount()))) {
+            player.setStackInHand(hand, stored);
+            entity.setItem(held);
+            if (stored.isEmpty() && !held.isEmpty())
+                this.playInsertSound(player, world);
+            else if (!stored.isEmpty())
+                this.playRemoveSound(player, world);
 
-        player.setStackInHand(hand, storedStack);
-        entity.setItem(stack);
+            return ActionResult.success(world.isClient);
+        }
+
+        if (stored.isEmpty()) {
+            entity.setItem(held.split(1));
+            this.playInsertSound(player, world);
+            return ActionResult.success(world.isClient);
+        }
+
+        int maxAdded = Math.min(stored.getMaxCount() - stored.getCount(), held.getCount());
+
+        held.decrement(maxAdded);
+        stored.increment(maxAdded);
+        entity.setItem(stored);
+
+        this.playInsertSound(player, world);
+
         return ActionResult.success(world.isClient);
     }
 
+    private void playInsertSound(PlayerEntity player, World world) {
+        world.playSound(
+          player,
+          player.getX(), player.getY(), player.getZ(),
+          SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM,
+          player.getSoundCategory(),
+          1.f,
+          1.f
+        );
+    }
+
+    private void playRemoveSound(PlayerEntity player, World world) {
+        world.playSound(
+          player,
+          player.getX(), player.getY(), player.getZ(),
+          SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM,
+          player.getSoundCategory(),
+          1.f,
+          1.f
+        );
+    }
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
