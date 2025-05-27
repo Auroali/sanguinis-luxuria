@@ -7,7 +7,7 @@ import net.minecraft.util.Util;
 
 public interface RitualType<T extends Ritual> {
     default String getTranslationKey() {
-        return Util.createTranslationKey("altar_ritual", getId(this));
+        return Util.createTranslationKey("ritual_type", getId(this));
     }
 
     Codec<T> getCodec();

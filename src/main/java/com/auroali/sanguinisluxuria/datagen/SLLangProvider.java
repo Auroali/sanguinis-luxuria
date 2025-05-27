@@ -3,20 +3,14 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.datagen.util.GenericTranslationBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.tag.TagKey;
-
-import java.util.function.BiConsumer;
 
 public class SLLangProvider extends FabricLanguageProvider {
     public SLLangProvider(FabricDataOutput dataGenerator) {
@@ -31,28 +25,27 @@ public class SLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("commands.sanguinisluxuria.convert.invalid_conversion", "Invalid conversion type \"%s\"");
         translationBuilder.add("commands.sanguinisluxuria.convert.failed", "Failed to convert %s");
         translationBuilder.add("commands.sanguinisluxuria.ability.failed_conditions", "Failed to add %s to %s");
-        tags(translationBuilder);
+        tags(new GenericTranslationBuilder.TagTranslationBuilder(translationBuilder));
         subtitles(translationBuilder);
         keybindings(translationBuilder);
         config(translationBuilder);
-        statusEffects(translationBuilder);
+        statusEffects(new GenericTranslationBuilder.DescriptionTranslationBuilder<>(translationBuilder, StatusEffect::getTranslationKey));
         gui(translationBuilder);
         entities(translationBuilder);
-        enchantments(translationBuilder);
+        enchantments(new GenericTranslationBuilder.DescriptionTranslationBuilder<>(translationBuilder, Enchantment::getTranslationKey));
         items(translationBuilder);
         blocks(translationBuilder);
         attributes(translationBuilder);
-        potions(translationBuilder);
-        abilities(translationBuilder);
-        deathMessages(translationBuilder);
+        potions(new GenericTranslationBuilder.Potions(translationBuilder, "Potion of ", "Splash Potion of ", "Lingering Potion of ", "Arrow of "));
+        abilities(new GenericTranslationBuilder.RegistryTranslationBuilder<>(translationBuilder, SLRegistries.VAMPIRE_ABILITIES));
+        deathMessages(
+          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.'))),
+          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.item".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.'))),
+          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.player".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.')))
+        );
         advancements(translationBuilder);
         emiTranslations(translationBuilder);
-        rituals(translationBuilder);
-    }
-
-    private static void generateTagTranslation(TranslationBuilder builder, TagKey<?> key, String translation) {
-        String transKey = "tag.%s.%s.%s".formatted(key.registry().getValue().getPath(), key.id().getNamespace(), key.id().getPath().replace("/", "."));
-        builder.add(transKey, translation);
+        rituals(new GenericTranslationBuilder.RegistryTranslationBuilder<>(translationBuilder, SLRegistries.RITUAL_TYPES));
     }
 
     private static void emiTranslations(TranslationBuilder builder) {
@@ -60,90 +53,78 @@ public class SLLangProvider extends FabricLanguageProvider {
         builder.add("emi.category.sanguinisluxuria.blood_cauldron", "Cauldron Infusing");
     }
 
-    private static void tags(TranslationBuilder builder) {
-        generateTagTranslation(builder, SLTags.Items.VAMPIRE_MASKS, "Vampire Masks");
-        generateTagTranslation(builder, SLTags.Items.SUN_BLOCKING_HELMETS, "Sun Blocking Helmets");
-        generateTagTranslation(builder, SLTags.Items.VAMPIRES_GET_HUNGER_FROM, "Vampire Food");
-        generateTagTranslation(builder, SLTags.Items.BLOOD_STORING_BOTTLES, "Blood Storing Bottles");
-        generateTagTranslation(builder, SLTags.Items.DECAYED_LOGS, "Decayed Logs");
-        generateTagTranslation(builder, SLTags.Items.SILVER_INGOTS, "Silver Ingots");
-        generateTagTranslation(builder, SLTags.Items.SILVER_ORES, "Silver Ores");
-        generateTagTranslation(builder, SLTags.Items.SILVER_BLOCKS, "Silver Blocks");
-        generateTagTranslation(builder, SLTags.Items.RAW_SILVER_BLOCKS, "Raw Silver Blocks");
+    private static void tags(GenericTranslationBuilder.TagTranslationBuilder builder) {
+        builder.add(SLTags.Items.VAMPIRE_MASKS, "Vampire Masks");
+        builder.add(SLTags.Items.SUN_BLOCKING_HELMETS, "Sun Blocking Helmets");
+        builder.add(SLTags.Items.VAMPIRES_GET_HUNGER_FROM, "Vampire Food");
+        builder.add(SLTags.Items.BLOOD_STORING_BOTTLES, "Blood Storing Bottles");
+        builder.add(SLTags.Items.DECAYED_LOGS, "Decayed Logs");
+        builder.add(SLTags.Items.SILVER_INGOTS, "Silver Ingots");
+        builder.add(SLTags.Items.SILVER_ORES, "Silver Ores");
+        builder.add(SLTags.Items.SILVER_BLOCKS, "Silver Blocks");
+        builder.add(SLTags.Items.RAW_SILVER_BLOCKS, "Raw Silver Blocks");
     }
 
-    private static void deathMessages(TranslationBuilder translationBuilder) {
-        BiConsumer<RegistryKey<DamageType>, String> death = (key, name) -> translationBuilder.add("death.attack.%s.%s".formatted(key.getValue().getNamespace(), key.getValue().getPath()), name);
-        BiConsumer<RegistryKey<DamageType>, String> deathItem = (key, name) -> translationBuilder.add("death.attack.%s.%s.item".formatted(key.getValue().getNamespace(), key.getValue().getPath()), name);
-        BiConsumer<RegistryKey<DamageType>, String> deathPlayer = (key, name) -> translationBuilder.add("death.attack.%s.%s.player".formatted(key.getValue().getNamespace(), key.getValue().getPath()), name);
-        death.accept(SLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water");
-        deathPlayer.accept(SLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water whilst trying to escape %s");
-        death.accept(SLResources.BITE_DAMAGE_KEY, "%s was bitten by %s");
-        deathItem.accept(SLResources.BITE_DAMAGE_KEY, "%s was bitten by %s using %s");
-        death.accept(SLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained");
-        deathPlayer.accept(SLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained whilst trying to escape %s");
-        death.accept(SLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s");
-        deathItem.accept(SLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s using %s");
+    private static void deathMessages(GenericTranslationBuilder<RegistryKey<DamageType>> death, GenericTranslationBuilder<RegistryKey<DamageType>> afterDamage, GenericTranslationBuilder<RegistryKey<DamageType>> item) {
+        death.add(SLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water");
+        death.add(SLResources.BITE_DAMAGE_KEY, "%s was bitten by %s");
+        death.add(SLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained");
+        death.add(SLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s");
+        afterDamage.add(SLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water by %s");
+        afterDamage.add(SLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained by %s");
+        item.add(SLResources.BITE_DAMAGE_KEY, "%s was bitten by %s using %s");
+        item.add(SLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s using %s");
     }
 
-    private static void abilities(TranslationBuilder translationBuilder) {
-        generateAbilityKey(translationBuilder, SLVampireAbilities.TELEPORT, "Blink");
-        generateAbilityKey(translationBuilder, SLVampireAbilities.INFECTIOUS, "Infectious");
-        generateAbilityKey(translationBuilder, SLVampireAbilities.BITE, "Bite");
-        generateAbilityKey(translationBuilder, SLVampireAbilities.MIST, "Mist");
-        generateAbilityKey(translationBuilder, SLVampireAbilities.VULNERABILITY, "Vulnerability");
-        generateAbilityKey(translationBuilder, SLVampireAbilities.RESILIENCE, "Resilience");
+    private static void abilities(GenericTranslationBuilder.RegistryTranslationBuilder<VampireAbility> builder) {
+        builder.add(SLVampireAbilities.TELEPORT, "Blink");
+        builder.add(SLVampireAbilities.INFECTIOUS, "Infectious");
+        builder.add(SLVampireAbilities.BITE, "Bite");
+        builder.add(SLVampireAbilities.MIST, "Mist");
+        builder.add(SLVampireAbilities.VULNERABILITY, "Vulnerability");
+        builder.add(SLVampireAbilities.RESILIENCE, "Resilience");
     }
 
-    public static void rituals(TranslationBuilder builder) {
-        builder.add(SLRitualTypes.ABILITY_RITUAL_TYPE.getTranslationKey(), "Ritual of Transformation");
-        builder.add(SLRitualTypes.ABILITY_RESET_RITUAL_TYPE.getTranslationKey(), "Ritual of Cleansing");
-        builder.add(SLRitualTypes.ITEM_RITUAL_TYPE.getTranslationKey(), "Ritual of Transmutation");
-        builder.add(SLRitualTypes.ABILITY_REVEAL_RITUAL_TYPE.getTranslationKey(), "Ritual of Revealing");
-        builder.add(SLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE.getTranslationKey(), "Ritual of Summoning");
-        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey(), "Ritual of Alchemy");
-        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey(), "Ritual of Conversion");
+    public static void rituals(GenericTranslationBuilder.RegistryTranslationBuilder<RitualType<?>> builder) {
+        builder.add(SLRitualTypes.ABILITY_RITUAL_TYPE, "Ritual of Transformation");
+        builder.add(SLRitualTypes.ABILITY_RESET_RITUAL_TYPE, "Ritual of Cleansing");
+        builder.add(SLRitualTypes.ITEM_RITUAL_TYPE, "Ritual of Transmutation");
+        builder.add(SLRitualTypes.ABILITY_REVEAL_RITUAL_TYPE, "Ritual of Revealing");
+        builder.add(SLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE, "Ritual of Summoning");
+        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE, "Ritual of Alchemy");
+        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
         builder.add("altar_ritual.sanguinisluxuria.convert.converting", "Converting");
         builder.add("altar_ritual.sanguinisluxuria.convert.deconverting", "Deconverting");
         builder.add("altar_ritual.sanguinisluxuria.effects", "Applies the effects to %s for %.1ds");
     }
 
-    private static void potions(TranslationBuilder translationBuilder) {
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION, Items.POTION, "Potion of Blessed Water");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION, Items.TIPPED_ARROW, "Arrow of Blessed Water");
-
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION_TWO, Items.POTION, "Potion of Blessed Water");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION_TWO, Items.SPLASH_POTION, "Splash Potion of Blessed Water");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION_TWO, Items.LINGERING_POTION, "Lingering Potion of Blessed Water");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLESSED_WATER_POTION_TWO, Items.TIPPED_ARROW, "Arrow of Blessed Water");
-
-        generatePotionKey(translationBuilder, SLStatusEffects.BLOOD_LUST_POTION, Items.POTION, "Potion of Blood Lust");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLOOD_LUST_POTION, Items.SPLASH_POTION, "Splash Potion of Blood Lust");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLOOD_LUST_POTION, Items.LINGERING_POTION, "Lingering Potion of Blood Lust");
-        generatePotionKey(translationBuilder, SLStatusEffects.BLOOD_LUST_POTION, Items.TIPPED_ARROW, "Arrow of Blood Lust");
+    private static void potions(GenericTranslationBuilder.Potions builder) {
+        builder.add(SLStatusEffects.BLESSED_WATER_POTION, "Blessed Water");
+        builder.add(SLStatusEffects.BLESSED_WATER_POTION_TWO, "Blessed Water");
+        builder.add(SLStatusEffects.BLOOD_LUST_POTION, "Bloodlust");
     }
 
-    private static void enchantments(TranslationBuilder translationBuilder) {
-        translationBuilder.add(SLEnchantments.SUN_PROTECTION, "Sun Protection");
-        enchantmentDescription(translationBuilder, SLEnchantments.SUN_PROTECTION, "Increases the amount of time a vampire can stay in the sun");
-        translationBuilder.add(SLEnchantments.BLOOD_TRANSFER, "Blood Transfer");
-        enchantmentDescription(translationBuilder, SLEnchantments.BLOOD_TRANSFER, "Allows a trident to latch on and slowly transfer blood from a target to the thrower");
-        translationBuilder.add(SLEnchantments.SERRATED, "Serrated");
-        enchantmentDescription(translationBuilder, SLEnchantments.SERRATED, "Has a chance of inflicting bleeding on targets");
-    }
-
-    private static void enchantmentDescription(TranslationBuilder builder, Enchantment enchantment, String description) {
-        builder.add(enchantment.getTranslationKey() + ".desc", description);
+    private static void enchantments(GenericTranslationBuilder.DescriptionTranslationBuilder<Enchantment> translationBuilder) {
+        translationBuilder.add(SLEnchantments.SUN_PROTECTION,
+          "Sun Protection",
+          "Increases the amount of time a vampire can stay in the sun"
+        );
+        translationBuilder.add(SLEnchantments.BLOOD_TRANSFER,
+          "Blood Transfer",
+          "Allows a trident to latch on and slowly transfer blood from a target to the thrower"
+        );
+        translationBuilder.add(SLEnchantments.SERRATED,
+          "Serrated",
+          "Has a chance of inflicting bleeding on targets"
+        );
     }
 
     private static void attributes(TranslationBuilder translationBuilder) {
-        translationBuilder.add(SLEntityAttributes.BLESSED_DAMAGE.getTranslationKey(), "Blessed Damage");
-        translationBuilder.add(SLEntityAttributes.BLINK_COOLDOWN.getTranslationKey(), "Blink Cooldown");
-        translationBuilder.add(SLEntityAttributes.BLINK_RANGE.getTranslationKey(), "Blink Range");
-        translationBuilder.add(SLEntityAttributes.SUN_RESISTANCE.getTranslationKey(), "Sun Resistance");
-        translationBuilder.add(SLEntityAttributes.VULNERABILITY.getTranslationKey(), "Vulnerability");
+        translationBuilder.add(SLEntityAttributes.BLESSED_DAMAGE, "Blessed Damage");
+        translationBuilder.add(SLEntityAttributes.BLINK_COOLDOWN, "Blink Cooldown");
+        translationBuilder.add(SLEntityAttributes.BLINK_RANGE, "Blink Range");
+        translationBuilder.add(SLEntityAttributes.SUN_RESISTANCE, "Sun Resistance");
+        translationBuilder.add(SLEntityAttributes.VULNERABILITY, "Vulnerability");
     }
 
     private static void entities(TranslationBuilder translationBuilder) {
@@ -240,17 +221,27 @@ public class SLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("sanguinisluxuria.landing", "A book of vampires.");
     }
 
-    private static void statusEffects(TranslationBuilder translationBuilder) {
-        translationBuilder.add(SLStatusEffects.BLOOD_SICKNESS, "Blood Sickness");
-        generateStatusEffectDescription(translationBuilder, SLStatusEffects.BLOOD_SICKNESS, "Gained from drinking blood. High enough levels will convert you to a vampire");
-        translationBuilder.add(SLStatusEffects.BLESSED_WATER, "Blessed Water");
-        generateStatusEffectDescription(translationBuilder, SLStatusEffects.BLESSED_WATER, "Damages the undead and grants Blessed Blood to the living");
-        translationBuilder.add(SLStatusEffects.BLOOD_PROTECTION, "Blessed Blood");
-        generateStatusEffectDescription(translationBuilder, SLStatusEffects.BLOOD_PROTECTION, "Protects you from having your blood drained by vampires");
-        translationBuilder.add(SLStatusEffects.BLEEDING, "Bleeding");
-        generateStatusEffectDescription(translationBuilder, SLStatusEffects.BLEEDING, "Causes the afflicted entity to slowly bleed out");
-        translationBuilder.add(SLStatusEffects.BLOOD_LUST, "Bloodlust");
-        generateStatusEffectDescription(translationBuilder, SLStatusEffects.BLOOD_LUST, "Gives the living a thirst for blood");
+    private static void statusEffects(GenericTranslationBuilder.DescriptionTranslationBuilder<StatusEffect> translationBuilder) {
+        translationBuilder.add(SLStatusEffects.BLOOD_SICKNESS,
+          "Blood Sickness",
+          "Gained from drinking blood. High enough levels will convert you to a vampire"
+        );
+        translationBuilder.add(SLStatusEffects.BLESSED_WATER,
+          "Blessed Water",
+          "Damages the undead and grants Blessed Blood to the living"
+        );
+        translationBuilder.add(SLStatusEffects.BLOOD_PROTECTION,
+          "Blessed Blood",
+          "Protects you from having your blood drained by vampires"
+        );
+        translationBuilder.add(SLStatusEffects.BLEEDING,
+          "Bleeding",
+          "Causes the afflicted entity to slowly bleed out"
+        );
+        translationBuilder.add(SLStatusEffects.BLOOD_LUST,
+          "Bloodlust",
+          "Gives the living a thirst for blood"
+        );
     }
 
     public static void advancements(TranslationBuilder translationBuilder) {
@@ -292,19 +283,5 @@ public class SLLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add(SLAdvancementsProvider.title("transfer_all_effects"), "How did we get there?");
         translationBuilder.add(SLAdvancementsProvider.desc("transfer_all_effects"), "Transfer every effect at once via Infectious");
-    }
-
-    public static void generatePotionKey(TranslationBuilder builder, Potion potion, Item item, String entry) {
-        ItemStack stack = new ItemStack(item);
-        PotionUtil.setPotion(stack, potion);
-        builder.add(stack.getTranslationKey(), entry);
-    }
-
-    public static void generateAbilityKey(TranslationBuilder builder, VampireAbility ability, String entry) {
-        builder.add(ability.getTranslationKey(), entry);
-    }
-
-    public static void generateStatusEffectDescription(TranslationBuilder builder, StatusEffect effect, String entry) {
-        builder.add(effect.getTranslationKey() + ".desc", entry);
     }
 }

@@ -103,7 +103,7 @@ public class SLResources {
     public static final Identifier FALLING_BLOOD = id("falling_blood");
     public static final Identifier LANDING_BLOOD = id("landing_blood");
     public static final Identifier BLOOD_STORING_BOTTLES_ID = id("blood_storing_bottles");
-    public static final Identifier RITUAL_TYPE_REGISTRY_ID = id("ritual_types");
+    public static final Identifier RITUAL_TYPE_REGISTRY_ID = id("ritual_type");
     public static final Identifier ITEM_RITUAL_TYPE = id("item_ritual");
     public static final Identifier ABILITY_RITUAL_TYPE = id("ability");
     public static final Identifier ABILITY_RESET_RITUAL_TYPE = id("reset_abilities");
@@ -131,11 +131,11 @@ public class SLResources {
     public static final Identifier RESILIENCE_ID = id("resilience");
     public static final Identifier VAMPIRE_MERCHANT_OFFERS_ID = id("vampire_merchant_enchantments");
     public static final Identifier VULNERABILITY_ID = id("vulnerability");
-    public static final Identifier CONVERSION_TRANSFORMERS = id("conversion_transformers");
-    public static final Identifier CONVERSION_CONDITIONS = id("conversion_conditions");
+    public static final Identifier CONVERSION_TRANSFORMERS = id("conversion_transformer");
+    public static final Identifier CONVERSION_CONDITIONS = id("conversion_condition");
     public static final Identifier COPY_TRANSFORMER_ID = id("copy");
     public static final Identifier CONVERSION_DATA = id("conversion_data");
-    public static final Identifier CONVERSION_TYPES = id("conversion_types");
+    public static final Identifier CONVERSION_TYPES = id("conversion_type");
     public static final Identifier SPAWN_TYPE = id("spawn");
     public static final Identifier SET_VAMPIRE_TYPE = id("set_vampire");
     public static final Identifier REVERT_VAMPIRE_TYPE = id("revert_vampire");

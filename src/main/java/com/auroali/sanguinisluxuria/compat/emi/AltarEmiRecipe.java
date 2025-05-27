@@ -51,7 +51,7 @@ public class AltarEmiRecipe implements EmiRecipe {
         this.output = this.ritual instanceof ItemCreatingRitual itemRitual
           ? EmiStack.of(itemRitual.getOutput())
           : EmiStack.EMPTY;
-        this.ritualTranslationKey = Util.createTranslationKey("altar_ritual", RitualType.getId(this.ritual.getType()));
+        this.ritualTranslationKey = this.ritual.getType().getTranslationKey();
         this.calculateRemainders();
     }
 
