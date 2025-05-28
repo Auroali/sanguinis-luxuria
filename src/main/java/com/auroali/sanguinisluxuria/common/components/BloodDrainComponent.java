@@ -146,7 +146,7 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
         }
 
         this.ticksDraining %= this.getTimeToDrain();
-        VampireComponent.KEY.sync(this.holder);
+        KEY.sync(this.holder);
     }
 
     @Override
