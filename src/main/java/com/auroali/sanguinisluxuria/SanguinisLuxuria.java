@@ -9,6 +9,7 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
+import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
 import com.auroali.sanguinisluxuria.common.items.storage.BloodItemFluidStorage;
 import com.auroali.sanguinisluxuria.common.network.SLNetwork;
 import com.auroali.sanguinisluxuria.common.registry.*;
@@ -20,6 +21,7 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
@@ -154,6 +156,8 @@ public class SanguinisLuxuria implements ModInitializer {
         FluidStorage.combinedItemApiProvider(SLItems.BLOOD_BAG).register(BloodItemFluidStorage::new);
 
         FluidVariantAttributes.register(SLFluids.BLOOD, SLFluids.BLOOD_ATTRIBUTE_HANDLER);
+
+        UseBlockCallback.EVENT.register(EntityTrackingItem::setAltarTarget);
     }
 
     private static void dropBlood(LivingEntity entity, DamageSource source) {

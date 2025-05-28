@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-public class AltarBlock extends BlockWithEntity {
+public class AltarBlock extends BlockWithEntity implements Waterloggable {
     private static final VoxelShape SHAPE = Stream.of(
       Block.createCuboidShape(0, 0, 0, 16, 7, 16),
       Block.createCuboidShape(1, 7, 1, 15, 14, 15)

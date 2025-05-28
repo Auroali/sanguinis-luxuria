@@ -1,0 +1,16 @@
+{
+  "name": "Ritual of Purification",
+  "icon": "minecraft:golden_apple",
+  "category": "sanguinisluxuria:rituals",
+  "advancement": "sanguinisluxuria:drink_twisted_blood",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Ritual of Purification is a version of the conversion ritual that acts similarly to curing a Zombie Villager. When performed on a vampire, they will be reverted to their human form.$(br2)Unlike curing a Zombie Villager, however, this ritual has a much wider range of uses."
+    },
+    {
+      "type": "sanguinisluxuria:ritual",
+      "recipe": "sanguinisluxuria:rituals/purification"
+    }
+  ]
+}

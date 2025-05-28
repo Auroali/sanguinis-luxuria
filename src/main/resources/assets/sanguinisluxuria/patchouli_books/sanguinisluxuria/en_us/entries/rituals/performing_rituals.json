@@ -1,0 +1,12 @@
+{
+  "name": "Performing Rituals",
+  "icon": "sanguinisluxuria:altar",
+  "category": "sanguinisluxuria:rituals",
+  "advancement": "sanguinisluxuria:drink_twisted_blood",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "TODO"
+    }
+  ]
+}

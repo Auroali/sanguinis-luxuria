@@ -1,49 +1,32 @@
 package com.auroali.sanguinisluxuria.common.advancements;
 
 import com.auroali.sanguinisluxuria.SLResources;
-import com.auroali.sanguinisluxuria.SanguinisLuxuria;
-import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
-import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
-import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
+import com.auroali.sanguinisluxuria.common.rituals.RitualPredicate;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.LootContextPredicate;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-
-import java.util.Optional;
+import net.minecraft.util.JsonHelper;
 
 public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCriterion.Conditions> {
     @Override
     protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        if (obj.has("ritual")) {
-            Identifier id = Identifier.tryParse(obj.get("ritual").getAsString());
-            RitualType<?> ritualType = SLRegistries.RITUAL_TYPES.get(id);
-            NbtCompound nbt = null;
-            if (obj.has("nbt")) {
-                nbt = NbtCompound.CODEC.parse(JsonOps.INSTANCE, obj.get("nbt"))
-                  .resultOrPartial(SanguinisLuxuria.LOGGER::error)
-                  .orElseThrow(() -> new JsonParseException("Failed to deserialize nbt"));
-            }
-            return new Conditions(ritualType, nbt, playerPredicate);
-        }
-        return new Conditions(null, null, playerPredicate);
+        return new Conditions(
+          RitualPredicate.fromJson(JsonHelper.getObject(obj, "ritual")),
+          playerPredicate
+        );
     }
 
-    public void trigger(ServerPlayerEntity player, Ritual ritual) {
-        this.trigger(player, conditions -> conditions.test(ritual));
+    public void trigger(ServerPlayerEntity player, Ritual ritual, RitualParameters parameters) {
+        if (parameters.world() instanceof ServerWorld world)
+            this.trigger(player, conditions -> conditions.test(world, ritual, parameters));
     }
 
     @Override
@@ -52,72 +35,32 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
     }
 
     public static class Conditions extends AbstractCriterionConditions {
-        final RitualType<?> ritual;
-        final NbtCompound nbt;
+        private final RitualPredicate predicate;
 
-        public Conditions(RitualType<?> ritual, NbtCompound nbt, LootContextPredicate entity) {
+        public Conditions(RitualPredicate predicate, LootContextPredicate entity) {
             super(SLResources.PERFORM_RITUAL_ID, entity);
-            this.ritual = ritual;
-            this.nbt = nbt;
+            this.predicate = predicate;
         }
 
-        @SuppressWarnings("unchecked")
-        public boolean test(Ritual ritual) {
-            if (this.ritual == null)
+        public boolean test(ServerWorld world, Ritual ritual, RitualParameters parameters) {
+            if (this.predicate == RitualPredicate.ANY)
                 return true;
 
-            if (this.ritual != ritual.getType())
-                return false;
-
-            NbtCompound toCompare = ((Codec<Ritual>) ritual.getType().getCodec()).encodeStart(NbtOps.INSTANCE, ritual)
-              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
-              .flatMap(nbtElement -> nbtElement instanceof NbtCompound compound ? Optional.of(compound) : Optional.empty())
-              .orElse(null);
-
-            return NbtHelper.matches(this.nbt, toCompare, true);
+            return this.predicate.test(world, ritual, parameters);
         }
 
         public static Conditions create() {
-            return new Conditions(null, null, LootContextPredicate.EMPTY);
+            return new Conditions(RitualPredicate.ANY, LootContextPredicate.EMPTY);
         }
 
-        public static Conditions create(RitualType<?> ritual) {
-            return new Conditions(ritual, null, LootContextPredicate.EMPTY);
-        }
-
-        public static Conditions createForItem(ItemConvertible item) {
-            NbtCompound nbt = new NbtCompound();
-            NbtCompound resultNbt = new NbtCompound();
-            resultNbt.putString("id", Registries.ITEM.getId(item.asItem()).toString());
-            nbt.put("result", resultNbt);
-            return create(SLRitualTypes.ITEM_RITUAL_TYPE, nbt);
-        }
-
-        @SuppressWarnings("unchecked")
-        public static Conditions create(Ritual ritual) {
-            NbtCompound nbt = ((Codec<Ritual>) ritual.getType().getCodec())
-              .encodeStart(NbtOps.INSTANCE, ritual)
-              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
-              .flatMap(element -> element instanceof NbtCompound compound ? Optional.of(compound) : Optional.empty())
-              .orElse(null);
-            return new Conditions(ritual.getType(), nbt, LootContextPredicate.EMPTY);
-        }
-
-        public static Conditions create(RitualType<?> ritual, NbtCompound compound) {
-            return new Conditions(ritual, compound, LootContextPredicate.EMPTY);
+        public static Conditions create(RitualPredicate predicate) {
+            return new Conditions(predicate, LootContextPredicate.EMPTY);
         }
 
         @Override
         public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
             JsonObject object = super.toJson(predicateSerializer);
-            if (this.ritual != null) {
-                object.addProperty("ritual", RitualType.getId(this.ritual).toString());
-                if (this.nbt != null) {
-                    NbtCompound.CODEC.encodeStart(JsonOps.INSTANCE, this.nbt)
-                      .resultOrPartial(SanguinisLuxuria.LOGGER::error)
-                      .ifPresent(element -> object.add("nbt", element));
-                }
-            }
+            object.add("ritual", this.predicate.toJson());
             return object;
         }
     }

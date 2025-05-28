@@ -37,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisplayingBlockEntity {
     private static final Vec3d ITEM_OFFSET = new Vec3d(0.5, 0.45, 0.5);
@@ -49,6 +50,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
     private LivingEntity cachedTarget;
     private ActiveRitualData ritualData;
     private int ticksProcessing;
+    private UUID storedTarget;
 
     public AltarBlockEntity(BlockPos pos, BlockState state) {
         super(SLBlockEntities.ALTAR, pos, state);
@@ -120,7 +122,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
           .target(target)
           .build();
         ritual.onCompleted(parameters);
-        parameters.applyToPlayerInitiator(player -> SLAdvancementCriterion.PERFORM_RITUAL.trigger(player, ritual));
+        parameters.applyToPlayerInitiator(player -> SLAdvancementCriterion.PERFORM_RITUAL.trigger(player, ritual, parameters));
         altar.getStack(0).decrement(1);
         altar.ritualData = null;
         altar.ticksProcessing = 0;
@@ -184,7 +186,11 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
 
               world.setBlockState(pos, state.with(AltarBlock.ACTIVE, true));
               this.ticksProcessing = 0;
-              this.ritualData = new ActiveRitualData(recipe.getRitual(), initiator.getUuid(), initiator.getUuid());
+              this.ritualData = new ActiveRitualData(
+                recipe.getRitual(),
+                initiator.getUuid(),
+                this.isStoredTargetAlive(world) ? this.storedTarget : initiator.getUuid()
+              );
               if (initiator instanceof ServerPlayerEntity player) {
                   Criteria.RECIPE_CRAFTED.trigger(player, recipe.getId(), inventory.stacks);
               }
@@ -301,5 +307,16 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
     @Override
     public Vec3d getDisplayOffset() {
         return ITEM_OFFSET;
+    }
+
+    public void setNextTarget(LivingEntity entity) {
+        if (entity.isAlive())
+            this.storedTarget = entity.getUuid();
+    }
+
+    private boolean isStoredTargetAlive(World world) {
+        if (world instanceof ServerWorld serverWorld && this.storedTarget != null)
+            return serverWorld.getEntity(this.storedTarget) instanceof LivingEntity living && living.isAlive();
+        return false;
     }
 }

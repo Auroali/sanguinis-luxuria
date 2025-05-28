@@ -99,8 +99,8 @@ public class SLLangProvider extends FabricLanguageProvider {
         builder.add(SLRitualTypes.ENTITY_SPAWNING_RITUAL_TYPE, "Ritual of Summoning");
         builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE, "Ritual of Alchemy");
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
-        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".converting", "Purification");
-        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".deconverting", "Corrupting");
+        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".converting", "Corruption");
+        builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".deconverting", "Purification");
         builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effects", "Applies the effects to %s for %.1ds");
     }
 
@@ -291,6 +291,11 @@ public class SLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(SLResources.id("unbecome_vampire"),
           "Humanity",
           "Perform the Ritual of Purification"
+        );
+
+        translationBuilder.add(SLResources.id("purify_other"),
+          "No need for weakness",
+          "Perform the Ritual of Purification on something other than yourself"
         );
 
         translationBuilder.add(SLResources.id("craft_hungry_sapling"),

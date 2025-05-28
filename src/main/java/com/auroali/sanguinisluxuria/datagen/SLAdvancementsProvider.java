@@ -5,10 +5,10 @@ import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.common.advancements.*;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.SLItems;
-import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
-import com.auroali.sanguinisluxuria.common.registry.SLTags;
+import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.common.rituals.RitualPredicate;
+import com.auroali.sanguinisluxuria.common.rituals.predicate.RitualFieldsPredicate;
+import com.auroali.sanguinisluxuria.common.rituals.predicate.RitualTypePredicate;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
@@ -16,6 +16,7 @@ import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -23,6 +24,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityEffectPredicate;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -113,6 +115,33 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
           .parent(becomeVampire)
           .criterion("unconvert", ConvertCriterion.Conditions.create(ConversionContext.Conversion.DECONVERTING))
           .build(SLResources.id("unbecome_vampire"));
+
+        Advancement purifyOther = Advancement.Builder.create()
+          .display(
+            PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), SLStatusEffects.BLESSED_WATER_POTION),
+            Text.translatable(title("purify_other")),
+            Text.translatable(desc("purify_other")),
+            null,
+            AdvancementFrame.CHALLENGE,
+            true,
+            true,
+            true
+          )
+          .parent(unbecomeVampire)
+          .criterion("ritual", PerformRitualCriterion.Conditions.create(
+            RitualPredicate.builder()
+              .targetExcluding(EntityPredicate.Builder.create()
+                .type(EntityType.PLAYER)
+                .build()
+              )
+              .type(RitualTypePredicate.create(SLRitualTypes.CONVERT_ENTITY_RITUAL))
+              .fields(RitualFieldsPredicate.builder()
+                .field("conversion", "deconverting")
+                .build()
+              )
+              .build()
+          ))
+          .build(SLResources.id("purify_other"));
 
         Advancement bloodSickness = Advancement.Builder
           .create()
@@ -302,6 +331,7 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
         consumer.accept(transferMoreEffects);
         consumer.accept(transferTheMostEffects);
         consumer.accept(unbecomeVampire);
+        consumer.accept(purifyOther);
         consumer.accept(craftHungrySapling);
         consumer.accept(growDecayedTree);
         consumer.accept(obtainHungryLog);

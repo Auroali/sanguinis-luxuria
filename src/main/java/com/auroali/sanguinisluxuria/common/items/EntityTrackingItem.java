@@ -1,11 +1,17 @@
 package com.auroali.sanguinisluxuria.common.items;
 
+import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
 import java.util.UUID;
@@ -80,5 +86,28 @@ public interface EntityTrackingItem {
             return uuid != null ? serverWorld.getEntity(uuid) : null;
         }
         return null;
+    }
+
+    static boolean hasEntity(ItemStack stack) {
+        return getEntity(stack) != null;
+    }
+
+    static ActionResult setAltarTarget(PlayerEntity entity, World world, Hand hand, BlockHitResult hitResult) {
+        ItemStack stack = entity.getStackInHand(hand);
+        if (!hasEntity(stack))
+            return ActionResult.PASS;
+
+        Entity target = getEntity(stack, world);
+        if (world.getBlockEntity(hitResult.getBlockPos()) instanceof AltarBlockEntity altar) {
+            if (world.isClient)
+                return ActionResult.SUCCESS;
+            if (!(target instanceof LivingEntity))
+                return ActionResult.FAIL;
+            altar.setNextTarget((LivingEntity) target);
+            clearEntity(stack);
+            return ActionResult.CONSUME;
+        }
+
+        return ActionResult.PASS;
     }
 }

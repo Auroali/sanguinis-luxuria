@@ -262,7 +262,7 @@ public class SLRecipeProvider extends FabricRecipeProvider {
           .input(SLItems.SILVER_INGOT)
           .input(SLItems.SILVER_INGOT)
           .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
-          .offerTo(exporter, SLResources.id("rituals/deconversion"));
+          .offerTo(exporter, SLResources.id("rituals/purification"));
 
         // effects
         RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.FIRE_RESISTANCE).duration(1900).build())

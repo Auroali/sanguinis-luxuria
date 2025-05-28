@@ -1,0 +1,48 @@
+{
+  "parent": "sanguinisluxuria:unbecome_vampire",
+  "criteria": {
+    "ritual": {
+      "conditions": {
+        "ritual": {
+          "type": {
+            "id": "sanguinisluxuria:convert"
+          },
+          "fields": {
+            "fields": {
+              "conversion": "deconverting"
+            }
+          },
+          "target": {
+            "inverted": true,
+            "predicate": {
+              "type": "minecraft:player"
+            }
+          }
+        }
+      },
+      "trigger": "sanguinisluxuria:perform_ritual"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.sanguinisluxuria.purify_other.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:splash_potion",
+      "nbt": "{Potion:\"sanguinisluxuria:blessed_water\"}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.sanguinisluxuria.purify_other.title"
+    }
+  },
+  "requirements": [
+    [
+      "ritual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

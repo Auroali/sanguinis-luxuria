@@ -9,7 +9,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "sanguinisluxuria:rituals/deconversion"
+        "recipe": "sanguinisluxuria:rituals/purification"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -22,7 +22,7 @@
   ],
   "rewards": {
     "recipes": [
-      "sanguinisluxuria:rituals/deconversion"
+      "sanguinisluxuria:rituals/purification"
     ]
   },
   "sends_telemetry_event": true
