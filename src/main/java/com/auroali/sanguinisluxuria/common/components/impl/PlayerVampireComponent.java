@@ -26,7 +26,7 @@ import java.util.UUID;
 public class PlayerVampireComponent implements VampireComponent {
     private static final ConditionalPacketWriter<SyncFlags, PlayerVampireComponent> PACKET_WRITER = ConditionalPacketWriter
       .builder(SyncFlags.class, PlayerVampireComponent.class)
-      .defaultSection(
+      .section(SyncFlags.STATE,
         (buf, component) -> {
             buf.writeBoolean(component.isVampire);
             buf.writeBoolean(component.isMist);
@@ -88,7 +88,7 @@ public class PlayerVampireComponent implements VampireComponent {
                 a.onUnVampire(this.holder, this);
             }
         }
-        this.state.defaultOnly();
+        this.state.update(SyncFlags.STATE);
         VampireComponent.KEY.sync(this.holder);
     }
 
@@ -162,7 +162,7 @@ public class PlayerVampireComponent implements VampireComponent {
     public void setDowned(boolean down) {
         this.isDowned = down;
         this.isMist = false;
-        this.state.defaultOnly();
+        this.state.update(SyncFlags.STATE);
         VampireComponent.KEY.sync(this.holder);
     }
 
@@ -174,7 +174,7 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void setMist(boolean isMist) {
         this.isMist = isMist;
-        this.state.defaultOnly();
+        this.state.update(SyncFlags.STATE);
         VampireComponent.KEY.sync(this.holder);
     }
 
@@ -254,6 +254,7 @@ public class PlayerVampireComponent implements VampireComponent {
     }
 
     private enum SyncFlags {
+        STATE,
         SUN,
         ABILITIES,
     }

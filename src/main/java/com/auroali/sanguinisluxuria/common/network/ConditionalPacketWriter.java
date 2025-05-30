@@ -15,15 +15,13 @@ import java.util.function.BiConsumer;
  * @param <U> the instance
  */
 public class ConditionalPacketWriter<T extends Enum<T>, U> {
-    // the uppermost bit is reserved as a default section only marker
-    protected static final long DEFAULT_EXCLUSIVE_FLAG = 1L << 63;
-    protected static final long ALL_FLAGS = Long.MAX_VALUE & ~DEFAULT_EXCLUSIVE_FLAG;
+    protected static final long ALL_FLAGS = Long.MAX_VALUE;
     private final Class<T> flagClass;
     protected final Section<U>[] sections;
     protected final Section<U> defaultSection;
 
     protected ConditionalPacketWriter(Class<T> flagClass, Section<U> defaultSection, Section<U>[] sections) {
-        assert sections.length <= 63;
+        assert sections.length <= 64;
         assert sections.length == flagClass.getEnumConstants().length;
         this.flagClass = flagClass;
         this.defaultSection = defaultSection;
@@ -113,13 +111,6 @@ public class ConditionalPacketWriter<T extends Enum<T>, U> {
          */
         public void update(T flag) {
             this.currentFlags |= (1L << flag.ordinal());
-        }
-
-        /**
-         * Negates the behaviour of {@link WriteBehaviour#ALL_ON_EMPTY}
-         */
-        public void defaultOnly() {
-            this.currentFlags |= DEFAULT_EXCLUSIVE_FLAG;
         }
 
         /**
