@@ -258,9 +258,9 @@ public class SLRecipeProvider extends FabricRecipeProvider {
 
         RitualRecipeJsonBuilder.create(RecipeCategory.MISC, new ConvertEntityRitual(ConversionContext.Conversion.DECONVERTING))
           .catalyst(Items.GOLDEN_APPLE)
-          .input(SLItems.SILVER_INGOT)
-          .input(SLItems.SILVER_INGOT)
-          .input(SLItems.SILVER_INGOT)
+          .input(SLTags.Items.SILVER_INGOTS)
+          .input(SLTags.Items.SILVER_INGOTS)
+          .input(SLTags.Items.SILVER_INGOTS)
           .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .offerTo(exporter, SLResources.id("rituals/purification"));
 

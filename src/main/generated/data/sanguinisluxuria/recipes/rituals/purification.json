@@ -6,13 +6,13 @@
   "category": "misc",
   "inputs": [
     {
-      "item": "sanguinisluxuria:silver_ingot"
+      "tag": "c:silver_ingots"
     },
     {
-      "item": "sanguinisluxuria:silver_ingot"
+      "tag": "c:silver_ingots"
     },
     {
-      "item": "sanguinisluxuria:silver_ingot"
+      "tag": "c:silver_ingots"
     }
   ],
   "ritual": {

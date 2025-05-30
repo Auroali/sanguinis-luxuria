@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-28T20:13:16.670251021	Sanguinis Luxuria/Tags for minecraft:item
+// 1.20.1	2025-05-29T23:40:06.124267248	Sanguinis Luxuria/Tags for minecraft:item
 b730ffc8e63f32a3da32d2cac45fbc4df71ba54e data/c/tags/items/raw_silver_blocks.json
 7246aec037ac6c03902a5efb15c2e213af5d8f3d data/minecraft/tags/items/hoes.json
 5928bad07d3872bb60f29ef4f3c885c8e1967c20 data/sanguinisluxuria/tags/items/blood_storing_bottles.json
@@ -15,8 +15,8 @@ fc585cef69e32bab8e1d4ec5c04bf5afe54dbbde data/sanguinisluxuria/tags/items/hungry
 629f75843c82691375ef6b0fe17524c2599abffc data/trinkets/tags/items/head/face.json
 6d684fce31ed676aeaa54e1c92a9fa648b6f16e7 data/minecraft/tags/items/shovels.json
 24574ec48380d4efd6252f6ca2c73d12b04efc0b data/minecraft/tags/items/wooden_trapdoors.json
-d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/items/ores.json
 facafd2526c364a82c85495552558d6c38405d42 data/c/tags/items/silver_ingots.json
+d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/items/ores.json
 20092aaced62cce39c57459227613c0d7ec3a574 data/minecraft/tags/items/saplings.json
 cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/items/logs.json
 e907755d879be948ac26842fab1558331a2743eb data/minecraft/tags/items/wooden_pressure_plates.json
