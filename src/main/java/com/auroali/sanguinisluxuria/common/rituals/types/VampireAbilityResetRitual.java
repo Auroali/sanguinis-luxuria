@@ -20,7 +20,7 @@ public class VampireAbilityResetRitual implements Ritual {
 
     @Override
     public void onCompleted(RitualParameters parameters) {
-        if (!VampireHelper.isVampire(parameters.target()) || !parameters.targetWithin(32.d))
+        if (!VampireHelper.isVampire(parameters.target()) || !parameters.targetWithin(12.d))
             return;
 
         VampireComponent vampire = VampireComponent.KEY.get(parameters.target());

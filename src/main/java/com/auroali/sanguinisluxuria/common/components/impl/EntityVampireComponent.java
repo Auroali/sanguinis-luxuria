@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
+import com.auroali.sanguinisluxuria.common.abilities.DefaultedVampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
@@ -22,7 +23,7 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     public EntityVampireComponent(T holder, Predicate<T> vampirePredicate, VampireAbility... abilities) {
         this.holder = holder;
         this.vampirePredicate = vampirePredicate;
-        this.abilities = new VampireAbilityContainer(Arrays.asList(abilities), () -> VampireComponent.KEY.sync(this.holder));
+        this.abilities = new DefaultedVampireAbilityContainer(Arrays.asList(abilities), () -> VampireComponent.KEY.sync(this.holder));
     }
 
     public EntityVampireComponent(T holder, VampireAbility... abilities) {

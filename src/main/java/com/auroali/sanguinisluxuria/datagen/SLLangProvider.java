@@ -101,7 +101,8 @@ public class SLLangProvider extends FabricLanguageProvider {
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".converting", "Corruption");
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".deconverting", "Purification");
-        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effects", "Applies the effects to %s for %.1ds");
+        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effects", "Applies the effects to %s for %.0fs");
+        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effect_entry", "- %s");
     }
 
     private static void potions(GenericTranslationBuilder.Potions builder) {
@@ -316,6 +317,11 @@ public class SLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(SLResources.id("transfer_all_effects"),
           "How did we get there?",
           "Transfer every effect at once via Infectious"
+        );
+
+        translationBuilder.add(SLResources.id("receive_bloodlust"),
+          "WIP",
+          "Receive a thirst for blood"
         );
     }
 }

@@ -61,15 +61,17 @@ public class PlayerVampireComponent implements VampireComponent {
     );
 
     private final PlayerEntity holder;
-    private final ConditionalPacketWriter<SyncFlags, PlayerVampireComponent>.State state = PACKET_WRITER.createFullState(ConditionalPacketWriter.WriteBehaviour.ALL_ON_EMPTY);
+    private final ConditionalPacketWriter<SyncFlags, PlayerVampireComponent>.State state;
     private boolean isVampire;
-    private final VampireAbilityContainer container = new VampireAbilityContainer(() -> this.state.update(SyncFlags.ABILITIES));
+    private final VampireAbilityContainer container;
     private boolean isDowned;
     private boolean isMist;
     private int sunTicks;
 
     public PlayerVampireComponent(PlayerEntity holder) {
         this.holder = holder;
+        this.state = PACKET_WRITER.createFullState(ConditionalPacketWriter.WriteBehaviour.ALL_ON_EMPTY);
+        this.container = new VampireAbilityContainer(() -> this.state.update(SyncFlags.ABILITIES));
     }
 
     @Override

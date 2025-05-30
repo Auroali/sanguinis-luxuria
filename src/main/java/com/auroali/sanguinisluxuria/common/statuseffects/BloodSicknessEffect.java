@@ -36,6 +36,7 @@ public class BloodSicknessEffect extends StatusEffect {
         if (amplifier >= 4 && entity.getRandom().nextInt(420) == 0)
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
 
+        // todo: rework becoming a vampire?
         if (duration == 1 && this.isRightConditions(entity, amplifier) && SLConversions.convertEntity(ConversionContext.from(entity, ConversionContext.Conversion.CONVERTING))) {
             if (entity instanceof ServerPlayerEntity p)
                 SLAdvancementCriterion.CONVERT.trigger(p, ConversionContext.Conversion.CONVERTING);

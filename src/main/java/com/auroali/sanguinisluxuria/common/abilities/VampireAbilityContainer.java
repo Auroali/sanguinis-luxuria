@@ -19,7 +19,7 @@ import java.util.*;
 public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry>> {
     private static final Runnable EMPTY_CALLBACK = () -> {
     };
-    private Map<VampireAbility, AbilityEntry> abilities;
+    protected Map<VampireAbility, AbilityEntry> abilities;
     private final Runnable syncCallback;
 
     public VampireAbilityContainer() {
@@ -27,15 +27,9 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
     }
 
     public VampireAbilityContainer(Runnable syncCallback) {
-        this(Collections.emptySet(), syncCallback);
-    }
-
-    public VampireAbilityContainer(Collection<VampireAbility> abilities, Runnable syncCallback) {
         this.abilities = new Object2ObjectOpenHashMap<>();
         this.syncCallback = syncCallback;
-        abilities.forEach(a -> this.abilities.put(a, new AbilityEntry(a)));
     }
-
 
     public void tick(LivingEntity entity, VampireComponent vampire) {
         BloodComponent blood = BloodComponent.KEY.get(entity);
