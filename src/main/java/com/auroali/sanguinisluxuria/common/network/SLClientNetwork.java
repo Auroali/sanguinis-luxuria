@@ -4,12 +4,14 @@ import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.network.packets.AltarRecipeStartS2C;
+import com.auroali.sanguinisluxuria.common.network.packets.EmitParticlesS2C;
 import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class SLClientNetwork {
@@ -41,6 +43,24 @@ public class SLClientNetwork {
                       0
                     );
                 }
+            }
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(EmitParticlesS2C.ID, (packet, player, responseSender) -> {
+            Random random = player.getRandom();
+            for (int i = 0; i < packet.count(); i++) {
+                double velocityX = random.nextGaussian() * packet.varianceX() + packet.velocityX();
+                double velocityY = random.nextGaussian() * packet.varianceY() + packet.velocityY();
+                double velocityZ = random.nextGaussian() * packet.varianceZ() + packet.velocityZ();
+                player.getWorld().addParticle(
+                  packet.parameters(),
+                  packet.x(),
+                  packet.y(),
+                  packet.z(),
+                  velocityX,
+                  velocityY,
+                  velocityZ
+                );
             }
         });
     }

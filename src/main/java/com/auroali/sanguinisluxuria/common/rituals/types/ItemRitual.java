@@ -1,10 +1,7 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
 import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
-import com.auroali.sanguinisluxuria.common.rituals.ItemCreatingRitual;
-import com.auroali.sanguinisluxuria.common.rituals.Ritual;
-import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
-import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.common.rituals.*;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.ItemEntity;
@@ -31,6 +28,7 @@ public class ItemRitual implements Ritual, ItemCreatingRitual {
     @Override
     public void onCompleted(RitualParameters parameters) {
         this.spawnResultItem(parameters, this.createResultItem(parameters));
+        RitualUtil.spawnSuccessParticles(parameters);
     }
 
     protected ItemStack createResultItem(RitualParameters parameters) {

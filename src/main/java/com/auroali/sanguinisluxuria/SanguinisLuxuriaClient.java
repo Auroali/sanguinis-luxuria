@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.client.SLHud;
 import com.auroali.sanguinisluxuria.client.particles.AltarBeatParticle;
+import com.auroali.sanguinisluxuria.client.particles.AltarParticle;
 import com.auroali.sanguinisluxuria.client.particles.DrippingBloodParticle;
 import com.auroali.sanguinisluxuria.client.render.blocks.ItemDisplayingBlockEntityRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireMerchantRenderer;
@@ -42,25 +43,25 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
     public static final KeyBinding SUCK_BLOOD = new KeyBinding(
       "key.sanguinisluxuria.drain_blood",
       InputUtil.Type.KEYSYM,
-      GLFW.GLFW_KEY_R,
+      InputUtil.GLFW_KEY_R,
       "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static final KeyBinding ACTIVATE_BITE = new KeyBinding(
       "key.sanguinisluxuria.activate_bite",
       InputUtil.Type.KEYSYM,
-      GLFW.GLFW_KEY_X,
+      InputUtil.GLFW_KEY_X,
       "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static final KeyBinding ACTIVATE_BLINK = new KeyBinding(
       "key.sanguinisluxuria.activate_blink",
       InputUtil.Type.KEYSYM,
-      GLFW.GLFW_KEY_Z,
+      InputUtil.GLFW_KEY_Z,
       "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static final KeyBinding ACTIVATE_MIST = new KeyBinding(
       "key.sanguinisluxuria.activate_mist",
       InputUtil.Type.KEYSYM,
-      GLFW.GLFW_KEY_C,
+      InputUtil.GLFW_KEY_C,
       "category.sanguinisluxuria.sanguinisluxuria"
     );
 
@@ -129,6 +130,7 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
             return particle;
         });
         ParticleFactoryRegistry.getInstance().register(SLParticles.ALTAR_BEAT, AltarBeatParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(SLParticles.ALTAR, AltarParticle.Factory::new);
     }
 
     public void registerBindings() {

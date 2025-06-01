@@ -27,9 +27,6 @@ public class ConvertCommand {
     }
 
     public static int convert(Collection<? extends Entity> entities, ConversionContext.Conversion conversion) {
-        if (!conversion.isValidConversion()) {
-            throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.invalid_conversion", conversion));
-        }
         for (Entity entity : entities) {
             if (!SLConversions.convertEntity(ConversionContext.from(entity, conversion)))
                 throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.invalid_conversion", entity.getName()));

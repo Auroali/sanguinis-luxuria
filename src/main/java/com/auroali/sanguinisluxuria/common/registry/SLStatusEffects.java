@@ -17,7 +17,7 @@ public class SLStatusEffects {
     public static final StatusEffect BLESSED_WATER = new BlessedWaterEffect(StatusEffectCategory.BENEFICIAL, 0x7AD0E6);
     public static final StatusEffect BLOOD_PROTECTION = new BloodProtectionEffect(StatusEffectCategory.BENEFICIAL, 0x7AD0E6);
     public static final StatusEffect BLEEDING = new BleedingEffect(StatusEffectCategory.HARMFUL, 0xFF6C0000);
-    public static final StatusEffect BLOOD_LUST = new BloodLustEffect(StatusEffectCategory.HARMFUL, 0xFFD52600);
+    public static final StatusEffect BLOOD_LUST = new BloodlustEffect(StatusEffectCategory.HARMFUL, 0xFFD52600);
 
     public static final Potion BLESSED_WATER_POTION = new Potion(new StatusEffectInstance(BLESSED_WATER, 0, 0));
     public static final Potion BLESSED_WATER_POTION_TWO = new Potion(new StatusEffectInstance(BLESSED_WATER, 0, 1));

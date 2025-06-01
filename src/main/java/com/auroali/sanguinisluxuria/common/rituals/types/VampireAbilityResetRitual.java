@@ -9,6 +9,7 @@ import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.common.rituals.RitualUtil;
 import com.mojang.serialization.Codec;
 
 public class VampireAbilityResetRitual implements Ritual {
@@ -32,6 +33,8 @@ public class VampireAbilityResetRitual implements Ritual {
         }
 
         VampireComponent.KEY.sync(parameters.target());
+        RitualUtil.spawnSuccessParticles(parameters);
+        RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());
     }
 
     @Override

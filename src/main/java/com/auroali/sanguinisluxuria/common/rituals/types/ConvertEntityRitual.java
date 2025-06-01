@@ -7,6 +7,7 @@ import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.common.rituals.RitualUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.LivingEntity;
@@ -30,8 +31,11 @@ public class ConvertEntityRitual implements Ritual {
     @Override
     public void onCompleted(RitualParameters parameters) {
         LivingEntity target = parameters.target();
-        if (SLConversions.convertEntity(ConversionContext.from(target, this.conversion)))
+        if (SLConversions.convertEntity(ConversionContext.from(target, this.conversion))) {
             parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.CONVERT.trigger(player, this.conversion));
+            RitualUtil.spawnSuccessParticles(parameters);
+            RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());
+        }
     }
 
     public ConversionContext.Conversion getConversion() {

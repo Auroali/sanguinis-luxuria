@@ -2,9 +2,12 @@ package com.auroali.sanguinisluxuria.common.conversions;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.DataResult;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public record ConversionContext(World world, Entity entity, Conversion conversion) {
     public static ConversionContext from(Entity entity, Conversion conversion) {
@@ -15,10 +18,7 @@ public record ConversionContext(World world, Entity entity, Conversion conversio
         // represents converting to a vampire
         CONVERTING("converting"),
         // represents deconverting from being a vampire
-        DECONVERTING("deconverting"),
-        // represents a non-performable conversion, used in place of null values
-        // as codecs don't like those
-        NONE("none");
+        DECONVERTING("deconverting");
 
         public static final com.mojang.serialization.Codec<Conversion> CODEC = StringIdentifiable.createCodec(Conversion::values);
 
@@ -38,15 +38,6 @@ public record ConversionContext(World world, Entity entity, Conversion conversio
             return this.name;
         }
 
-        /**
-         * Checks if a conversion is valid (can be performed)
-         *
-         * @return if the conversion is not {@link Conversion#NONE}
-         */
-        public boolean isValidConversion() {
-            return this != NONE;
-        }
-
         public static Conversion fromJson(JsonElement element) {
             if (!element.isJsonPrimitive() || !element.getAsJsonPrimitive().isString())
                 throw new JsonParseException("Expected a string for the conversion field");
@@ -54,7 +45,6 @@ public record ConversionContext(World world, Entity entity, Conversion conversio
             return switch (element.getAsString()) {
                 case "converting" -> CONVERTING;
                 case "deconverting" -> DECONVERTING;
-                case "none" -> NONE;
                 default -> throw new JsonParseException("Unknown conversion " + element.getAsString());
             };
         }

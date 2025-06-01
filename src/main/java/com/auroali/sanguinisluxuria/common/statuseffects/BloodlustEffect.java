@@ -5,8 +5,8 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class BloodLustEffect extends StatusEffect {
-    public BloodLustEffect(StatusEffectCategory category, int color) {
+public class BloodlustEffect extends StatusEffect {
+    public BloodlustEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
 

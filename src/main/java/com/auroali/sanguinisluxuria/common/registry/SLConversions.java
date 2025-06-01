@@ -54,9 +54,6 @@ public class SLConversions extends JsonDataLoader implements IdentifiableResourc
     }
 
     public static boolean convertEntity(ConversionContext context) {
-        if (!context.conversion().isValidConversion())
-            return false;
-
         Set<EntityConversionData> conversions = CONVERSIONS.get(context.entity().getType());
         if (conversions.isEmpty())
             return false;

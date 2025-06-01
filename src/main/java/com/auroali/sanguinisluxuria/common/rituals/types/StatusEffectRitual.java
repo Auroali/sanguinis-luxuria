@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.common.rituals.RitualUtil;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -34,26 +35,30 @@ public record StatusEffectRitual(List<StatusEffect> effects, int duration, int a
 
     @Override
     public void onCompleted(RitualParameters parameters) {
+        RitualUtil.spawnSuccessParticles(parameters);
         switch (this.target()) {
             case ALL -> {
-                this.applyToEntity(parameters.target(), parameters.initiator());
-                this.applyToOthers(parameters.world(), parameters.initiator(), parameters.pos());
+                this.applyToEntity(parameters, parameters.target());
+                if (parameters.target() != parameters.initiator())
+                    this.applyToEntity(parameters, parameters.initiator());
+                this.applyToOthers(parameters);
             }
-            case OTHER -> this.applyToOthers(parameters.world(), parameters.initiator(), parameters.pos());
-            case RITUAL_TARGET -> this.applyToEntity(parameters.target(), parameters.initiator());
+            case OTHER -> this.applyToOthers(parameters);
+            case RITUAL_TARGET -> this.applyToEntity(parameters, parameters.target());
         }
     }
 
-    public void applyToEntity(LivingEntity entity, LivingEntity initiator) {
+    public void applyToEntity(RitualParameters parameters, LivingEntity entity) {
         this.effects().forEach(effect ->
-          entity.addStatusEffect(new StatusEffectInstance(effect, this.duration(), 0), initiator)
+          entity.addStatusEffect(new StatusEffectInstance(effect, this.duration(), 0), parameters.initiator())
         );
+        RitualUtil.spawnSuccessParticlesAt(parameters, entity.getPos());
     }
 
-    public void applyToOthers(World world, LivingEntity initiator, BlockPos pos) {
-        world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), new Box(pos).expand(16.d), entity -> entity != initiator && entity.isAlive())
+    public void applyToOthers(RitualParameters parameters) {
+        parameters.world().getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), new Box(parameters.pos()).expand(16.d), entity -> entity != parameters.initiator() && entity.isAlive())
           .forEach(entity ->
-            this.applyToEntity(entity, initiator)
+            this.applyToEntity(parameters, entity)
           );
     }
 

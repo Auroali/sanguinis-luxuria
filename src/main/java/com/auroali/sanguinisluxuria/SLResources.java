@@ -162,6 +162,7 @@ public class SLResources {
     public static final Identifier AFTER_EVENT_PHASE = id("after");
     public static final Identifier BLOOD_DRAIN_COMPONENT_ID = id("blood_drain");
     public static final Identifier FILL_BLOOD_ITEM_C2S = id("fill_blood_item_c2s");
+    public static final Identifier EMIT_PARTICLES_S2C = id("emit_particles_s2c");
 
     public static Identifier id(String path) {
         return new Identifier(SanguinisLuxuria.MODID, path);

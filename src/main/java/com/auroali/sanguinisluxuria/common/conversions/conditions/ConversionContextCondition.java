@@ -10,24 +10,25 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.dynamic.Codecs;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Condition that operates off of the Conversion Context.
  * Allows specifying either a conversion type (converting/deconverting),
  * an entity predicate, or both
  */
-public record ConversionContextCondition(ConversionContext.Conversion conversion,
-                                         EntityPredicate predicate) implements EntityConversionCondition {
+public record ConversionContextCondition(Optional<ConversionContext.Conversion> conversion,
+                                         Optional<EntityPredicate> predicate) implements EntityConversionCondition {
     private static final Codec<EntityPredicate> PREDICATE_CODEC = Codecs.JSON_ELEMENT.xmap(
       EntityPredicate::fromJson,
       EntityPredicate::toJson
     );
     public static final Codec<ConversionContextCondition> CODEC = RecordCodecBuilder.<ConversionContextCondition>create(instance -> instance.group(
-        ConversionContext.Conversion.CODEC.optionalFieldOf("conversion", ConversionContext.Conversion.NONE).forGetter(ConversionContextCondition::conversion),
-        PREDICATE_CODEC.optionalFieldOf("predicate", EntityPredicate.ANY).forGetter(ConversionContextCondition::predicate)
+        ConversionContext.Conversion.CODEC.optionalFieldOf("conversion").forGetter(ConversionContextCondition::conversion),
+        PREDICATE_CODEC.optionalFieldOf("predicate").forGetter(ConversionContextCondition::predicate)
       ).apply(instance, ConversionContextCondition::new))
       .flatXmap(
-        condition -> condition.conversion() == ConversionContext.Conversion.NONE && condition.predicate() == EntityPredicate.ANY
+        condition -> condition.conversion().isEmpty() && condition.predicate().isEmpty()
           ? DataResult.error(() -> "Expected either a conversion or predicate field")
           : DataResult.success(condition),
         DataResult::success
@@ -36,10 +37,10 @@ public record ConversionContextCondition(ConversionContext.Conversion conversion
     @Override
     public boolean test(ConversionContext context) {
         boolean result = true;
-        if (this.conversion != ConversionContext.Conversion.NONE)
-            result = this.conversion == context.conversion();
-        if (this.predicate != EntityPredicate.ANY && context.world() instanceof ServerWorld world)
-            result = result && this.predicate.test(world, context.entity().getPos(), context.entity());
+        if (this.conversion.isPresent())
+            result = this.conversion.get() == context.conversion();
+        if (this.predicate.isPresent() && context.world() instanceof ServerWorld world)
+            result = result && this.predicate.get().test(world, context.entity().getPos(), context.entity());
         return result;
     }
 
@@ -49,15 +50,15 @@ public record ConversionContextCondition(ConversionContext.Conversion conversion
     }
 
     public static ConversionContextCondition converting() {
-        return new ConversionContextCondition(ConversionContext.Conversion.CONVERTING, EntityPredicate.ANY);
+        return new ConversionContextCondition(Optional.of(ConversionContext.Conversion.CONVERTING), Optional.empty());
     }
 
     public static ConversionContextCondition deconverting() {
-        return new ConversionContextCondition(ConversionContext.Conversion.DECONVERTING, EntityPredicate.ANY);
+        return new ConversionContextCondition(Optional.of(ConversionContext.Conversion.DECONVERTING), Optional.empty());
     }
 
     public static ConversionContextCondition predicate(EntityPredicate predicate) {
-        return new ConversionContextCondition(ConversionContext.Conversion.NONE, predicate);
+        return new ConversionContextCondition(Optional.empty(), Optional.of(predicate));
     }
 
     public static ConversionContextConditionBuilder builder() {
@@ -69,7 +70,7 @@ public record ConversionContextCondition(ConversionContext.Conversion conversion
         private EntityPredicate predicate;
 
         protected ConversionContextConditionBuilder() {
-            this.conversion = ConversionContext.Conversion.NONE;
+            this.conversion = null;
             this.predicate = EntityPredicate.ANY;
         }
 
@@ -86,9 +87,12 @@ public record ConversionContextCondition(ConversionContext.Conversion conversion
         }
 
         public ConversionContextCondition build() {
-            if (this.conversion == ConversionContext.Conversion.NONE && this.predicate == EntityPredicate.ANY)
+            if (this.conversion == null && this.predicate == EntityPredicate.ANY)
                 throw new IllegalStateException("ConversionContextCondition cannot be empty");
-            return new ConversionContextCondition(this.conversion, this.predicate);
+            return new ConversionContextCondition(
+              this.conversion == null ? Optional.empty() : Optional.of(this.conversion),
+              this.predicate == EntityPredicate.ANY ? Optional.empty() : Optional.of(this.predicate)
+            );
         }
     }
 }

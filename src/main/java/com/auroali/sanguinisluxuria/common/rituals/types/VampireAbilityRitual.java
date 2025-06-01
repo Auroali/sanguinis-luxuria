@@ -10,6 +10,7 @@ import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.common.rituals.RitualUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.text.Text;
@@ -34,6 +35,9 @@ public record VampireAbilityRitual(VampireAbility ability) implements Ritual {
             return;
         abilities.addAbility(this.ability);
         parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.UNLOCK_ABILITY.trigger(player, this.ability));
+
+        RitualUtil.spawnSuccessParticles(parameters);
+        RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());
     }
 
     @Override
