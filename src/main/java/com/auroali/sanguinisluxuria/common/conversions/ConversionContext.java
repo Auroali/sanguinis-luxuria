@@ -2,12 +2,9 @@ package com.auroali.sanguinisluxuria.common.conversions;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import com.mojang.serialization.DataResult;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.world.World;
-
-import java.util.Optional;
 
 public record ConversionContext(World world, Entity entity, Conversion conversion) {
     public static ConversionContext from(Entity entity, Conversion conversion) {

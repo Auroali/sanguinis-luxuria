@@ -37,7 +37,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import org.lwjgl.glfw.GLFW;
 
 public class SanguinisLuxuriaClient implements ClientModInitializer {
     public static final KeyBinding SUCK_BLOOD = new KeyBinding(

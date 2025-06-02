@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.datagen;
 
-import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.loot.SetBloodLootFunction;
 import com.auroali.sanguinisluxuria.common.registry.SLEntities;
@@ -14,7 +13,6 @@ import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.LootingEnchantLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.BinomialLootNumberProvider;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.util.Identifier;
@@ -42,7 +40,6 @@ public class SLEntityLootTableProvider extends SimpleFabricLootTableProvider {
             .with(ItemEntry.builder(SLItems.BLOOD_BOTTLE)
               .apply(SetBloodLootFunction.builder(BloodConstants.BLOOD_PER_BOTTLE))
             )
-            .build()
           )
         );
     }
