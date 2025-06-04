@@ -87,7 +87,6 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         }
 
         this.abilities = abilities;
-        this.requestClientSync();
     }
 
     public void writePacket(PacketByteBuf buf) {

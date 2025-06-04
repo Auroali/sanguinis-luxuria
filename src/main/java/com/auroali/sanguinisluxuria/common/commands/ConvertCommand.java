@@ -29,7 +29,7 @@ public class ConvertCommand {
     public static int convert(Collection<? extends Entity> entities, ConversionContext.Conversion conversion) {
         for (Entity entity : entities) {
             if (!SLConversions.convertEntity(ConversionContext.from(entity, conversion)))
-                throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.invalid_conversion", entity.getName()));
+                throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.failed", entity.getName()));
         }
         return 0;
     }
