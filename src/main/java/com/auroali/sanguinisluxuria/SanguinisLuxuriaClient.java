@@ -7,6 +7,7 @@ import com.auroali.sanguinisluxuria.client.particles.DrippingBloodParticle;
 import com.auroali.sanguinisluxuria.client.render.blocks.ItemDisplayingBlockEntityRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireMerchantRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRenderer;
+import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.network.SLClientNetwork;
@@ -65,8 +66,6 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
     );
 
     public static boolean isAltarActive = false;
-
-    public boolean drainingBlood;
 
     @Override
     public void onInitializeClient() {
@@ -150,8 +149,8 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
             }
             if (SUCK_BLOOD.isPressed()) {
                 this.handeBloodDrainPress(client);
-            } else if (this.drainingBlood) {
-                this.cancelBloodDrain();
+            } else if (client.player != null && BloodDrainComponent.KEY.get(client.player).isDraining()) {
+                ClientPlayNetworking.send(new DrainBloodC2S(false));
             }
         });
     }
@@ -159,16 +158,15 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
     private void handeBloodDrainPress(MinecraftClient client) {
         // handle draining blood from entities
         if (isLookingAtValidTarget()) {
-            if (!this.drainingBlood) {
+            if (client.player != null && !BloodDrainComponent.KEY.get(client.player).isDraining()) {
                 ClientPlayNetworking.send(new DrainBloodC2S(true));
-                this.drainingBlood = true;
             }
             return;
         }
 
         // otherwise, handle filling blood storing items
-        if (this.drainingBlood)
-            this.cancelBloodDrain();
+        if (client.player != null && BloodDrainComponent.KEY.get(client.player).isDraining())
+            ClientPlayNetworking.send(new DrainBloodC2S(false));
         // if the player is holding a fillable item, send the packet as long as the key is held down
         ItemStack toFill = VampireHelper.getItemInHand(
           client.player,
@@ -179,11 +177,6 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
 
         if (!toFill.isEmpty())
             ClientPlayNetworking.send(new FillBloodItemC2S(VampireHelper.getHandForStack(client.player, toFill)));
-    }
-
-    private void cancelBloodDrain() {
-        this.drainingBlood = false;
-        ClientPlayNetworking.send(new DrainBloodC2S(false));
     }
 
     public static boolean isLookingAtValidTarget() {

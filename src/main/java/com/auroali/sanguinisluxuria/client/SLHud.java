@@ -29,11 +29,11 @@ public class SLHud {
         VampireComponent vampire = VampireComponent.KEY.get(client.player);
         if (!vampire.isVampire())
             return;
-        drawBloodDrainIndicator(context, client, vampire, context.getScaledWindowWidth(), context.getScaledWindowHeight());
+        drawBloodDrainIndicator(context, client, vampire, context.getScaledWindowWidth(), context.getScaledWindowHeight(), deltaTick);
         showAbilityCooldowns(context, client, context.getScaledWindowHeight(), vampire.getAbilityContainer());
     }
 
-    private static void drawBloodDrainIndicator(DrawContext context, MinecraftClient client, VampireComponent vampire, int width, int height) {
+    private static void drawBloodDrainIndicator(DrawContext context, MinecraftClient client, VampireComponent vampire, int width, int height, double tickDelta) {
         if (!SanguinisLuxuriaClient.isLookingAtValidTarget())
             return;
 
@@ -49,7 +49,7 @@ public class SLHud {
         BloodDrainComponent drainer = BloodDrainComponent.KEY.get(client.player);
         int timeToDrain = drainer.getTimeToDrain();
 
-        double drainPercent = (double) drainer.getTimeDraining() / timeToDrain;
+        double drainPercent = Math.min(drainer.getTimeDraining() + tickDelta, timeToDrain) / timeToDrain;
         double bloodPercent = (double) blood.getBlood() / blood.getMaxBlood();
 
         int fangX = (width - 26) / 2;

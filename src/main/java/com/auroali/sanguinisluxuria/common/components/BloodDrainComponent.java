@@ -17,8 +17,11 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.TypeFilter;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+
+import java.util.Optional;
 
 public class BloodDrainComponent implements Component, ServerTickingComponent, AutoSyncedComponent, EntityTrackingDrainer {
     public static final ComponentKey<BloodDrainComponent> KEY = ComponentRegistry.getOrCreate(SLResources.BLOOD_DRAIN_COMPONENT_ID, BloodDrainComponent.class);
@@ -169,12 +172,21 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
     public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
         buf.writeVarInt(this.ticksDraining);
         buf.writeBoolean(this.targetHasBleeding);
+        buf.writeOptional(this.target != null
+            ? Optional.of(this.target.getId())
+            : Optional.empty(),
+          PacketByteBuf::writeVarInt
+        );
     }
 
     @Override
     public void applySyncPacket(PacketByteBuf buf) {
         this.ticksDraining = buf.readVarInt();
         this.targetHasBleeding = buf.readBoolean();
+        this.target = (LivingEntity) buf.readOptional(PacketByteBuf::readVarInt)
+          .map(id -> this.holder.getWorld().getEntityById(id))
+          .filter(e -> e instanceof LivingEntity)
+          .orElse(null);
     }
 
     @Override
@@ -191,5 +203,9 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
     @Override
     public Entity getLastDrained() {
         return this.lastDrained;
+    }
+
+    public boolean isDraining() {
+        return this.target != null;
     }
 }

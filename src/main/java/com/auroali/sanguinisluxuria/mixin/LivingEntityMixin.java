@@ -21,12 +21,15 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -52,6 +55,9 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow
     protected abstract void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition);
+
+    @Shadow
+    public abstract LivingEntity getLastAttacker();
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -100,7 +106,29 @@ public abstract class LivingEntityMixin extends Entity {
         instance.setHealth(Math.min(instance.getMaxHealth(), (float) blood.getBlood()));
         vampire.setDowned(true);
         blood.setBlood(0);
+        this.sanguinisluxuria$notifyAttackerDowned();
         return true;
+    }
+
+    @Unique
+    protected void sanguinisluxuria$notifyAttackerDowned() {
+        // make entities targeting this entity stop when this one is downed
+        this.getWorld().getEntitiesByType(
+            TypeFilter.instanceOf(LivingEntity.class),
+            this.getBoundingBox().expand(16.d),
+            e ->
+              e.getLastAttacker() == (Entity) this
+                || e.getAttacking() == (Entity) this
+                || e instanceof MobEntity m && m.getTarget() == (Entity) this
+          )
+          .forEach(e -> {
+              if (e.getAttacking() == (Entity) this)
+                  e.setAttacking(null);
+              if (e.getLastAttacker() == (Entity) this)
+                  e.setAttacker(null);
+              if (e instanceof MobEntity m && m.getTarget() == (Entity) this)
+                  m.setTarget(null);
+          });
     }
 
     @Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)
@@ -121,9 +149,11 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$modifyTargetTest(LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
-        if (!VampireHelper.isVampire(target))
+        // if the target is not a vampire or has attacked this entity since being downed, exit
+        if (!VampireHelper.isVampire(target) || this.getLastAttacker() == target)
             return;
 
+        // prevent targeting downed vampires
         VampireComponent vampire = VampireComponent.KEY.get(target);
         if (vampire.isDowned())
             cir.setReturnValue(false);

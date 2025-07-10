@@ -128,7 +128,7 @@ public class PlayerVampireComponent implements VampireComponent {
             this.holder.addStatusEffect(new StatusEffectInstance(
               StatusEffects.WEAKNESS,
               4,
-              3,
+              9,
               true,
               false,
               false
