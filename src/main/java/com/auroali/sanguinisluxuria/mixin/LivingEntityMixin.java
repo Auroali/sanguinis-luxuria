@@ -20,6 +20,8 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -131,6 +133,9 @@ public abstract class LivingEntityMixin extends Entity {
     public void sanguinisluxuria$preventBloodLustEffectForVampires(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
         if (effect.getEffectType() == SLStatusEffects.BLOOD_LUST && (VampireHelper.isVampire(this) || this.hasStatusEffect(SLStatusEffects.BLOOD_PROTECTION)))
             cir.setReturnValue(false);
+        else if (effect.getEffectType() == StatusEffects.REGENERATION && ((Entity) this) instanceof PlayerEntity && VampireHelper.isVampire(this)) {
+            cir.setReturnValue(true);
+        }
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))
