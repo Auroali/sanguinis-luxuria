@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.client.render.effects;
 
-import com.auroali.sanguinisluxuria.BLResources;
+import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import ladysnake.satin.api.managed.ManagedShaderEffect;
 import ladysnake.satin.api.managed.ShaderEffectManager;
@@ -11,7 +11,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
 
 public class VampireHungerEffectManager {
-    private static final ManagedShaderEffect SHADER = ShaderEffectManager.getInstance().manage(BLResources.VAMPIRE_HUNGER_SHADER);
+    private static final ManagedShaderEffect SHADER = ShaderEffectManager.getInstance().manage(SLResources.VAMPIRE_HUNGER_SHADER);
     private static final Uniform1f PERCENT = SHADER.findUniform1f("Percent");
     private static final Uniform1f RENDER_TIME = SHADER.findUniform1f("RenderTime");
     private static final int HUNGER_LIMIT = 8;
