@@ -4,13 +4,41 @@ import com.auroali.sanguinisluxuria.common.abilities.EntitySyncableVampireAbilit
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.google.common.collect.ImmutableMap;
+import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+import java.util.Map;
+import java.util.UUID;
+
 public class MistAbility extends VampireAbility implements EntitySyncableVampireAbility<LivingEntity> {
+    public static final EntityAttributeModifier STEP_HEIGHT_MODIFIER = new EntityAttributeModifier(
+      UUID.fromString("7a948f03-6f3c-48a6-a0fc-e72a24d0e9dc"),
+      "mist.step_height",
+      0.45d,
+      EntityAttributeModifier.Operation.ADDITION
+    );
+    public static final EntityAttributeModifier SPEED_MODIFIER = new EntityAttributeModifier(
+      UUID.fromString("e3fda4fc-4890-40da-bae6-2169a291d6b8"),
+      "mist.movement_speed",
+      0.2d,
+      EntityAttributeModifier.Operation.MULTIPLY_BASE
+    );
+
+    private static final Map<EntityAttribute, EntityAttributeModifier> MODIFIERS = ImmutableMap
+      .<EntityAttribute, EntityAttributeModifier>builder()
+      .put(StepHeightEntityAttributeMain.STEP_HEIGHT, STEP_HEIGHT_MODIFIER)
+      .put(EntityAttributes.GENERIC_MOVEMENT_SPEED, SPEED_MODIFIER)
+      .build();
+
     @Override
     public void activate(LivingEntity entity, VampireComponent component) {
         VampireAbilityContainer.AbilityEntry entry = component.getAbilityContainer().get(this);
@@ -21,8 +49,12 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
         // set the cooldown first to avoid a double sync
         this.setCooldown(entry, isMist);
         component.setMist(isMist);
-        if (isMist)
+        if (isMist) {
+            this.applyModifiers(entity);
             this.sync(entity, entity);
+        } else {
+            this.removeModifiers(entity);
+        }
     }
 
     void setCooldown(VampireAbilityContainer.AbilityEntry entry, boolean isMist) {
@@ -37,6 +69,7 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
         if (component.isMist()) {
             this.setCooldown(container.get(this), false);
             component.setMist(false);
+            this.removeModifiers(entity);
         }
     }
 
@@ -61,5 +94,24 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
     public void onAbilityRemoved(LivingEntity entity, VampireComponent vampire) {
         super.onAbilityRemoved(entity, vampire);
         vampire.setMist(false);
+        this.removeModifiers(entity);
+    }
+
+    private void applyModifiers(LivingEntity entity) {
+        MODIFIERS.forEach((attrib, mod) -> {
+            EntityAttributeInstance instance = entity.getAttributeInstance(attrib);
+            if (instance != null && !instance.hasModifier(mod)) {
+                instance.addPersistentModifier(mod);
+            }
+        });
+    }
+
+    private void removeModifiers(LivingEntity entity) {
+        MODIFIERS.forEach((attrib, mod) -> {
+            EntityAttributeInstance instance = entity.getAttributeInstance(attrib);
+            if (instance != null && instance.hasModifier(mod)) {
+                instance.removeModifier(mod);
+            }
+        });
     }
 }
