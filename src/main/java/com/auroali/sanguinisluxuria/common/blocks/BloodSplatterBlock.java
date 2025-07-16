@@ -127,30 +127,33 @@ public class BloodSplatterBlock extends Block {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         // todo: cleanup
         ItemStack stack = player.getStackInHand(hand);
-        boolean isFillableRegularItem = BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(player, stack);
-        if (!isFillableRegularItem && !BloodStorageItem.isItemFillable(stack))
+        boolean canBeFilled = BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(player, stack);
+        if (!canBeFilled)
             return ActionResult.FAIL;
 
         ItemStack resultItem = stack;
-        if (isFillableRegularItem) {
+        if (!BloodStorageItem.isItemFillable(stack)) {
             resultItem = BloodStorageFillEvents.TRANSFORM_STACK.invoker().createFrom(player, stack);
-            if (!BloodStorageItem.isItemFillable(resultItem) || BloodStorageItem.getItemCapacity(stack) < BloodConstants.BLOOD_PER_BOTTLE)
+            if (!BloodStorageItem.isItemFillable(resultItem) || BloodStorageItem.getItemCapacity(resultItem) < BloodConstants.BLOOD_PER_BOTTLE)
                 return ActionResult.FAIL;
 
             stack.decrement(1);
-            if (stack.isEmpty())
-                player.setStackInHand(hand, resultItem);
-            else if (!player.getInventory().insertStack(resultItem))
-                player.dropItem(resultItem, true);
         }
 
-        if (BloodStorageItem.getItemCapacity(stack) < BloodConstants.BLOOD_PER_BOTTLE)
+        if (BloodStorageItem.getItemCapacity(resultItem) < BloodConstants.BLOOD_PER_BOTTLE)
             return ActionResult.FAIL;
 
         BloodStorageItem.incrementItemBlood(resultItem, BloodConstants.BLOOD_PER_BOTTLE);
 
         world.removeBlock(pos, false);
         world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+        if (stack != resultItem) {
+            if (stack.isEmpty())
+                player.setStackInHand(hand, resultItem);
+            else if (!player.getInventory().insertStack(resultItem))
+                player.dropItem(resultItem, true);
+        }
 
         return ActionResult.success(world.isClient);
     }
