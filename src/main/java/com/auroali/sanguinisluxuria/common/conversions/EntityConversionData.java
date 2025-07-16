@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
 import com.auroali.sanguinisluxuria.common.registry.SLRegistries;
+import com.auroali.sanguinisluxuria.util.CachedCodec;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -82,7 +83,7 @@ public class EntityConversionData {
         VampireConversionEvents.AFTER_CONVERSION.invoker().afterConversion(context, newEntity);
     }
 
-    public static EntityConversionData fromJson(JsonObject object, CachedParser<EntityConversionTransformer> transformerCache, CachedParser<EntityConversionCondition> conditionCache) {
+    public static EntityConversionData fromJson(JsonObject object, CachedCodec<EntityConversionTransformer> transformerCache, CachedCodec<EntityConversionCondition> conditionCache) {
         if (!object.has("type"))
             throw new JsonParseException("Missing type field");
         if (!object.has("entity"))
@@ -125,36 +126,13 @@ public class EntityConversionData {
         return new EntityConversionData(type, entity, target, transformers, conditions);
     }
 
-    private static <T> List<T> parseWithCache(JsonArray array, CachedParser<T> cache) {
+    private static <T> List<T> parseWithCache(JsonArray array, CachedCodec<T> cache) {
         List<T> result = new ArrayList<>(array.size());
         for (JsonElement element : array) {
-            cache.parse(element).ifPresent(result::add);
+            cache.parse(JsonOps.INSTANCE, element)
+              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
+              .ifPresent(result::add);
         }
         return result;
-    }
-
-    public static <T> CachedParser<T> makeCachedParser(Codec<T> codec) {
-        return new CachedParser<>(codec);
-    }
-
-    public static class CachedParser<T> {
-        private final Codec<T> codec;
-        private final ConcurrentHashMap<T, T> cache;
-
-        protected CachedParser(Codec<T> codec) {
-            this.codec = codec;
-            this.cache = new ConcurrentHashMap<>();
-        }
-
-        public Optional<T> parse(JsonElement element) {
-            return this.codec.parse(JsonOps.INSTANCE, element)
-              .resultOrPartial(SanguinisLuxuria.LOGGER::error)
-              .map(result -> {
-                  if (this.cache.containsKey(result))
-                      return this.cache.get(result);
-                  this.cache.put(result, result);
-                  return result;
-              });
-        }
     }
 }

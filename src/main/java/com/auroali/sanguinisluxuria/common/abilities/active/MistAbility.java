@@ -23,7 +23,7 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
     public static final EntityAttributeModifier STEP_HEIGHT_MODIFIER = new EntityAttributeModifier(
       UUID.fromString("7a948f03-6f3c-48a6-a0fc-e72a24d0e9dc"),
       "mist.step_height",
-      0.45d,
+      0.6d,
       EntityAttributeModifier.Operation.ADDITION
     );
     public static final EntityAttributeModifier SPEED_MODIFIER = new EntityAttributeModifier(

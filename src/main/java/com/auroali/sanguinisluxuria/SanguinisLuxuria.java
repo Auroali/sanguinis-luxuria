@@ -161,10 +161,15 @@ public class SanguinisLuxuria implements ModInitializer {
     }
 
     private static void dropBlood(LivingEntity entity, DamageSource source) {
+        float dropChance = entity.hasStatusEffect(SLStatusEffects.BLEEDING) ? 0.7f : 0.5f;
         if (!VampireHelper.isVampire(entity)
           && VampireHelper.hasBlood(entity)
           && (entity.getType().isIn(SLTags.Entities.CAN_DROP_BLOOD) || entity.hasStatusEffect(SLStatusEffects.BLEEDING))
         ) {
+            // only drop blood dropChance% of the time
+            if (entity.getRandom().nextFloat() >= dropChance) {
+                return;
+            }
             BloodComponent blood = BloodComponent.KEY.get(entity);
             if (blood.getBlood() < blood.getMaxBlood())
                 return;

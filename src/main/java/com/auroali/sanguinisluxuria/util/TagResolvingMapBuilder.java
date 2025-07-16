@@ -1,5 +1,6 @@
-package com.auroali.sanguinisluxuria.common.registry;
+package com.auroali.sanguinisluxuria.util;
 
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.TagKey;

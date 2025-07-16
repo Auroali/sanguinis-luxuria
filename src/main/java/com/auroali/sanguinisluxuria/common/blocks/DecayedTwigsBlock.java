@@ -6,17 +6,22 @@ import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
-public class DecayedTwigsBlock extends WallMountedBlock implements Waterloggable {
+public class DecayedTwigsBlock extends WallMountedBlock implements Waterloggable, Fertilizable {
     public static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(1, 1, 8, 15, 15, 16);
     public static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(1, 1, 0, 15, 15, 8);
     public static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0, 1, 1, 8, 15, 15);
@@ -85,5 +90,20 @@ public class DecayedTwigsBlock extends WallMountedBlock implements Waterloggable
         builder.add(FACING);
         builder.add(FACE);
         builder.add(WATERLOGGED);
+    }
+
+    @Override
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+        return true;
+    }
+
+    @Override
+    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+        return true;
+    }
+
+    @Override
+    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+        dropStack(world, pos, new ItemStack(this));
     }
 }

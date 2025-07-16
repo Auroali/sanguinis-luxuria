@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainIgniteEffect;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainStatusEffect;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainTeleportEffect;
+import com.auroali.sanguinisluxuria.util.TagResolvingMapBuilder;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

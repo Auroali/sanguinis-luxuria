@@ -11,6 +11,7 @@ import com.auroali.sanguinisluxuria.common.conversions.transformers.ConditionalT
 import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransformer;
 import com.auroali.sanguinisluxuria.common.events.VampireConversionEvents;
+import com.auroali.sanguinisluxuria.util.CachedCodec;
 import com.google.common.collect.HashMultimap;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -78,8 +79,8 @@ public class SLConversions extends JsonDataLoader implements IdentifiableResourc
     @Override
     protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler) {
         CONVERSIONS.clear();
-        EntityConversionData.CachedParser<EntityConversionTransformer> transformerCache = EntityConversionData.makeCachedParser(EntityConversionTransformer.CODEC);
-        EntityConversionData.CachedParser<EntityConversionCondition> conditionCache = EntityConversionData.makeCachedParser(EntityConversionCondition.CODEC);
+        CachedCodec<EntityConversionTransformer> transformerCache = CachedCodec.wrap(EntityConversionTransformer.CODEC);
+        CachedCodec<EntityConversionCondition> conditionCache = CachedCodec.wrap(EntityConversionCondition.CODEC);
         prepared.forEach((id, element) -> {
             try {
                 EntityConversionData conversionData = EntityConversionData.fromJson(
