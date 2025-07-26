@@ -9,6 +9,7 @@ import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -35,15 +36,15 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
             BloodComponent.KEY.sync(this.holder);
             return;
         }
-        this.wasBaby = this.holder.isBaby();
 
-        boolean needsToSetBlood = this.maxBlood == 0;
+        boolean needsToSetBlood = this.maxBlood == 0 || this.wasBaby != this.holder.isBaby();
         // if an entity isn't in the good blood tag, half the max amount of blood
         this.maxBlood = this.recalculateMaxBlood();
         // set the current blood value if it either is invalid or if this entity previously had no blood
         if (this.currentBlood == -1 || needsToSetBlood)
             this.currentBlood = this.maxBlood;
         this.currentBlood = Math.min(this.currentBlood, this.maxBlood);
+        this.wasBaby = this.holder.isBaby();
 
         BloodComponent.KEY.sync(this.holder);
     }
@@ -62,7 +63,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         if (this.holder.isBaby())
             return 1;
 
-        float maxBloodFromHealth = this.holder.getMaxHealth();
+        float maxBloodFromHealth = (float) this.holder.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH);
         if (!this.holder.getType().isIn(SLTags.Entities.GOOD_BLOOD))
             maxBloodFromHealth = MathHelper.clamp(maxBloodFromHealth / 2.f, 1.f, Float.MAX_VALUE);
         return (int) Math.ceil(maxBloodFromHealth);
@@ -73,6 +74,8 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         this.currentBlood = Math.min(tag.getInt("Blood"), this.maxBlood);
         this.bloodGainTimer = tag.getInt("BloodTimer");
         this.wasBaby = tag.getBoolean("Baby");
+        if (this.currentBlood == 0 && this.maxBlood > 0 && !this.holder.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
+            this.currentBlood = this.maxBlood;
     }
 
     @Override
