@@ -37,11 +37,16 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
     ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
 
     public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
+    public static final BooleanProperty TARGET = BooleanProperty.of("target");
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public AltarBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(ACTIVE, false).with(WATERLOGGED, false));
+        this.setDefaultState(this.getStateManager().getDefaultState()
+          .with(ACTIVE, false)
+          .with(WATERLOGGED, false)
+          .with(TARGET, false)
+        );
     }
 
     @Override
@@ -105,6 +110,7 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         super.appendProperties(builder);
         builder.add(ACTIVE);
         builder.add(WATERLOGGED);
+        builder.add(TARGET);
     }
 
     @Override

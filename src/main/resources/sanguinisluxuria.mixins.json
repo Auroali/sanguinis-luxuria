@@ -28,6 +28,7 @@
     "VillagerEntityMixin",
     "VillagerHostilesSensorMixin",
     "WanderingTraderMixin",
+    "legacy.EnchantmentHelperMixin",
     "legacy.SimpleRegistryMixin"
   ],
   "injectors": {

@@ -1,0 +1,6 @@
+{
+  "parent": "sanguinisluxuria:block/altar_base",
+  "textures": {
+    "texture": "sanguinisluxuria:block/altar_target"
+  }
+}

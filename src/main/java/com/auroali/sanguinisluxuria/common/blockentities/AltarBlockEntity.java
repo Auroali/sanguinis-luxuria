@@ -62,6 +62,8 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
         Inventories.readNbt(nbt, this.inventory);
 
+        if (nbt.containsUuid("StoredTarget"))
+            this.storedTarget = nbt.getUuid("StoredTarget");
         this.ritualData = ActiveRitualData.readNbt(nbt);
     }
 
@@ -70,6 +72,8 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
 
+        if (this.storedTarget != null)
+            nbt.putUuid("StoredTarget", this.storedTarget);
         ActiveRitualData.writeNbt(nbt, this.ritualData);
     }
 
@@ -128,7 +132,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         altar.ticksProcessing = 0;
         altar.cachedTarget = null;
         altar.cachedInitiator = null;
-        world.setBlockState(pos, state.with(AltarBlock.ACTIVE, false));
+        world.setBlockState(pos, state.with(AltarBlock.ACTIVE, false).with(AltarBlock.TARGET, false));
         altar.markDirty();
     }
 
@@ -184,13 +188,14 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
                   entity.getInventory().markDirty();
               });
 
-              world.setBlockState(pos, state.with(AltarBlock.ACTIVE, true));
               this.ticksProcessing = 0;
+              boolean storedTargetAlive = this.isStoredTargetAlive(this.world);
               this.ritualData = new ActiveRitualData(
                 recipe.getRitual(),
                 initiator.getUuid(),
-                this.isStoredTargetAlive(world) ? this.storedTarget : initiator.getUuid()
+                storedTargetAlive ? this.storedTarget : initiator.getUuid()
               );
+              world.setBlockState(pos, state.with(AltarBlock.ACTIVE, true).with(AltarBlock.TARGET, storedTargetAlive));
               if (initiator instanceof ServerPlayerEntity player) {
                   Criteria.RECIPE_CRAFTED.trigger(player, recipe.getId(), inventory.stacks);
               }
@@ -310,8 +315,12 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
     }
 
     public void setNextTarget(LivingEntity entity) {
-        if (entity.isAlive())
+        if (entity.isAlive()) {
             this.storedTarget = entity.getUuid();
+            if (this.world != null)
+                this.world.setBlockState(this.pos, this.getCachedState().with(AltarBlock.TARGET, true));
+            this.markDirty();
+        }
     }
 
     private boolean isStoredTargetAlive(World world) {

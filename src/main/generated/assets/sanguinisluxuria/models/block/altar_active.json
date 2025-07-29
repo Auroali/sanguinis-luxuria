@@ -1,5 +1,5 @@
 {
-  "parent": "sanguinisluxuria:block/altar",
+  "parent": "sanguinisluxuria:block/altar_base",
   "textures": {
     "texture": "sanguinisluxuria:block/altar_active"
   }

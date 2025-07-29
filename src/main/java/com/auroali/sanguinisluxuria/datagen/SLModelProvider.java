@@ -37,7 +37,43 @@ public class SLModelProvider extends FabricModelProvider {
         blockStateModelGenerator.blockStateCollector
           .accept(VariantsBlockStateSupplier
             .create(SLBlocks.ALTAR)
-            .coordinate(BlockStateModelGenerator.createBooleanModelMap(AltarBlock.ACTIVE, SLResources.id("block/altar_active"), SLResources.id("block/altar")))
+            .coordinate(
+              BlockStateVariantMap.create(AltarBlock.ACTIVE, AltarBlock.TARGET)
+                .register(
+                  false,
+                  false,
+                  BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    SLModels.ALTAR.upload(SLBlocks.ALTAR, blockStateModelGenerator.modelCollector))
+                )
+                .register(
+                  false,
+                  true,
+                  BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    SLModels.ALTAR
+                      .andThen(textures -> textures.put(TextureKey.TEXTURE, textures.getTexture(TextureKey.TEXTURE).withSuffixedPath("_target")))
+                      .upload(SLBlocks.ALTAR, "_target", blockStateModelGenerator.modelCollector))
+                )
+                .register(
+                  true,
+                  false,
+                  BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    SLModels.ALTAR
+                      .andThen(textures -> textures.put(TextureKey.TEXTURE, textures.getTexture(TextureKey.TEXTURE).withSuffixedPath("_active")))
+                      .upload(SLBlocks.ALTAR, "_active", blockStateModelGenerator.modelCollector))
+                )
+                .register(
+                  true,
+                  true,
+                  BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    SLModels.ALTAR
+                      .andThen(textures -> textures.put(TextureKey.TEXTURE, textures.getTexture(TextureKey.TEXTURE).withSuffixedPath("_active_target")))
+                      .upload(SLBlocks.ALTAR, "_active_target", blockStateModelGenerator.modelCollector))
+                )
+            )
           );
 
         blockStateModelGenerator.blockStateCollector
