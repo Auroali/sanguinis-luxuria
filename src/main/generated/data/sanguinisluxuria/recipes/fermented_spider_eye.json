@@ -1,0 +1,11 @@
+{
+  "type": "sanguinisluxuria:blood_cauldron",
+  "category": "misc",
+  "input": {
+    "item": "minecraft:spider_eye"
+  },
+  "level": 1,
+  "result": {
+    "item": "minecraft:fermented_spider_eye"
+  }
+}

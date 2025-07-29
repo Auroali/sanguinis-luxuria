@@ -165,15 +165,27 @@ public class SLRecipeProvider extends FabricRecipeProvider {
     public void generateCauldronInfusingRecipes(Consumer<RecipeJsonProvider> exporter) {
         BloodCauldronRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.fromTag(ItemTags.FLOWERS), SLItems.BLOOD_PETAL)
           .criterion("become_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
+          .criterion("has_blood", conditionsFromItem(SLItems.BLOOD_BOTTLE))
           .offerTo(exporter);
         BloodCauldronFillRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.ofItems(Items.GLASS_BOTTLE), SLItems.BLOOD_BOTTLE)
+          .criterion("has_blood", conditionsFromItem(SLItems.BLOOD_BOTTLE))
           .criterion("has_item", conditionsFromItem(SLItems.BLOOD_BOTTLE))
           .offerTo(exporter);
         BloodCauldronFillRecipeJsonBuilder.create(RecipeCategory.BREWING, SLItems.BLOOD_BAG)
           .criterion("has_item", conditionsFromItem(SLItems.BLOOD_BAG))
+          .criterion("has_blood", conditionsFromItem(SLItems.BLOOD_BOTTLE))
           .offerTo(exporter);
         BloodCauldronRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.ofItems(Items.GUNPOWDER), Items.REDSTONE)
           .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
+          .criterion("has_blood", conditionsFromItem(SLItems.BLOOD_BOTTLE))
+          .offerTo(exporter);
+        BloodCauldronRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.fromTag(ConventionalItemTags.WHITE_DYES), Items.RED_DYE)
+          .criterion("has_item", conditionsFromTag(ConventionalItemTags.WHITE_DYES))
+          .criterion("has_blood", conditionsFromItem(SLItems.BLOOD_BOTTLE))
+          .offerTo(exporter);
+        BloodCauldronRecipeJsonBuilder.create(RecipeCategory.BREWING, Ingredient.ofItems(Items.SPIDER_EYE), Items.FERMENTED_SPIDER_EYE)
+          .criterion("has_item", conditionsFromItem(Items.SPIDER_EYE))
+          .criterion("has_blood", conditionsFromItem(SLItems.BLOOD_BOTTLE))
           .offerTo(exporter);
     }
 

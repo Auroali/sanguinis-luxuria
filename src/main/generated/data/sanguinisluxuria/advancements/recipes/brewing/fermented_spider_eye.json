@@ -1,12 +1,6 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "become_vampire": {
-      "conditions": {
-        "conversion": "converting"
-      },
-      "trigger": "sanguinisluxuria:converted"
-    },
     "has_blood": {
       "conditions": {
         "items": [
@@ -19,23 +13,35 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:spider_eye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "sanguinisluxuria:blood_petal"
+        "recipe": "minecraft:fermented_spider_eye"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "become_vampire",
+      "has_item",
       "has_blood",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "sanguinisluxuria:blood_petal"
+      "minecraft:fermented_spider_eye"
     ]
   },
   "sends_telemetry_event": true

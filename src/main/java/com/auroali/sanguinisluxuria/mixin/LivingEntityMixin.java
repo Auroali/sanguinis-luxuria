@@ -7,6 +7,7 @@ import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponen
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -176,5 +177,12 @@ public abstract class LivingEntityMixin extends Entity {
                 init.initializeBloodValues();
             }
         }
+    }
+
+    @ModifyReturnValue(method = "getAttackDistanceScalingFactor", at = @At("RETURN"))
+    public double sanguinisluxuria$modifyVisibility(double original) {
+        if (VampireHelper.isVampire(this) && VampireComponent.KEY.get(this).isMist())
+            return Math.min(0.07f, original);
+        return original;
     }
 }
