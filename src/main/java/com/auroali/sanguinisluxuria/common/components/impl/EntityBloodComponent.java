@@ -13,6 +13,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 
 public class EntityBloodComponent implements InitializableBloodComponent, ServerTickingComponent {
@@ -33,7 +34,8 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         if (!this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
             this.maxBlood = 0;
             this.currentBlood = 0;
-            BloodComponent.KEY.sync(this.holder);
+            if (this.holder.getWorld() instanceof ServerWorld)
+                BloodComponent.KEY.sync(this.holder);
             return;
         }
 
@@ -46,7 +48,8 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         this.currentBlood = Math.min(this.currentBlood, this.maxBlood);
         this.wasBaby = this.holder.isBaby();
 
-        BloodComponent.KEY.sync(this.holder);
+        if (this.holder.getWorld() instanceof ServerWorld)
+            BloodComponent.KEY.sync(this.holder);
     }
 
     @Override
