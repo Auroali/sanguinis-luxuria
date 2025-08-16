@@ -4,7 +4,7 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
-import com.auroali.sanguinisluxuria.config.BLConfig;
+import com.auroali.sanguinisluxuria.config.SLConfig;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -47,7 +47,7 @@ public class HungerManagerMixin implements VampireHungerManager {
     public float sanguinisluxuria$lowerExhaustionForVampires(float exhaustion) {
         // if the player is a vampire and does not have hunger, reduce exhaustion
         if (VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer) && !this.sanguinisluxuria$hmTrackedPlayer.hasStatusEffect(StatusEffects.HUNGER))
-            return exhaustion * BLConfig.INSTANCE.vampireExhaustionMultiplier;
+            return exhaustion * SLConfig.INSTANCE.vampireExhaustionMultiplier;
 
         return exhaustion;
     }
@@ -79,7 +79,7 @@ public class HungerManagerMixin implements VampireHungerManager {
     )
     public float sanguinisluxuria$makeRegenUseMoreExhaustion(float value) {
         if (VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer))
-            return 1.2f / (BLConfig.INSTANCE.vampireExhaustionMultiplier);
+            return 1.2f / (SLConfig.INSTANCE.vampireExhaustionMultiplier);
         return value;
     }
 

@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class BLConfig {
-    public static final BLConfig INSTANCE = new BLConfig();
+public class SLConfig {
+    public static final SLConfig INSTANCE = new SLConfig();
 
     private static final Path CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve("sanguinisluxuria.json");
     private static final Gson GSON = new Gson()

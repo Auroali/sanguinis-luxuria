@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.worldgen.DecayedTwigsDecorator;
-import com.auroali.sanguinisluxuria.config.BLConfig;
+import com.auroali.sanguinisluxuria.config.SLConfig;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registries;
@@ -22,7 +22,7 @@ public class SLWorldgen {
     public static void register() {
         Registry.register(Registries.TREE_DECORATOR_TYPE, SLResources.DECAYED_TWIGS_ID, DECAYED_TWIGS_DECORATOR);
 
-        if (BLConfig.INSTANCE.generateSilverOre)
+        if (SLConfig.INSTANCE.generateSilverOre)
             BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, SLWorldgen.SILVER_ORE);
     }
 }

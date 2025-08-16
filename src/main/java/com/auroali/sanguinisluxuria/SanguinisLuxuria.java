@@ -13,7 +13,7 @@ import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
 import com.auroali.sanguinisluxuria.common.items.storage.BloodItemFluidStorage;
 import com.auroali.sanguinisluxuria.common.network.SLNetwork;
 import com.auroali.sanguinisluxuria.common.registry.*;
-import com.auroali.sanguinisluxuria.config.BLConfig;
+import com.auroali.sanguinisluxuria.config.SLConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -61,7 +61,7 @@ public class SanguinisLuxuria implements ModInitializer {
     @Override
     public void onInitialize() {
         SLRegistries.init();
-        BLConfig.INSTANCE.load();
+        SLConfig.INSTANCE.load();
 
         SLEntityAttributes.register();
         SLCauldronBehaviours.register();
