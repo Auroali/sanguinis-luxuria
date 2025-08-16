@@ -35,7 +35,7 @@ public class SLDamageSources {
         return new DamageSource(getEntry(entity.getWorld(), SLResources.BITE_DAMAGE_KEY), entity);
     }
 
-    public static DamageSource teleport(LivingEntity entity) {
-        return new DamageSource(getEntry(entity.getWorld(), SLResources.TELEPORT_DAMAGE_KEY), entity);
+    public static DamageSource piercing(LivingEntity entity) {
+        return new DamageSource(getEntry(entity.getWorld(), SLResources.PIERCING_DAMAGE_KEY), entity);
     }
 }

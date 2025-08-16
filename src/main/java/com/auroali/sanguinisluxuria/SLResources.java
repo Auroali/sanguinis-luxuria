@@ -77,7 +77,7 @@ public class SLResources {
     public static final RegistryKey<DamageType> BLOOD_DRAIN_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blood_drain"));
     public static final RegistryKey<DamageType> BLESSED_WATER_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blessed_water"));
     public static final RegistryKey<DamageType> BITE_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("bite"));
-    public static final RegistryKey<DamageType> TELEPORT_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blink_piercing"));
+    public static final RegistryKey<DamageType> PIERCING_DAMAGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("blink_piercing"));
     public static final Identifier VAMPIRES_WEAK_TO_ID = id("vampires_weak_to");
     public static final Identifier ACTIVATE_ABILITY_C2S = id("activate_ability");
     public static final Identifier DRAIN_BLOOD_C2S = id("drain_blood");

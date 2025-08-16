@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.entities.VampireDamageHandler;
 import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -17,7 +18,6 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -49,9 +49,6 @@ public abstract class LivingEntityMixin extends Entity {
     public abstract void remove(RemovalReason reason);
 
     @Shadow
-    public abstract double getAttributeValue(EntityAttribute attribute);
-
-    @Shadow
     public abstract boolean hasStatusEffect(StatusEffect effect);
 
     @Shadow
@@ -69,12 +66,11 @@ public abstract class LivingEntityMixin extends Entity {
     ), argsOnly = true)
     public float sanguinisluxuria$increaseDamage(float amount, @Local(argsOnly = true) DamageSource source) {
         float blessedDamageMod = 0.0f;
-        if (this.isUndead() && source.getAttacker() instanceof LivingEntity entity) {
+        if (this.isUndead() && source.getAttacker() instanceof LivingEntity entity && entity.getAttributes().hasAttribute(SLEntityAttributes.BLESSED_DAMAGE)) {
             blessedDamageMod += (float) entity.getAttributeValue(SLEntityAttributes.BLESSED_DAMAGE);
         }
         if (VampireHelper.isVampire(this)) {
-            double vulnerability = this.getAttributeValue(SLEntityAttributes.VULNERABILITY);
-            return blessedDamageMod + VampireComponent.calculateDamage(amount, (float) vulnerability, source);
+            return blessedDamageMod + VampireDamageHandler.modifyIncomingDamage((LivingEntity) (Object) this, source, amount);
         }
         return blessedDamageMod + amount;
     }
@@ -101,7 +97,7 @@ public abstract class LivingEntityMixin extends Entity {
         VampireComponent vampire = VampireComponent.KEY.get(instance);
         BloodComponent blood = BloodComponent.KEY.get(instance);
 
-        if (blood.getBlood() == 0 || VampireComponent.isEffectiveAgainstVampires(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
+        if (blood.getBlood() == 0 || VampireDamageHandler.canKillVampire(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
             return false;
 
         instance.setHealth(Math.min(instance.getMaxHealth(), (float) blood.getBlood()));

@@ -13,15 +13,11 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityInteraction;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.event.GameEvent;
@@ -73,44 +69,6 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
      * @return this component's ability container
      */
     VampireAbilityContainer getAbilityContainer();
-
-    /**
-     * Calculates the amount of damage taken by a vampire for a given damage source
-     *
-     * @param amount the initial amount of damage
-     * @param source the damage source
-     * @return the amount of damage that should be taken by the vampire
-     * @see SLEntityAttributes#VULNERABILITY
-     */
-    static float calculateDamage(float amount, float vulnerability, DamageSource source) {
-        if (source.isIn(SLTags.DamageTypes.VAMPIRES_WEAK_TO))
-            return amount * vulnerability;
-
-        return amount;
-    }
-
-    /**
-     * Checks if a particular damage source is effective against vampires
-     *
-     * @param source the damage source
-     * @return whether the source is effective and damage should be increased
-     */
-    static boolean isEffectiveAgainstVampires(DamageSource source) {
-        if (source.isIn(SLTags.DamageTypes.VAMPIRES_WEAK_TO))
-            return true;
-
-        if (source.getAttacker() instanceof LivingEntity entity && entity.getAttributeValue(SLEntityAttributes.BLESSED_DAMAGE) > 0) {
-            return true;
-        }
-
-        if (source.getAttacker() instanceof LivingEntity entity) {
-            ItemStack stack = entity.getMainHandStack();
-            int level = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
-            return level > 0;
-        }
-
-        return false;
-    }
 
     static void handleBloodDrain(VampireComponent vampire, LivingEntity target, LivingEntity vampireEntity) {
         BloodComponent blood = BloodComponent.KEY.get(target);

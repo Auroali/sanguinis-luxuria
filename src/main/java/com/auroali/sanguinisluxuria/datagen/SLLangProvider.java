@@ -75,11 +75,11 @@ public class SLLangProvider extends FabricLanguageProvider {
         death.add(SLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water");
         death.add(SLResources.BITE_DAMAGE_KEY, "%s was bitten by %s");
         death.add(SLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained");
-        death.add(SLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s");
+        death.add(SLResources.PIERCING_DAMAGE_KEY, "%s was pierced by %s");
         afterDamage.add(SLResources.BLESSED_WATER_DAMAGE_KEY, "%s was burned by blessed water by %s");
         afterDamage.add(SLResources.BLOOD_DRAIN_DAMAGE_KEY, "%s had their blood drained by %s");
         item.add(SLResources.BITE_DAMAGE_KEY, "%s was bitten by %s using %s");
-        item.add(SLResources.TELEPORT_DAMAGE_KEY, "%s was pierced by %s using %s");
+        item.add(SLResources.PIERCING_DAMAGE_KEY, "%s was pierced by %s using %s");
     }
 
     private static void abilities(GenericTranslationBuilder.RegistryTranslationBuilder<VampireAbility> builder) {
