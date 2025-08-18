@@ -1,0 +1,31 @@
+{
+  "advancement": "sanguinisluxuria:grow_decayed_tree",
+  "category": "sanguinisluxuria:intro",
+  "icon": "sanguinisluxuria:mask_1",
+  "name": "Carved Masks",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A mask, carved from decayed wood. It allows you to hide your face, at the cost of being unable to drain blood.$(br2)While worn, Villagers won't run away and Iron Golems won't attack on sight."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "sanguinisluxuria:mask_1",
+      "link_recipe": false,
+      "text": "Can be obtained by carving a log in a stonecutter"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "sanguinisluxuria:mask_2",
+      "link_recipe": false
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "sanguinisluxuria:mask_3",
+      "link_recipe": false
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

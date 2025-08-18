@@ -1,0 +1,7 @@
+{
+  "description": "Items that you may find useful",
+  "icon": "minecraft:glass_bottle",
+  "name": "Equipment",
+  "secret": false,
+  "sortnum": 1
+}

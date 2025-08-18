@@ -1,0 +1,26 @@
+{
+  "category": "sanguinisluxuria:cauldron_infusing",
+  "icon": "sanguinisluxuria:blood_petal",
+  "name": "Blood Petal",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "It would seem that drenching a flower in blood destroys all but a single petal. The petal left behind is transformed, infused with blood."
+    },
+    {
+      "type": "sanguinisluxuria:cauldron_infusing",
+      "recipe": "sanguinisluxuria:blood_petal"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A blood petal can be grafted to a sapling, seemingly causing the sapling to quickly wither. Yet the sapling still seems to cling on to life. Water does not satiate it, and it is far too delicate to grow from sunlight...$(br2)What would happen if it had a source of blood nearby?"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:grafted_sapling"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

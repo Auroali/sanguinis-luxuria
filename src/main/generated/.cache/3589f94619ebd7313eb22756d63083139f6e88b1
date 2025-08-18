@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-29T18:05:22.190349102	Sanguinis Luxuria/Recipes
+// 1.20.1	2025-08-18T14:44:37.697089246	Sanguinis Luxuria/Recipes
 6743f234851f6553c2bd57007383515893b68cae data/sanguinisluxuria/advancements/recipes/decorations/grafted_sapling.json
 c63feffdace2858a7c1f435303035dc403a4816d data/sanguinisluxuria/recipes/altar.json
 6259d5231dfcd88cd6d915e51537135efda354cf data/sanguinisluxuria/advancements/recipes/redstone/decayed_door.json
@@ -10,8 +10,8 @@ bcac2e5a04dd71d43579d0aab842dba379fbffb5 data/sanguinisluxuria/advancements/reci
 fa07d341aa73549bd4fe97e72148e12942f4f434 data/sanguinisluxuria/advancements/recipes/redstone/decayed_fence_gate.json
 111d8be55813a2bbc91bbe2f52efa8425f9891b5 data/sanguinisluxuria/recipes/blood_bag.json
 ff80d2790aad0d0c31c84a805ff65ee2c7561922 data/sanguinisluxuria/recipes/silver_shovel.json
-60080e5e128ba066cec251367a2f376473f0fea4 data/sanguinisluxuria/advancements/recipes/misc/rituals/blink.json
 a17eb97e506245a9b09c0f8f21264fe70edc6ec6 data/sanguinisluxuria/advancements/recipes/brewing/fermented_spider_eye.json
+60080e5e128ba066cec251367a2f376473f0fea4 data/sanguinisluxuria/advancements/recipes/misc/rituals/blink.json
 ae626a2660034ac540528812b71a4e6ee94ed05a data/sanguinisluxuria/recipes/smelting/silver_ingot.json
 a089236343d17a565f3897c313234970e70aa380 data/sanguinisluxuria/recipes/decayed_wood.json
 3c88ccb1ca9badb92e25b564462659558dad13bc data/sanguinisluxuria/recipes/blasting/silver_ingot.json
@@ -55,8 +55,8 @@ cde84802ade2d9702281a62d9b287b368a289c86 data/sanguinisluxuria/recipes/decayed_d
 63b4147e524bee2efd7866ce28e3feba9c5afa20 data/sanguinisluxuria/advancements/recipes/tools/mask_1.json
 89eb3a3b2bd12d9f40455e0820c9966f99cd8ea6 data/sanguinisluxuria/recipes/decayed_planks.json
 75817f9372ab6c96fe592721e80dc0a0990e0291 data/sanguinisluxuria/recipes/rituals/infectious.json
-b2420165c922f0bd11b94a4a1ce18322f34107c1 data/sanguinisluxuria/advancements/recipes/misc/rituals/lesser_fire_resistance.json
 fad8bcd7b2bd1be68192cb4e511850c68e061334 data/sanguinisluxuria/advancements/recipes/brewing/blood_petal.json
+b2420165c922f0bd11b94a4a1ce18322f34107c1 data/sanguinisluxuria/advancements/recipes/misc/rituals/lesser_fire_resistance.json
 9f83ccb6cc1c979bef380e4014b3cac959b4d85c data/sanguinisluxuria/advancements/recipes/tools/silver_sword.json
 fd2189859fb3a33248ad99681ad42ac2ee99dd93 data/sanguinisluxuria/advancements/recipes/building_blocks/decayed_stairs.json
 622fbed52c4a9fc155cb65b5ef059b5f656e3905 data/sanguinisluxuria/advancements/recipes/tools/mask_3.json

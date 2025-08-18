@@ -1,0 +1,19 @@
+{
+  "advancement": "sanguinisluxuria:become_vampire",
+  "category": "sanguinisluxuria:intro",
+  "icon": "sanguinisluxuria:blood_bottle{Blood:{CurrentBlood:2,MaxBlood:2}}",
+  "name": "Vampires",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "As a vampire, your body does not accept regular food. You require blood to sustain yourself.$(br2)You can obtain blood from most living things, the amount of blood they have depends on their max health. Certain creatures, such as Villagers, provide more blood, while others, such as the undead, provide toxic blood that weakens and hurts you."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "You can drain blood by being within range of something with blood, and holding $(keybind:key.sanguinisluxuria.bite)$().$$(br2)nfortunately, it does seem like Villagers can recognize that you are a vampire, and refuse to even trade with you, let alone go near you. Maybe there's a way around this?"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

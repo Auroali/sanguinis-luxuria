@@ -1,0 +1,31 @@
+{
+  "category": "sanguinisluxuria:equipment",
+  "icon": "sanguinisluxuria:silver_sword{Damage:0}",
+  "name": "Silver Tools",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "sanguinisluxuria:silver_sword{Damage:0}",
+      "link_recipe": false,
+      "text": "Silver can be used to make tools.$(br2)Tools made with silver are on par with tools made of iron normally, but what makes them special is that they deal $(l)increased damage$() against the undead, and are capable of killing vampires.",
+      "title": "Silver Tools"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:silver_sword",
+      "recipe2": "sanguinisluxuria:silver_pickaxe"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:silver_axe",
+      "recipe2": "sanguinisluxuria:silver_shovel"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:silver_hoe"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

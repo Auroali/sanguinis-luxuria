@@ -1,0 +1,31 @@
+{
+  "advancement": "sanguinisluxuria:become_vampire",
+  "category": "sanguinisluxuria:equipment",
+  "icon": "minecraft:trident{Damage:0}",
+  "name": "Tridents",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:trident{Damage:0}",
+      "link_recipe": false,
+      "text": "Tridents can be a rather useful tool for a vampire, due to a certain trident-specific enchantment"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"sanguinisluxuria:blood_transfer\",lvl:1s}]}",
+      "link_recipe": false,
+      "text": "Blood Transfer allows a trident to latch on to an entity and drain its blood, at the cost of a damage decrease.$(br)Blood drained by the trident will either go directly into your blood bar, or into a blood-storing item in your hand. Blood Transfer cannot completely drain something's blood, the amount it can drain depends on the level.",
+      "title": "Blood Transfer"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"sanguinisluxuria:serrated\",lvl:1s}]}",
+      "link_recipe": false,
+      "text": "Serrated is another trident enchantment. When something is hit with a serrated trident, it has a chance to be inflicted with bleeding. Both the amount of time they bleed for and the chance for bleeding to be inflicted increases with level.",
+      "title": "Serrated"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

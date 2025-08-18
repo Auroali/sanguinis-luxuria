@@ -24,5 +24,6 @@ public class SanguinisLuxuriaDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(SLConversionProvider::new);
         pack.addProvider(SLBloodEffectProvider::new);
         pack.addProvider(SLStatusEffectTags::new);
+        pack.addProvider(SLPatchouliBooks::new);
     }
 }

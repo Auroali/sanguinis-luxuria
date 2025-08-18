@@ -1,0 +1,7 @@
+{
+  "description": "Cauldron infusing recipes",
+  "icon": "minecraft:cauldron",
+  "name": "Cauldron Infusing",
+  "secret": false,
+  "sortnum": 1
+}

@@ -1,0 +1,34 @@
+{
+  "category": "sanguinisluxuria:equipment",
+  "icon": "sanguinisluxuria:silver_pressure_plate",
+  "name": "Pressure Plates",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "sanguinisluxuria:silver_pressure_plate",
+      "link_recipe": false,
+      "text": "Using silver to create a pressure plate results in a redstone component that will only emit a signal when a living creature steps on it.",
+      "title": "Silver Pressure Plate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:silver_pressure_plate"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "advancement": "sanguinisluxuria:grow_decayed_tree",
+      "item": "sanguinisluxuria:decayed_pressure_plate",
+      "link_recipe": false,
+      "text": "Making a pressure plate out of decayed wood, on the other hand, will result in one that only emits a signal when an undead creature steps on it.",
+      "title": "Decayed Pressure Plate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "advancement": "sanguinisluxuria:grow_decayed_tree",
+      "recipe": "sanguinisluxuria:decayed_pressure_plate"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

@@ -1,0 +1,19 @@
+{
+  "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
+  "category": "sanguinisluxuria:intro",
+  "icon": "sanguinisluxuria:altar",
+  "name": "Altar",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Decayed wood can be used to create an altar capable of performing $(l:sanguinisluxuria:rituals)rituals$(/l)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "sanguinisluxuria:altar"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}
