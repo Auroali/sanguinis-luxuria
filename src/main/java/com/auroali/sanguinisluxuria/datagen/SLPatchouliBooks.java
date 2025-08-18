@@ -2,10 +2,7 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.SLEnchantments;
-import com.auroali.sanguinisluxuria.common.registry.SLItemGroups;
-import com.auroali.sanguinisluxuria.common.registry.SLItems;
-import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliJsonBook;
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliJsonCategory;
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliProvider;
@@ -108,7 +105,7 @@ public class SLPatchouliBooks extends PatchouliProvider {
 
         equipment.entry("helmets", "Helmets", Items.LEATHER_HELMET)
           .advancement(SLResources.id("become_vampire"))
-          .page(PatchouliSpotlightPage.create(Items.LEATHER_HELMET)
+          .page(PatchouliSpotlightPage.create(SLTags.Items.SUN_BLOCKING_HELMETS)
             .text("Certain helmets can grant extra time in the sun before you start to burn. These helmets usually have the trade-off of very little protection, however")
           )
           .page(PatchouliSpotlightPage.create(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SLEnchantments.SUN_PROTECTION, 1)))
@@ -129,7 +126,7 @@ public class SLPatchouliBooks extends PatchouliProvider {
           .page(PatchouliCraftingPage.create(SLItems.DECAYED_PRESSURE_PLATE).advancement(SLResources.id("grow_decayed_tree")));
 
         equipment.entry("silver_tools", "Silver Tools", SLItems.SILVER_SWORD)
-          .page(PatchouliSpotlightPage.create(SLItems.SILVER_SWORD)
+          .page(PatchouliSpotlightPage.create(SLItems.SILVER_SWORD, SLItems.SILVER_PICKAXE, SLItems.SILVER_AXE, SLItems.SILVER_SHOVEL, SLItems.SILVER_HOE)
             .title("Silver Tools")
             .text("Silver can be used to make tools.")
             .text("Tools made with silver are on par with tools made of iron normally, but what makes them special is that they deal $(l)increased damage$() against the undead, and are capable of killing vampires.")

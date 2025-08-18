@@ -1,12 +1,12 @@
 {
   "advancement": "sanguinisluxuria:become_vampire",
   "category": "sanguinisluxuria:equipment",
-  "icon": "minecraft:trident{Damage:0}",
+  "icon": "minecraft:trident",
   "name": "Tridents",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:trident{Damage:0}",
+      "item": "minecraft:trident",
       "link_recipe": false,
       "text": "Tridents can be a rather useful tool for a vampire, due to a certain trident-specific enchantment"
     },

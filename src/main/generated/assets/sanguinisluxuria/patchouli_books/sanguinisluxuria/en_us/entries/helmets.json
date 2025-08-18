@@ -1,12 +1,12 @@
 {
   "advancement": "sanguinisluxuria:become_vampire",
   "category": "sanguinisluxuria:equipment",
-  "icon": "minecraft:leather_helmet{Damage:0}",
+  "icon": "minecraft:leather_helmet",
   "name": "Helmets",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:leather_helmet{Damage:0}",
+      "item": "tag:sanguinisluxuria:sun_blocking_helmets",
       "link_recipe": false,
       "text": "Certain helmets can grant extra time in the sun before you start to burn. These helmets usually have the trade-off of very little protection, however"
     },
