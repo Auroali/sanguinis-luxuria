@@ -26,6 +26,9 @@ public class SLLangProvider extends FabricLanguageProvider {
         translationBuilder.add("commands.sanguinisluxuria.convert.invalid_conversion", "Invalid conversion type \"%s\"");
         translationBuilder.add("commands.sanguinisluxuria.convert.failed", "Failed to convert %s");
         translationBuilder.add("commands.sanguinisluxuria.ability.failed_conditions", "Failed to add %s to %s");
+        translationBuilder.add("options.sanguinisluxuria.use_hunger_effects", "Low Hunger Effects");
+        translationBuilder.add("options.sanguinisluxuria.use_hunger_effects.tooltip", "Toggles the use of the low hunger shader for vampires");
+
         tags(new GenericTranslationBuilder.TagTranslationBuilder(translationBuilder));
         subtitles(translationBuilder);
         keybindings(translationBuilder);
@@ -40,9 +43,9 @@ public class SLLangProvider extends FabricLanguageProvider {
         potions(new GenericTranslationBuilder.Potions(translationBuilder, "Potion of ", "Splash Potion of ", "Lingering Potion of ", "Arrow of "));
         abilities(new GenericTranslationBuilder.RegistryTranslationBuilder<>(translationBuilder, SLRegistries.VAMPIRE_ABILITIES));
         deathMessages(
-          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.'))),
-          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.item".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.'))),
-          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.player".formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.')))
+          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s" .formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.'))),
+          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.item" .formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.'))),
+          new GenericTranslationBuilder<>(translationBuilder, key -> "death.attack.%s.%s.player" .formatted(key.getValue().getNamespace(), key.getValue().getPath().replace('/', '.')))
         );
         advancements(new GenericTranslationBuilder.DescriptionTranslationBuilder<>(
           translationBuilder,

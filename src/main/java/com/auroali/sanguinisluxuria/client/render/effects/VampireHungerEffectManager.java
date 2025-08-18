@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.client.render.effects;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.config.SLClientConfig;
 import ladysnake.satin.api.managed.ManagedShaderEffect;
 import ladysnake.satin.api.managed.ShaderEffectManager;
 import ladysnake.satin.api.managed.uniform.Uniform1f;
@@ -24,6 +25,10 @@ public class VampireHungerEffectManager {
     private boolean render;
 
     public void tick(PlayerEntity entity) {
+        if (!SLClientConfig.INSTANCE.useCustomHungerEffect) {
+            this.render = false;
+            return;
+        }
         HungerManager manager = entity.getHungerManager();
         this.totalRenderTicks++;
         this.prevTicks = this.ticks;

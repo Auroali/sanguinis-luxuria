@@ -3,6 +3,7 @@
   "package": "com.auroali.sanguinisluxuria.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.AccessibilityOptionsScreenMixin",
     "client.BossBarHudMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",

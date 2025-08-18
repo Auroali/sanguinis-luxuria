@@ -134,6 +134,8 @@
   "key.sanguinisluxuria.activate_blink": "Blink",
   "key.sanguinisluxuria.activate_mist": "Mist",
   "key.sanguinisluxuria.drain_blood": "Drain Blood",
+  "options.sanguinisluxuria.use_hunger_effects": "Low Hunger Effects",
+  "options.sanguinisluxuria.use_hunger_effects.tooltip": "Toggles the use of the low hunger shader for vampires",
   "ritual_type.sanguinisluxuria.ability": "Ritual of Transformation",
   "ritual_type.sanguinisluxuria.ability_reveal": "Ritual of Revealing",
   "ritual_type.sanguinisluxuria.convert": "Ritual of Conversion",

@@ -18,6 +18,7 @@ import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.FillBloodItemC2S;
 import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.config.SLClientConfig;
 import com.auroali.sanguinisluxuria.util.ItemUtil;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
@@ -71,9 +72,11 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
     );
 
     public static boolean isAltarActive = false;
+    private final VampireHungerEffectManager vampireHungerEffectManager = new VampireHungerEffectManager();
 
     @Override
     public void onInitializeClient() {
+        SLClientConfig.INSTANCE.load();
         this.registerBindings();
 
         SLModelLayers.register();
@@ -134,6 +137,16 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         });
         ParticleFactoryRegistry.getInstance().register(SLParticles.ALTAR_BEAT, AltarBeatParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(SLParticles.ALTAR, AltarParticle.Factory::new);
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (VampireHelper.consumesBlood(client.player))
+                this.vampireHungerEffectManager.tick(client.player);
+        });
+
+        ShaderEffectRenderCallback.EVENT.register(delta -> {
+            if (VampireHelper.consumesBlood(MinecraftClient.getInstance().player))
+                this.vampireHungerEffectManager.render(delta);
+        });
     }
 
     public void registerBindings() {
