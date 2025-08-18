@@ -45,7 +45,7 @@ public class VampireHungerEffectManager {
         if (!this.render && this.ticks == 0)
             return;
 
-        float renderTick = MathHelper.lerp(tickDelta, this.prevTicks, this.ticks);
+        float renderTick = MathHelper.lerp(tickDelta, (float) this.prevTicks, (float) this.ticks);
         RENDER_TIME.set((this.totalRenderTicks + tickDelta) / 20.f);
         PERCENT.set(MathHelper.clamp(1.f - renderTick / (float) MAX_TICKS_ENTITY, 0.3f, 1.f));
         SHADER.render(tickDelta);

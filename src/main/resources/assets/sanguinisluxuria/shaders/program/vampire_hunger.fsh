@@ -1,4 +1,5 @@
 #version 150
+#define HUNGER_PIXELATE
 
 uniform sampler2D DiffuseSampler;
 uniform float RenderTime;
@@ -30,8 +31,18 @@ float dither(float color) {
     return (dist < index) ? closestColor : secondClosest;
 }
 
+#ifdef HUNGER_PIXELATE
+vec2 pixelate(vec2 coords, float size) {
+    return floor(coords / size) * size;
+}
+#endif
+
 void main() {
+    #ifdef HUNGER_PIXELATE
+    vec2 pos = pixelate(texCoord, 0.01) - 0.5;
+    #else
     vec2 pos = texCoord - 0.5;
+    #endif
     float scroll = RenderTime / 8.0;
     // add wobble
     float xModifier = sin((scroll + pos.y) * 32.0) / 16.0;
