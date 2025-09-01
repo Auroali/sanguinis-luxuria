@@ -11,6 +11,22 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 public class PatchouliJsonBook {
+    public static final Identifier GUI_BOOK_BLUE = new Identifier("patchouli", "textures/gui/book_blue.png");
+    public static final Identifier GUI_BOOK_BROWN = new Identifier("patchouli", "textures/gui/book_brown.png");
+    public static final Identifier GUI_BOOK_CYAN = new Identifier("patchouli", "textures/gui/book_cyan.png");
+    public static final Identifier GUI_BOOK_GRAY = new Identifier("patchouli", "textures/gui/book_gray.png");
+    public static final Identifier GUI_BOOK_GREEN = new Identifier("patchouli", "textures/gui/book_green.png");
+    public static final Identifier GUI_BOOK_PURPLE = new Identifier("patchouli", "textures/gui/book_purple.png");
+    public static final Identifier GUI_BOOK_RED = new Identifier("patchouli", "textures/gui/book_red.png");
+    public static final Identifier MODEL_BOOK_BLUE = new Identifier("patchouli", "item/book_blue");
+    public static final Identifier MODEL_BOOK_BROWN = new Identifier("patchouli", "item/book_brown");
+    public static final Identifier MODEL_BOOK_CYAN = new Identifier("patchouli", "item/book_cyan");
+    public static final Identifier MODEL_BOOK_GRAY = new Identifier("patchouli", "item/book_gray");
+    public static final Identifier MODEL_BOOK_GREEN = new Identifier("patchouli", "item/book_green");
+    public static final Identifier MODEL_BOOK_PURPLE = new Identifier("patchouli", "item/book_purple");
+    public static final Identifier MODEL_BOOK_RED = new Identifier("patchouli", "item/book_red");
+    public static final Identifier MODEL_GUIDE_BOOK = new Identifier("patchouli", "item/guide_book");
+
     private final Identifier id;
     private final String name;
     private final String landing;
