@@ -32,9 +32,7 @@ public class SLPatchouliBooks extends PatchouliProvider {
           .model(SLResources.id("book"))
           .texture(new Identifier("patchouli", "textures/gui/book_red.png"))
           .linkColor(PatchouliColor.fromHex("a51e12"))
-          //.linkColor(new Color(0xa5, 0x1e, 0x12))
           .linkHoverColor(PatchouliColor.fromHex("ff6e11"))
-          //.linkHoverColor(new Color(0xff, 0x6e, 0x11))
           .macro("$(keybind:", "$(#0066ff)$(l)$(k:")
           .macro("$(blood)", "$(#a51e12)$(l)")
           .group(SLItemGroups.SANGUINIS_LUXURIA_TAB);
