@@ -5,7 +5,6 @@ import net.minecraft.data.DataOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

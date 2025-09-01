@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.datagen.patchouli.pages;
 
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliJsonPage;
 import com.google.gson.JsonObject;
-import net.minecraft.util.Identifier;
 
 public class PatchouliEmptyPage extends PatchouliJsonPage {
     private final boolean drawFiller;

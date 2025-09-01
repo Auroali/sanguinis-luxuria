@@ -2,9 +2,6 @@ package com.auroali.sanguinisluxuria.datagen.patchouli.pages;
 
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliJsonPage;
 import com.google.gson.JsonObject;
-import net.minecraft.util.Identifier;
-
-import java.util.Optional;
 
 public class PatchouliTextPage extends PatchouliTextTitlePage<PatchouliTextPage> {
     protected PatchouliTextPage() {

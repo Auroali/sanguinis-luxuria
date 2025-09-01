@@ -9,7 +9,6 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import vazkii.patchouli.api.IVariable;
 
 import java.util.Arrays;
 import java.util.List;

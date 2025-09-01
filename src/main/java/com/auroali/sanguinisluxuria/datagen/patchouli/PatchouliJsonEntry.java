@@ -3,11 +3,8 @@ package com.auroali.sanguinisluxuria.datagen.patchouli;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +21,7 @@ public class PatchouliJsonEntry {
     private boolean readByDefault;
     private Optional<Identifier> advancement;
     private Optional<Identifier> turnIn;
-    private Optional<Color> entryColor;
+    private Optional<PatchouliColor> entryColor;
     private Optional<Identifier> parent;
     private Optional<String> flag;
     private OptionalInt sortNumber;
@@ -89,7 +86,7 @@ public class PatchouliJsonEntry {
         return this;
     }
 
-    public PatchouliJsonEntry color(Color color) {
+    public PatchouliJsonEntry color(PatchouliColor color) {
         this.entryColor = Optional.of(color);
         return this;
     }
@@ -116,7 +113,7 @@ public class PatchouliJsonEntry {
         this.parent.ifPresent(id -> object.addProperty("parent", id.toString()));
         this.flag.ifPresent(flag -> object.addProperty("flag", flag));
         this.sortNumber.ifPresent(sort -> object.addProperty("sortnum", sort));
-        this.entryColor.ifPresent(color -> object.addProperty("entry_color", String.format("%06x", color.getRGB() & 0xFFFFFF)));
+        this.entryColor.ifPresent(color -> object.addProperty("entry_color", color.toString()));
         return object;
     }
 }

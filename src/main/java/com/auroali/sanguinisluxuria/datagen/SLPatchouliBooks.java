@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.datagen;
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliColor;
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliJsonBook;
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliJsonCategory;
 import com.auroali.sanguinisluxuria.datagen.patchouli.PatchouliProvider;
@@ -14,8 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
-
-import java.awt.*;
 
 public class SLPatchouliBooks extends PatchouliProvider {
     public SLPatchouliBooks(FabricDataOutput output) {
@@ -32,8 +31,10 @@ public class SLPatchouliBooks extends PatchouliProvider {
         )
           .model(SLResources.id("book"))
           .texture(new Identifier("patchouli", "textures/gui/book_red.png"))
-          .linkColor(new Color(0xa5, 0x1e, 0x12))
-          .linkHoverColor(new Color(0xff, 0x6e, 0x11))
+          .linkColor(PatchouliColor.fromHex("a51e12"))
+          //.linkColor(new Color(0xa5, 0x1e, 0x12))
+          .linkHoverColor(PatchouliColor.fromHex("ff6e11"))
+          //.linkHoverColor(new Color(0xff, 0x6e, 0x11))
           .macro("$(keybind:", "$(#0066ff)$(l)$(k:")
           .macro("$(blood)", "$(#a51e12)$(l)")
           .group(SLItemGroups.SANGUINIS_LUXURIA_TAB);

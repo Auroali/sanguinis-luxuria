@@ -1,20 +1,14 @@
 package com.auroali.sanguinisluxuria.datagen.patchouli;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.datafixers.util.Either;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
-import vazkii.patchouli.api.IVariable;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class PatchouliJsonBook {
     private final Identifier id;
@@ -24,12 +18,12 @@ public class PatchouliJsonBook {
     private Optional<RegistryKey<ItemGroup>> group;
     private Optional<Identifier> texture;
     private Optional<Identifier> model;
-    private Optional<Color> textColor;
-    private Optional<Color> linkColor;
-    private Optional<Color> linkHoverColor;
-    private Optional<Color> nameplateColor;
-    private Optional<Color> progressBarColor;
-    private Optional<Color> progressBarBackground;
+    private Optional<PatchouliColor> textColor;
+    private Optional<PatchouliColor> linkColor;
+    private Optional<PatchouliColor> linkHoverColor;
+    private Optional<PatchouliColor> nameplateColor;
+    private Optional<PatchouliColor> progressBarColor;
+    private Optional<PatchouliColor> progressBarBackground;
     private Optional<Identifier> openSound;
     private Optional<Identifier> flipSound;
     private Optional<PatchouliJsonIcon> indexIcon;
@@ -75,32 +69,32 @@ public class PatchouliJsonBook {
         return this;
     }
 
-    public PatchouliJsonBook textColor(Color color) {
+    public PatchouliJsonBook textColor(PatchouliColor color) {
         this.textColor = Optional.of(color);
         return this;
     }
 
-    public PatchouliJsonBook linkColor(Color color) {
+    public PatchouliJsonBook linkColor(PatchouliColor color) {
         this.linkColor = Optional.of(color);
         return this;
     }
 
-    public PatchouliJsonBook linkHoverColor(Color color) {
+    public PatchouliJsonBook linkHoverColor(PatchouliColor color) {
         this.linkHoverColor = Optional.of(color);
         return this;
     }
 
-    public PatchouliJsonBook nameplateColor(Color color) {
+    public PatchouliJsonBook nameplateColor(PatchouliColor color) {
         this.nameplateColor = Optional.of(color);
         return this;
     }
 
-    public PatchouliJsonBook progressBarColor(Color color) {
+    public PatchouliJsonBook progressBarColor(PatchouliColor color) {
         this.progressBarColor = Optional.of(color);
         return this;
     }
 
-    public PatchouliJsonBook progressBarBackgroundColor(Color color) {
+    public PatchouliJsonBook progressBarBackgroundColor(PatchouliColor color) {
         this.progressBarBackground = Optional.of(color);
         return this;
     }
@@ -145,12 +139,12 @@ public class PatchouliJsonBook {
         object.addProperty("landing_text", this.landing);
         object.addProperty("version", this.version);
         object.addProperty("use_resource_pack", true);
-        this.textColor.ifPresent(color -> object.addProperty("text_color", String.format("%06x", color.getRGB() & 0xFFFFFF)));
-        this.linkColor.ifPresent(color -> object.addProperty("link_color", String.format("%06x", color.getRGB() & 0xFFFFFF)));
-        this.linkHoverColor.ifPresent(color -> object.addProperty("link_hover_color", String.format("%06x", color.getRGB() & 0xFFFFFF)));
-        this.nameplateColor.ifPresent(color -> object.addProperty("nameplate_color", String.format("%06x", color.getRGB() & 0xFFFFFF)));
-        this.progressBarColor.ifPresent(color -> object.addProperty("progress_bar_color", String.format("%06x", color.getRGB() & 0xFFFFFF)));
-        this.progressBarBackground.ifPresent(color -> object.addProperty("progress_bar_background", String.format("%06x", color.getRGB() & 0xFFFFFF)));
+        this.textColor.ifPresent(color -> object.addProperty("text_color", color.toString()));
+        this.linkColor.ifPresent(color -> object.addProperty("link_color", color.toString()));
+        this.linkHoverColor.ifPresent(color -> object.addProperty("link_hover_color", color.toString()));
+        this.nameplateColor.ifPresent(color -> object.addProperty("nameplate_color", color.toString()));
+        this.progressBarColor.ifPresent(color -> object.addProperty("progress_bar_color", color.toString()));
+        this.progressBarBackground.ifPresent(color -> object.addProperty("progress_bar_background", color.toString()));
         this.group.ifPresent(key -> object.addProperty("creative_tab", key.getValue().toString()));
         this.texture.ifPresent(id -> object.addProperty("book_texture", id.toString()));
         this.model.ifPresent(id -> object.addProperty("model", id.toString()));

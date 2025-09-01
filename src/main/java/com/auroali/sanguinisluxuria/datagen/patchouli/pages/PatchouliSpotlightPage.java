@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 
 public class PatchouliSpotlightPage extends PatchouliTextTitlePage<PatchouliSpotlightPage> {
     private final PatchouliJsonIcon stack;
