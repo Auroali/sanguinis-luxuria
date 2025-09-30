@@ -14,6 +14,7 @@ public record ActiveRitualData(Ritual ritual, UUID initiator, UUID target) {
     public static final String RITUAL_KEY = "ritual";
     public static final String INITIATOR_KEY = "initiator";
     public static final String TARGET_KEY = "target";
+    public static final int TIME_TO_COMPLETE = 300;
 
     public static void writeNbt(NbtCompound compound, ActiveRitualData data) {
         if (data == null)

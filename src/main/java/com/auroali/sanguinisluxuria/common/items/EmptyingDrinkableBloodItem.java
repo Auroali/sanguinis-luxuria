@@ -36,6 +36,7 @@ public class EmptyingDrinkableBloodItem extends DrinkableBloodItem {
         return this.itemFactory.createEmpty(stack, BloodStorageItem.getItemBlood(stack), BloodStorageItem.getItemMaxBlood(stack));
     }
 
+    @FunctionalInterface
     public interface EmptyItemFactory {
         ItemStack createEmpty(ItemStack stack, int blood, int maxBlood);
     }

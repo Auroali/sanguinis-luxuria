@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Abstract class that represents a composite condition (one made up of multiple other conditions)
@@ -21,9 +20,9 @@ public abstract class CompositeConversionCondition implements EntityConversionCo
         this.conditions = conditions;
     }
 
-    public static <T extends CompositeConversionCondition> Codec<T> codec(Function<List<EntityConversionCondition>, T> constructor) {
+    public static <T extends CompositeConversionCondition> Codec<T> codec(Factory<T> constructor) {
         return RecordCodecBuilder.create(instance -> instance.ap(
-          constructor, EntityConversionCondition.LIST_CODEC.fieldOf("conditions").forGetter(composite -> composite.conditions)
+                constructor::create, EntityConversionCondition.LIST_CODEC.fieldOf("conditions").forGetter(composite -> composite.conditions)
         ));
     }
 

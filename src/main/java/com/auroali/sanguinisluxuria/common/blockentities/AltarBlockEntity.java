@@ -65,6 +65,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         if (nbt.containsUuid("StoredTarget"))
             this.storedTarget = nbt.getUuid("StoredTarget");
         this.ritualData = ActiveRitualData.readNbt(nbt);
+        this.ticksProcessing = nbt.getInt("TicksProcessing");
     }
 
     @Override
@@ -75,6 +76,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         if (this.storedTarget != null)
             nbt.putUuid("StoredTarget", this.storedTarget);
         ActiveRitualData.writeNbt(nbt, this.ritualData);
+        nbt.putInt("TicksProcessing", this.ticksProcessing);
     }
 
     public static void tickClient(World world, BlockPos pos, BlockState state, AltarBlockEntity altar) {
@@ -92,8 +94,8 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         if (!VampireHelper.isVampire(initiator) || target == null) {
             altar.ritualData = null;
             altar.ticksProcessing = 0;
-            altar.markDirty();
             world.setBlockState(pos, state.with(AltarBlock.ACTIVE, false).with(AltarBlock.TARGET, false));
+            altar.markDirty();
             return;
         }
 
@@ -112,8 +114,9 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
             );
         }
 
-        if (altar.ticksProcessing < 300) {
+        if (altar.ticksProcessing < ActiveRitualData.TIME_TO_COMPLETE) {
             altar.ticksProcessing++;
+            altar.markDirty();
             return;
         }
 
@@ -335,5 +338,9 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
         if (world instanceof ServerWorld serverWorld && this.storedTarget != null)
             return serverWorld.getEntity(this.storedTarget) instanceof LivingEntity living && living.isAlive();
         return false;
+    }
+
+    public int getRecipeTicks() {
+        return this.ticksProcessing;
     }
 }

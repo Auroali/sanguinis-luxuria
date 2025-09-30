@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
 import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
+import com.auroali.sanguinisluxuria.common.rituals.ActiveRitualData;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -22,6 +23,7 @@ import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -164,5 +166,33 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
           1.f,
           1.f
         );
+    }
+
+    @Override
+    public boolean emitsRedstonePower(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+        return state.get(ACTIVE) ? 5 : 0;
+    }
+
+    @Override
+    public int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        if (state.get(ACTIVE) && world.getBlockEntity(pos) instanceof AltarBlockEntity altar) {
+            return 1 + MathHelper.floor(14.f * altar.getRecipeTicks() / ActiveRitualData.TIME_TO_COMPLETE);
+        }
+        return 0;
     }
 }

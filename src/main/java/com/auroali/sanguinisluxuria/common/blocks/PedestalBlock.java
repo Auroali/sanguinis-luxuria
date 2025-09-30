@@ -21,6 +21,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -156,5 +157,19 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(WATERLOGGED);
+    }
+
+    @Override
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        if (world.getBlockEntity(pos) instanceof PedestalBlockEntity pedestal) {
+            ItemStack stack = pedestal.getInventory().getStack(0);
+            return MathHelper.floor(14.f * stack.getCount() / stack.getMaxCount()) + (stack.isEmpty() ? 0 : 1);
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
     }
 }

@@ -243,6 +243,7 @@ public class VampireAbilityContainer implements Iterable<Map.Entry<VampireAbilit
         }
     }
 
+    @FunctionalInterface
     private interface ContainerSyncManager {
         void request();
     }

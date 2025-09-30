@@ -189,8 +189,8 @@ public class SLPatchouliBooks extends PatchouliProvider {
             .text("You can obtain blood from most living things, the amount of blood they have depends on their max health. Certain creatures, such as Villagers, provide more blood, while others, such as the undead, provide toxic blood that weakens and hurts you.")
           )
           .page(PatchouliTextPage.create()
-            .text("You can drain blood by being within range of something with blood, and holding $(keybind:key.sanguinisluxuria.bite)$().$")
-            .text("nfortunately, it does seem like Villagers can recognize that you are a vampire, and refuse to even trade with you, let alone go near you. Maybe there's a way around this?")
+            .text("You can drain blood by being within range of something with blood, and holding $(keybind:key.sanguinisluxuria.drain_blood)$().")
+            .text("Unfortunately, it does seem like Villagers can recognize that you are a vampire, and refuse to even trade with you, let alone go near you. Maybe there's a way around this?")
           );
 
         intro.entry("decayed_tree", "Decayed Tree", SLItems.DECAYED_LOG)
@@ -224,6 +224,21 @@ public class SLPatchouliBooks extends PatchouliProvider {
     }
 
     private static void ritualEntries(PatchouliJsonCategory rituals, PatchouliJsonCategory abilities) {
+        rituals.entry("performing_rituals", "Performing Rituals", SLItems.ALTAR)
+          .sort(-1)
+          .advancement(SLResources.id("unlock/grow_tree_and_become_vampire"))
+          .page(PatchouliSpotlightPage.create(SLItems.ALTAR)
+            .title("Performing Rituals")
+            .text("Rituals are performed using the Altar. To start a ritual, place ritual's catalyst into the Altar, then place the other required items in pedestals surrounding it.")
+            .text("The ritual can then be initiated by crouching and interacting with the Altar.")
+          )
+          .page(PatchouliTextPage.create()
+            .title("Targeting Others")
+            .text("Rituals can also be performed on others. To change the ritual's target, crouch and interact with the Altar while holding an item that has been recently filled with the blood of another.")
+            .text("You will know this has worked when the small slot on the side of the Altar is filled.")
+          )
+          .page(PatchouliTextPage.create("The target can be cleared without performing a ritual by crouching and interacting with an empty Altar"));
+
         rituals.entry("purification", "Ritual of Purification", Items.GOLDEN_APPLE)
           .advancement(SLResources.id("drink_twisted_blood"))
           .page(PatchouliTextPage.create()

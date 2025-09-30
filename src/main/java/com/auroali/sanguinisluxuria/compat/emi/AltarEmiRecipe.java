@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.compat.emi;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.recipes.AltarRitualRecipe;
 import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
+import com.auroali.sanguinisluxuria.common.rituals.ActiveRitualData;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -116,8 +117,8 @@ public class AltarEmiRecipe implements EmiRecipe {
             stack.pop();
             drawContext.draw();
         });
-        widgets.addFillingArrow(84, 40, 15000)
-          .tooltip(List.of(TooltipComponent.of(Text.translatable("emi.cooking.time", 15).asOrderedText())));
+        widgets.addFillingArrow(84, 40, ActiveRitualData.TIME_TO_COMPLETE / 20 * 1000)
+          .tooltip(List.of(TooltipComponent.of(Text.translatable("emi.cooking.time", ActiveRitualData.TIME_TO_COMPLETE / 20).asOrderedText())));
 
         // if there is no output item, create texture slot with a tooltip
         widgets.add(new AltarSlotWidget(this.output, 111, 36))

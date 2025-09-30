@@ -98,9 +98,6 @@ public interface EntityTrackingItem {
         if (!entity.isSneaking())
             return ActionResult.PASS;
 
-        BlockState state = world.getBlockState(hitResult.getBlockPos());
-        if (state.get(AltarBlock.ACTIVE))
-            return ActionResult.FAIL;
 
         ItemStack stack = entity.getStackInHand(hand);
         if (!hasEntity(stack))
@@ -108,10 +105,16 @@ public interface EntityTrackingItem {
 
         Entity target = getEntity(stack, world);
         if (world.getBlockEntity(hitResult.getBlockPos()) instanceof AltarBlockEntity altar) {
+            BlockState state = world.getBlockState(hitResult.getBlockPos());
+            if (state.get(AltarBlock.ACTIVE))
+                return ActionResult.FAIL;
+
             if (world.isClient)
                 return ActionResult.SUCCESS;
+
             if (!(target instanceof LivingEntity))
                 return ActionResult.FAIL;
+
             altar.setNextTarget((LivingEntity) target);
             clearEntity(stack);
             return ActionResult.CONSUME;

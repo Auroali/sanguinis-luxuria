@@ -1,0 +1,28 @@
+{
+  "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
+  "category": "sanguinisluxuria:rituals",
+  "icon": "sanguinisluxuria:altar",
+  "name": "Performing Rituals",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "sanguinisluxuria:altar",
+      "link_recipe": false,
+      "text": "Rituals are performed using the Altar. To start a ritual, place ritual's catalyst into the Altar, then place the other required items in pedestals surrounding it.$(br2)The ritual can then be initiated by crouching and interacting with the Altar.",
+      "title": "Performing Rituals"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Rituals can also be performed on others. To change the ritual's target, crouch and interact with the Altar while holding an item that has been recently filled with the blood of another.$(br2)You will know this has worked when the small slot on the side of the Altar is filled.",
+      "title": "Targeting Others"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The target can be cleared without performing a ritual by crouching and interacting with an empty Altar"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false,
+  "sortnum": -1
+}
