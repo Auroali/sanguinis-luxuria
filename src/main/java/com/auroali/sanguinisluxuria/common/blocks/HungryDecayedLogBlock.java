@@ -112,33 +112,36 @@ public class HungryDecayedLogBlock extends PillarBlock {
             return;
         }
         if (random.nextInt(13) == 0) {
-            int newLevel = state.get(BLOOD_LEVEL) + 1;
-            Box boundingBox = new Box(pos).expand(5);
+            drainNearbyBlood(state, world, pos);
+        }
+    }
 
-            List<LivingEntity> entities = world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), boundingBox, VampireHelper::hasBlood);
+    private static void drainNearbyBlood(BlockState state, ServerWorld world, BlockPos pos) {
+        int newLevel = state.get(BLOOD_LEVEL) + 1;
+        Box boundingBox = new Box(pos).expand(5);
 
-            for (LivingEntity entity : entities) {
-                BloodComponent component = BloodComponent.KEY.get(entity);
-                if (component.drainBlood(1)) {
-                    world.playSound(null, pos, SLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
-                    world.setBlockState(pos, state.with(BLOOD_LEVEL, newLevel));
-                    Box entityBox = entity.getBoundingBox();
+        List<LivingEntity> entities = world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), boundingBox, VampireHelper::hasBlood);
 
-                    world.spawnParticles(
-                      SLParticles.DRIPPING_BLOOD,
-                      entityBox.getCenter().getX(),
-                      entityBox.getCenter().getY(),
-                      entityBox.getCenter().getZ(),
-                      20,
-                      entityBox.getXLength() / 2.d,
-                      entityBox.getYLength() / 2.d,
-                      entityBox.getZLength() / 2.d,
-                      0.d
-                    );
-                    return;
-                }
+        for (LivingEntity entity : entities) {
+            BloodComponent component = BloodComponent.KEY.get(entity);
+            if (component.drainBlood(1)) {
+                world.playSound(null, pos, SLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                world.setBlockState(pos, state.with(BLOOD_LEVEL, newLevel));
+                Box entityBox = entity.getBoundingBox();
+
+                world.spawnParticles(
+                  SLParticles.DRIPPING_BLOOD,
+                  entityBox.getCenter().getX(),
+                  entityBox.getCenter().getY(),
+                  entityBox.getCenter().getZ(),
+                  20,
+                  entityBox.getXLength() / 2.d,
+                  entityBox.getYLength() / 2.d,
+                  entityBox.getZLength() / 2.d,
+                  0.d
+                );
+                return;
             }
-
         }
     }
 

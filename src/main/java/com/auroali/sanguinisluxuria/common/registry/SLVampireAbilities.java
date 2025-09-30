@@ -33,6 +33,7 @@ public class SLVampireAbilities {
     public static final VampireAbility RESILIENCE = VampireAttributeModifierAbility
       .builder(UUID.fromString("bbff7218-3b09-4d9e-95a7-91e0daf5f13a"))
       .addModifier(SLEntityAttributes.SUN_RESISTANCE, 0.65, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
+      .addModifier(SLEntityAttributes.VULNERABILITY, -0.45, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
       .addModifier(EntityAttributes.GENERIC_MAX_HEALTH, -4, EntityAttributeModifier.Operation.ADDITION)
       .addModifier(EntityAttributes.GENERIC_ATTACK_SPEED, -0.05, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
       .addModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, -0.02, EntityAttributeModifier.Operation.ADDITION)

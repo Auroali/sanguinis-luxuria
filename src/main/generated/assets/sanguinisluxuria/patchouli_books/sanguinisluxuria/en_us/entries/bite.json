@@ -1,0 +1,20 @@
+{
+  "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
+  "category": "sanguinisluxuria:abilities",
+  "icon": "sanguinisluxuria:vampire_fang",
+  "name": "Bite",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Grants the ability to bite other creatures, inflicting bleeding.$(br2)Activate with $(keybind:key.sanguinisluxuria.activate_bite)$()",
+      "title": "Bite"
+    },
+    {
+      "type": "sanguinisluxuria:ritual",
+      "recipe": "sanguinisluxuria:rituals/bite"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

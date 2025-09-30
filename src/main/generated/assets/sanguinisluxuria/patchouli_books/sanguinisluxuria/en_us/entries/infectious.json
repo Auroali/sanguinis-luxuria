@@ -1,0 +1,20 @@
+{
+  "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
+  "category": "sanguinisluxuria:abilities",
+  "icon": "minecraft:potion{Potion:\"minecraft:poison\"}",
+  "name": "Infectious",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Grants the ability to transfer any active potions to another upon draining their blood.",
+      "title": "Infectious"
+    },
+    {
+      "type": "sanguinisluxuria:ritual",
+      "recipe": "sanguinisluxuria:rituals/infectious"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

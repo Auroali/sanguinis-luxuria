@@ -1,0 +1,20 @@
+{
+  "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
+  "category": "sanguinisluxuria:abilities",
+  "icon": "minecraft:glass_pane",
+  "name": "Resilience",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Grants increased resistance against vampire-effective damage, as well as allowing you to stay out in the sun longer.$(br2)However, this comes at the cost of reduced health, movement speed, and attack speed.$(br)Mutually exclusive with $(l:vulnerability)Vulnerability$(/l)",
+      "title": "Resilience"
+    },
+    {
+      "type": "sanguinisluxuria:ritual",
+      "recipe": "sanguinisluxuria:rituals/resilience"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

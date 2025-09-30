@@ -21,9 +21,9 @@ public record ActiveRitualData(Ritual ritual, UUID initiator, UUID target) {
         Ritual.RITUAL_CODEC.encodeStart(NbtOps.INSTANCE, data.ritual())
           .resultOrPartial(SanguinisLuxuria.LOGGER::error)
           .ifPresent(element -> {
-              compound.putUuid(RITUAL_KEY, data.initiator);
-              compound.putUuid(INITIATOR_KEY, data.target);
-              compound.put(TARGET_KEY, element);
+              compound.putUuid(INITIATOR_KEY, data.initiator);
+              compound.putUuid(TARGET_KEY, data.target);
+              compound.put(RITUAL_KEY, element);
           });
     }
 

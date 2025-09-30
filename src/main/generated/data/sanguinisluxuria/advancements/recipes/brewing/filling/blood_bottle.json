@@ -27,7 +27,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "sanguinisluxuria:cauldron_filling/blood_bottle"
+        "recipe": "minecraft:filling/blood_bottle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -41,7 +41,7 @@
   ],
   "rewards": {
     "recipes": [
-      "sanguinisluxuria:cauldron_filling/blood_bottle"
+      "minecraft:filling/blood_bottle"
     ]
   },
   "sends_telemetry_event": true

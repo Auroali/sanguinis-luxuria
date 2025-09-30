@@ -1,0 +1,20 @@
+{
+  "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
+  "category": "sanguinisluxuria:abilities",
+  "icon": "minecraft:ender_pearl",
+  "name": "Blink",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Blink allows the user to perform a short-range teleport. Mutually exclusive with $(l:mist)Mist$(/l).$(br2)Activate with $(keybind:key.sanguinisluxuria.activate_blink)$()",
+      "title": "Blink"
+    },
+    {
+      "type": "sanguinisluxuria:ritual",
+      "recipe": "sanguinisluxuria:rituals/blink"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

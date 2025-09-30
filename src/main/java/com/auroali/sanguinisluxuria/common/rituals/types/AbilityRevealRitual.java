@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
+import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
@@ -28,13 +29,23 @@ public class AbilityRevealRitual extends ItemRitual {
         super(OUTPUT, false);
     }
 
-    @Override
-    protected ItemStack createResultItem(RitualParameters parameters) {
-        VampireComponent vampire = VampireComponent.KEY.get(parameters.initiator());
-        ItemStack outputStack = new ItemStack(Items.WRITTEN_BOOK);
-        NbtCompound nbt = outputStack.getOrCreateNbt();
+    private ItemStack createEmptyBook() {
+        ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
+        NbtCompound nbt = book.getOrCreateNbt();
         nbt.putString(WrittenBookItem.AUTHOR_KEY, "Ritual of Revealing");
         nbt.putString(WrittenBookItem.TITLE_KEY, "Transformations");
+        book.setSubNbt(WrittenBookItem.PAGES_KEY, new NbtList());
+        return book;
+    }
+
+    @Override
+    protected ItemStack createResultItem(RitualParameters parameters) {
+        if (!VampireHelper.isVampire(parameters.target()))
+            return this.createEmptyBook();
+
+        VampireComponent vampire = VampireComponent.KEY.get(parameters.target());
+
+        ItemStack outputStack = this.createEmptyBook();
 
         // generate the pages for the book
         List<Text> pages = new ArrayList<>();

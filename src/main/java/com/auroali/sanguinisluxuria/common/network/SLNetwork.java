@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.network;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
+import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
@@ -53,7 +54,8 @@ public class SLNetwork {
             if (blood.getBlood() == 0)
                 return;
 
-            int filled = VampireHelper.fillHeldBloodStorage(player, stack, packet.hand(), 1, s -> {
+            int toFill = Math.min(BloodConstants.BLOOD_PER_BOTTLE, blood.getBlood());
+            int filled = VampireHelper.fillHeldBloodStorage(player, stack, packet.hand(), toFill, s -> {
                 if (EntityTrackingItem.canTrackEntity(s) && drainer.getLastDrained() != null) {
                     EntityTrackingItem.setEntity(s, drainer.getLastDrained());
                     drainer.setLastDrained(null);

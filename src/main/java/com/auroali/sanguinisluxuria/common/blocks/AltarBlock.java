@@ -62,8 +62,12 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
             return ActionResult.FAIL;
 
         if (player.isSneaking()) {
-            if (!world.isClient)
+            if (!world.isClient && !altar.getStack(0).isEmpty())
                 altar.startRitual(world, player, pos, state);
+            else if (altar.getStack(0).isEmpty() && state.get(TARGET)) {
+                altar.clearNextTarget();
+                world.setBlockState(pos, state.with(TARGET, false));
+            }
             return ActionResult.success(world.isClient);
         }
 

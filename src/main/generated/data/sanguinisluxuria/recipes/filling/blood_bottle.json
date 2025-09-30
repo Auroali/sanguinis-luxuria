@@ -4,6 +4,7 @@
   "input": {
     "item": "minecraft:glass_bottle"
   },
+  "level": 1,
   "result": {
     "item": "sanguinisluxuria:blood_bottle"
   }

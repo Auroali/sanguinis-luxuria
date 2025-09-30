@@ -93,6 +93,7 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
             altar.ritualData = null;
             altar.ticksProcessing = 0;
             altar.markDirty();
+            world.setBlockState(pos, state.with(AltarBlock.ACTIVE, false).with(AltarBlock.TARGET, false));
             return;
         }
 
@@ -196,10 +197,11 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
                 storedTargetAlive ? this.storedTarget : initiator.getUuid()
               );
               world.setBlockState(pos, state.with(AltarBlock.ACTIVE, true).with(AltarBlock.TARGET, storedTargetAlive));
+
               if (initiator instanceof ServerPlayerEntity player) {
                   Criteria.RECIPE_CRAFTED.trigger(player, recipe.getId(), inventory.stacks);
               }
-              this.markDirty();
+              this.clearNextTarget();
           });
     }
 
@@ -321,6 +323,12 @@ public class AltarBlockEntity extends BlockEntity implements Inventory, ItemDisp
                 this.world.setBlockState(this.pos, this.getCachedState().with(AltarBlock.TARGET, true));
             this.markDirty();
         }
+    }
+
+    public void clearNextTarget() {
+        this.cachedTarget = null;
+        this.storedTarget = null;
+        this.markDirty();
     }
 
     private boolean isStoredTargetAlive(World world) {

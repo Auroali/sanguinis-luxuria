@@ -1,0 +1,14 @@
+{
+  "type": "sanguinisluxuria:blood_cauldron_copy",
+  "category": "misc",
+  "copied": [
+    "pages"
+  ],
+  "input": {
+    "item": "minecraft:written_book"
+  },
+  "level": 1,
+  "result": {
+    "item": "minecraft:writable_book"
+  }
+}

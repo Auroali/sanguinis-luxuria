@@ -1,6 +1,8 @@
 package com.auroali.sanguinisluxuria.common.items;
 
 import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
+import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -93,6 +95,13 @@ public interface EntityTrackingItem {
     }
 
     static ActionResult setAltarTarget(PlayerEntity entity, World world, Hand hand, BlockHitResult hitResult) {
+        if (!entity.isSneaking())
+            return ActionResult.PASS;
+
+        BlockState state = world.getBlockState(hitResult.getBlockPos());
+        if (state.get(AltarBlock.ACTIVE))
+            return ActionResult.FAIL;
+
         ItemStack stack = entity.getStackInHand(hand);
         if (!hasEntity(stack))
             return ActionResult.PASS;

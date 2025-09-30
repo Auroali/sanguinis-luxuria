@@ -20,7 +20,7 @@ public class SLCauldronBehaviours {
             if (BloodStorageItem.getItemBlood(stack) >= BloodConstants.BLOOD_PER_BOTTLE) {
                 int bloodToDrain = Math.min(BloodStorageItem.getItemBlood(stack) / BloodConstants.BLOOD_PER_BOTTLE, LeveledCauldronBlock.MAX_LEVEL);
                 BloodStorageItem.decrementItemBlood(stack, bloodToDrain * BloodConstants.BLOOD_PER_BOTTLE);
-                if (BloodStorageItem.getItemMaxBlood(stack) == 0) {
+                if (BloodStorageItem.getItemBlood(stack) == 0) {
                     ItemStack emptyStack = BloodStorageItem.createEmptyStackFor(stack);
                     if (emptyStack != stack)
                         player.setStackInHand(hand, emptyStack);

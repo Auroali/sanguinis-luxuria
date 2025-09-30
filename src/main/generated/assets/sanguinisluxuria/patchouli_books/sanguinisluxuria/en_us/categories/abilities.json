@@ -1,0 +1,8 @@
+{
+  "parent": "sanguinisluxuria:rituals",
+  "description": "Variations of the Ritual of Transmutation",
+  "icon": "sanguinisluxuria:altar",
+  "name": "Ritual of Transmutation",
+  "secret": false,
+  "sortnum": 1
+}
