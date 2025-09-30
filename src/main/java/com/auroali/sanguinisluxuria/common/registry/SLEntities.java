@@ -54,6 +54,6 @@ public class SLEntities {
 
     public static void registerSpawns() {
         SpawnRestriction.register(VAMPIRE_VILLAGER, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
-        BiomeModifications.addSpawn(b -> b.getBiomeRegistryEntry().isIn(SLTags.Biomes.VAMPIRE_VILLAGER_SPAWN), SpawnGroup.MONSTER, VAMPIRE_VILLAGER, 3, 1, 1);
+        BiomeModifications.addSpawn(b -> b.getBiomeRegistryEntry().isIn(SLTags.Biomes.VAMPIRE_VILLAGER_SPAWN), SpawnGroup.MONSTER, VAMPIRE_VILLAGER, 13, 1, 1);
     }
 }
