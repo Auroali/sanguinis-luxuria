@@ -89,7 +89,7 @@ dependencies {
         transitive = false
     }
 
-    modRuntimeOnly("squeek.appleskin:appleskin-fabric:${project.appleskin_version}") {
+    modLocalRuntime("squeek.appleskin:appleskin-fabric:${project.appleskin_version}") {
         exclude module: 'modmenu'
         exclude module: 'fabric-loader'
     }
