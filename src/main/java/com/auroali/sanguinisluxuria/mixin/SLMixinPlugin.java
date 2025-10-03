@@ -2,8 +2,6 @@ package com.auroali.sanguinisluxuria.mixin;
 
 import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
@@ -11,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 public class SLMixinPlugin implements IMixinConfigPlugin {
-    private static final Logger LOGGER = LoggerFactory.getLogger("sanguinisluxuria|mixins");
     private String mixinPackage;
 
     @Override
@@ -33,7 +30,6 @@ public class SLMixinPlugin implements IMixinConfigPlugin {
             if (!present && !path[2].equals("missing"))
                 throw new IllegalArgumentException("invalid mixin " + mixin + ", compatibility mixins must be located in either compat.<modid>.present or compat.<modid>.missing!");
             String modid = path[1];
-            LOGGER.info("detected compat mixin {} for mod {} (mod state={} required state={} applying={})", mixin, path[1], FabricLoader.getInstance().isModLoaded(path[1]) ? "present" : "missing", path[2], present == FabricLoader.getInstance().isModLoaded(modid));
             return present == FabricLoader.getInstance().isModLoaded(modid);
         }
         return true;

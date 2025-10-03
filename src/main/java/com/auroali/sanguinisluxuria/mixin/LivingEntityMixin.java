@@ -91,14 +91,15 @@ public abstract class LivingEntityMixin extends Entity {
         if (original.call(instance, source))
             return true;
 
-        if (!VampireHelper.isVampire(instance))
+        if (VampireDamageHandler.canKillVampire(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
+            return false;
+
+        if (BloodComponent.KEY.maybeGet(instance).map(BloodComponent::isEmpty).orElse(true)
+          || (!VampireHelper.isVampire(instance) && !VampireHelper.attemptConvertToVampire(instance)))
             return false;
 
         VampireComponent vampire = VampireComponent.KEY.get(instance);
         BloodComponent blood = BloodComponent.KEY.get(instance);
-
-        if (blood.getBlood() == 0 || VampireDamageHandler.canKillVampire(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
-            return false;
 
         instance.setHealth(Math.min(instance.getMaxHealth(), (float) blood.getBlood()));
         vampire.setDowned(true);

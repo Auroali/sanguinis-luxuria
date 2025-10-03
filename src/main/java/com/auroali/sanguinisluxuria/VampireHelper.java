@@ -2,9 +2,11 @@ package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
+import com.auroali.sanguinisluxuria.common.registry.SLConversions;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import com.google.common.base.Predicates;
@@ -93,16 +95,6 @@ public class VampireHelper {
         return TrinketsApi.getTrinketComponent(entity)
           .map(c -> c.isEquipped(i -> i.isIn(SLTags.Items.VAMPIRE_MASKS)))
           .orElse(false);
-    }
-
-    /**
-     * Increments the level of blood sickness on an entity. If the entity does not currently have blood sickness, this will add it
-     *
-     * @param entity the entity to increment the blood sickness level of
-     */
-    public static void incrementBloodSickness(LivingEntity entity) {
-        int level = entity.hasStatusEffect(SLStatusEffects.BLOOD_SICKNESS) ? entity.getStatusEffect(SLStatusEffects.BLOOD_SICKNESS).getAmplifier() + 1 : 0;
-        entity.addStatusEffect(new StatusEffectInstance(SLStatusEffects.BLOOD_SICKNESS, 3600, level));
     }
 
     /**
@@ -343,5 +335,20 @@ public class VampireHelper {
     public static HitResult raycastEntity(LivingEntity entity, Vec3d direction, Predicate<Entity> predicate) {
         double reach = ReachEntityAttributes.getReachDistance(entity, 4.5d);
         return raycastEntity(entity, direction, predicate, reach);
+    }
+
+    /**
+     * Attempts to perform a conversion to a vampire, with the condition that the entity must
+     * have the bloodlust effect
+     *
+     * @param entity the entity to convert
+     * @return if it was successful
+     */
+    public static boolean attemptConvertToVampire(LivingEntity entity) {
+        // todo: maybe more conditions than just dying with bloodlust?
+        if (!entity.hasStatusEffect(SLStatusEffects.BLOOD_LUST))
+            return false;
+
+        return SLConversions.convertEntity(new ConversionContext(entity.getWorld(), entity, ConversionContext.Conversion.CONVERTING));
     }
 }

@@ -94,18 +94,12 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         ItemStack result = BloodStorageItem.getItemBlood(stack) == 0 ? BloodStorageItem.createEmptyStackFor(stack) : stack;
 
         if (VampireHelper.consumesBlood(user)) {
-            // doing the same check twice probably isnt great
-            // but it works
-            // so thats something
-            if (!VampireHelper.isVampire(user))
-                VampireHelper.incrementBloodSickness(user);
             // only add the blood to vampires
             userBlood.addBlood(bloodToFill);
             return result;
         }
 
         user.eatFood(world, stackCopy);
-        VampireHelper.incrementBloodSickness(user);
         return result;
     }
 
