@@ -1,4 +1,4 @@
-package com.auroali.sanguinisluxuria.mixin;
+package com.auroali.sanguinisluxuria.mixin.compat.connectormod.missing;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.llamalad7.mixinextras.sugar.Share;
@@ -26,12 +26,12 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin extends World {
+public abstract class FabricServerWorldMixin extends World {
     @Shadow
     @Final
     List<ServerPlayerEntity> players;
 
-    protected ServerWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DynamicRegistryManager registryManager, RegistryEntry<DimensionType> dimensionEntry, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long biomeAccess, int maxChainedNeighborUpdates) {
+    protected FabricServerWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DynamicRegistryManager registryManager, RegistryEntry<DimensionType> dimensionEntry, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long biomeAccess, int maxChainedNeighborUpdates) {
         super(properties, registryRef, registryManager, dimensionEntry, profiler, isClient, debugWorld, biomeAccess, maxChainedNeighborUpdates);
     }
 

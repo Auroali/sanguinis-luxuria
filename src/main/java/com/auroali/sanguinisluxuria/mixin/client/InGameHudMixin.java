@@ -1,50 +1,33 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
-import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.components.impl.PlayerVampireComponent;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
-    @ModifyArg(method = "renderStatusBars", at = @At(
+    @ModifyExpressionValue(method = "renderVignetteOverlay", at = @At(
       value = "INVOKE",
-      target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V"
-    ), slice = @Slice(from = @At(
-      value = "INVOKE",
-      target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
-      ordinal = 1), to = @At(
-      value = "INVOKE",
-      target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 2
-    )))
-    public Identifier sanguinisluxuria$injectHungerIcons(Identifier texture) {
-        if (VampireHelper.consumesBlood(MinecraftClient.getInstance().player)) {
-            return SLResources.ICONS;
-        }
-        return texture;
-    }
-
-    @ModifyVariable(method = "renderVignetteOverlay", at = @At(
-      value = "STORE"
-    ), ordinal = 1)
-    public float sanguinisluxuria$showSunTimeProgress(float g) {
+      target = "Lnet/minecraft/util/math/MathHelper;clamp(FFF)F", ordinal = 1))
+    public float sanguinisluxuria$showSunTimeProgress(float original) {
         PlayerEntity entity = MinecraftClient.getInstance().player;
         if (VampireHelper.isVampire(entity) && VampireComponent.KEY.get(entity) instanceof PlayerVampireComponent vampire) {
             if (vampire.getTimeInSun() == 0)
-                return g;
+                return original;
             return MathHelper.clamp(vampire.getTimeInSun() / (float) vampire.getMaxTimeInSun(), 0.f, 1.f);
         }
-        return g;
+        return original;
     }
 
     @Inject(method = "renderVignetteOverlay", at = @At(

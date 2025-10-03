@@ -8,7 +8,8 @@
     "client.ItemRendererMixin",
     "client.LightmapTextureManagerMixin",
     "client.LivingEntityClientMixin",
-    "client.LivingEntityRendererMixin"
+    "client.LivingEntityRendererMixin",
+    "compat.connectormod.missing.FabricInGameHudMixin"
   ],
   "mixins": [
     "AbstractBlockStateMixin",
@@ -22,16 +23,19 @@
     "PersistentProjectileEntityAccessor",
     "PlayerEntityMixin",
     "ServerPlayerEntityMixin",
-    "ServerWorldMixin",
     "StatusEffectMixin",
     "TridentEntityMixin",
     "VillagerEntityMixin",
     "VillagerHostilesSensorMixin",
     "WanderingTraderMixin",
+    "compat.connectormod.missing.FabricServerWorldMixin",
+    "compat.connectormod.present.ForgeGuiMixin",
+    "compat.connectormod.present.ForgeServerWorldMixin",
     "legacy.EnchantmentHelperMixin",
     "legacy.SimpleRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.auroali.sanguinisluxuria.mixin.SLMixinPlugin"
 }
