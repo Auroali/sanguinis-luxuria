@@ -27,6 +27,7 @@ public class VampireHungerEffectManager {
     public void tick(PlayerEntity entity) {
         if (!SLClientConfig.INSTANCE.useCustomHungerEffect) {
             this.render = false;
+            this.ticks = 0;
             return;
         }
         HungerManager manager = entity.getHungerManager();

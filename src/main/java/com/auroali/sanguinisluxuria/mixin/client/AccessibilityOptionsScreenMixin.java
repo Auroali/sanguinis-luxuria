@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
-import com.auroali.sanguinisluxuria.config.BLConfig;
 import com.auroali.sanguinisluxuria.config.SLClientConfig;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.gui.screen.option.AccessibilityOptionsScreen;
@@ -10,7 +9,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @Mixin(AccessibilityOptionsScreen.class)
