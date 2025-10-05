@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "WIP (Mutually exclusive with $(l:blink)Blink$(/l)).$(br2)Activate with $(keybind:key.sanguinisluxuria.activate_mist)$()",
+      "text": "Grants the ability to turn your body into mist, allowing faster movement, reduced detection, and the ability to pass through certain blocks. Activate with $(keybind:key.sanguinisluxuria.activate_mist)$().$(br2)Mutually exclusive with $(l:blink)Blink$(/l)).",
       "title": "Mist"
     },
     {

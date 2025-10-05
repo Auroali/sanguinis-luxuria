@@ -6,10 +6,16 @@
   "category": "misc",
   "inputs": [
     {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:leather"
     },
     {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:magma_cream"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:golden_apple"
     }
   ],
   "ritual": {

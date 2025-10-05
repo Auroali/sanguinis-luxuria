@@ -292,8 +292,8 @@ public class SLPatchouliBooks extends PatchouliProvider {
           .advancement(SLResources.id("unlock/grow_tree_and_become_vampire"))
           .page(PatchouliTextPage.create()
             .title("Mist")
-            .text("WIP (Mutually exclusive with $(l:blink)Blink$(/l)).")
-            .text("Activate with $(keybind:key.sanguinisluxuria.activate_mist)$()")
+            .text("Grants the ability to turn your body into mist, allowing faster movement, reduced detection, and the ability to pass through certain blocks. Activate with $(keybind:key.sanguinisluxuria.activate_mist)$().")
+            .text("Mutually exclusive with $(l:blink)Blink$(/l)).")
           )
           .page(PatchouliRitualPage.create(SLResources.id("rituals/mist")));
 
@@ -317,7 +317,7 @@ public class SLPatchouliBooks extends PatchouliProvider {
           )
           .page(PatchouliRitualPage.create(SLResources.id("rituals/vulnerability")));
 
-        abilities.entry("resilience", "Resilience", Items.GLASS_PANE)
+        abilities.entry("resilience", "Resilience", Items.LEATHER_HELMET)
           .advancement(SLResources.id("unlock/grow_tree_and_become_vampire"))
           .page(PatchouliTextPage.create()
             .title("Resilience")

@@ -40,6 +40,7 @@ public class SLItemGroups {
               entries.add(SLItems.SILVER_INGOT);
               entries.add(SLItems.SILVER_BLOCK);
               entries.add(SLItems.SILVER_PRESSURE_PLATE);
+              entries.add(SLItems.SILVER_BARS);
               entries.add(SLItems.RAW_SILVER);
               entries.add(SLItems.RAW_SILVER_BLOCK);
               entries.add(SLItems.SILVER_ORE);

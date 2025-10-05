@@ -203,6 +203,8 @@ public class SLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(SLBlocks.DECAYED_HANGING_SIGN, "Decayed Hanging Sign");
         translationBuilder.add(SLBlocks.DECAYED_STAIRS, "Decayed Stairs");
         translationBuilder.add(SLBlocks.POTTED_GRAFTED_SAPLING, "Potted Grafted Sapling");
+        translationBuilder.add(SLBlocks.SILVER_BARS, "Silver Bars");
+
         translationBuilder.add("block.sanguinisluxuria.bed.no_sleep", "You can sleep only at day or during thunderstorms");
     }
 

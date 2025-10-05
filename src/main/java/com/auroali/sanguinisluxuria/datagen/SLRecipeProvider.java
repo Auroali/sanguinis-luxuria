@@ -249,14 +249,18 @@ public class SLRecipeProvider extends FabricRecipeProvider {
           .offerTo(exporter, SLResources.id("rituals/mist"));
         RitualRecipeJsonBuilder.create(RecipeCategory.MISC, new VampireAbilityRitual(SLVampireAbilities.RESILIENCE))
           .catalyst(SLItems.TWISTED_BLOOD)
-          .input(Items.OBSIDIAN)
-          .input(Items.OBSIDIAN)
+          .input(Items.LEATHER)
+          .input(Items.MAGMA_CREAM)
+          .input(Items.LEATHER)
+          .input(Items.GOLDEN_APPLE)
           .criterion("has_twisted_blood", conditionsFromItem(SLItems.TWISTED_BLOOD))
           .offerTo(exporter, SLResources.id("rituals/resilience"));
         RitualRecipeJsonBuilder.create(RecipeCategory.MISC, new VampireAbilityRitual(SLVampireAbilities.VULNERABILITY))
           .catalyst(SLItems.TWISTED_BLOOD)
           .input(Items.GLASS_PANE)
+          .input(Items.BLAZE_POWDER)
           .input(Items.GLASS_PANE)
+          .input(Items.FERMENTED_SPIDER_EYE)
           .criterion("has_twisted_blood", conditionsFromItem(SLItems.TWISTED_BLOOD))
           .offerTo(exporter, SLResources.id("rituals/vulnerability"));
 
@@ -264,6 +268,7 @@ public class SLRecipeProvider extends FabricRecipeProvider {
           .catalyst(PotionUtil.setPotion(new ItemStack(Items.POTION), SLStatusEffects.BLESSED_WATER_POTION))
           .input(Items.SUNFLOWER)
           .input(Items.SUNFLOWER)
+          .input(SLItems.TWISTED_BLOOD)
           .criterion("unlocked_ability", UnlockAbilityCriterion.Conditions.create())
           .offerTo(exporter, SLResources.id("rituals/reset_abilities"));
 

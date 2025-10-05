@@ -1,7 +1,7 @@
 {
   "advancement": "sanguinisluxuria:unlock/grow_tree_and_become_vampire",
   "category": "sanguinisluxuria:abilities",
-  "icon": "minecraft:glass_pane",
+  "icon": "minecraft:leather_helmet",
   "name": "Resilience",
   "pages": [
     {
