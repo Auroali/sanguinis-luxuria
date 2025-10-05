@@ -1,4 +1,5 @@
 {
+  "parent": "sanguinisluxuria:receive_bloodlust",
   "criteria": {
     "convert": {
       "conditions": {

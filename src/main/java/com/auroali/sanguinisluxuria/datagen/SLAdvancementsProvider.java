@@ -38,6 +38,24 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
 
     @Override
     public void generateAdvancement(Consumer<Advancement> consumer) {
+        Advancement getBloodlustEffect = Advancement.Builder
+          .create()
+          .display(
+            SLItems.VAMPIRE_FANG,
+            Text.translatable(title("receive_bloodlust")),
+            Text.translatable(desc("receive_bloodlust")),
+            null,
+            AdvancementFrame.TASK,
+            true,
+            true,
+            false
+          )
+          .criterion("status_effect_non_vampire", EffectsChangedCriterion.Conditions.create(
+            EntityEffectPredicate.create()
+              .withEffect(SLStatusEffects.BLOOD_LUST)
+          ))
+          .build(SLResources.id("receive_bloodlust"));
+
         Advancement becomeVampire = Advancement.Builder
           .create()
           .display(
@@ -50,6 +68,7 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
             true,
             false
           )
+          .parent(getBloodlustEffect)
           .criterion("convert", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .build(SLResources.id("become_vampire"));
 
@@ -84,6 +103,7 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
           )
           .criterion("has_item", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(SLTags.Items.DECAYED_LOGS).build()))
           .build(SLResources.id("grow_decayed_tree"));
+
         Advancement obtainHungryLog = Advancement.Builder
           .create()
           .parent(growDecayedTree)
@@ -143,24 +163,6 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
           ))
           .build(SLResources.id("purify_other"));
 
-        Advancement bloodSickness = Advancement.Builder
-          .create()
-          .display(
-            Items.ROTTEN_FLESH,
-            Text.translatable(title("blood_sickness")),
-            Text.translatable(desc("blood_sickness")),
-            null,
-            AdvancementFrame.TASK,
-            true,
-            true,
-            false
-          )
-          .parent(becomeVampire)
-          .criterion("get_blood_sickness", EffectsChangedCriterion.Conditions.create(
-            EntityEffectPredicate.create().withEffect(SLStatusEffects.BLOOD_SICKNESS)
-          ))
-          .build(SLResources.id("blood_sickness"));
-
         Advancement infectOther = Advancement.Builder
           .create()
           .display(
@@ -173,7 +175,7 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
             true,
             false
           )
-          .parent(bloodSickness)
+          .parent(becomeVampire)
           .criterion("give_blood_sickness", InfectEntityCriterion.Conditions.create())
           .build(SLResources.id("infect_other"));
 
@@ -266,7 +268,6 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
               .withEffect(StatusEffects.INVISIBILITY)
               .withEffect(StatusEffects.NIGHT_VISION)
               .withEffect(StatusEffects.WEAKNESS)
-              .withEffect(StatusEffects.POISON)
               .withEffect(StatusEffects.WITHER)
               .withEffect(StatusEffects.HASTE)
               .withEffect(StatusEffects.MINING_FATIGUE)
@@ -302,27 +303,7 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
           .criterion("reset_abilities", ResetAbilitiesCriterion.Conditions.create())
           .build(SLResources.id("reset_abilities"));
 
-        Advancement getBloodlustEffect = Advancement.Builder
-          .create()
-          .display(
-            SLItems.VAMPIRE_FANG,
-            Text.translatable(title("receive_bloodlust")),
-            Text.translatable(desc("receive_bloodlust")),
-            null,
-            AdvancementFrame.TASK,
-            true,
-            true,
-            false
-          )
-          .parent(bloodSickness)
-          .criterion("status_effect_non_vampire", EffectsChangedCriterion.Conditions.create(
-            EntityEffectPredicate.create()
-              .withEffect(SLStatusEffects.BLOOD_LUST)
-          ))
-          .build(SLResources.id("receive_bloodlust"));
-
         consumer.accept(becomeVampire);
-        consumer.accept(bloodSickness);
         consumer.accept(drinkTwistedBlood);
         consumer.accept(unlockAnyAbility);
         consumer.accept(resetAbilities);

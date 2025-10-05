@@ -1,5 +1,4 @@
 {
-  "parent": "sanguinisluxuria:blood_sickness",
   "criteria": {
     "status_effect_non_vampire": {
       "conditions": {

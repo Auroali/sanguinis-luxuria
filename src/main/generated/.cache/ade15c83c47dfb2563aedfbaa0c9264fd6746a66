@@ -1,4 +1,4 @@
-// 1.20.1	2025-10-01T22:12:05.811332273	Sanguinis Luxuria/Model Definitions
+// 1.20.1	2025-10-05T16:41:47.535545518	Sanguinis Luxuria/Model Definitions
 1b4d5423efb7f92cf5f51e03e4594662a3cd5b60 assets/sanguinisluxuria/models/block/hungry_decayed_log_2.json
 e83fba3eea321d2c8cbdeec79b48a1b657ea4c5c assets/sanguinisluxuria/models/block/raw_silver_block.json
 513a1ea2883e95c670872d3e21af39e15c644ab1 assets/sanguinisluxuria/models/item/silver_pressure_plate.json
@@ -131,8 +131,8 @@ e298b9b0418ccbe4cf6eaeb611a1be5451cb3756 assets/sanguinisluxuria/models/block/st
 c03e9cafa48d70dcc54c5f66972a7665241f13a7 assets/sanguinisluxuria/models/block/decayed_log_horizontal.json
 a0140c3688f172e771b81cd2610e2b077ac843ae assets/sanguinisluxuria/models/item/vampire_fang.json
 8f9cf747624a1d5f1f6bb97804f45071a26d3971 assets/sanguinisluxuria/models/item/silver_shovel.json
-bc3ec61ca1f56e256fecd0c086b2c08d1b61bf49 assets/sanguinisluxuria/blockstates/decayed_sign.json
 17e4420c566893c491f1a242c83d7a3c411f7aa4 assets/sanguinisluxuria/blockstates/stripped_hungry_decayed_log.json
+bc3ec61ca1f56e256fecd0c086b2c08d1b61bf49 assets/sanguinisluxuria/blockstates/decayed_sign.json
 376eb53af4cb9e7d198d8e24cadb1096e6b8f0eb assets/sanguinisluxuria/blockstates/potted_grafted_sapling.json
 be4e62493ac27b1ebf30177d11d1a1b4ea3c64c1 assets/sanguinisluxuria/models/block/decayed_log.json
 cfa218d12069b78b35e34cbf26b68b76f0202782 assets/sanguinisluxuria/models/item/silver_bars.json

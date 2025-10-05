@@ -1,5 +1,5 @@
 {
-  "parent": "sanguinisluxuria:blood_sickness",
+  "parent": "sanguinisluxuria:become_vampire",
   "criteria": {
     "give_blood_sickness": {
       "conditions": {},

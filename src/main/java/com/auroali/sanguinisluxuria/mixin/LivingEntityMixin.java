@@ -57,6 +57,9 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow
     public abstract LivingEntity getLastAttacker();
 
+    @Shadow
+    public abstract boolean removeStatusEffect(StatusEffect type);
+
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -94,7 +97,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (VampireDamageHandler.canKillVampire(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
             return false;
 
-        if (BloodComponent.KEY.maybeGet(instance).map(BloodComponent::isEmpty).orElse(true)
+        if (!VampireHelper.hasBlood(instance)
           || (!VampireHelper.isVampire(instance) && !VampireHelper.attemptConvertToVampire(instance)))
             return false;
 
@@ -105,6 +108,7 @@ public abstract class LivingEntityMixin extends Entity {
         vampire.setDowned(true);
         blood.setBlood(0);
         this.sanguinisluxuria$notifyAttackerDowned();
+        this.removeStatusEffect(SLStatusEffects.BLOOD_LUST);
         return true;
     }
 

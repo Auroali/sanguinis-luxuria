@@ -35,6 +35,7 @@ public class SLTags {
         public static final TagKey<EntityType<?>> TOXIC_BLOOD = TagKey.of(RegistryKeys.ENTITY_TYPE, SLResources.TOXIC_BLOOD_ID);
         public static final TagKey<EntityType<?>> TELEPORTS_ON_DRAIN = TagKey.of(RegistryKeys.ENTITY_TYPE, SLResources.TELEPORTS_ON_DRAIN_ID);
         public static final TagKey<EntityType<?>> IMMUNE_TO_BLOOD_LOSS = TagKey.of(RegistryKeys.ENTITY_TYPE, SLResources.IMMUNE_TO_BLOOD_LOSS_ID);
+        public static final TagKey<EntityType<?>> VAMPIRES_ATTEMPT_CONVERT = TagKey.of(RegistryKeys.ENTITY_TYPE, SLResources.VAMPIRES_ATTEMPT_CONVERT);
     }
 
     public static class Items {

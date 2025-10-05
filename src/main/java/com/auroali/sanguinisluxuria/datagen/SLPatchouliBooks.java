@@ -163,17 +163,18 @@ public class SLPatchouliBooks extends PatchouliProvider {
     }
 
     private static void introEntries(PatchouliJsonCategory intro) {
-        intro.entry("introduction", "Blood", Items.REDSTONE)
+        intro.entry("vampires", "Vampires", SLItems.VAMPIRE_FANG)
           .page(PatchouliTextPage.create()
-            .text("It would seem that killing villagers can sometimes leave some blood behind on the floor. Not only that, but it can be picked up with a bottle; although drinking it provides very little nutritional value and makes you feel more sick with each sip.")
-            .text("I wonder why anyone would want to drink this...")
+            .title("Vampires")
+            .text("I've heard of strange creatures that roam dark oak forests at night, feeding on blood... sometimes even giving others a temporary thirst for it. Some even say that one can become such a creature yourself.")
+          )
+          .page(PatchouliSpotlightPage.create(SLItems.VAMPIRE_FANG)
+            .text("A fang dropped by a vampire. It seems some sort of potion can be extracted from it by brewing it with a Mundane Potion.")
+          )
+          .page(PatchouliSpotlightPage.create(PotionUtil.setPotion(new ItemStack(Items.POTION), SLStatusEffects.BLOOD_LUST_POTION))
+            .text("A potion of Bloodlust. Seemingly a more concentrated version of the thirst for blood vampires are known to inflict on their targets sometimes.")
+            .text("And yet, it still seems temporary. Is there something I'm missing?")
           );
-
-        intro.entry("blood_sickness", "Blood Sickness", Items.ROTTEN_FLESH)
-          .advancement(SLResources.id("blood_sickness"))
-          .page(PatchouliTextPage.create(
-            "Blood sickness is the direct result of drinking blood. The more blood you drink, the more sick you get. It seems that at a high enough level it starts poisoning you, perhaps if you let the effect run out something interesting would happen?"
-          ));
 
         intro.entry("altar", "Altar", SLItems.ALTAR)
           .advancement(SLResources.id("unlock/grow_tree_and_become_vampire"))
@@ -182,7 +183,7 @@ public class SLPatchouliBooks extends PatchouliProvider {
           ))
           .page(PatchouliCraftingPage.create(SLItems.ALTAR));
 
-        intro.entry("become_vampire", "Vampires", BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE))
+        intro.entry("become_vampire", "Vampirism", BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE))
           .advancement(SLResources.id("become_vampire"))
           .page(PatchouliTextPage.create()
             .text("As a vampire, your body does not accept regular food. You require blood to sustain yourself.")

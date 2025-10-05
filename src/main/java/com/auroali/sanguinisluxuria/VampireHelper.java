@@ -346,9 +346,13 @@ public class VampireHelper {
      */
     public static boolean attemptConvertToVampire(LivingEntity entity) {
         // todo: maybe more conditions than just dying with bloodlust?
-        if (!entity.hasStatusEffect(SLStatusEffects.BLOOD_LUST))
+        if (!entity.hasStatusEffect(SLStatusEffects.BLOOD_LUST) || entity.hasStatusEffect(SLStatusEffects.BLOOD_PROTECTION))
             return false;
 
-        return SLConversions.convertEntity(new ConversionContext(entity.getWorld(), entity, ConversionContext.Conversion.CONVERTING));
+        boolean success = SLConversions.convertEntity(new ConversionContext(entity.getWorld(), entity, ConversionContext.Conversion.CONVERTING));
+        if (success && entity instanceof ServerPlayerEntity player) {
+            SLAdvancementCriterion.CONVERT.trigger(player, ConversionContext.Conversion.CONVERTING);
+        }
+        return success;
     }
 }

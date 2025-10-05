@@ -1,0 +1,27 @@
+{
+  "category": "sanguinisluxuria:intro",
+  "icon": "sanguinisluxuria:vampire_fang",
+  "name": "Vampires",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "I've heard of strange creatures that roam dark oak forests at night, feeding on blood... sometimes even giving others a temporary thirst for it. Some even say that one can become such a creature yourself.",
+      "title": "Vampires"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "sanguinisluxuria:vampire_fang",
+      "link_recipe": false,
+      "text": "A fang dropped by a vampire. It seems some sort of potion can be extracted from it by brewing it with a Mundane Potion."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion{Potion:\"sanguinisluxuria:bloodlust\"}",
+      "link_recipe": false,
+      "text": "A potion of Bloodlust. Seemingly a more concentrated version of the thirst for blood vampires are known to inflict on their targets sometimes.$(br2)And yet, it still seems temporary. Is there something I'm missing?"
+    }
+  ],
+  "priority": false,
+  "read_by_default": false,
+  "secret": false
+}

@@ -25,6 +25,7 @@ import net.minecraft.world.event.GameEvent;
 
 public interface VampireComponent extends Component, AutoSyncedComponent, ServerTickingComponent {
     ComponentKey<VampireComponent> KEY = ComponentRegistry.getOrCreate(SLResources.VAMPIRE_COMPONENT_ID, VampireComponent.class);
+    int BLOODLUST_TIME = 60;
 
     /**
      * @return if the holding entity is a vampire
@@ -119,7 +120,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
             StatusEffectInstance instance = target.getStatusEffect(SLStatusEffects.BLOOD_LUST);
             target.addStatusEffect(new StatusEffectInstance(
               SLStatusEffects.BLOOD_LUST,
-              instance == null ? 40 : instance.getDuration() + 40,
+              instance == null ? BLOODLUST_TIME : instance.getDuration() + BLOODLUST_TIME,
               0
             ));
         }

@@ -7,11 +7,15 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.goals.TeleportWhenOutOfRangeGoal;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
+import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -115,14 +119,32 @@ public class VampireVillagerEntity extends HostileEntity {
     public boolean tryAttack(Entity target) {
         BloodComponent blood = BloodComponent.KEY.get(this);
         VampireComponent vampire = VampireComponent.KEY.get(this);
-        if (target instanceof LivingEntity entity && VampireHelper.hasBlood(target) && !vampire.isMist() && this.bloodDrainTimer == 0 && blood.getBlood() < blood.getMaxBlood()) {
-            VampireComponent.handleBloodDrain(vampire, entity, this);
-            this.playSound(SLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
-            this.bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
-            this.onAttacking(target);
-            return true;
+        if (target instanceof LivingEntity entity && VampireHelper.hasBlood(target)) {
+            // apply weakness to the target if they have little blood left
+            // to attempt to convert them
+            BloodComponent targetBlood = BloodComponent.KEY.get(entity);
+            if (targetBlood.getBlood() < Math.min(4, targetBlood.getMaxBlood() / 6))
+                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 160));
+
+            if (!vampire.isMist()
+              && this.bloodDrainTimer == 0
+              && blood.getBlood() < blood.getMaxBlood()
+              && !this.shouldAttemptConvert(entity, blood)
+            ) {
+                VampireComponent.handleBloodDrain(vampire, entity, this);
+                this.playSound(SLSounds.DRAIN_BLOOD, 1.0f, 1.0f);
+                this.bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
+                this.onAttacking(target);
+                return true;
+            }
         }
         return super.tryAttack(target);
+    }
+
+    protected boolean shouldAttemptConvert(LivingEntity target, BloodComponent blood) {
+        return target.getType().isIn(SLTags.Entities.VAMPIRES_ATTEMPT_CONVERT)
+          && target.hasStatusEffect(SLStatusEffects.BLOOD_LUST)
+          && blood.getBlood() > blood.getMaxBlood() / 2;
     }
 
     public void setVillagerData(VillagerData data) {

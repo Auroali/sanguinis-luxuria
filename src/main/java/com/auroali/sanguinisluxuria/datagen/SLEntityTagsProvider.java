@@ -97,5 +97,11 @@ public class SLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
 
         this.getOrCreateTagBuilder(SLTags.Entities.TELEPORTS_ON_DRAIN)
           .add(EntityType.ENDERMAN);
+
+        this.getOrCreateTagBuilder(SLTags.Entities.VAMPIRES_ATTEMPT_CONVERT)
+          .add(
+            EntityType.VILLAGER,
+            EntityType.PLAYER
+          );
     }
 }
