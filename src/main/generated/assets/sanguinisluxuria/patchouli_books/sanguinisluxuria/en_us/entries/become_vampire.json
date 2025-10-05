@@ -2,7 +2,7 @@
   "advancement": "sanguinisluxuria:become_vampire",
   "category": "sanguinisluxuria:intro",
   "icon": "sanguinisluxuria:blood_bottle{Blood:{CurrentBlood:2,MaxBlood:2}}",
-  "name": "Vampires",
+  "name": "Vampirism",
   "pages": [
     {
       "type": "patchouli:text",

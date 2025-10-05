@@ -22,9 +22,7 @@ public class SLResources {
     public static final Identifier SUN_BLOCKING_HELMETS_ID = id("sun_blocking_helmets");
     public static final Identifier BLOOD_BOTTLE_ID = id("blood_bottle");
     public static final Identifier ITEM_GROUP_ID = id(SanguinisLuxuria.MODID);
-    public static final Identifier BLOOD_SICKNESS_ID = id("blood_sickness");
     public static final Identifier BLOOD_SPLATTER_ID = id("blood_splatter");
-    public static final Identifier CAN_DROP_BLOOD = id("can_drop_blood");
     public static final Identifier BLESSED_WATER_ID = id("blessed_water");
     public static final Identifier BLOOD_PROTECTION_ID = id("blessed_blood");
     public static final Identifier VAMPIRE_MASKS_ID = id("vampire_masks");
