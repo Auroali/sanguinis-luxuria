@@ -9,6 +9,7 @@
     "client.LightmapTextureManagerMixin",
     "client.LivingEntityClientMixin",
     "client.LivingEntityRendererMixin",
+    "compat.connectormod.present.ForgeGuiMixin",
     "compat.connectormod.missing.FabricInGameHudMixin"
   ],
   "mixins": [
@@ -29,7 +30,6 @@
     "VillagerHostilesSensorMixin",
     "WanderingTraderMixin",
     "compat.connectormod.missing.FabricServerWorldMixin",
-    "compat.connectormod.present.ForgeGuiMixin",
     "compat.connectormod.present.ForgeServerWorldMixin",
     "legacy.EnchantmentHelperMixin",
     "legacy.SimpleRegistryMixin"
