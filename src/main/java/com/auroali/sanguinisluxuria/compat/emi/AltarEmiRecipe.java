@@ -25,14 +25,16 @@ import net.minecraft.util.math.RotationAxis;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AltarEmiRecipe implements EmiRecipe {
-    final AltarRitualRecipe recipe;
-    final EmiIngredient catalyst;
-    final Ritual ritual;
-    final List<EmiIngredient> inputs;
-    final EmiStack output;
+    protected final AltarRitualRecipe recipe;
+    protected final EmiIngredient catalyst;
+    protected final Ritual ritual;
+    protected final List<EmiIngredient> inputs;
+    protected final List<EmiIngredient> combinedCatalystInputs;
+    protected final EmiStack output;
 
     public AltarEmiRecipe(AltarRitualRecipe recipe, EmiStack output) {
         this.recipe = recipe;
@@ -44,11 +46,14 @@ public class AltarEmiRecipe implements EmiRecipe {
         }
         this.inputs = stacks;
         this.output = output;
+        this.combinedCatalystInputs = new ArrayList<>(this.inputs.size() + 1);
+        this.combinedCatalystInputs.add(this.catalyst);
+        this.combinedCatalystInputs.addAll(this.inputs);
         this.calculateRemainders();
     }
 
     private void calculateRemainders() {
-        for (EmiIngredient ingredient : this.inputs) {
+        for (EmiIngredient ingredient : this.combinedCatalystInputs) {
             for (EmiStack stack : ingredient.getEmiStacks()) {
                 if (stack.isEmpty())
                     continue;
@@ -72,7 +77,7 @@ public class AltarEmiRecipe implements EmiRecipe {
 
     @Override
     public List<EmiIngredient> getInputs() {
-        return this.inputs;
+        return this.combinedCatalystInputs;
     }
 
     @Override
@@ -125,7 +130,5 @@ public class AltarEmiRecipe implements EmiRecipe {
           .large(true)
           .backgroundTexture(EmiCompat.TEXTURES, 0, 32)
           .recipeContext(this);
-
-
     }
 }

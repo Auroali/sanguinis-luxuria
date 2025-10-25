@@ -25,9 +25,9 @@ import org.joml.Matrix4f;
 import java.util.List;
 
 public class CauldronInfusingEmiRecipe implements EmiRecipe {
-    final BloodCauldronRecipe recipe;
-    final List<EmiIngredient> inputs;
-    final List<EmiStack> outputs;
+    protected final BloodCauldronRecipe recipe;
+    protected final List<EmiIngredient> inputs;
+    protected final List<EmiStack> outputs;
 
     public CauldronInfusingEmiRecipe(BloodCauldronRecipe recipe, MinecraftClient client) {
         this.recipe = recipe;
