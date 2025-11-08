@@ -55,9 +55,6 @@ public abstract class LivingEntityMixin extends Entity {
     protected abstract void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition);
 
     @Shadow
-    public abstract LivingEntity getLastAttacker();
-
-    @Shadow
     public abstract boolean removeStatusEffect(StatusEffect type);
 
     public LivingEntityMixin(EntityType<?> type, World world) {
@@ -149,18 +146,6 @@ public abstract class LivingEntityMixin extends Entity {
           .add(SLEntityAttributes.VULNERABILITY);
     }
 
-    @Inject(method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("HEAD"), cancellable = true)
-    public void sanguinisluxuria$modifyTargetTest(LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
-        // if the target is not a vampire or has attacked this entity since being downed, exit
-        if (!VampireHelper.isVampire(target) || this.getLastAttacker() == target)
-            return;
-
-        // prevent targeting downed vampires
-        VampireComponent vampire = VampireComponent.KEY.get(target);
-        if (vampire.isDowned())
-            cir.setReturnValue(false);
-    }
-
     @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
     public void sanguinisluxuria$preventBloodLustEffectForVampires(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
         if (effect.getEffectType() == SLStatusEffects.BLOOD_LUST && (VampireHelper.isVampire(this) || this.hasStatusEffect(SLStatusEffects.BLOOD_PROTECTION)))
@@ -182,8 +167,13 @@ public abstract class LivingEntityMixin extends Entity {
 
     @ModifyReturnValue(method = "getAttackDistanceScalingFactor", at = @At("RETURN"))
     public double sanguinisluxuria$modifyVisibility(double original) {
-        if (VampireHelper.isVampire(this) && VampireComponent.KEY.get(this).isMist())
-            return Math.min(0.07f, original);
+        if (VampireHelper.isVampire(this)) {
+            VampireComponent vampire = VampireComponent.KEY.get(this);
+            if (vampire.isDowned())
+                return Math.min(0.035f, original);
+            if (vampire.isMist())
+                return Math.min(0.07f, original);
+        }
         return original;
     }
 }
