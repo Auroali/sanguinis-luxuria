@@ -70,7 +70,6 @@ public class SLHud {
     }
 
     public static void showAbilityCooldowns(DrawContext context, MinecraftClient client, int height, VampireAbilityContainer container) {
-        TextRenderer renderer = client.textRenderer;
         context.getMatrices().push();
         context.getMatrices().translate(2, -2, 0);
         for (Map.Entry<VampireAbility, VampireAbilityContainer.AbilityEntry> entry : container) {

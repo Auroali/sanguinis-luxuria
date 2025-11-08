@@ -72,8 +72,8 @@ public class SLItemTagsProvider extends FabricTagProvider<Item> {
             SLItems.STRIPPED_DECAYED_LOG,
             SLItems.STRIPPED_DECAYED_WOOD,
             SLItems.HUNGRY_DECAYED_LOG,
-            SLItems.STRIPPED_HUNGRY_DECAYED_LOG)
-        ;
+            SLItems.STRIPPED_HUNGRY_DECAYED_LOG
+          );
         this.getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN)
           .add(
             SLItems.DECAYED_WOOD,

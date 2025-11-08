@@ -59,7 +59,10 @@ public class SLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
             EntityType.SNIFFER,
             EntityType.MOOSHROOM,
             EntityType.RABBIT,
-            EntityType.WITCH
+            EntityType.WITCH,
+            EntityType.VEX,
+            EntityType.ALLAY,
+            EntityType.BAT
           )
           .add(
             SLEntities.VAMPIRE_VILLAGER,
@@ -102,6 +105,12 @@ public class SLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
           .add(
             EntityType.VILLAGER,
             EntityType.PLAYER
+          );
+
+        this.getOrCreateTagBuilder(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS)
+          .add(
+            EntityType.ALLAY,
+            EntityType.VEX
           );
     }
 }
