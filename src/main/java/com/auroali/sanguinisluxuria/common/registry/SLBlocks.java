@@ -140,6 +140,7 @@ public class SLBlocks {
       SLBlockSetTypes.DECAYED_WOOD_TYPE);
     public static final Block DECAYED_BUTTON = new ButtonBlock(AbstractBlock.Settings
       .create()
+      .noCollision()
       .mapColor(MapColor.OFF_WHITE)
       .instrument(Instrument.BASS)
       .strength(0.5f)
