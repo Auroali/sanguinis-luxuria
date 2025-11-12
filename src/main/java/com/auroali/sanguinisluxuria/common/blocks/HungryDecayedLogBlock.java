@@ -122,7 +122,10 @@ public class HungryDecayedLogBlock extends PillarBlock {
 
         List<LivingEntity> entities = world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), boundingBox, VampireHelper::hasBlood);
 
-        for (LivingEntity entity : entities) {
+        int start = world.getRandom().nextInt(entities.size());
+        int end = start + entities.size();
+        for (int i = start; i < end; i++) {
+            LivingEntity entity = entities.get(i % entities.size());
             BloodComponent component = BloodComponent.KEY.get(entity);
             if (component.drainBlood(1)) {
                 world.playSound(null, pos, SLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
