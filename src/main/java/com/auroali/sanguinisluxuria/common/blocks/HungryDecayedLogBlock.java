@@ -143,7 +143,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
                   entityBox.getZLength() / 2.d,
                   0.d
                 );
-                return;
+                break;
             }
         }
     }
