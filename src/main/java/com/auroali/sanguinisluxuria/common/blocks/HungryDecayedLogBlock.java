@@ -121,6 +121,8 @@ public class HungryDecayedLogBlock extends PillarBlock {
         Box boundingBox = new Box(pos).expand(5);
 
         List<LivingEntity> entities = world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), boundingBox, VampireHelper::hasBlood);
+        if (entities.isEmpty())
+            return;
 
         int start = world.getRandom().nextInt(entities.size());
         int end = start + entities.size();
