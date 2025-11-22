@@ -4,10 +4,7 @@ import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
-import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.SLItems;
-import com.auroali.sanguinisluxuria.common.registry.SLParticles;
-import com.auroali.sanguinisluxuria.common.registry.SLSounds;
+import com.auroali.sanguinisluxuria.common.registry.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -129,6 +126,8 @@ public class HungryDecayedLogBlock extends PillarBlock {
         for (int i = start; i < end; i++) {
             LivingEntity entity = entities.get(i % entities.size());
             BloodComponent component = BloodComponent.KEY.get(entity);
+            if (component.getBlood() <= 1 && !entity.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
+                continue;
             if (component.drainBlood(1)) {
                 world.playSound(null, pos, SLSounds.DRAIN_BLOOD, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 world.setBlockState(pos, state.with(BLOOD_LEVEL, newLevel));
