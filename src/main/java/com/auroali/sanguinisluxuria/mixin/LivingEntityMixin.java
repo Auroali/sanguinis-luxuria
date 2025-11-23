@@ -176,4 +176,10 @@ public abstract class LivingEntityMixin extends Entity {
         }
         return original;
     }
+
+    @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
+    public void sanguinisluxuria$preventPushingWhileMist(CallbackInfoReturnable<Boolean> cir) {
+        if (VampireHelper.isVampire(this) && VampireComponent.KEY.get(this).isMist())
+            cir.setReturnValue(false);
+    }
 }

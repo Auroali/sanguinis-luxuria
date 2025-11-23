@@ -22,6 +22,7 @@ public class SLEntityComponents implements EntityComponentInitializer {
         registry.registerForPlayers(BloodComponent.KEY, PlayerBloodComponent::new, RespawnCopyStrategy.NEVER_COPY);
         registry.registerForPlayers(VampireComponent.KEY, PlayerVampireComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         registry.registerForPlayers(BloodDrainComponent.KEY, BloodDrainComponent::new, RespawnCopyStrategy.NEVER_COPY);
+        registry.registerForPlayers(BurnInSunComponent.KEY, BurnInSunComponent::new, RespawnCopyStrategy.NEVER_COPY);
         registry.beginRegistration(LivingEntity.class, BloodComponent.KEY)
           .impl(EntityBloodComponent.class)
           .end(EntityBloodComponent::new);

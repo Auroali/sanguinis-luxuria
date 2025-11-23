@@ -107,7 +107,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
             SyncableVampireAbility.syncAbility(
               target,
               SLVampireAbilities.INFECTIOUS,
-              InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(vampireEntity, target))
+              InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(vampireEntity, target, true))
             );
         }
 

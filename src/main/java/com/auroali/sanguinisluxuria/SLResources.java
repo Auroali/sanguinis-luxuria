@@ -163,6 +163,7 @@ public class SLResources {
     public static final Identifier EMIT_PARTICLES_S2C = id("emit_particles_s2c");
     public static final Identifier BLOOD_CAULDRON_COPY_ID = id("blood_cauldron_copy");
     public static final Identifier VAMPIRES_ATTEMPT_CONVERT = id("vampires_attempt_convert");
+    public static final Identifier BURN_IN_SUN_COMPONENT_ID = id("burn_in_sun");
 
     public static Identifier id(String path) {
         return new Identifier(SanguinisLuxuria.MODID, path);

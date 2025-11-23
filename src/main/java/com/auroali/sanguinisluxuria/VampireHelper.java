@@ -104,22 +104,34 @@ public class VampireHelper {
      * @param to   the entity to transfer effects to
      * @return the list of successfully transferred status effect instances
      */
-    public static List<StatusEffectInstance> transferStatusEffects(LivingEntity from, LivingEntity to) {
+    public static List<StatusEffectInstance> transferStatusEffects(LivingEntity from, LivingEntity to, boolean clearOriginal) {
         List<StatusEffectInstance> transferredEffects = new ArrayList<>(from.getStatusEffects().size());
         for (StatusEffectInstance instance : from.getStatusEffects()) {
             if (instance.isAmbient() || Registries.STATUS_EFFECT.getEntry(instance.getEffectType()).isIn(SLTags.StatusEffects.NON_TRANSFERABLE))
                 continue;
 
-            to.addStatusEffect(instance);
-            transferredEffects.add(instance);
+            StatusEffectInstance toAdd = new StatusEffectInstance(
+              instance.getEffectType(),
+              clearOriginal ? instance.getDuration() : Math.min(instance.getDuration(), 100),
+              instance.getAmplifier(),
+              instance.isAmbient(),
+              instance.shouldShowParticles(),
+              instance.shouldShowIcon(),
+              null,
+              instance.getFactorCalculationData()
+            );
+            to.addStatusEffect(toAdd);
+            transferredEffects.add(toAdd);
         }
 
         if (from instanceof ServerPlayerEntity player) {
             SLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, transferredEffects);
         }
 
-        // prevent removing effects that weren't transferred
-        transferredEffects.forEach(effect -> from.removeStatusEffect(effect.getEffectType()));
+        if (clearOriginal) {
+            // prevent removing effects that weren't transferred
+            transferredEffects.forEach(effect -> from.removeStatusEffect(effect.getEffectType()));
+        }
         return transferredEffects;
     }
 

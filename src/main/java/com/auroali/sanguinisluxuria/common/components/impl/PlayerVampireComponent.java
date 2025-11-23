@@ -3,12 +3,11 @@ package com.auroali.sanguinisluxuria.common.components.impl;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
+import com.auroali.sanguinisluxuria.common.abilities.active.MistAbility;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
-import com.auroali.sanguinisluxuria.common.enchantments.SunProtectionEnchantment;
-import com.auroali.sanguinisluxuria.common.events.VampireSunEvents;
 import com.auroali.sanguinisluxuria.common.network.ConditionalPacketWriter;
-import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
+import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -19,7 +18,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 
@@ -37,10 +35,6 @@ public class PlayerVampireComponent implements VampireComponent {
             component.isMist = buf.readBoolean();
             component.isDowned = buf.readBoolean();
         }
-      )
-      .section(SyncFlags.SUN,
-        (buf, component) -> buf.writeVarInt(component.sunTicks),
-        (buf, component) -> component.sunTicks = buf.readVarInt()
       )
       .section(SyncFlags.ABILITIES,
         (buf, component) -> component.container.writePacket(buf),
@@ -66,7 +60,6 @@ public class PlayerVampireComponent implements VampireComponent {
     private final VampireAbilityContainer container;
     private boolean isDowned;
     private boolean isMist;
-    private int sunTicks;
 
     public PlayerVampireComponent(PlayerEntity holder) {
         this.holder = holder;
@@ -84,7 +77,6 @@ public class PlayerVampireComponent implements VampireComponent {
         this.isVampire = isVampire;
         if (!isVampire) {
             this.removeModifiers();
-            this.sunTicks = 0;
             this.isDowned = false;
             for (VampireAbility a : this.container.abilities()) {
                 a.onUnVampire(this.holder, this);
@@ -97,7 +89,6 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void readFromNbt(NbtCompound tag) {
         this.isVampire = tag.getBoolean("IsVampire");
-        this.sunTicks = tag.getInt("TimeInSun");
         this.isDowned = tag.getBoolean("IsDowned");
         this.isMist = tag.getBoolean("IsMist");
         this.container.readNbt(tag);
@@ -108,7 +99,6 @@ public class PlayerVampireComponent implements VampireComponent {
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("IsVampire", this.isVampire);
-        tag.putInt("TimeInSun", this.sunTicks);
         tag.putBoolean("IsDowned", this.isDowned);
         tag.putBoolean("IsMist", this.isMist);
         this.container.writeNbt(tag);
@@ -121,7 +111,6 @@ public class PlayerVampireComponent implements VampireComponent {
 
         this.container.tick(this.holder, this);
 
-        this.tickSunEffects();
         this.tickBloodEffects();
 
         if (this.isDowned) {
@@ -133,6 +122,10 @@ public class PlayerVampireComponent implements VampireComponent {
               false,
               false
             ));
+        }
+
+        if (this.isMist() && this.getAbilityContainer().has(SLVampireAbilities.INFECTIOUS)) {
+            MistAbility.transferInfectiousEffects(this.holder);
         }
 
         if (this.state.isSet())
@@ -203,61 +196,8 @@ public class PlayerVampireComponent implements VampireComponent {
         VampireHelper.applyModifierFromBlood(this.holder, EntityAttributes.GENERIC_MAX_HEALTH, HEALTH_ATTRIBUTE, blood, b -> b.getBlood() >= 2);
     }
 
-    private void tickSunEffects() {
-        if (!this.isAffectedByDaylight()) {
-            if (this.sunTicks > 0) {
-                this.sunTicks = 0;
-                this.state.update(SyncFlags.SUN);
-            }
-            return;
-        }
-
-        if (this.sunTicks >= 1)
-            this.holder.addStatusEffect(new StatusEffectInstance(
-              StatusEffects.WEAKNESS,
-              10,
-              0,
-              true,
-              true
-            ));
-
-
-        if (this.sunTicks < this.getMaxTimeInSun()) {
-            this.sunTicks++;
-            this.state.update(SyncFlags.SUN);
-            return;
-        }
-
-        this.holder.setOnFireFor(6);
-    }
-
-    // from MobEntity
-    private boolean isAffectedByDaylight() {
-        if (this.holder.getWorld().isDay() && !this.holder.getWorld().isClient) {
-            float f = this.holder.getBrightnessAtEyes();
-            BlockPos blockPos = BlockPos.ofFloored(this.holder.getX(), this.holder.getEyeY(), this.holder.getZ());
-            boolean bl = this.holder.isWet() || this.holder.inPowderSnow || this.holder.wasInPowderSnow;
-            return f > 0.5F
-              && !bl
-              && this.holder.getWorld().isSkyVisible(blockPos)
-              && VampireSunEvents.CAN_BURN.invoker().canBurn(this.holder.getWorld(), this.holder, this);
-        }
-        return false;
-    }
-
-    public int getMaxTimeInSun() {
-        // combine sun resistance values and then convert from seconds to ticks
-        int time = (int) ((this.holder.getAttributeValue(SLEntityAttributes.SUN_RESISTANCE) + SunProtectionEnchantment.calculateForEntity(this.holder)) * 20.d);
-        return VampireSunEvents.MODIFY_SUN_TIME.invoker().getMaxTimeInSun(this.holder, this, time);
-    }
-
-    public int getTimeInSun() {
-        return this.sunTicks;
-    }
-
     private enum SyncFlags {
         STATE,
-        SUN,
         ABILITIES,
     }
 }

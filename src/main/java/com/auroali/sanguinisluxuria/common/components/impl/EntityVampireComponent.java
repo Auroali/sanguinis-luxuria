@@ -3,7 +3,9 @@ package com.auroali.sanguinisluxuria.common.components.impl;
 import com.auroali.sanguinisluxuria.common.abilities.DefaultedVampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
+import com.auroali.sanguinisluxuria.common.abilities.active.MistAbility;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import com.google.common.base.Predicates;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -70,6 +72,8 @@ public class EntityVampireComponent<T extends LivingEntity> implements VampireCo
     @Override
     public void serverTick() {
         this.abilities.tick(this.holder, this);
+        if (this.isMist() && this.getAbilityContainer().has(SLVampireAbilities.INFECTIOUS))
+            MistAbility.transferInfectiousEffects(this.holder);
     }
 
     @Override

@@ -55,7 +55,7 @@ public class BiteAbility extends VampireAbility {
             SyncableVampireAbility.syncAbility(
               entity,
               SLVampireAbilities.INFECTIOUS,
-              InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(entity, target))
+              InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(entity, target, true))
             );
         }
         if (component instanceof EntityTrackingDrainer drainer && target.isAlive()) {

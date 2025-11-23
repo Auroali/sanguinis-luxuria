@@ -1,5 +1,6 @@
 package com.auroali.sanguinisluxuria.common.abilities.active;
 
+import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.EntitySyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
@@ -12,6 +13,7 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -128,5 +130,13 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
                 instance.removeModifier(mod);
             }
         });
+    }
+
+    public static void transferInfectiousEffects(LivingEntity entity) {
+        World world = entity.getWorld();
+        world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), entity.getBoundingBox(), LivingEntity::isAlive)
+          .forEach(target -> {
+              VampireHelper.transferStatusEffects(entity, target, false);
+          });
     }
 }

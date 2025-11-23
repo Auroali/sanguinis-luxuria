@@ -9,8 +9,8 @@
     "client.LightmapTextureManagerMixin",
     "client.LivingEntityClientMixin",
     "client.LivingEntityRendererMixin",
-    "compat.connectormod.present.ForgeGuiMixin",
-    "compat.connectormod.missing.FabricInGameHudMixin"
+    "compat.connectormod.missing.FabricInGameHudMixin",
+    "compat.connectormod.present.ForgeGuiMixin"
   ],
   "mixins": [
     "AbstractBlockStateMixin",
