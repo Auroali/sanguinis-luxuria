@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.components;
 
 import com.auroali.sanguinisluxuria.SLResources;
+import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.enchantments.SunProtectionEnchantment;
 import com.auroali.sanguinisluxuria.common.events.VampireSunEvents;
 import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
@@ -78,7 +79,7 @@ public class BurnInSunComponent implements Component, ServerTickingComponent, Au
 
     @Override
     public void serverTick() {
-        if (!VampireComponent.KEY.isProvidedBy(this.holder))
+        if (!VampireHelper.isVampire(this.holder))
             return;
 
         if (!this.isAffectedByDaylight()) {
