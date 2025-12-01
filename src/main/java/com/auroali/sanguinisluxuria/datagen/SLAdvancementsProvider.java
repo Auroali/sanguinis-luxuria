@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.EffectsChangedCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.entity.EntityType;
@@ -190,7 +189,7 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
             true,
             false
           )
-          .criterion("drink_twisted_blood", ConsumeItemCriterion.Conditions.item(SLItems.TWISTED_BLOOD))
+          .criterion("drink_twisted_blood", InventoryChangedCriterion.Conditions.items(SLItems.TWISTED_BLOOD))
           .parent(growDecayedTree)
           .build(SLResources.id("drink_twisted_blood"));
 

@@ -3,13 +3,15 @@
   "criteria": {
     "drink_twisted_blood": {
       "conditions": {
-        "item": {
-          "items": [
-            "sanguinisluxuria:twisted_blood_bottle"
-          ]
-        }
+        "items": [
+          {
+            "items": [
+              "sanguinisluxuria:twisted_blood_bottle"
+            ]
+          }
+        ]
       },
-      "trigger": "minecraft:consume_item"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
