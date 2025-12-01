@@ -6,9 +6,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.world.World;
 
-public record ConversionContext(World world, Entity entity, Conversion conversion) {
+import java.util.function.Consumer;
+
+public record ConversionContext(World world, Entity entity, Conversion conversion, Consumer<Entity> convertedCallback) {
     public static ConversionContext from(Entity entity, Conversion conversion) {
-        return new ConversionContext(entity.getWorld(), entity, conversion);
+        return new ConversionContext(entity.getWorld(), entity, conversion, null);
+    }
+
+    public void onConverted(Entity entity) {
+        if (this.convertedCallback != null)
+            this.convertedCallback.accept(entity);
     }
 
     public enum Conversion implements StringIdentifiable {

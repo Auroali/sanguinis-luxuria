@@ -94,9 +94,9 @@ public abstract class LivingEntityMixin extends Entity {
         if (VampireDamageHandler.canKillVampire(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
             return false;
 
-        if (!VampireHelper.hasBlood(instance)
-          || (!VampireHelper.isVampire(instance) && !VampireHelper.attemptConvertToVampire(instance)))
-            return false;
+        if (!VampireHelper.hasBlood(instance) || !VampireHelper.isVampire(instance)) {
+            return VampireHelper.attemptConvertToVampire((LivingEntity) (Object) this);
+        }
 
         VampireComponent vampire = VampireComponent.KEY.get(instance);
         BloodComponent blood = BloodComponent.KEY.get(instance);

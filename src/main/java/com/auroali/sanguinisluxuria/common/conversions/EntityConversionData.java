@@ -62,6 +62,7 @@ public class EntityConversionData {
         Entity newEntity = this.type.apply(world, entity, this.target, newNbt);
         if (newEntity == entity) {
             VampireConversionEvents.AFTER_CONVERSION.invoker().afterConversion(context, newEntity);
+            context.onConverted(newEntity);
             return;
         }
 
@@ -78,6 +79,7 @@ public class EntityConversionData {
         entity.remove(Entity.RemovalReason.DISCARDED);
 
         VampireConversionEvents.AFTER_CONVERSION.invoker().afterConversion(context, newEntity);
+        context.onConverted(entity);
     }
 
     public static EntityConversionData fromJson(JsonObject object, CachedCodec<EntityConversionTransformer> transformerCache, CachedCodec<EntityConversionCondition> conditionCache) {
