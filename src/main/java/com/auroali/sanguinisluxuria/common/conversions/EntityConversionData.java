@@ -79,7 +79,7 @@ public class EntityConversionData {
         entity.remove(Entity.RemovalReason.DISCARDED);
 
         VampireConversionEvents.AFTER_CONVERSION.invoker().afterConversion(context, newEntity);
-        context.onConverted(entity);
+        context.onConverted(newEntity);
     }
 
     public static EntityConversionData fromJson(JsonObject object, CachedCodec<EntityConversionTransformer> transformerCache, CachedCodec<EntityConversionCondition> conditionCache) {
