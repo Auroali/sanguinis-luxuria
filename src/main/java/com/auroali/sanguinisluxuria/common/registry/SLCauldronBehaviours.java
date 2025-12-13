@@ -16,11 +16,11 @@ import java.util.Map;
 public class SLCauldronBehaviours {
     public static final Map<Item, CauldronBehavior> BLOOD_CAULDRON_BEHAVIOUR = CauldronBehavior.createMap();
     public static final CauldronBehavior BLOOD_STORING_ITEM_FILL = (state, world, pos, player, hand, stack) -> {
-        if (stack.getItem() instanceof BloodStorageItem item) {
+        if (stack.getItem() instanceof BloodStorageItem) {
             if (BloodStorageItem.getItemBlood(stack) >= BloodConstants.BLOOD_PER_BOTTLE) {
                 int bloodToDrain = Math.min(BloodStorageItem.getItemBlood(stack) / BloodConstants.BLOOD_PER_BOTTLE, LeveledCauldronBlock.MAX_LEVEL);
                 BloodStorageItem.decrementItemBlood(stack, bloodToDrain * BloodConstants.BLOOD_PER_BOTTLE);
-                if (BloodStorageItem.getItemBlood(stack) == 0) {
+                if (BloodStorageItem.isItemEmpty(stack)) {
                     ItemStack emptyStack = BloodStorageItem.createEmptyStackFor(stack);
                     if (emptyStack != stack)
                         player.setStackInHand(hand, emptyStack);
@@ -33,8 +33,8 @@ public class SLCauldronBehaviours {
         return ActionResult.FAIL;
     };
     public static final CauldronBehavior BLOOD_STORING_ITEM_DRAIN_FILL = (state, world, pos, player, hand, stack) -> {
-        if (stack.getItem() instanceof BloodStorageItem item) {
-            if (state.get(LeveledCauldronBlock.LEVEL) >= 1 && BloodStorageItem.getItemBlood(stack) <= BloodStorageItem.getItemMaxBlood(stack) - BloodConstants.BLOOD_PER_BOTTLE) {
+        if (stack.getItem() instanceof BloodStorageItem) {
+            if (state.get(LeveledCauldronBlock.LEVEL) >= 1 && BloodStorageItem.getItemCapacity(stack) >= BloodConstants.BLOOD_PER_BOTTLE) {
                 BloodStorageItem.incrementItemBlood(stack, BloodConstants.BLOOD_PER_BOTTLE);
 
                 LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
@@ -48,7 +48,7 @@ public class SLCauldronBehaviours {
                 return ActionResult.FAIL;
 
             BloodStorageItem.decrementItemBlood(stack, (newLevel - level) * BloodConstants.BLOOD_PER_BOTTLE);
-            if (BloodStorageItem.getItemMaxBlood(stack) == 0) {
+            if (BloodStorageItem.isItemEmpty(stack)) {
                 ItemStack emptyStack = BloodStorageItem.createEmptyStackFor(stack);
                 if (emptyStack != stack)
                     player.setStackInHand(hand, emptyStack);

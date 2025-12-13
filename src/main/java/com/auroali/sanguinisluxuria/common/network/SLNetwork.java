@@ -66,6 +66,7 @@ public class SLNetwork {
             });
 
             blood.setBlood(blood.getBlood() - filled);
+            player.getHungerManager().setSaturationLevel(BloodConstants.adjustSaturation(player, filled, -BloodConstants.SATURATION_PER_BLOOD_FILLED));
         });
     }
 }

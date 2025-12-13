@@ -25,7 +25,7 @@ public class BloodCauldronFillRecipe extends BloodCauldronRecipe {
     public boolean matches(SimpleInventory inventory, World world) {
         ItemStack stack = inventory.getStack(0);
         return this.ingredient.test(inventory.getStack(0))
-          && (!BloodStorageItem.isItemFillable(stack) || BloodStorageItem.getItemMaxBlood(stack) - BloodStorageItem.getItemBlood(stack) >= BloodConstants.BLOOD_PER_BOTTLE);
+          && (!BloodStorageItem.isItemFillable(stack) || BloodStorageItem.getItemCapacity(stack) >= BloodConstants.BLOOD_PER_BOTTLE);
     }
 
     @Override

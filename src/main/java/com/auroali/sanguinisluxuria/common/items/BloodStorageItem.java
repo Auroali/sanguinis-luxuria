@@ -107,7 +107,7 @@ public interface BloodStorageItem {
             getOrCreateBloodTag(stack);
 
         int blood = getItemBlood(stack);
-        if (blood - amount < 0)
+        if (blood < amount)
             return false;
 
         setItemBlood(stack, blood - amount);

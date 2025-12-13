@@ -70,7 +70,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         if (!VampireHelper.hasBlood(user)) {
             user.eatFood(world, stackCopy);
             BloodStorageItem.decrementItemBlood(stack, 1);
-            if (BloodStorageItem.getItemBlood(stack) == 0)
+            if (BloodStorageItem.isItemEmpty(stack))
                 return BloodStorageItem.createEmptyStackFor(stack);
 
             return stack;
@@ -91,11 +91,14 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         if (!(user instanceof PlayerEntity player && player.isCreative()))
             BloodStorageItem.decrementItemBlood(stack, bloodToFill);
 
-        ItemStack result = BloodStorageItem.getItemBlood(stack) == 0 ? BloodStorageItem.createEmptyStackFor(stack) : stack;
+        ItemStack result = BloodStorageItem.isItemEmpty(stack) ? BloodStorageItem.createEmptyStackFor(stack) : stack;
 
         if (VampireHelper.consumesBlood(user)) {
             // only add the blood to vampires
             userBlood.addBlood(bloodToFill);
+            if (user instanceof PlayerEntity player) {
+                player.getHungerManager().setSaturationLevel(BloodConstants.adjustSaturation(player, bloodToFill, BloodConstants.SATURATION_PER_BLOOD));
+            }
             return result;
         }
 
@@ -115,12 +118,12 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
-        return BloodStorageItem.getItemBlood(stack) > 0 ? UseAction.DRINK : UseAction.NONE;
+        return !BloodStorageItem.isItemEmpty(stack) ? UseAction.DRINK : UseAction.NONE;
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (BloodStorageItem.getItemBlood(user.getStackInHand(hand)) <= 0)
+        if (BloodStorageItem.isItemEmpty(user.getStackInHand(hand)))
             return TypedActionResult.pass(user.getStackInHand(hand));
         return super.use(world, user, hand);
     }
@@ -156,7 +159,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         // if the player is in survival, drain blood from the bottle
         if (!player.isCreative()) {
             BloodStorageItem.decrementItemBlood(stack, BloodConstants.BLOOD_PER_BOTTLE);
-            if (BloodStorageItem.getItemBlood(stack) <= 0)
+            if (BloodStorageItem.isItemEmpty(stack))
                 player.setStackInHand(context.getHand(), BloodStorageItem.createEmptyStackFor(stack));
         }
         // play the bottle empty sound and emit the block place game event

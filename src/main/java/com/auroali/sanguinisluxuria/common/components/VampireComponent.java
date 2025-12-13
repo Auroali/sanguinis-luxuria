@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
+import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import dev.onyxstudios.cca.api.v3.component.Component;
@@ -89,7 +90,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
         // handle differences between adding blood to the player and regular entities
         // (such as saturation)
         if (vampireEntity instanceof PlayerEntity player)
-            ((VampireHungerManager) player.getHungerManager()).sanguinisluxuria$addHunger(1, 0.65f);
+            ((VampireHungerManager) player.getHungerManager()).sanguinisluxuria$addHunger(1, BloodConstants.SATURATION_PER_BLOOD);
         else BloodComponent.KEY.get(vampireEntity).addBlood(1);
 
         BloodEvents.BLOOD_DRAINED.invoker().onBloodDrained(vampireEntity, target, 1);

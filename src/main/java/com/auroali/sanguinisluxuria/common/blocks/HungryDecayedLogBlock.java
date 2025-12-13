@@ -68,7 +68,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
         }
         // fill blood storing items
         if (stack.getItem() instanceof BloodStorageItem bloodStoringItem && bloodStoringItem.canFill() && state.get(BLOOD_LEVEL) >= 3) {
-            if (BloodStorageItem.getItemBlood(stack) > BloodStorageItem.getItemMaxBlood(stack) - BloodConstants.BLOOD_PER_BOTTLE)
+            if (BloodStorageItem.getItemCapacity(stack) < BloodConstants.BLOOD_PER_BOTTLE)
                 return ActionResult.FAIL;
 
             BloodStorageItem.incrementItemBlood(stack, BloodConstants.BLOOD_PER_BOTTLE);

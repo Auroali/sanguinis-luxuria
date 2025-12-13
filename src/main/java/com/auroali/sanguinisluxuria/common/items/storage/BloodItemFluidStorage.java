@@ -30,7 +30,7 @@ public class BloodItemFluidStorage implements Storage<FluidVariant>, StorageView
         if (!resource.equals(this.getResource()) || maxAmount == 0)
             return 0;
 
-        if (!BloodStorageItem.isItemFillable(stack) || BloodStorageItem.getItemBlood(stack) >= BloodStorageItem.getItemMaxBlood(stack))
+        if (!BloodStorageItem.isItemFillable(stack) || BloodStorageItem.isItemFull(stack))
             return 0;
 
         int bloodToFill = Math.min(
@@ -55,7 +55,7 @@ public class BloodItemFluidStorage implements Storage<FluidVariant>, StorageView
         if (!resource.equals(this.getResource()) || maxAmount == 0)
             return 0;
 
-        if (!BloodStorageItem.isItemDrainable(stack) || BloodStorageItem.getItemBlood(stack) == 0)
+        if (!BloodStorageItem.isItemDrainable(stack) || BloodStorageItem.isItemEmpty(stack))
             return 0;
 
         int bloodToDrain = Math.min(
@@ -72,7 +72,7 @@ public class BloodItemFluidStorage implements Storage<FluidVariant>, StorageView
 
     @Override
     public boolean isResourceBlank() {
-        return BloodStorageItem.getItemBlood(this.context.getItemVariant().toStack()) == 0;
+        return BloodStorageItem.isItemEmpty(this.context.getItemVariant().toStack());
     }
 
     @Override
