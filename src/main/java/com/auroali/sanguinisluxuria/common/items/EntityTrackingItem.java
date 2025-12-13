@@ -46,12 +46,11 @@ public interface EntityTrackingItem {
     }
 
     default void setTrackedEntity(ItemStack stack, UUID uuid, Text name) {
-        NbtCompound trackedTag = getOrCreateEntityTag(stack);
         if (uuid == null && name == null) {
-            trackedTag.remove(UUID_KEY);
-            trackedTag.remove(NAME_KEY);
+            stack.removeSubNbt(TRACKED_ENTITY);
             return;
         }
+        NbtCompound trackedTag = getOrCreateEntityTag(stack);
         trackedTag.putUuid(UUID_KEY, uuid);
         trackedTag.putString(NAME_KEY, Text.Serializer.toJson(name));
     }
