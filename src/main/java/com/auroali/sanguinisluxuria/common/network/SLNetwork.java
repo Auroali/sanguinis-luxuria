@@ -48,6 +48,9 @@ public class SLNetwork {
         });
 
         ServerPlayNetworking.registerGlobalReceiver(FillBloodItemC2S.ID, (packet, player, responseSender) -> {
+            if (!VampireHelper.isVampire(player))
+                return;
+
             ItemStack stack = player.getStackInHand(packet.hand());
             BloodComponent blood = BloodComponent.KEY.get(player);
             BloodDrainComponent drainer = BloodDrainComponent.KEY.get(player);

@@ -167,16 +167,19 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         // otherwise, handle filling blood storing items
         if (client.player != null && BloodDrainComponent.KEY.get(client.player).isDraining())
             ClientPlayNetworking.send(new DrainBloodC2S(false));
-        // if the player is holding a fillable item, send the packet as long as the key is held down
-        ItemStack toFill = VampireHelper.getItemInHand(
-          client.player,
-          Hand.MAIN_HAND,
-          stack -> stack.getItem() instanceof BloodStorageItem
-            || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(client.player, stack)
-        );
 
-        if (!toFill.isEmpty())
-            ClientPlayNetworking.send(new FillBloodItemC2S(VampireHelper.getHandForStack(client.player, toFill)));
+        if (VampireHelper.isVampire(client.player)) {
+            // if the player is holding a fillable item, send the packet as long as the key is held down
+            ItemStack toFill = VampireHelper.getItemInHand(
+              client.player,
+              Hand.MAIN_HAND,
+              stack -> stack.getItem() instanceof BloodStorageItem
+                || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(client.player, stack)
+            );
+
+            if (!toFill.isEmpty())
+                ClientPlayNetworking.send(new FillBloodItemC2S(VampireHelper.getHandForStack(client.player, toFill)));
+        }
     }
 
     public static boolean isLookingAtValidTarget() {
