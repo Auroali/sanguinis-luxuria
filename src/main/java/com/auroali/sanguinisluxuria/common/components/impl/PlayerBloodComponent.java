@@ -59,6 +59,6 @@ public class PlayerBloodComponent implements BloodComponent {
 
     @Override
     public boolean shouldSyncWith(ServerPlayerEntity player) {
-        return player != this.holder;
+        return player != this.holder && VampireHelper.isVampire(player);
     }
 }

@@ -34,28 +34,27 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         if (!this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
             this.maxBlood = 0;
             this.currentBlood = 0;
-            if (this.holder.getWorld() instanceof ServerWorld)
+            this.wasBaby = this.holder.isBaby();
+            if (!this.holder.getWorld().isClient)
                 BloodComponent.KEY.sync(this.holder);
             return;
         }
 
-        boolean needsToSetBlood = this.maxBlood == 0 || this.wasBaby != this.holder.isBaby();
+        boolean needsToSetBlood = this.maxBlood == 0 || this.currentBlood == -1;
         // if an entity isn't in the good blood tag, half the max amount of blood
         this.maxBlood = this.recalculateMaxBlood();
         // set the current blood value if it either is invalid or if this entity previously had no blood
-        if (this.currentBlood == -1 || needsToSetBlood)
+        if (needsToSetBlood)
             this.currentBlood = this.maxBlood;
         this.currentBlood = Math.min(this.currentBlood, this.maxBlood);
         this.wasBaby = this.holder.isBaby();
 
-        if (this.holder.getWorld() instanceof ServerWorld)
+        if (!this.holder.getWorld().isClient)
             BloodComponent.KEY.sync(this.holder);
     }
 
     @Override
     public boolean hasInitialized() {
-        if (this.currentBlood == -1 || this.maxBlood == -1)
-            return false;
         if (this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
             return this.maxBlood > 0;
         }
