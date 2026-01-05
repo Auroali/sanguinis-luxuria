@@ -1,5 +1,5 @@
 {
+  "exhaustion": 0.3,
   "message_id": "sanguinisluxuria.bite",
-  "scaling": "never",
-  "exhaustion": 0.3
+  "scaling": "never"
 }

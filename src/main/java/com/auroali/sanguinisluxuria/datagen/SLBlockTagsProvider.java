@@ -13,9 +13,9 @@ import net.minecraft.registry.tag.BlockTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SLBlockTagsProvider extends FabricTagProvider<Block> {
+public class SLBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
     public SLBlockTagsProvider(FabricDataOutput dataGenerator, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(dataGenerator, RegistryKeys.BLOCK, registriesFuture);
+        super(dataGenerator, registriesFuture);
     }
 
     @Override
@@ -27,7 +27,8 @@ public class SLBlockTagsProvider extends FabricTagProvider<Block> {
             SLBlocks.DEEPSLATE_SILVER_ORE,
             SLBlocks.SILVER_BLOCK,
             SLBlocks.RAW_SILVER_BLOCK,
-            SLBlocks.SILVER_BARS
+            SLBlocks.SILVER_BARS,
+            SLBlocks.SILVER_PRESSURE_PLATE
           );
         this.getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
           .add(

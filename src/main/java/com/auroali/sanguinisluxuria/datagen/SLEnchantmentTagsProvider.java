@@ -10,9 +10,9 @@ import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SLEnchantmentTagsProvider extends FabricTagProvider<Enchantment> {
+public class SLEnchantmentTagsProvider extends FabricTagProvider.EnchantmentTagProvider {
     public SLEnchantmentTagsProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(output, RegistryKeys.ENCHANTMENT, registriesFuture);
+        super(output, registriesFuture);
     }
 
     @Override

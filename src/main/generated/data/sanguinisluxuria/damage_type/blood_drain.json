@@ -1,5 +1,5 @@
 {
+  "exhaustion": 0.1,
   "message_id": "sanguinisluxuria.blood_drain",
-  "scaling": "never",
-  "exhaustion": 0.1
+  "scaling": "never"
 }

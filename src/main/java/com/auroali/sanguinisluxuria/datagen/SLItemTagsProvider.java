@@ -13,9 +13,9 @@ import net.minecraft.registry.tag.ItemTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SLItemTagsProvider extends FabricTagProvider<Item> {
+public class SLItemTagsProvider extends FabricTagProvider.ItemTagProvider {
     public SLItemTagsProvider(FabricDataOutput dataGenerator, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(dataGenerator, RegistryKeys.ITEM, registriesFuture);
+        super(dataGenerator, registriesFuture);
     }
 
     @Override

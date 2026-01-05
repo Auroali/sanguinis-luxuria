@@ -11,9 +11,9 @@ import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SLEntityTagsProvider extends FabricTagProvider<EntityType<?>> {
+public class SLEntityTagsProvider extends FabricTagProvider.EntityTypeTagProvider {
     public SLEntityTagsProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(output, RegistryKeys.ENTITY_TYPE, registriesFuture);
+        super(output, registriesFuture);
     }
 
     @Override

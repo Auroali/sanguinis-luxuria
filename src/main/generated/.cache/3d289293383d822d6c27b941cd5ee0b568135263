@@ -1,4 +1,4 @@
-// 1.20.1	2025-12-01T15:50:52.895369289	Sanguinis Luxuria/Tags for minecraft:block
+// 1.20.1	2026-01-05T17:09:49.563609628	Sanguinis Luxuria/Tags for minecraft:block
 e907755d879be948ac26842fab1558331a2743eb data/minecraft/tags/blocks/wooden_pressure_plates.json
 cbc32d4bc22046141999636336671badf0644782 data/sanguinisluxuria/tags/blocks/decayed_logs.json
 178878e9bb91da550b3f1bd46120161853ccd222 data/minecraft/tags/blocks/wooden_doors.json
@@ -22,6 +22,6 @@ d62ad4e58046e1c7718cfbccc3ead5b25e9db738 data/minecraft/tags/blocks/mineable/axe
 3834d12c6b786b3d3a1eb209fb685d1dfd849abf data/minecraft/tags/blocks/cauldrons.json
 cabe123adcbd020d55fa43f4b29ebb0565efd8ff data/minecraft/tags/blocks/wooden_slabs.json
 20092aaced62cce39c57459227613c0d7ec3a574 data/minecraft/tags/blocks/saplings.json
-a9a09de3fd702c185d618cc53afa16905b863356 data/minecraft/tags/blocks/mineable/pickaxe.json
+4b29a5f04535c14918b42a3b0904661475eb61fe data/minecraft/tags/blocks/mineable/pickaxe.json
 4bf2ba1d547c21f67ea0d3c84b7ca18ec674b1f8 data/minecraft/tags/blocks/wooden_buttons.json
 cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/blocks/logs.json
