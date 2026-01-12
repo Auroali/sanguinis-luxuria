@@ -49,7 +49,9 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         this.currentBlood = Math.min(this.currentBlood, this.maxBlood);
         this.wasBaby = this.holder.isBaby();
 
-        if (!this.holder.getWorld().isClient)
+        // has to be an instanceof check so that create schematics
+        // don't error
+        if (this.holder.getWorld() instanceof ServerWorld)
             BloodComponent.KEY.sync(this.holder);
     }
 
