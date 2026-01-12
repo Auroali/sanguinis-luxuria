@@ -30,6 +30,7 @@ public class SLItemGroups {
               entries.add(SLItems.MASK_1);
               entries.add(SLItems.MASK_2);
               entries.add(SLItems.MASK_3);
+              entries.add(SLItems.VAMPIRE_FANG);
               entries.add(SLItems.BLOOD_PETAL);
               entries.add(SLItems.PENDANT_OF_PIERCING);
               entries.add(SLItems.SILVER_SWORD);
