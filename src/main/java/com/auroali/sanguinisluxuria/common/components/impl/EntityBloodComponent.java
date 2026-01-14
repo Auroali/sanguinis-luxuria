@@ -78,8 +78,8 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         this.currentBlood = Math.min(tag.getInt("Blood"), this.maxBlood);
         this.bloodGainTimer = tag.getInt("BloodTimer");
         this.wasBaby = tag.getBoolean("Baby");
-        if (this.currentBlood == 0 && this.maxBlood > 0 && !this.holder.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
-            this.currentBlood = this.maxBlood;
+        if (!this.hasInitialized() || this.wasBaby != this.holder.isBaby())
+            this.initializeBloodValues();
     }
 
     @Override
