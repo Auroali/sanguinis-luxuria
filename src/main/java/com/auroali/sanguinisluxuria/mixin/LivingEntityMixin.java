@@ -170,7 +170,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (VampireHelper.isVampire(this)) {
             VampireComponent vampire = VampireComponent.KEY.get(this);
             if (vampire.isDowned())
-                return Math.min(0.035f, original);
+                return Math.min(0.1f, original);
             if (vampire.isMist())
                 return Math.min(0.07f, original);
         }
