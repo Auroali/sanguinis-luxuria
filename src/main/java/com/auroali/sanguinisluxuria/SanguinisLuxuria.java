@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria;
 
 import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
 import com.auroali.sanguinisluxuria.common.blockentities.PedestalBlockEntity;
-import com.auroali.sanguinisluxuria.common.commands.BloodlustCommand;
+import com.auroali.sanguinisluxuria.common.commands.SanguinisLuxuriaCommand;
 import com.auroali.sanguinisluxuria.common.commands.arguments.ConversionArgument;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
@@ -86,7 +86,7 @@ public class SanguinisLuxuria implements ModInitializer {
           ConstantArgumentSerializer.of(ConversionArgument::conversion)
         );
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(BloodlustCommand.register()));
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(SanguinisLuxuriaCommand.register()));
 
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
             if (VampireHelper.isVampire(newPlayer)) {

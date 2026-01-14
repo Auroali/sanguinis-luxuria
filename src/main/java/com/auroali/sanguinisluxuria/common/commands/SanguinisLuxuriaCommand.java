@@ -7,7 +7,7 @@ import net.minecraft.server.command.ServerCommandSource;
 
 import java.util.Locale;
 
-public class BloodlustCommand {
+public class SanguinisLuxuriaCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal(SanguinisLuxuria.MODID.toLowerCase(Locale.ROOT))
           .requires(ctx -> ctx.hasPermissionLevel(2))
