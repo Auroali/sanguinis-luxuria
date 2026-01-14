@@ -12,6 +12,7 @@ public class BloodlustCommand {
         return CommandManager.literal(SanguinisLuxuria.MODID.toLowerCase(Locale.ROOT))
           .requires(ctx -> ctx.hasPermissionLevel(2))
           .then(AbilityCommand.register())
-          .then(ConvertCommand.register());
+          .then(ConvertCommand.register())
+          .then(GuidebookCommand.register());
     }
 }
