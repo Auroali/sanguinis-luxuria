@@ -60,6 +60,7 @@ public class SLHud {
             context.drawTexture(SLResources.ICONS, fangX, fangY, 0, 0, 26, 7, 256, 256);
         context.drawTexture(SLResources.ICONS, bloodBarX, bloodBarY, 0, 14, 14, 3, 256, 256);
 
+        RenderSystem.defaultBlendFunc();
         RenderSystem.disableBlend();
 
         context.drawTexture(SLResources.ICONS, bloodBarX + 1, bloodBarY, 15, 14, (int) (bloodPercent * 13), 3, 256, 256);
