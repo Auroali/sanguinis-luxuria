@@ -38,6 +38,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import org.lwjgl.glfw.GLFW;
 
 public class SanguinisLuxuriaClient implements ClientModInitializer {
     public static final KeyBinding SUCK_BLOOD = new KeyBinding(
@@ -138,16 +139,20 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         KeyBindingHelper.registerKeyBinding(ACTIVATE_MIST);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (ACTIVATE_BITE.wasPressed()) {
-                ClientPlayNetworking.send(new ActivateAbilityC2S(SLVampireAbilities.BITE));
+            //while (ACTIVATE_BITE.wasPressed()) {
+            if (GLFW.glfwGetKey(client.getWindow().getHandle(),ACTIVATE_BITE.getDefaultKey().getCode()) == GLFW.GLFW_PRESS) {
+                    ClientPlayNetworking.send(new ActivateAbilityC2S(SLVampireAbilities.BITE));
             }
-            while (ACTIVATE_BLINK.wasPressed()) {
+            //while (ACTIVATE_BLINK.wasPressed()) {
+            if (GLFW.glfwGetKey(client.getWindow().getHandle(),ACTIVATE_BLINK.getDefaultKey().getCode()) == GLFW.GLFW_PRESS) {
                 ClientPlayNetworking.send(new ActivateAbilityC2S(SLVampireAbilities.TELEPORT));
             }
-            while (ACTIVATE_MIST.wasPressed()) {
+            //while (ACTIVATE_MIST.wasPressed()) {
+            if (GLFW.glfwGetKey(client.getWindow().getHandle(),ACTIVATE_MIST.getDefaultKey().getCode()) == GLFW.GLFW_PRESS) {
                 ClientPlayNetworking.send(new ActivateAbilityC2S(SLVampireAbilities.MIST));
             }
-            if (SUCK_BLOOD.isPressed()) {
+            //if (SUCK_BLOOD.isPressed()) {
+            if (GLFW.glfwGetKey(client.getWindow().getHandle(),SUCK_BLOOD.getDefaultKey().getCode()) == GLFW.GLFW_PRESS) {
                 this.handeBloodDrainPress(client);
             } else if (client.player != null && BloodDrainComponent.KEY.get(client.player).isDraining()) {
                 ClientPlayNetworking.send(new DrainBloodC2S(false));
