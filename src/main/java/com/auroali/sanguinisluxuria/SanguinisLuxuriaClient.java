@@ -52,19 +52,19 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
     public static final KeyBinding ACTIVATE_BITE = new KeyBinding(
       "key.sanguinisluxuria.activate_bite",
       InputUtil.Type.KEYSYM,
-      InputUtil.GLFW_KEY_X,
+      InputUtil.GLFW_KEY_G,
       "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static final KeyBinding ACTIVATE_BLINK = new KeyBinding(
       "key.sanguinisluxuria.activate_blink",
       InputUtil.Type.KEYSYM,
-      InputUtil.GLFW_KEY_Z,
+      InputUtil.GLFW_KEY_V,
       "category.sanguinisluxuria.sanguinisluxuria"
     );
     public static final KeyBinding ACTIVATE_MIST = new KeyBinding(
       "key.sanguinisluxuria.activate_mist",
       InputUtil.Type.KEYSYM,
-      InputUtil.GLFW_KEY_C,
+      InputUtil.GLFW_KEY_B,
       "category.sanguinisluxuria.sanguinisluxuria"
     );
 
