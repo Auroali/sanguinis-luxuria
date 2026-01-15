@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:bypasses_invulnerability",
+    "#sanguinisluxuria:vampires_weak_to",
+    {
+      "id": "hexcasting:overcast",
+      "required": false
+    }
+  ]
+}

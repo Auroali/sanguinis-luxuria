@@ -91,7 +91,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (original.call(instance, source))
             return true;
 
-        if (VampireDamageHandler.canKillVampire(source) || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
+        if (VampireDamageHandler.canKillVampire(source))
             return false;
 
         if (!VampireHelper.hasBlood(instance) || !VampireHelper.isVampire(instance)) {

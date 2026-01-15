@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 
 public class VampireDamageHandler {
     public static boolean canKillVampire(DamageSource source) {
-        if (isEffectiveAgainstVampires(source))
+        if (source.isIn(SLTags.DamageTypes.CAN_KILL_VAMPIRES))
             return true;
 
         Entity attacker = source.getAttacker();

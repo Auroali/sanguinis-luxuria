@@ -59,6 +59,7 @@ public class SLTags {
 
     public static class DamageTypes {
         public static final TagKey<DamageType> VAMPIRES_WEAK_TO = TagKey.of(RegistryKeys.DAMAGE_TYPE, SLResources.VAMPIRES_WEAK_TO_ID);
+        public static final TagKey<DamageType> CAN_KILL_VAMPIRES = TagKey.of(RegistryKeys.DAMAGE_TYPE, SLResources.CAN_KILL_VAMPIRES);
     }
 
     public static class Biomes {

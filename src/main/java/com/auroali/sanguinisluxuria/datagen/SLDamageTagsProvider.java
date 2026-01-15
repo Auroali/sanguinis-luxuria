@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -37,5 +38,9 @@ public class SLDamageTagsProvider extends FabricTagProvider<DamageType> {
           .forceAddTag(DamageTypeTags.WITCH_RESISTANT_TO)
           .forceAddTag(DamageTypeTags.IS_FIRE)
           .addOptional(SLResources.BLESSED_WATER_DAMAGE_KEY);
+        this.getOrCreateTagBuilder(SLTags.DamageTypes.CAN_KILL_VAMPIRES)
+          .forceAddTag(DamageTypeTags.BYPASSES_INVULNERABILITY)
+          .addTag(SLTags.DamageTypes.VAMPIRES_WEAK_TO)
+          .addOptional(new Identifier("hexcasting", "overcast"));
     }
 }
