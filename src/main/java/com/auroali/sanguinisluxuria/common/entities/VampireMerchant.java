@@ -166,18 +166,18 @@ public class VampireMerchant extends MerchantEntity {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_VILLAGER_HURT;
+        return SoundEvents.ENTITY_PILLAGER_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_VILLAGER_DEATH;
+        return SoundEvents.ENTITY_PILLAGER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_VILLAGER_AMBIENT;
+        return SoundEvents.ENTITY_PILLAGER_AMBIENT;
     }
 
     @Nullable

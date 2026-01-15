@@ -16,6 +16,7 @@ public abstract class PatchouliTextTitlePage<T extends PatchouliTextTitlePage<?>
         this.title = Optional.empty();
     }
 
+    @SuppressWarnings("unchecked")
     public T text(String text) {
         if (this.text.isPresent()) {
             this.text = Optional.of(this.text.get() + "$(br2)" + text);
@@ -29,6 +30,7 @@ public abstract class PatchouliTextTitlePage<T extends PatchouliTextTitlePage<?>
         return this.text(String.join("$(br)", text));
     }
 
+    @SuppressWarnings("unchecked")
     public T title(String title) {
         this.title = Optional.of(title);
         return (T) this;

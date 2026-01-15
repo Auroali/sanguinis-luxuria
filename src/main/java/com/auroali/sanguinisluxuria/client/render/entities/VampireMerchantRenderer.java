@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class VampireMerchantRenderer extends MobEntityRenderer<VampireMerchant, VillagerResemblingModel<VampireMerchant>> {
     public VampireMerchantRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new VillagerResemblingModel<>(ctx.getModelLoader().getModelPart(SLModelLayers.VAMPIRE_VILLAGER)), 0.6f);
+        super(ctx, new VillagerResemblingModel<>(ctx.getModelLoader().getModelPart(SLModelLayers.VAMPIRE_MERCHANT)), 0.6f);
         this.addFeature(new HeadFeatureRenderer<>(this, ctx.getModelLoader(), ctx.getHeldItemRenderer()));
         this.addFeature(new VillagerHeldItemFeatureRenderer<>(this, ctx.getHeldItemRenderer()));
     }

@@ -5,7 +5,7 @@ import com.auroali.sanguinisluxuria.common.components.impl.EntityVampireComponen
 import com.auroali.sanguinisluxuria.common.components.impl.PlayerBloodComponent;
 import com.auroali.sanguinisluxuria.common.components.impl.PlayerVampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
-import com.auroali.sanguinisluxuria.common.entities.VampireVillagerEntity;
+import com.auroali.sanguinisluxuria.common.entities.VampireIllagerEntity;
 import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
@@ -27,7 +27,7 @@ public class SLEntityComponents implements EntityComponentInitializer {
           .impl(EntityBloodComponent.class)
           .end(EntityBloodComponent::new);
         registry.registerFor(TridentEntity.class, BloodTransferComponent.KEY, BloodTransferComponent::new);
-        registry.registerFor(VampireVillagerEntity.class, VampireComponent.KEY, e -> new EntityVampireComponent<>(e, SLVampireAbilities.TELEPORT));
+        registry.registerFor(VampireIllagerEntity.class, VampireComponent.KEY, e -> new EntityVampireComponent<>(e, SLVampireAbilities.TELEPORT));
         registry.registerFor(VampireMerchant.class, VampireComponent.KEY, e -> new EntityVampireComponent<>(e, SLVampireAbilities.MIST));
     }
 }

@@ -2,7 +2,7 @@ package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
-import com.auroali.sanguinisluxuria.common.entities.VampireVillagerEntity;
+import com.auroali.sanguinisluxuria.common.entities.VampireIllagerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
@@ -16,11 +16,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.world.Heightmap;
 
 public class SLEntities {
-    public static final EntityType<VampireVillagerEntity> VAMPIRE_VILLAGER = EntityType.Builder
-      .create(VampireVillagerEntity::new, SpawnGroup.MONSTER)
+    public static final EntityType<VampireIllagerEntity> VAMPIRE_VILLAGER = EntityType.Builder
+      .create(VampireIllagerEntity::new, SpawnGroup.MONSTER)
       .maxTrackingRange(10)
       .setDimensions(0.6F, 1.95F)
-      .build(SLResources.VAMPIRE_VILLAGER.toString());
+      .build(SLResources.VAMPIRE_ILLAGER.toString());
     public static final EntityType<VampireMerchant> VAMPIRE_MERCHANT = EntityType.Builder
       .create(VampireMerchant::new, SpawnGroup.MONSTER)
       .maxTrackingRange(10)
@@ -29,7 +29,7 @@ public class SLEntities {
 
 
     public static void register() {
-        Registry.register(Registries.ENTITY_TYPE, SLResources.VAMPIRE_VILLAGER, VAMPIRE_VILLAGER);
+        Registry.register(Registries.ENTITY_TYPE, SLResources.VAMPIRE_ILLAGER, VAMPIRE_VILLAGER);
         Registry.register(Registries.ENTITY_TYPE, SLResources.VAMPIRE_MERCHANT, VAMPIRE_MERCHANT);
 
         registerAttributes();
@@ -38,7 +38,7 @@ public class SLEntities {
 
     public static void registerAttributes() {
         FabricDefaultAttributeRegistry
-          .register(VAMPIRE_VILLAGER, VampireVillagerEntity.createHostileAttributes()
+          .register(VAMPIRE_VILLAGER, VampireIllagerEntity.createHostileAttributes()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
             .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7)
             .add(EntityAttributes.GENERIC_ARMOR, 2)

@@ -49,7 +49,7 @@ public class SLResources {
     public static final Identifier BLEEDING_ID = id("bleeding");
     public static final Identifier BLEEDING_SOUND = id("bleeding");
     public static final Identifier INFECT_ENTITY_ID = id("infect_entity");
-    public static final Identifier VAMPIRE_VILLAGER = id("vampire_villager");
+    public static final Identifier VAMPIRE_ILLAGER = id("vampire_villager");
     public static final Identifier VAMPIRE_VILLAGER_TEXTURE = id("textures/entity/vampire_villager.png");
     public static final Identifier VAMPIRE_MERCHANT_TEXTURE = id("textures/entity/vampire_merchant.png");
     public static final Identifier VAMPIRE_VILLAGER_SPAWN_EGG = id("vampire_villager_spawn_egg");

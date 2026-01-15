@@ -16,7 +16,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.IllagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,13 +30,13 @@ import net.minecraft.village.VillagerData;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class VampireVillagerEntity extends HostileEntity {
+public class VampireIllagerEntity extends IllagerEntity {
     private int bloodDrainTimer;
     private VillagerData villagerData;
     private NbtCompound offers;
     private int xp;
 
-    public VampireVillagerEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public VampireIllagerEntity(EntityType<? extends IllagerEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -116,6 +116,11 @@ public class VampireVillagerEntity extends HostileEntity {
     }
 
     @Override
+    public void addBonusForWave(int wave, boolean unused) {
+
+    }
+
+    @Override
     public boolean tryAttack(Entity target) {
         BloodComponent blood = BloodComponent.KEY.get(this);
         VampireComponent vampire = VampireComponent.KEY.get(this);
@@ -153,18 +158,18 @@ public class VampireVillagerEntity extends HostileEntity {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_VILLAGER_HURT;
+        return SoundEvents.ENTITY_PILLAGER_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_VILLAGER_DEATH;
+        return SoundEvents.ENTITY_PILLAGER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_VILLAGER_AMBIENT;
+        return SoundEvents.ENTITY_PILLAGER_AMBIENT;
     }
 
     @Override
@@ -192,5 +197,15 @@ public class VampireVillagerEntity extends HostileEntity {
             this.offers = nbt.getCompound("Offers");
         if (nbt.contains("Xp"))
             this.xp = nbt.getInt("Xp");
+    }
+
+    @Override
+    public SoundEvent getCelebratingSound() {
+        return SoundEvents.ENTITY_PILLAGER_CELEBRATE;
+    }
+
+    @Override
+    public State getState() {
+        return State.NEUTRAL;
     }
 }

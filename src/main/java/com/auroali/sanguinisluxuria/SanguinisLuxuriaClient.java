@@ -6,7 +6,7 @@ import com.auroali.sanguinisluxuria.client.particles.AltarParticle;
 import com.auroali.sanguinisluxuria.client.particles.DrippingBloodParticle;
 import com.auroali.sanguinisluxuria.client.render.blocks.ItemDisplayingBlockEntityRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireMerchantRenderer;
-import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRenderer;
+import com.auroali.sanguinisluxuria.client.render.entities.VampireIllagerRenderer;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
@@ -100,7 +100,7 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(SLBlocks.POTTED_GRAFTED_SAPLING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(SLBlocks.SILVER_BARS, RenderLayer.getCutout());
 
-        EntityRendererRegistry.register(SLEntities.VAMPIRE_VILLAGER, VampireVillagerRenderer::new);
+        EntityRendererRegistry.register(SLEntities.VAMPIRE_VILLAGER, VampireIllagerRenderer::new);
         EntityRendererRegistry.register(SLEntities.VAMPIRE_MERCHANT, VampireMerchantRenderer::new);
 
         BlockEntityRendererFactories.register(SLBlockEntities.PEDESTAL, ctx -> new ItemDisplayingBlockEntityRenderer<>(ctx.getItemRenderer()));

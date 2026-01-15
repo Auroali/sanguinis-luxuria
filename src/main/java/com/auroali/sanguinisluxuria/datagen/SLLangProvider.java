@@ -135,7 +135,7 @@ public class SLLangProvider extends FabricLanguageProvider {
     }
 
     private static void entities(TranslationBuilder translationBuilder) {
-        translationBuilder.add(SLEntities.VAMPIRE_VILLAGER, "Vampiric Villager");
+        translationBuilder.add(SLEntities.VAMPIRE_VILLAGER, "Vampiric Illager");
         translationBuilder.add(SLEntities.VAMPIRE_MERCHANT, "Vampiric Merchant");
     }
 
@@ -219,7 +219,7 @@ public class SLLangProvider extends FabricLanguageProvider {
         translationBuilder.add(SLItems.SILVER_PICKAXE, "Silver Pickaxe");
         translationBuilder.add(SLItems.SILVER_SHOVEL, "Silver Shovel");
         translationBuilder.add(SLItems.SILVER_HOE, "Silver Hoe");
-        translationBuilder.add(SLItems.VAMPIRE_VILLAGER_SPAWN_EGG, "Vampire Villager Spawn Egg");
+        translationBuilder.add(SLItems.VAMPIRE_VILLAGER_SPAWN_EGG, "Vampiric Illager Spawn Egg");
         translationBuilder.add(SLItems.MASK_1, "Carved Mask");
         translationBuilder.add(SLItems.MASK_2, "Carved Mask");
         translationBuilder.add(SLItems.MASK_3, "Carved Mask");
