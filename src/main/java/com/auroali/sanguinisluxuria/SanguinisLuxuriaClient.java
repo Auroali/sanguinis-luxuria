@@ -7,7 +7,10 @@ import com.auroali.sanguinisluxuria.client.particles.DrippingBloodParticle;
 import com.auroali.sanguinisluxuria.client.render.blocks.ItemDisplayingBlockEntityRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireMerchantRenderer;
 import com.auroali.sanguinisluxuria.client.render.entities.VampireVillagerRenderer;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
+import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.network.SLClientNetwork;
@@ -138,14 +141,11 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         KeyBindingHelper.registerKeyBinding(ACTIVATE_MIST);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (ACTIVATE_BITE.wasPressed()) {
-                ClientPlayNetworking.send(new ActivateAbilityC2S(SLVampireAbilities.BITE));
-            }
-            while (ACTIVATE_BLINK.wasPressed()) {
-                ClientPlayNetworking.send(new ActivateAbilityC2S(SLVampireAbilities.TELEPORT));
-            }
-            while (ACTIVATE_MIST.wasPressed()) {
-                ClientPlayNetworking.send(new ActivateAbilityC2S(SLVampireAbilities.MIST));
+            if (VampireHelper.isVampire(client.player)) {
+                VampireAbilityContainer container = VampireComponent.KEY.get(client.player).getAbilityContainer();
+                this.handleAbilityKey(container, SLVampireAbilities.BITE, ACTIVATE_BITE);
+                this.handleAbilityKey(container, SLVampireAbilities.TELEPORT, ACTIVATE_BLINK);
+                this.handleAbilityKey(container, SLVampireAbilities.MIST, ACTIVATE_MIST);
             }
             if (SUCK_BLOOD.isPressed()) {
                 this.handeBloodDrainPress(client);
@@ -179,6 +179,14 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
 
             if (!toFill.isEmpty())
                 ClientPlayNetworking.send(new FillBloodItemC2S(VampireHelper.getHandForStack(client.player, toFill)));
+        }
+    }
+
+    private void handleAbilityKey(VampireAbilityContainer container, VampireAbility ability, KeyBinding keyBinding) {
+        if (container.has(ability)) {
+            while (keyBinding.wasPressed()) {
+                ClientPlayNetworking.send(new ActivateAbilityC2S(ability));
+            }
         }
     }
 
