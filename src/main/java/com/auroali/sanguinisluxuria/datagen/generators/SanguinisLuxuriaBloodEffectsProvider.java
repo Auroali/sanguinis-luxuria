@@ -13,12 +13,15 @@ import net.minecraft.util.Identifier;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
+/**
+ * Generates blood effect datapack entries
+ *
+ * @see BloodDrainEffectBuilder
+ */
 public abstract class SanguinisLuxuriaBloodEffectsProvider implements DataProvider {
     protected final FabricDataOutput output;
     protected final DataOutput.PathResolver pathResolver;
@@ -30,32 +33,31 @@ public abstract class SanguinisLuxuriaBloodEffectsProvider implements DataProvid
 
     @Override
     public CompletableFuture<?> run(DataWriter writer) {
-        Set<BloodDrainEffectBuilder.Provider> providers = new HashSet<>();
-        Set<Identifier> ids = new HashSet<>();
-        this.generateEffects(providers::add);
+        HashMap<Identifier, BloodDrainEffectBuilder> builders = new HashMap<>();
+        this.generateEffects((builder, id) -> {
+            if (builders.containsKey(id))
+                throw new IllegalStateException("Duplicated id " + id);
+            builders.put(id, builder);
+        });
 
         List<CompletableFuture<?>> futures = new ArrayList<>();
-        for (BloodDrainEffectBuilder.Provider provider : providers) {
-            if (!ids.add(provider.getId()))
-                throw new IllegalStateException("Duplicated id " + provider.getId());
-
-            JsonObject json = new JsonObject();
-            provider.serialize(json);
-            ConditionJsonProvider.write(json, FabricDataGenHelper.consumeConditions(provider));
-            futures.add(DataProvider.writeToPath(writer, json, this.getOutputPath(provider.getId())));
+        for (var builderEntry : builders.entrySet()) {
+            JsonObject json = builderEntry.getValue().toJson();
+            ConditionJsonProvider.write(json, FabricDataGenHelper.consumeConditions(builderEntry.getValue()));
+            futures.add(DataProvider.writeToPath(writer, json, this.getOutputPath(builderEntry.getKey())));
         }
         return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }
 
-    protected Consumer<BloodDrainEffectBuilder.Provider> withConditions(Consumer<BloodDrainEffectBuilder.Provider> exporter, ConditionJsonProvider... conditions) {
+    protected BloodEffectExporter withConditions(BloodEffectExporter exporter, ConditionJsonProvider... conditions) {
         Preconditions.checkArgument(conditions.length > 0, "Must add at least one condition.");
-        return provider -> {
-            FabricDataGenHelper.addConditions(provider, conditions);
-            exporter.accept(provider);
+        return (builder, id) -> {
+            FabricDataGenHelper.addConditions(builder, conditions);
+            exporter.offer(builder, id);
         };
     }
 
-    protected abstract void generateEffects(Consumer<BloodDrainEffectBuilder.Provider> exporter);
+    protected abstract void generateEffects(BloodEffectExporter exporter);
 
     protected Path getOutputPath(Identifier id) {
         return this.pathResolver.resolve(id, "json");
@@ -64,5 +66,14 @@ public abstract class SanguinisLuxuriaBloodEffectsProvider implements DataProvid
     @Override
     public String getName() {
         return "Blood Drain Effects";
+    }
+
+    @FunctionalInterface
+    public interface BloodEffectExporter {
+        void offer(BloodDrainEffectBuilder builder, Identifier id);
+
+        default void offer(BloodDrainEffectBuilder builder) {
+            this.offer(builder, builder.getId());
+        }
     }
 }

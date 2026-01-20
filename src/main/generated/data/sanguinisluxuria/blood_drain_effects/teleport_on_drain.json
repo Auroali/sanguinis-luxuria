@@ -2,7 +2,7 @@
   "effects": [
     {
       "type": "sanguinisluxuria:teleport",
-      "chance": 0.8,
+      "chance": 0.4,
       "range": 16
     }
   ],

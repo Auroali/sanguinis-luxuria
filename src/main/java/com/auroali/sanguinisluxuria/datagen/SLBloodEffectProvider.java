@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainIgniteEffect;
+import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainStatusEffect;
 import com.auroali.sanguinisluxuria.common.blood.effects.BloodDrainTeleportEffect;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import com.auroali.sanguinisluxuria.datagen.builders.BloodDrainEffectBuilder;
@@ -12,7 +13,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
 
-import java.util.function.Consumer;
 
 public class SLBloodEffectProvider extends SanguinisLuxuriaBloodEffectsProvider {
     public SLBloodEffectProvider(FabricDataOutput output) {
@@ -20,28 +20,41 @@ public class SLBloodEffectProvider extends SanguinisLuxuriaBloodEffectsProvider 
     }
 
     @Override
-    protected void generateEffects(Consumer<BloodDrainEffectBuilder.Provider> exporter) {
-        BloodDrainEffectBuilder.create(SLTags.Entities.TOXIC_BLOOD)
-          .statusEffect(StatusEffects.HUNGER, 0.9f)
-          .statusEffect(StatusEffects.WEAKNESS, 100, 0.73f)
-          .offerTo(exporter, SLResources.id("toxic_blood"));
+    protected void generateEffects(BloodEffectExporter exporter) {
+        exporter.offer(
+          BloodDrainEffectBuilder
+            .builder(SLTags.Entities.TOXIC_BLOOD)
+            .effect(
+              new BloodDrainStatusEffect(StatusEffects.HUNGER, 300, 0, 0.9f),
+              new BloodDrainStatusEffect(StatusEffects.WEAKNESS, 100, 0, 0.73f)
+            ),
+          SLResources.id("toxic_blood")
+        );
 
-        BloodDrainEffectBuilder.create(SLTags.Entities.TELEPORTS_ON_DRAIN)
-          .effect(new BloodDrainTeleportEffect(16, 0.8f))
-          .offerTo(exporter, SLResources.id("teleport_on_drain"));
+        exporter.offer(
+          BloodDrainEffectBuilder
+            .builder(SLTags.Entities.TELEPORTS_ON_DRAIN)
+            .effect(new BloodDrainTeleportEffect(16, 0.4f)),
+          SLResources.id("teleport_on_drain")
+        );
 
-        BloodDrainEffectBuilder.create(EntityType.WITCH)
-          .statusEffect(StatusEffects.WEAKNESS, 0.025f)
-          .statusEffect(StatusEffects.SLOWNESS, 0.025f)
-          .offerTo(exporter, SLResources.id("witch"));
+        exporter.offer(
+          BloodDrainEffectBuilder
+            .builder(EntityType.WITCH)
+            .effect(
+              new BloodDrainStatusEffect(StatusEffects.WEAKNESS, 300, 0, 0.05f),
+              new BloodDrainStatusEffect(StatusEffects.SLOWNESS, 300, 0, 0.05f)
+            )
+        );
 
         this.generateCompat(exporter);
     }
 
-    private void generateCompat(Consumer<BloodDrainEffectBuilder.Provider> exporter) {
-        BloodDrainEffectBuilder.createOptional(new Identifier("spectrum", "kindling"))
-          .effect(new BloodDrainIgniteEffect(8, 0.4f))
-          .offerTo(withConditions(exporter, DefaultResourceConditions.allModsLoaded("spectrum")), SLResources.id("compat/spectrum/kindling_effects"));
-
+    private void generateCompat(BloodEffectExporter exporter) {
+        withConditions(exporter, DefaultResourceConditions.allModsLoaded("spectrum"))
+          .offer(
+            BloodDrainEffectBuilder.builder(new Identifier("spectrum", "kindling"))
+              .effect(new BloodDrainIgniteEffect(8, 0.4f))
+          );
     }
 }

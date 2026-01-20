@@ -19,6 +19,11 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
+/**
+ * Generates conversion datapack entries
+ *
+ * @see ConversionJsonBuilder
+ */
 public abstract class SanguinisLuxuriaConversionsProvider implements DataProvider {
     protected final FabricDataOutput output;
     protected final DataOutput.PathResolver pathResolver;

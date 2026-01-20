@@ -2,12 +2,12 @@
   "effects": [
     {
       "type": "sanguinisluxuria:status_effect",
-      "chance": 0.025,
+      "chance": 0.05,
       "effect": "minecraft:weakness"
     },
     {
       "type": "sanguinisluxuria:status_effect",
-      "chance": 0.025,
+      "chance": 0.05,
       "effect": "minecraft:slowness"
     }
   ],

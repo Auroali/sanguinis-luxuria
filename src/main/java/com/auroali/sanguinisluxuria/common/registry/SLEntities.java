@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.registry;
 
 import com.auroali.sanguinisluxuria.SLResources;
-import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
 import com.auroali.sanguinisluxuria.common.entities.VampireIllagerEntity;
+import com.auroali.sanguinisluxuria.common.entities.VampireMerchant;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;

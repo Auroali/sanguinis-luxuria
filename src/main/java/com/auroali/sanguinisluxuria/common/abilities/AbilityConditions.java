@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.abilities;
 
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.PlayerAdvancementTracker;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -26,6 +27,14 @@ public class AbilityConditions {
 
     public static VampireAbility.VampireAbilityCondition lacksAbility(Supplier<VampireAbility> ability) {
         return (entity, vampire, container) -> !container.has(ability.get());
+    }
+
+    public static VampireAbility.VampireAbilityCondition hasTaggedAbility(TagKey<VampireAbility> tag) {
+        return (entity, vampire, container) -> container
+          .abilities
+          .keySet()
+          .stream()
+          .anyMatch(ability -> ability.isIn(tag));
     }
 
     public static VampireAbility.VampireAbilityCondition hasAdvancement(Identifier advancementId) {

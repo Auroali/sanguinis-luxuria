@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.items;
 
 import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
@@ -23,7 +24,6 @@ import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -64,46 +64,44 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
             serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
         }
 
-        // copy the stack so that vanilla food logic can run
-        // without decrementing the original stack size
-        ItemStack stackCopy = stack.copy();
-        if (!VampireHelper.hasBlood(user)) {
-            user.eatFood(world, stackCopy);
-            BloodStorageItem.decrementItemBlood(stack, 1);
-            if (BloodStorageItem.isItemEmpty(stack))
-                return BloodStorageItem.createEmptyStackFor(stack);
+        ItemStack usedStack = user instanceof PlayerEntity player && player.getAbilities().creativeMode
+          ? stack
+          : stack.split(1);
 
-            return stack;
-        }
-
-        BloodComponent userBlood = BloodComponent.KEY.get(user);
-        // calculate the blood to drain by taking the minimum of the
-        // amount of additional blood the entity's blood component can store
-        // and the amount of blood in the blood storage item. this value
-        // is then clamped between 0 and 6, and added to the entity's blood
-        // component and removed from the blood storage item's blood amount
-        int bloodToFill = MathHelper.clamp(
-          Math.min(userBlood.getMaxBlood() - userBlood.getBlood(), BloodStorageItem.getItemBlood(stack)),
-          0,
-          this.maxBloodPerDrink()
+        int bloodToDrain = Math.min(BloodStorageItem.getItemBlood(usedStack), this.maxBloodPerDrink());
+        boolean drainedBlood = (user instanceof PlayerEntity player && player.getAbilities().creativeMode)
+          || BloodStorageItem.decrementItemBlood(
+          usedStack,
+          bloodToDrain
         );
 
-        if (!(user instanceof PlayerEntity player && player.isCreative()))
-            BloodStorageItem.decrementItemBlood(stack, bloodToFill);
-
-        ItemStack result = BloodStorageItem.isItemEmpty(stack) ? BloodStorageItem.createEmptyStackFor(stack) : stack;
-
+        ItemStack result = BloodStorageItem.isItemEmpty(usedStack)
+          ? BloodStorageItem.createEmptyStackFor(usedStack)
+          : usedStack;
         if (VampireHelper.consumesBlood(user)) {
-            // only add the blood to vampires
-            userBlood.addBlood(bloodToFill);
+            // i wish we had java 21
+            // would look so much nicer as a switch statement
             if (user instanceof PlayerEntity player) {
-                player.getHungerManager().setSaturationLevel(BloodConstants.adjustSaturation(player, bloodToFill, BloodConstants.SATURATION_PER_BLOOD));
+                ((VampireHungerManager) player.getHungerManager())
+                  .sanguinisluxuria$addHunger(bloodToDrain, BloodConstants.SATURATION_PER_BLOOD);
+            } else {
+                BloodComponent.KEY.get(user)
+                  .addBlood(bloodToDrain);
             }
-            return result;
+        } else {
+            if (bloodToDrain != 0 && drainedBlood)
+                user.eatFood(world, usedStack.copy());
         }
 
-        user.eatFood(world, stackCopy);
-        return result;
+        if (stack.isEmpty())
+            return result;
+
+        if (user instanceof PlayerEntity player && !player.getAbilities().creativeMode) {
+            if (!player.getInventory().insertStack(result))
+                player.dropItem(result, false);
+        }
+
+        return stack;
     }
 
     @Override

@@ -10,6 +10,15 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
 
+/**
+ * Generates JSON files for a given dynamic registry using a given codec
+ *
+ * <p>
+ * Useful for dynamic registries that lack a datagen provider, like damage types
+ * </p>
+ *
+ * @param <T> the type to generate
+ */
 public abstract class SanguinusLuxuriaRegistryCodecProvider<T> extends FabricCodecDataProvider<T> {
     private final RegistryKey<Registry<T>> registryKey;
 
