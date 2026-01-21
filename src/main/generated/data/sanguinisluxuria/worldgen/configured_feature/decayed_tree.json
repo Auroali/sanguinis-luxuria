@@ -15,9 +15,9 @@
     },
     "foliage_placer": {
       "type": "minecraft:blob_foliage_placer",
+      "height": 0,
       "offset": 0,
-      "radius": 0,
-      "height": 0
+      "radius": 0
     },
     "foliage_provider": {
       "type": "minecraft:simple_state_provider",
@@ -35,28 +35,25 @@
     },
     "trunk_placer": {
       "type": "minecraft:upwards_branching_trunk_placer",
-      "can_grow_through": [
-        "minecraft:air"
-      ],
-      "extra_branch_steps": {
-        "type": "minecraft:biased_to_bottom",
-        "value": {
-          "min_inclusive": 1,
-          "max_inclusive": 5
-        }
-      },
+      "base_height": 4,
+      "can_grow_through": "minecraft:air",
       "extra_branch_length": {
         "type": "minecraft:biased_to_bottom",
         "value": {
-          "min_inclusive": 0,
-          "max_inclusive": 3
+          "max_inclusive": 3,
+          "min_inclusive": 0
         }
       },
-      "place_branch_per_log_probability": 0.35,
-      "base_height": 4,
+      "extra_branch_steps": {
+        "type": "minecraft:biased_to_bottom",
+        "value": {
+          "max_inclusive": 5,
+          "min_inclusive": 1
+        }
+      },
       "height_rand_a": 1,
       "height_rand_b": 0,
-      "min_height_for_leaves": 1
+      "place_branch_per_log_probability": 0.35
     },
     "trunk_provider": {
       "type": "minecraft:weighted_state_provider",
@@ -75,7 +72,7 @@
             "Name": "sanguinisluxuria:hungry_decayed_log",
             "Properties": {
               "axis": "y",
-              "blood": 0
+              "blood": "0"
             }
           },
           "weight": 2

@@ -1,12 +1,12 @@
-// 1.20.1	2026-01-20T16:33:27.093726184	Sanguinis Luxuria/Tags for minecraft:block
+// 1.20.1	2026-01-21T15:48:12.426856218	Sanguinis Luxuria/Tags for minecraft:block
 e907755d879be948ac26842fab1558331a2743eb data/minecraft/tags/blocks/wooden_pressure_plates.json
 cbc32d4bc22046141999636336671badf0644782 data/sanguinisluxuria/tags/blocks/decayed_logs.json
 178878e9bb91da550b3f1bd46120161853ccd222 data/minecraft/tags/blocks/wooden_doors.json
 d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/blocks/ores.json
 ba8d7bb0d51278b9143621c60990dcc8eb64408f data/minecraft/tags/blocks/planks.json
 fc585cef69e32bab8e1d4ec5c04bf5afe54dbbde data/sanguinisluxuria/tags/blocks/hungry_decayed_logs.json
-c22deb6ec39fe27f240d3e4c35cc8616e5d1739d data/minecraft/tags/blocks/all_hanging_signs.json
 24574ec48380d4efd6252f6ca2c73d12b04efc0b data/minecraft/tags/blocks/wooden_trapdoors.json
+c22deb6ec39fe27f240d3e4c35cc8616e5d1739d data/minecraft/tags/blocks/all_hanging_signs.json
 cbc32d4bc22046141999636336671badf0644782 data/minecraft/tags/blocks/logs_that_burn.json
 93c1cbb26815eb266d8109f8cfdefeee65a9b3c4 data/minecraft/tags/blocks/pressure_plates.json
 d1beb62c086c9735402c190ae0f606116164b9e5 data/c/tags/blocks/silver_ores.json
