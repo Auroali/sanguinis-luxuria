@@ -124,9 +124,9 @@ public class SanguinisLuxuria implements ModInitializer {
             if (blockEntity instanceof PedestalBlockEntity e)
                 return InventoryStorage.of(e.getInventory(), null);
             if (blockEntity instanceof AltarBlockEntity e)
-                return InventoryStorage.of(e, null);
+                return InventoryStorage.of(e.getInventory(), null);
             return null;
-        }, SLBlockEntities.PEDESTAL);
+        }, SLBlockEntities.PEDESTAL, SLBlockEntities.ALTAR);
 
         CauldronFluidContent.registerCauldron(SLBlocks.BLOOD_CAULDRON, SLFluids.BLOOD, FluidConstants.BOTTLE, LeveledCauldronBlock.LEVEL);
 

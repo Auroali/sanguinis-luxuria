@@ -1,15 +1,15 @@
 {
   "variants": {
-    "active=false,target=false": {
+    "active=false,has_target=false": {
       "model": "sanguinisluxuria:block/altar"
     },
-    "active=false,target=true": {
+    "active=false,has_target=true": {
       "model": "sanguinisluxuria:block/altar_target"
     },
-    "active=true,target=false": {
+    "active=true,has_target=false": {
       "model": "sanguinisluxuria:block/altar_active"
     },
-    "active=true,target=true": {
+    "active=true,has_target=true": {
       "model": "sanguinisluxuria:block/altar_active_target"
     }
   }

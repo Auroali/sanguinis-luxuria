@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
 import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
+import com.auroali.sanguinisluxuria.common.blockentities.EntityTargetingBlockEntity;
 import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
 import com.auroali.sanguinisluxuria.common.rituals.ActiveRitualData;
 import net.minecraft.block.*;
@@ -10,6 +11,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
@@ -40,7 +42,6 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
     ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
 
     public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
-    public static final BooleanProperty TARGET = BooleanProperty.of("target");
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public AltarBlock(Settings settings) {
@@ -48,7 +49,7 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         this.setDefaultState(this.getStateManager().getDefaultState()
           .with(ACTIVE, false)
           .with(WATERLOGGED, false)
-          .with(TARGET, false)
+          .with(EntityTargetingBlockEntity.TARGET, false)
         );
     }
 
@@ -63,25 +64,26 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         if (altar == null)
             return ActionResult.FAIL;
 
+        Inventory inventory = altar.getInventory();
         if (player.isSneaking()) {
-            if (!world.isClient && !altar.getStack(0).isEmpty())
-                altar.startRitual(world, player, pos, state);
-            else if (altar.getStack(0).isEmpty() && state.get(TARGET)) {
-                altar.clearNextTarget();
-                world.setBlockState(pos, state.with(TARGET, false));
+            if (!world.isClient && !inventory.isEmpty())
+                altar.startRitual(world, pos, state, player, false);
+            else if (inventory.isEmpty() && state.get(EntityTargetingBlockEntity.TARGET)) {
+                altar.clearTarget();
+                world.setBlockState(pos, state.with(EntityTargetingBlockEntity.TARGET, false));
             }
             return ActionResult.success(world.isClient);
         }
 
         ItemStack stack = player.getStackInHand(hand);
-        ItemStack altarStack = altar.getStack(0);
+        ItemStack altarStack = inventory.getStack(0);
         if (!stack.isEmpty() && altarStack.isEmpty())
             this.playInsertSound(player, world);
         else if (!altarStack.isEmpty())
             this.playRemoveSound(player, world);
 
         player.setStackInHand(hand, altarStack);
-        altar.setStack(0, stack);
+        inventory.setStack(0, stack);
 
         return ActionResult.success(world.isClient);
     }
@@ -110,7 +112,7 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof AltarBlockEntity e) {
-                ItemScatterer.spawn(world, pos, e);
+                ItemScatterer.spawn(world, pos, e.getInventory());
                 world.updateComparators(pos, this);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
@@ -122,7 +124,7 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         super.appendProperties(builder);
         builder.add(ACTIVE);
         builder.add(WATERLOGGED);
-        builder.add(TARGET);
+        builder.add(EntityTargetingBlockEntity.TARGET);
     }
 
     @Override
@@ -191,7 +193,7 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         if (state.get(ACTIVE) && world.getBlockEntity(pos) instanceof AltarBlockEntity altar) {
-            return 1 + MathHelper.floor(14.f * altar.getRecipeTicks() / ActiveRitualData.TIME_TO_COMPLETE);
+            return 1 + MathHelper.floor(14.f * altar.getRitualProgress() / ActiveRitualData.TIME_TO_COMPLETE);
         }
         return 0;
     }

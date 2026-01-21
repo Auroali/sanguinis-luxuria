@@ -30,6 +30,9 @@ public class ConvertEntityRitual implements Ritual {
 
     @Override
     public void onCompleted(RitualParameters parameters) {
+        if (!parameters.hasTarget() || !parameters.targetWithin(64))
+            return;
+
         LivingEntity target = parameters.target();
         if (SLConversions.convertEntity(ConversionContext.from(target, this.conversion))) {
             parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.CONVERT.trigger(player, this.conversion));

@@ -21,11 +21,23 @@ public record RitualParameters(World world, BlockPos pos, Inventory inventory, L
     }
 
     public boolean targetWithin(double distance) {
-        return this.target.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
+        return this.hasTarget() && this.target.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
     }
 
     public boolean initiatorWithin(double distance) {
-        return this.initiator.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
+        return this.hasInitiator() && this.initiator.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
+    }
+
+    public boolean hasInitiator() {
+        return this.initiator != null;
+    }
+
+    public boolean hasTarget() {
+        return this.target != null;
+    }
+
+    public boolean hasTargetAndInitiator() {
+        return this.hasInitiator() && this.hasTarget();
     }
 
     public static RitualParametersBuilder builder() {
@@ -68,7 +80,7 @@ public record RitualParameters(World world, BlockPos pos, Inventory inventory, L
         }
 
         public RitualParameters build() {
-            return new RitualParameters(this.world, this.pos, this.inventory, this.initiator, this.target != null ? this.target : this.initiator);
+            return new RitualParameters(this.world, this.pos, this.inventory, this.initiator, this.target);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.SLResources;
+import com.auroali.sanguinisluxuria.common.blockentities.EntityTargetingBlockEntity;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.blocks.HungryDecayedLogBlock;
 import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
@@ -38,7 +39,7 @@ public class SLModelProvider extends FabricModelProvider {
           .accept(VariantsBlockStateSupplier
             .create(SLBlocks.ALTAR)
             .coordinate(
-              BlockStateVariantMap.create(AltarBlock.ACTIVE, AltarBlock.TARGET)
+              BlockStateVariantMap.create(AltarBlock.ACTIVE, EntityTargetingBlockEntity.TARGET)
                 .register(
                   false,
                   false,

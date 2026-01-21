@@ -36,13 +36,15 @@ public record StatusEffectRitual(List<StatusEffect> effects, int duration, int a
         RitualUtil.spawnSuccessParticles(parameters);
         switch (this.target()) {
             case ALL -> {
-                this.applyToEntity(parameters, parameters.target());
-                if (parameters.target() != parameters.initiator())
-                    this.applyToEntity(parameters, parameters.initiator());
+                if (parameters.hasTarget())
+                    this.applyToEntity(parameters, parameters.target());
                 this.applyToOthers(parameters);
             }
             case OTHER -> this.applyToOthers(parameters);
-            case RITUAL_TARGET -> this.applyToEntity(parameters, parameters.target());
+            case RITUAL_TARGET -> {
+                if (parameters.hasTarget())
+                    this.applyToEntity(parameters, parameters.target());
+            }
         }
     }
 

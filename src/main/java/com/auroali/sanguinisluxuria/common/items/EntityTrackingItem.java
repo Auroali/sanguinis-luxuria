@@ -1,7 +1,9 @@
 package com.auroali.sanguinisluxuria.common.items;
 
 import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
+import com.auroali.sanguinisluxuria.common.blockentities.EntityTargetingBlockEntity;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
+import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -93,6 +95,7 @@ public interface EntityTrackingItem {
         return getEntity(stack) != null;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static ActionResult setAltarTarget(PlayerEntity entity, World world, Hand hand, BlockHitResult hitResult) {
         if (!entity.isSneaking())
             return ActionResult.PASS;
@@ -103,18 +106,14 @@ public interface EntityTrackingItem {
             return ActionResult.PASS;
 
         Entity target = getEntity(stack, world);
-        if (world.getBlockEntity(hitResult.getBlockPos()) instanceof AltarBlockEntity altar) {
-            BlockState state = world.getBlockState(hitResult.getBlockPos());
-            if (state.get(AltarBlock.ACTIVE))
-                return ActionResult.FAIL;
-
+        if (world.getBlockEntity(hitResult.getBlockPos()) instanceof EntityTargetingBlockEntity targetBlock) {
             if (world.isClient)
                 return ActionResult.SUCCESS;
 
-            if (!(target instanceof LivingEntity))
+            if (!targetBlock.canTarget(target))
                 return ActionResult.FAIL;
 
-            altar.setNextTarget((LivingEntity) target);
+            targetBlock.setTarget(target);
             clearEntity(stack);
             return ActionResult.CONSUME;
         }
