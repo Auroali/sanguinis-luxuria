@@ -56,11 +56,6 @@ public class VampireIllagerEntity extends IllagerEntity {
             this.bloodDrainTimer--;
 
         VampireComponent vampire = VampireComponent.KEY.get(this);
-        if (this.canHealWithBlood()) {
-            this.setHealth(this.getHealth() + 1);
-            this.bloodDrainTimer = BloodConstants.BLOOD_DRAIN_TIME * 2;
-        }
-
         if (this.getWorld().isClient && vampire.isDowned()) {
             Box box = this.getBoundingBox();
             int max = 3;
@@ -79,13 +74,6 @@ public class VampireIllagerEntity extends IllagerEntity {
                 );
             }
         }
-    }
-
-    protected boolean canHealWithBlood() {
-        BloodComponent blood = BloodComponent.KEY.get(this);
-        // only heal when healing wouldnt completely drain blood, health is less than max health, and blood could be drained
-        // also prioritize draining blood when targeting an entity and health is above 50%
-        return blood.getBlood() > 1 && this.getHealth() < this.getMaxHealth() && (this.getTarget() == null || blood.getBlood() >= blood.getMaxBlood() || this.getHealth() / this.getMaxHealth() < 0.5f) && blood.drainBlood(1);
     }
 
     @Override
