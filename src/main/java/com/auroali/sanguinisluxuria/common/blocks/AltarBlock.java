@@ -14,6 +14,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -26,6 +27,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -43,12 +45,14 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
 
     public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    private static final BooleanProperty POWERED = Properties.POWERED;
 
     public AltarBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getStateManager().getDefaultState()
           .with(ACTIVE, false)
           .with(WATERLOGGED, false)
+          .with(POWERED, false)
           .with(EntityTargetingBlockEntity.TARGET, false)
         );
     }
@@ -124,6 +128,7 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         super.appendProperties(builder);
         builder.add(ACTIVE);
         builder.add(WATERLOGGED);
+        builder.add(POWERED);
         builder.add(EntityTargetingBlockEntity.TARGET);
     }
 
@@ -148,6 +153,30 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+        if (!world.isClient) {
+            boolean powered = state.get(POWERED);
+            if (powered != world.isReceivingRedstonePower(pos)) {
+                if (powered)
+                    world.scheduleBlockTick(pos, this, 4);
+                else {
+                    if (world.getBlockEntity(pos) instanceof AltarBlockEntity entity && !entity.startRitual(world, pos, state.cycle(POWERED), null, true)) {
+                        world.setBlockState(pos, state.cycle(POWERED), Block.NOTIFY_LISTENERS);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (state.get(POWERED) && !world.isReceivingRedstonePower(pos)) {
+            world.setBlockState(pos, state.cycle(POWERED), Block.NOTIFY_LISTENERS);
+        }
+    }
+
     private void playInsertSound(PlayerEntity player, World world) {
         world.playSound(
           player,
@@ -168,21 +197,6 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
           1.f,
           1.f
         );
-    }
-
-    @Override
-    public boolean emitsRedstonePower(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-        return state.get(ACTIVE) ? 5 : 0;
-    }
-
-    @Override
-    public int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-        return 0;
     }
 
     @Override

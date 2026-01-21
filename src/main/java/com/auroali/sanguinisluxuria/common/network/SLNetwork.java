@@ -59,8 +59,13 @@ public class SLNetwork {
 
             int toFill = Math.min(BloodConstants.BLOOD_PER_BOTTLE, blood.getBlood());
             int filled = VampireHelper.fillHeldBloodStorage(player, stack, packet.hand(), toFill, s -> {
-                if (player.isSneaking() && EntityTrackingItem.canTrackEntity(s) && drainer.getLastDrained() != null) {
-                    EntityTrackingItem.setEntity(s, drainer.getLastDrained());
+                if (player.isSneaking() && EntityTrackingItem.canTrackEntity(s) && !EntityTrackingItem.hasEntity(stack)) {
+                    EntityTrackingItem.setEntity(
+                      s,
+                      drainer.getLastDrained() == null
+                        ? player
+                        : drainer.getLastDrained()
+                    );
                     drainer.setLastDrained(null);
                 }
             });

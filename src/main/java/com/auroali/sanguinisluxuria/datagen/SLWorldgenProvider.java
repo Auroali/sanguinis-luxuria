@@ -2,7 +2,6 @@ package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
-import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import com.auroali.sanguinisluxuria.common.registry.SLWorldgen;
 import com.auroali.sanguinisluxuria.common.worldgen.DecayedTwigsDecorator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -17,7 +16,6 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.structure.rule.TagMatchRuleTest;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DataPool;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.intprovider.BiasedToBottomIntProvider;

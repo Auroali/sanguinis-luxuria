@@ -3,23 +3,21 @@ package com.auroali.sanguinisluxuria.common.blockentities;
 import com.auroali.sanguinisluxuria.SanguinisLuxuriaClient;
 import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
-import com.auroali.sanguinisluxuria.common.network.packets.AltarRecipeStartS2C;
 import com.auroali.sanguinisluxuria.common.particles.DelayedParticleEffect;
-import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
+import com.auroali.sanguinisluxuria.common.registry.SLParticles;
+import com.auroali.sanguinisluxuria.common.registry.SLRecipeTypes;
+import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.common.rituals.ActiveRitualData;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualUtil;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -29,11 +27,9 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Clearable;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkSectionPos;
@@ -79,6 +75,10 @@ public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlock
         if (!redstone && !VampireHelper.isVampire(initiator))
             return false;
 
+        LivingEntity target = this.getTarget();
+        if (redstone && target == null)
+            return false;
+
         List<PedestalBlockEntity> nearbyPedestals = new ArrayList<>();
         this.forEachPedestalAround(world, pos, pedestal -> {
             if (!pedestal.getInventory().isEmpty())
@@ -96,26 +96,23 @@ public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlock
               nearbyPedestals.forEach(pedestal -> {
                   ItemStack consumed = pedestal.getInventory().removeStack(0, 1);
                   ItemStack remainder = consumed.getRecipeRemainder();
+                  BlockPos pedestalPos = pedestal.getPos();
                   if (!remainder.isEmpty()) {
                       world.spawnEntity(new ItemEntity(
                         world,
-                        pos.getX() + 0.5,
-                        pos.getY() + 1.0,
-                        pos.getZ() + 0.5,
+                        pedestalPos.getX() + 0.5,
+                        pedestalPos.getY() + 1.0,
+                        pedestalPos.getZ() + 0.5,
                         remainder
                       ));
                   }
-                  RitualUtil.spawnItemConsumedParticlesAt(world, pos);
+                  RitualUtil.spawnItemConsumedParticlesAt(world, pedestalPos);
               });
               return recipe.getRitual();
           })
           .orElse(null);
 
         if (ritual != null) {
-            LivingEntity target = this.getTarget();
-            if (redstone && target == null)
-                return false;
-
             this.activeRitual = new ActiveRitualData(
               ritual,
               initiator == null ? target.getUuid() : initiator.getUuid(),

@@ -1,12 +1,7 @@
 package com.auroali.sanguinisluxuria.common.items;
 
-import com.auroali.sanguinisluxuria.common.blockentities.AltarBlockEntity;
 import com.auroali.sanguinisluxuria.common.blockentities.EntityTargetingBlockEntity;
-import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
-import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
