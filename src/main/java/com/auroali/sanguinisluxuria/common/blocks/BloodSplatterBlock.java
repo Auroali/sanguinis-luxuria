@@ -14,7 +14,10 @@ import net.minecraft.block.enums.WireConnection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsage;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
@@ -31,6 +34,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -124,25 +128,25 @@ public class BloodSplatterBlock extends Block {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack held = player.getStackInHand(hand);
-        ItemStack originalHeld = held.copy();
-        ItemStack toFill = held.split(1);
+        ItemStack toFill = held.copyWithCount(1);
         if (!(held.getItem() instanceof BloodStorageItem) && BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(player, toFill)) {
             toFill = BloodStorageFillEvents.TRANSFORM_STACK
               .invoker().createFrom(player, toFill);
         }
 
         if (!BloodStorageItem.isItemFillable(toFill) || !BloodStorageItem.incrementItemBlood(toFill, BloodConstants.BLOOD_PER_BOTTLE)) {
-            player.setStackInHand(hand, originalHeld);
             return ActionResult.FAIL;
         }
 
-        if (held.isEmpty()) {
-            player.setStackInHand(hand, toFill);
-            return ActionResult.success(world.isClient);
+        if (!world.isClient) {
+            player.incrementStat(Stats.USED.getOrCreateStat(held.getItem()));
         }
 
-        if (!player.getInventory().insertStack(toFill))
-            player.dropItem(toFill, false);
+        world.removeBlock(pos, false);
+        world.playSound(player, pos, SoundEvents.ITEM_BOTTLE_FILL, player.getSoundCategory(), 1.f, 1.f);
+        world.emitGameEvent(player, GameEvent.FLUID_PICKUP, pos);
+
+        player.setStackInHand(hand, ItemUsage.exchangeStack(held, player, toFill));
 
         return ActionResult.success(world.isClient);
     }

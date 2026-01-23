@@ -159,7 +159,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
             ItemStack drained = stack.split(1);
             BloodStorageItem.decrementItemBlood(drained, BloodConstants.BLOOD_PER_BOTTLE);
             if (BloodStorageItem.isItemEmpty(drained))
-                drained = BloodStorageItem.createEmptyStackFor(stack);
+                drained = BloodStorageItem.createEmptyStackFor(drained);
 
             if (stack.isEmpty())
                 player.setStackInHand(context.getHand(), drained);
