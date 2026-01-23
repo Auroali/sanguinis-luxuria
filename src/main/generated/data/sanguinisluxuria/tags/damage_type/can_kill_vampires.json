@@ -4,6 +4,30 @@
     "#minecraft:bypasses_invulnerability",
     "#sanguinisluxuria:vampires_weak_to",
     {
+      "id": "sanguinisluxuria:bite",
+      "required": false
+    },
+    {
+      "id": "sanguinisluxuria:blink_piercing",
+      "required": false
+    },
+    {
+      "id": "spectrum:deadly_poison",
+      "required": false
+    },
+    {
+      "id": "spectrum:midnight_solution",
+      "required": false
+    },
+    {
+      "id": "spectrum:primordial_fire",
+      "required": false
+    },
+    {
+      "id": "spectrum:sleep",
+      "required": false
+    },
+    {
       "id": "hexcasting:overcast",
       "required": false
     }

@@ -6,6 +6,22 @@
     {
       "id": "sanguinisluxuria:blessed_water",
       "required": false
+    },
+    {
+      "id": "malum:voodoo",
+      "required": false
+    },
+    {
+      "id": "spectrum:kindling_cough",
+      "required": false
+    },
+    {
+      "id": "spectrum:dragonrot",
+      "required": false
+    },
+    {
+      "id": "spectrum:incandescence",
+      "required": false
     }
   ]
 }

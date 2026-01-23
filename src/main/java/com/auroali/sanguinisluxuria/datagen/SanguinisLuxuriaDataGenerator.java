@@ -18,13 +18,13 @@ public class SanguinisLuxuriaDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(SLAdvancementsProvider::new);
         pack.addProvider(SLBlockLootTableProvider::new);
         pack.addProvider(SLEntityLootTableProvider::new);
+        pack.addProvider(SLDamageTypeProvider::new);
         pack.addProvider(SLDamageTagsProvider::new);
         pack.addProvider(SLEnchantmentTagsProvider::new);
         pack.addProvider(SLConversionProvider::new);
         pack.addProvider(SLBloodEffectProvider::new);
         pack.addProvider(SLStatusEffectTags::new);
         pack.addProvider(SLPatchouliBooks::new);
-        pack.addProvider(SLDamageTypeProvider::new);
         pack.addProvider(SLWorldgenProvider::new);
     }
 }

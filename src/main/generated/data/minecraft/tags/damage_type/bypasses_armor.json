@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "sanguinisluxuria:blood_drain",
+      "required": false
+    },
+    {
       "id": "sanguinisluxuria:blessed_water",
       "required": false
     },
