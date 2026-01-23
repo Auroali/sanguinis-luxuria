@@ -7,24 +7,29 @@
       "when": {
         "OR": [
           {
+            "active": "false",
             "east": "none",
             "north": "none",
             "south": "none",
             "west": "none"
           },
           {
+            "active": "false",
             "east": "side|up",
             "north": "side|up"
           },
           {
+            "active": "false",
             "east": "side|up",
             "south": "side|up"
           },
           {
+            "active": "false",
             "south": "side|up",
             "west": "side|up"
           },
           {
+            "active": "false",
             "north": "side|up",
             "west": "side|up"
           }
@@ -36,6 +41,7 @@
         "model": "sanguinisluxuria:block/blood_splatter_side0"
       },
       "when": {
+        "active": "false",
         "north": "side|up"
       }
     },
@@ -44,6 +50,7 @@
         "model": "sanguinisluxuria:block/blood_splatter_alt0"
       },
       "when": {
+        "active": "false",
         "south": "side|up"
       }
     },
@@ -53,6 +60,7 @@
         "y": 270
       },
       "when": {
+        "active": "false",
         "east": "side|up"
       }
     },
@@ -62,6 +70,7 @@
         "y": 270
       },
       "when": {
+        "active": "false",
         "west": "side|up"
       }
     },
@@ -70,6 +79,7 @@
         "model": "sanguinisluxuria:block/blood_splatter_up"
       },
       "when": {
+        "active": "false",
         "north": "up"
       }
     },
@@ -79,6 +89,7 @@
         "y": 90
       },
       "when": {
+        "active": "false",
         "east": "up"
       }
     },
@@ -88,6 +99,7 @@
         "y": 180
       },
       "when": {
+        "active": "false",
         "south": "up"
       }
     },
@@ -97,6 +109,120 @@
         "y": 270
       },
       "when": {
+        "active": "false",
+        "west": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_dot_active"
+      },
+      "when": {
+        "OR": [
+          {
+            "active": "true",
+            "east": "none",
+            "north": "none",
+            "south": "none",
+            "west": "none"
+          },
+          {
+            "active": "true",
+            "east": "side|up",
+            "north": "side|up"
+          },
+          {
+            "active": "true",
+            "east": "side|up",
+            "south": "side|up"
+          },
+          {
+            "active": "true",
+            "south": "side|up",
+            "west": "side|up"
+          },
+          {
+            "active": "true",
+            "north": "side|up",
+            "west": "side|up"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_side0_active"
+      },
+      "when": {
+        "active": "true",
+        "north": "side|up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_alt0_active"
+      },
+      "when": {
+        "active": "true",
+        "south": "side|up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_alt1_active",
+        "y": 270
+      },
+      "when": {
+        "active": "true",
+        "east": "side|up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_side1_active",
+        "y": 270
+      },
+      "when": {
+        "active": "true",
+        "west": "side|up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_up_active"
+      },
+      "when": {
+        "active": "true",
+        "north": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_up_active",
+        "y": 90
+      },
+      "when": {
+        "active": "true",
+        "east": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_up_active",
+        "y": 180
+      },
+      "when": {
+        "active": "true",
+        "south": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "sanguinisluxuria:block/blood_splatter_up_active",
+        "y": 270
+      },
+      "when": {
+        "active": "true",
         "west": "up"
       }
     }

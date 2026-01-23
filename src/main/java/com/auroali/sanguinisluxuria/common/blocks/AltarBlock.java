@@ -71,11 +71,12 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
         Inventory inventory = altar.getInventory();
         if (player.isSneaking()) {
             if (!world.isClient && !inventory.isEmpty())
-                altar.startRitual(world, pos, state, player, false);
-            else if (inventory.isEmpty() && state.get(EntityTargetingBlockEntity.TARGET)) {
-                altar.clearTarget();
-                world.setBlockState(pos, state.with(EntityTargetingBlockEntity.TARGET, false));
-            }
+                if (!state.get(ACTIVE))
+                    altar.startRitual(world, pos, state, player, false);
+                else if (inventory.isEmpty() && state.get(EntityTargetingBlockEntity.TARGET)) {
+                    altar.clearTarget();
+                    world.setBlockState(pos, state.with(EntityTargetingBlockEntity.TARGET, false));
+                }
             return ActionResult.success(world.isClient);
         }
 
@@ -162,7 +163,7 @@ public class AltarBlock extends BlockWithEntity implements Waterloggable {
                 if (powered)
                     world.scheduleBlockTick(pos, this, 4);
                 else {
-                    if (world.getBlockEntity(pos) instanceof AltarBlockEntity entity && !entity.startRitual(world, pos, state.cycle(POWERED), null, true)) {
+                    if (world.getBlockEntity(pos) instanceof AltarBlockEntity entity && (state.get(ACTIVE) || !entity.startRitual(world, pos, state.cycle(POWERED), null, true))) {
                         world.setBlockState(pos, state.cycle(POWERED), Block.NOTIFY_LISTENERS);
                     }
                 }

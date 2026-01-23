@@ -1,9 +1,9 @@
-// 1.20.1	2026-01-22T22:44:01.620944823	Sanguinis Luxuria/Tags for minecraft:damage_type
+// 1.20.1	2026-01-23T15:22:07.753651286	Sanguinis Luxuria/Tags for minecraft:damage_type
 81277ebbf0f67d39c3ce4c3588e1b67845e48d98 data/minecraft/tags/damage_type/bypasses_armor.json
 92a897e775eb838045569e1dde1cb224d6a6d075 data/minecraft/tags/damage_type/bypasses_invulnerability.json
 e98e832f02bb9b4d0675173ee5fa344cde7e2823 data/minecraft/tags/damage_type/bypasses_resistance.json
 9564754fd2b49718a2df585ea394604ba6a6875b data/minecraft/tags/damage_type/witch_resistant_to.json
 fafaa4469911858071a9e4c14d0fbb4bbbdc92fa data/sanguinisluxuria/tags/damage_type/vampires_weak_to.json
 e98e832f02bb9b4d0675173ee5fa344cde7e2823 data/minecraft/tags/damage_type/bypasses_effects.json
-bdb0f7a6d8a86f4eaf0b1c6de34f95a3328d3102 data/sanguinisluxuria/tags/damage_type/can_kill_vampires.json
 e98e832f02bb9b4d0675173ee5fa344cde7e2823 data/minecraft/tags/damage_type/bypasses_enchantments.json
+bdb0f7a6d8a86f4eaf0b1c6de34f95a3328d3102 data/sanguinisluxuria/tags/damage_type/can_kill_vampires.json

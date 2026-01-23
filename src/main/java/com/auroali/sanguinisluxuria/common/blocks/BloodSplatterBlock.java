@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.SLItems;
+import com.auroali.sanguinisluxuria.common.registry.SLParticles;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
@@ -69,6 +70,7 @@ public class BloodSplatterBlock extends Block {
     private static final HashMap<BlockState, VoxelShape> SHAPES = new HashMap<>();
 
     private static final BooleanProperty PERSISTENT = Properties.PERSISTENT;
+    public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
     public static final EnumProperty<WireConnection> WIRE_CONNECTION_NORTH = Properties.NORTH_WIRE_CONNECTION;
     public static final EnumProperty<WireConnection> WIRE_CONNECTION_EAST = Properties.EAST_WIRE_CONNECTION;
     public static final EnumProperty<WireConnection> WIRE_CONNECTION_SOUTH = Properties.SOUTH_WIRE_CONNECTION;
@@ -87,6 +89,7 @@ public class BloodSplatterBlock extends Block {
           .with(WIRE_CONNECTION_EAST, WireConnection.NONE)
           .with(WIRE_CONNECTION_SOUTH, WireConnection.NONE)
           .with(WIRE_CONNECTION_WEST, WireConnection.NONE)
+          .with(ACTIVE, false)
         );
 
         for (BlockState state : this.getStateManager().getStates()) {
@@ -232,6 +235,44 @@ public class BloodSplatterBlock extends Block {
     }
 
     @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (state.get(ACTIVE)) {
+            world.setBlockState(pos, state.cycle(ACTIVE), Block.NOTIFY_LISTENERS);
+        }
+    }
+
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        super.randomDisplayTick(state, world, pos, random);
+        if (state.get(ACTIVE)) {
+            DIRECTION_TO_WIRE_CONNECTION_PROPERTY.forEach((direction, property) -> {
+                switch (state.get(property)) {
+                    case UP -> this.addActiveParticles(world, pos, direction, true, random);
+                    case SIDE -> this.addActiveParticles(world, pos, direction, false, random);
+                    default -> this.addActiveParticles(world, pos, Direction.DOWN, false, random);
+                }
+            });
+        }
+    }
+
+    private void addActiveParticles(World world, BlockPos pos, Direction direction, boolean up, Random random) {
+        if (random.nextFloat() >= 0.3f)
+            return;
+        double x = 0.5 + pos.getX() + (0.5 * direction.getOffsetX() * random.nextDouble());
+        double y = pos.getY() + (up ? random.nextDouble() : 0.0);
+        double z = 0.5 + pos.getZ() + (0.5 * direction.getOffsetZ() * random.nextDouble());
+
+        world.addParticle(
+          SLParticles.ALTAR,
+          x, y, z,
+          0.05 * random.nextGaussian(),
+          0.02 + 0.005 * random.nextDouble(),
+          0.05 * random.nextGaussian()
+        );
+    }
+
+    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(PERSISTENT);
@@ -239,5 +280,6 @@ public class BloodSplatterBlock extends Block {
         builder.add(WIRE_CONNECTION_EAST);
         builder.add(WIRE_CONNECTION_SOUTH);
         builder.add(WIRE_CONNECTION_WEST);
+        builder.add(ACTIVE);
     }
 }

@@ -2,11 +2,9 @@ package com.auroali.sanguinisluxuria.common.blockentities;
 
 import com.auroali.sanguinisluxuria.SanguinisLuxuriaClient;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
+import com.auroali.sanguinisluxuria.common.blocks.BloodSplatterBlock;
 import com.auroali.sanguinisluxuria.common.particles.DelayedParticleEffect;
-import com.auroali.sanguinisluxuria.common.registry.SLBlockEntities;
-import com.auroali.sanguinisluxuria.common.registry.SLParticles;
-import com.auroali.sanguinisluxuria.common.registry.SLRecipeTypes;
-import com.auroali.sanguinisluxuria.common.registry.SLSounds;
+import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.common.rituals.ActiveRitualData;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
@@ -15,6 +13,7 @@ import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.WireConnection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -31,14 +30,13 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -46,7 +44,7 @@ import java.util.function.Consumer;
 public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlockEntity, EntityTargetingBlockEntity<LivingEntity>, Clearable {
     private static final Vec3d ITEM_OFFSET = new Vec3d(0.5, 0.45, 0.5);
     private static final int INVENTORY_SIZE = 1;
-    private static final int PEDESTAL_SEARCH_RADIUS = 8;
+    private static final int PEDESTAL_SEARCH_RADIUS = 15;
 
     private final SimpleInventory inventory;
 
@@ -293,25 +291,65 @@ public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlock
     }
 
     protected void forEachPedestalAround(World world, BlockPos pos, Consumer<? super PedestalBlockEntity> consumer) {
-        BlockPos min = new BlockPos(pos.getX() - PEDESTAL_SEARCH_RADIUS, pos.getY() - PEDESTAL_SEARCH_RADIUS, pos.getZ() - PEDESTAL_SEARCH_RADIUS);
-        BlockPos max = new BlockPos(pos.getX() + PEDESTAL_SEARCH_RADIUS, pos.getY() + PEDESTAL_SEARCH_RADIUS, pos.getZ() + PEDESTAL_SEARCH_RADIUS);
-        Box bounds = new Box(min, max);
-        int chunkMinX = ChunkSectionPos.getSectionCoord(min.getX());
-        int chunkMaxX = ChunkSectionPos.getSectionCoord(max.getX());
-        int chunkMinZ = ChunkSectionPos.getSectionCoord(min.getZ());
-        int chunkMaxZ = ChunkSectionPos.getSectionCoord(max.getZ());
+        HashMap<BlockPos, Integer> visitedBlocks = new HashMap<>();
+        BloodVisitor visitor = (view, visitedPos, visitedState, visitedEntity) -> {
+            if (visitedEntity instanceof PedestalBlockEntity pedestal)
+                consumer.accept(pedestal);
+        };
+        // todo: this implementation is probably slow
+        this.visitBloodPos(visitedBlocks, world, pos.north(), 0, visitor);
+        this.visitBloodPos(visitedBlocks, world, pos.south(), 0, visitor);
+        this.visitBloodPos(visitedBlocks, world, pos.east(), 0, visitor);
+        this.visitBloodPos(visitedBlocks, world, pos.west(), 0, visitor);
 
-        for (int x = chunkMinX; x <= chunkMaxX; x++) {
-            for (int z = chunkMinZ; z <= chunkMaxZ; z++) {
-                if (!world.isChunkLoaded(x, z))
-                    continue;
-                WorldChunk chunk = world.getChunk(x, z);
-                chunk.getBlockEntities().forEach((bPos, be) -> {
-                    if (be instanceof PedestalBlockEntity pedestalBlockEntity && bounds.contains(bPos.getX(), bPos.getY(), bPos.getZ()))
-                        consumer.accept(pedestalBlockEntity);
-                });
+        visitedBlocks.forEach((visited, dist) -> {
+            BlockState state = world.getBlockState(visited);
+            if (state.isOf(SLBlocks.BLOOD_SPLATTER)) {
+                world.setBlockState(visited, state.with(BloodSplatterBlock.ACTIVE, true), Block.NOTIFY_LISTENERS);
+                world.scheduleBlockTick(visited, SLBlocks.BLOOD_SPLATTER, 10);
             }
+        });
+    }
+
+    protected void visitBloodPos(HashMap<BlockPos, Integer> visitedBlocks, BlockView world, BlockPos current, int distance, BloodVisitor visitor) {
+        BlockState state = world.getBlockState(current);
+        if (state.isOf(SLBlocks.PEDESTAL) && !visitedBlocks.containsKey(current)) {
+            visitor.visit(world, current, world.getBlockState(current), world.getBlockEntity(current));
         }
+
+        visitedBlocks.put(current, distance);
+        if (state.isOf(SLBlocks.BLOOD_SPLATTER)) {
+            BloodSplatterBlock.DIRECTION_TO_WIRE_CONNECTION_PROPERTY.forEach((direction, property) -> {
+                switch (state.get(property)) {
+                    case SIDE -> {
+                        BlockPos connectedPos = current.offset(direction);
+                        BlockPos connectedDownPos = connectedPos.down();
+                        if (!world.getBlockState(connectedPos).isOf(SLBlocks.BLOOD_SPLATTER) && world.getBlockState(connectedDownPos).isOf(SLBlocks.BLOOD_SPLATTER)) {
+                            BlockState downState = world.getBlockState(connectedDownPos);
+                            if (downState.get(BloodSplatterBlock.DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction.getOpposite())) == WireConnection.UP) {
+                                if (distance + 1 < PEDESTAL_SEARCH_RADIUS && (!visitedBlocks.containsKey(connectedDownPos) || visitedBlocks.get(connectedDownPos) > distance + 1)) {
+                                    this.visitBloodPos(visitedBlocks, world, connectedDownPos, distance + 1, visitor);
+                                }
+                            } else {
+                                if (distance + 1 < PEDESTAL_SEARCH_RADIUS && (!visitedBlocks.containsKey(connectedPos) || visitedBlocks.get(connectedPos) > distance + 1)) {
+                                    this.visitBloodPos(visitedBlocks, world, connectedPos, distance + 1, visitor);
+                                }
+                            }
+                        } else if (distance + 1 < PEDESTAL_SEARCH_RADIUS && (!visitedBlocks.containsKey(connectedPos) || visitedBlocks.get(connectedPos) > distance + 1)) {
+                            this.visitBloodPos(visitedBlocks, world, connectedPos, distance + 1, visitor);
+                        }
+                    }
+                    case UP -> {
+                        BlockPos connectedPos = current.offset(direction).up();
+                        if (distance + 1 < PEDESTAL_SEARCH_RADIUS && (!visitedBlocks.containsKey(connectedPos) || visitedBlocks.get(connectedPos) > distance + 1)) {
+                            this.visitBloodPos(visitedBlocks, world, connectedPos, distance + 1, visitor);
+                        }
+                    }
+                }
+            });
+        }
+
+
     }
 
     @Override
@@ -319,5 +357,10 @@ public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlock
         this.targetUUID = null;
         this.activeRitual = null;
         this.inventory.clear();
+    }
+
+    @FunctionalInterface
+    protected interface BloodVisitor {
+        void visit(BlockView view, BlockPos pos, BlockState state, @Nullable BlockEntity entity);
     }
 }
