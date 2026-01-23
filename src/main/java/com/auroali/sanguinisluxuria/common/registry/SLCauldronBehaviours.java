@@ -62,16 +62,13 @@ public class SLCauldronBehaviours {
 
     public static boolean fillFromCauldron(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack) {
         if (BloodStorageItem.isItemFillable(stack) && BloodStorageItem.getItemCapacity(stack) >= BloodConstants.BLOOD_PER_BOTTLE) {
-            ItemStack filled = stack.split(1);
+            Item usedItem = stack.getItem();
+            ItemStack filled = stack.copyWithCount(1);
             BloodStorageItem.incrementItemBlood(filled, BloodConstants.BLOOD_PER_BOTTLE);
             BloodCauldronBlock.decrementFluidLevel(state, world, pos);
-            if (stack.isEmpty()) {
-                player.setStackInHand(hand, filled);
-            } else if (!player.getInventory().insertStack(filled)) {
-                player.dropItem(filled, false);
-            }
+            player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, filled));
             player.incrementStat(Stats.USE_CAULDRON);
-            player.incrementStat(Stats.USED.getOrCreateStat(filled.getItem()));
+            player.incrementStat(Stats.USED.getOrCreateStat(usedItem));
             world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
             world.emitGameEvent(null, GameEvent.FLUID_PICKUP, pos);
             return true;
@@ -85,7 +82,8 @@ public class SLCauldronBehaviours {
             && BloodStorageItem.getItemBlood(stack) >= BloodConstants.BLOOD_PER_BOTTLE
             && (state.isOf(Blocks.CAULDRON) || state.get(LeveledCauldronBlock.LEVEL) < 3)
         ) {
-            ItemStack drained = stack.split(1);
+            Item usedItem = stack.getItem();
+            ItemStack drained = stack.copyWithCount(1);
             BloodStorageItem.decrementItemBlood(stack, BloodConstants.BLOOD_PER_BOTTLE);
             world.setBlockState(pos, state.isOf(Blocks.CAULDRON)
               ? SLBlocks.BLOOD_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, 1)
@@ -94,13 +92,9 @@ public class SLCauldronBehaviours {
             if (BloodStorageItem.isItemEmpty(drained)) {
                 drained = BloodStorageItem.createEmptyStackFor(drained);
             }
-            if (stack.isEmpty()) {
-                player.setStackInHand(hand, drained);
-            } else if (!player.getInventory().insertStack(drained)) {
-                player.dropItem(drained, false);
-            }
+            player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, drained));
             player.incrementStat(Stats.FILL_CAULDRON);
-            player.incrementStat(Stats.USED.getOrCreateStat(drained.getItem()));
+            player.incrementStat(Stats.USED.getOrCreateStat(usedItem));
             world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
             world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
             return true;
