@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BurnInSunComponent;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.DrawContext;

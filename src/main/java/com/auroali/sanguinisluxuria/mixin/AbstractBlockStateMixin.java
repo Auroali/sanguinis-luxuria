@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.mixin;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.EntityShapeContext;

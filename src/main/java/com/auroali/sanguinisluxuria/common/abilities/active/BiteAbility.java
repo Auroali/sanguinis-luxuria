@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.common.abilities.active;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
@@ -11,6 +10,8 @@ import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.SLParticles;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
+import com.auroali.sanguinisluxuria.util.RaycastHelper;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.server.world.ServerWorld;
@@ -25,7 +26,7 @@ public class BiteAbility extends VampireAbility {
         if (entry.isOnCooldown() || VampireHelper.isMasked(entity))
             return;
 
-        HitResult result = VampireHelper.raycastEntity(entity, entity.getRotationVector(), e -> e instanceof LivingEntity);
+        HitResult result = RaycastHelper.raycastEntity(entity, entity.getRotationVector(), e -> e instanceof LivingEntity);
         if (result.getType() != HitResult.Type.ENTITY)
             return;
 
@@ -55,7 +56,7 @@ public class BiteAbility extends VampireAbility {
             SyncableVampireAbility.syncAbility(
               entity,
               SLVampireAbilities.INFECTIOUS,
-              InfectiousAbility.InfectiousData.create(target, VampireHelper.transferStatusEffects(entity, target, true))
+              InfectiousAbility.InfectiousData.create(target, InfectiousAbility.transferStatusEffects(entity, target, true))
             );
         }
         if (component instanceof EntityTrackingDrainer drainer && target.isAlive()) {

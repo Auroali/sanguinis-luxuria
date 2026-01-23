@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
@@ -10,6 +9,7 @@ import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
 import com.auroali.sanguinisluxuria.common.rituals.RitualUtil;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.mojang.serialization.Codec;
 
 public class VampireAbilityResetRitual implements Ritual {

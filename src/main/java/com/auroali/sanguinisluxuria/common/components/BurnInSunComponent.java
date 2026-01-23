@@ -1,10 +1,10 @@
 package com.auroali.sanguinisluxuria.common.components;
 
 import com.auroali.sanguinisluxuria.SLResources;
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.enchantments.SunProtectionEnchantment;
 import com.auroali.sanguinisluxuria.common.events.VampireSunEvents;
 import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;

@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.mixin;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import org.spongepowered.asm.mixin.Mixin;

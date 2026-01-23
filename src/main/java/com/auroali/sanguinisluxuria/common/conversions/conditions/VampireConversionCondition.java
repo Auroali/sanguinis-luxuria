@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.conversions.conditions;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionCondition;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 

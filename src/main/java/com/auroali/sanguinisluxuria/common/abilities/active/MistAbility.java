@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria.common.abilities.active;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.EntitySyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
+import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.google.common.collect.ImmutableMap;
 import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
@@ -136,7 +136,7 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
         World world = entity.getWorld();
         world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), entity.getBoundingBox(), LivingEntity::isAlive)
           .forEach(target -> {
-              VampireHelper.transferStatusEffects(entity, target, false);
+              InfectiousAbility.transferStatusEffects(entity, target, false);
           });
     }
 }

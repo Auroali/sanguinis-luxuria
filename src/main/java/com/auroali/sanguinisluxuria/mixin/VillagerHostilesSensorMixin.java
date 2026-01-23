@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.mixin;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.sensor.VillagerHostilesSensor;
 import org.spongepowered.asm.mixin.Mixin;

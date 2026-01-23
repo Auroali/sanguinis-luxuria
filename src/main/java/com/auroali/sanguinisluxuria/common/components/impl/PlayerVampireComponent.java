@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.common.components.impl;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.active.MistAbility;
@@ -8,6 +7,7 @@ import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.network.ConditionalPacketWriter;
 import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;

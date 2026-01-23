@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.mixin.compat.connectormod.present;
 
 import com.auroali.sanguinisluxuria.SLResources;
-import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;

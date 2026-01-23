@@ -1,9 +1,9 @@
 package com.auroali.sanguinisluxuria.common.blocks;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.common.registry.SLWorldgen;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.sapling.SaplingGenerator;

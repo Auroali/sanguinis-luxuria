@@ -2,10 +2,14 @@ package com.auroali.sanguinisluxuria.common.abilities.passive;
 
 import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
+import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
+import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -69,6 +73,44 @@ public class InfectiousAbility extends VampireAbility implements SyncableVampire
               colour.z()
             );
         }
+    }
+
+    /**
+     * Transfers status effects from one entity to the other, clearing the effects from the original entity
+     *
+     * @param from the entity to transfer effects from
+     * @param to   the entity to transfer effects to
+     * @return the list of successfully transferred status effect instances
+     */
+    public static List<StatusEffectInstance> transferStatusEffects(LivingEntity from, LivingEntity to, boolean clearOriginal) {
+        List<StatusEffectInstance> transferredEffects = new ArrayList<>(from.getStatusEffects().size());
+        for (StatusEffectInstance instance : from.getStatusEffects()) {
+            if (instance.isAmbient() || Registries.STATUS_EFFECT.getEntry(instance.getEffectType()).isIn(SLTags.StatusEffects.NON_TRANSFERABLE))
+                continue;
+
+            StatusEffectInstance toAdd = new StatusEffectInstance(
+              instance.getEffectType(),
+              clearOriginal ? instance.getDuration() : Math.min(instance.getDuration(), 100),
+              instance.getAmplifier(),
+              instance.isAmbient(),
+              instance.shouldShowParticles(),
+              instance.shouldShowIcon(),
+              null,
+              instance.getFactorCalculationData()
+            );
+            to.addStatusEffect(toAdd);
+            transferredEffects.add(toAdd);
+        }
+
+        if (from instanceof ServerPlayerEntity player) {
+            SLAdvancementCriterion.TRANSFER_EFFECTS.trigger(player, transferredEffects);
+        }
+
+        if (clearOriginal) {
+            // prevent removing effects that weren't transferred
+            transferredEffects.forEach(effect -> from.removeStatusEffect(effect.getEffectType()));
+        }
+        return transferredEffects;
     }
 
     public record InfectiousData(LivingEntity target, List<Vector3f> colours) {

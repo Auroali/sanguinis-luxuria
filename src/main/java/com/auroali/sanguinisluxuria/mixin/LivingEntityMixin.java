@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.mixin;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.InitializableBloodComponent;
@@ -8,6 +7,7 @@ import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.VampireDamageHandler;
 import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

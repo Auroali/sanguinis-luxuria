@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.compat;
 
 import com.auroali.sanguinisluxuria.SLResources;
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.HungerManager;

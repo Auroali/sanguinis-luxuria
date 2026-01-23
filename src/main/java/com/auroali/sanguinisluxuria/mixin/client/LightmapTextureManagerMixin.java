@@ -1,6 +1,6 @@
 package com.auroali.sanguinisluxuria.mixin.client;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.client.MinecraftClient;

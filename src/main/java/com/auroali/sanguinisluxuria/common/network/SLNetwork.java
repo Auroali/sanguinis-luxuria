@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.common.network;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
@@ -10,6 +9,9 @@ import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
 import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.FillBloodItemC2S;
+import com.auroali.sanguinisluxuria.util.ItemUtil;
+import com.auroali.sanguinisluxuria.util.RaycastHelper;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -32,7 +34,7 @@ public class SLNetwork {
             if (!VampireHelper.isVampire(player))
                 return;
             BloodDrainComponent drainer = BloodDrainComponent.KEY.get(player);
-            HitResult result = VampireHelper.raycastEntity(player, player.getRotationVector(), Entity::isAlive);
+            HitResult result = RaycastHelper.raycastEntity(player, player.getRotationVector(), Entity::isAlive);
             if (result.getType() != HitResult.Type.ENTITY)
                 return;
 
@@ -58,7 +60,7 @@ public class SLNetwork {
                 return;
 
             int toFill = Math.min(BloodConstants.BLOOD_PER_BOTTLE, blood.getBlood());
-            int filled = VampireHelper.fillHeldBloodStorage(player, stack, packet.hand(), toFill, s -> {
+            int filled = ItemUtil.fillHeldBloodStorage(player, stack, packet.hand(), toFill, s -> {
                 if (player.isSneaking() && EntityTrackingItem.canTrackEntity(s) && !EntityTrackingItem.hasEntity(stack)) {
                     EntityTrackingItem.setEntity(
                       s,

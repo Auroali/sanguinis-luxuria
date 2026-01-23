@@ -1,10 +1,11 @@
 package com.auroali.sanguinisluxuria.mixin;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.BloodTransferComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.auroali.sanguinisluxuria.util.ItemUtil;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -89,7 +90,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     @Unique
     private void sanguinisluxuria$transferBloodToOwner(Entity owner, int amount) {
         LivingEntity livingOwner = this.sanguinisluxuria$getOwnerAsLiving(owner);
-        if (livingOwner != null && VampireHelper.fillHeldBloodStorage(livingOwner, amount) != 0)
+        if (livingOwner != null && ItemUtil.fillHeldBloodStorage(livingOwner, amount) != 0)
             return;
 
         if (VampireHelper.consumesBlood(owner) && VampireHelper.hasBlood(owner)) {

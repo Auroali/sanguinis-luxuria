@@ -13,6 +13,7 @@ import com.auroali.sanguinisluxuria.common.items.storage.BloodItemFluidStorage;
 import com.auroali.sanguinisluxuria.common.network.SLNetwork;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.SLConfig;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;

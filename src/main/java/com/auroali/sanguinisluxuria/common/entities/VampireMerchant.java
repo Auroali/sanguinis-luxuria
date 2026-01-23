@@ -1,6 +1,5 @@
 package com.auroali.sanguinisluxuria.common.entities;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.entities.goals.AcivateAbilityWhenDownedGoal;
 import com.auroali.sanguinisluxuria.common.entities.goals.FleeWhenDownedGoal;
@@ -9,6 +8,7 @@ import com.auroali.sanguinisluxuria.common.registry.SLItems;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import com.auroali.sanguinisluxuria.common.registry.SLVampireVillagerTrades;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.ai.goal.*;

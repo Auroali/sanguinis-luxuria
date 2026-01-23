@@ -18,6 +18,8 @@ import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.FillBloodItemC2S;
 import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.util.ItemUtil;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -170,7 +172,7 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
 
         if (VampireHelper.isVampire(client.player)) {
             // if the player is holding a fillable item, send the packet as long as the key is held down
-            ItemStack toFill = VampireHelper.getItemInHand(
+            ItemStack toFill = ItemUtil.getItemInHand(
               client.player,
               Hand.MAIN_HAND,
               stack -> stack.getItem() instanceof BloodStorageItem
@@ -178,7 +180,7 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
             );
 
             if (!toFill.isEmpty())
-                ClientPlayNetworking.send(new FillBloodItemC2S(VampireHelper.getHandForStack(client.player, toFill)));
+                ClientPlayNetworking.send(new FillBloodItemC2S(ItemUtil.getHandForStack(client.player, toFill)));
         }
     }
 

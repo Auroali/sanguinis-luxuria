@@ -1,7 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blood.effects;
 
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
+import com.auroali.sanguinisluxuria.util.EntityUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +15,7 @@ public record BloodDrainTeleportEffect(int radius, float chance) implements Bloo
     @Override
     public void apply(LivingEntity entity) {
         if (entity.getRandom().nextFloat() < this.chance)
-            VampireHelper.teleportRandomly(entity, this.radius);
+            EntityUtil.teleportRandomly(entity, this.radius);
     }
 
     @Override

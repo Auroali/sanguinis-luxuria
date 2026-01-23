@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.common.entities;
 
 import com.auroali.sanguinisluxuria.SanguinisLuxuria;
-import com.auroali.sanguinisluxuria.VampireHelper;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
@@ -9,6 +8,7 @@ import com.auroali.sanguinisluxuria.common.entities.goals.TeleportWhenOutOfRange
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
