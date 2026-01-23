@@ -34,6 +34,7 @@ public class SLDamageTagsProvider extends FabricTagProvider<DamageType> {
 
         this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ENCHANTMENTS)
           .addOptional(SLResources.BLOOD_DRAIN_DAMAGE_KEY)
+          .addOptional(SLResources.BITE_DAMAGE_KEY)
           .addOptional(SLResources.BLESSED_WATER_DAMAGE_KEY);
 
         this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_RESISTANCE)

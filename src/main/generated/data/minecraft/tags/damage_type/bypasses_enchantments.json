@@ -6,6 +6,10 @@
       "required": false
     },
     {
+      "id": "sanguinisluxuria:bite",
+      "required": false
+    },
+    {
       "id": "sanguinisluxuria:blessed_water",
       "required": false
     }
