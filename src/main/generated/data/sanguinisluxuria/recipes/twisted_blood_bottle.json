@@ -1,7 +1,17 @@
 {
   "type": "sanguinisluxuria:ritual",
   "catalyst": {
-    "item": "sanguinisluxuria:blood_bottle"
+    "fabric:type": "fabric:nbt",
+    "base": {
+      "item": "sanguinisluxuria:blood_bottle"
+    },
+    "nbt": {
+      "Blood": {
+        "CurrentBlood": 2,
+        "MaxBlood": 2
+      }
+    },
+    "strict": false
   },
   "category": "misc",
   "inputs": [

@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.advancements.ConvertCriterion;
 import com.auroali.sanguinisluxuria.common.advancements.UnlockAbilityCriterion;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
+import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.registry.SLItems;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
@@ -13,7 +14,9 @@ import com.auroali.sanguinisluxuria.datagen.builders.BloodCauldronRecipeJsonBuil
 import com.auroali.sanguinisluxuria.datagen.builders.RitualRecipeJsonBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.fabricmc.fabric.impl.recipe.ingredient.builtin.NbtIngredient;
 import net.minecraft.data.server.recipe.*;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
@@ -195,7 +198,7 @@ public class SLRecipeProvider extends FabricRecipeProvider {
 
     public void generateRitualRecipes(Consumer<RecipeJsonProvider> exporter) {
         RitualRecipeJsonBuilder.create(RecipeCategory.BREWING, ItemRitual.create(SLItems.TWISTED_BLOOD))
-          .catalyst(SLItems.BLOOD_BOTTLE)
+          .catalyst(BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE))
           .input(Items.NETHER_WART)
           .input(Items.FERMENTED_SPIDER_EYE)
           .input(SLItems.BLOOD_PETAL)
