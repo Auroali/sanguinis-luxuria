@@ -64,13 +64,13 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
             serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
         }
 
-        ItemStack usedStack = user instanceof PlayerEntity player && player.getAbilities().creativeMode
+        boolean creative = user instanceof PlayerEntity player && player.getAbilities().creativeMode;
+        ItemStack usedStack = creative
           ? stack
           : stack.split(1);
 
         int bloodToDrain = Math.min(BloodStorageItem.getItemBlood(usedStack), this.maxBloodPerDrink());
-        boolean drainedBlood = (user instanceof PlayerEntity player && player.getAbilities().creativeMode)
-          || BloodStorageItem.decrementItemBlood(
+        boolean drainedBlood = creative || BloodStorageItem.decrementItemBlood(
           usedStack,
           bloodToDrain
         );
@@ -89,14 +89,14 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
                   .addBlood(bloodToDrain);
             }
         } else {
-            if (bloodToDrain != 0 && drainedBlood)
+            if (drainedBlood)
                 user.eatFood(world, usedStack.copy());
         }
 
         if (stack.isEmpty())
             return result;
 
-        if (user instanceof PlayerEntity player && !player.getAbilities().creativeMode) {
+        if (user instanceof PlayerEntity player && !creative) {
             if (!player.getInventory().insertStack(result))
                 player.dropItem(result, false);
         }
@@ -155,10 +155,17 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
         world.setBlockState(pos, bloodState, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
 
         // if the player is in survival, drain blood from the bottle
-        if (!player.isCreative()) {
-            BloodStorageItem.decrementItemBlood(stack, BloodConstants.BLOOD_PER_BOTTLE);
-            if (BloodStorageItem.isItemEmpty(stack))
-                player.setStackInHand(context.getHand(), BloodStorageItem.createEmptyStackFor(stack));
+        if (!player.getAbilities().creativeMode) {
+            ItemStack drained = stack.split(1);
+            BloodStorageItem.decrementItemBlood(drained, BloodConstants.BLOOD_PER_BOTTLE);
+            if (BloodStorageItem.isItemEmpty(drained))
+                drained = BloodStorageItem.createEmptyStackFor(stack);
+
+            if (stack.isEmpty())
+                player.setStackInHand(context.getHand(), drained);
+            else if (!player.getInventory().insertStack(drained)) {
+                player.dropItem(drained, false);
+            }
         }
         // play the bottle empty sound and emit the block place game event
         world.playSound(player, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);

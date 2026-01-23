@@ -103,6 +103,9 @@ public interface BloodStorageItem {
      * @return if the amount was successfully decremented
      */
     static boolean decrementItemBlood(ItemStack stack, int amount) {
+        if (amount == 0)
+            return false;
+
         if (!stack.hasNbt() || !stack.getNbt().contains(BLOOD_KEY, NbtElement.COMPOUND_TYPE))
             getOrCreateBloodTag(stack);
 
@@ -122,6 +125,9 @@ public interface BloodStorageItem {
      * @return if the amount was successfully incremented
      */
     static boolean incrementItemBlood(ItemStack stack, int amount) {
+        if (amount == 0)
+            return false;
+
         if (!stack.hasNbt() || !stack.getNbt().contains(BLOOD_KEY, NbtElement.COMPOUND_TYPE))
             getOrCreateBloodTag(stack);
 
