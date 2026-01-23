@@ -251,23 +251,21 @@ public class VampireHelper {
      * @return the amount of blood successfully filled
      */
     public static int fillHeldBloodStorage(LivingEntity entity, ItemStack stack, Hand hand, int amount, Consumer<ItemStack> consumer) {
-        ItemStack resultStack = stack;
+        ItemStack original = stack.copy();
+        ItemStack resultStack = stack.split(1);
         if (!(resultStack.getItem() instanceof BloodStorageItem)) {
             resultStack = BloodStorageFillEvents.TRANSFORM_STACK.invoker().createFrom(entity, resultStack);
         }
 
         int amountToFill = Math.min(amount, BloodStorageItem.getItemCapacity(resultStack));
 
-        if (amountToFill == 0 || !BloodStorageItem.isItemFillable(resultStack) || !BloodStorageItem.incrementItemBlood(resultStack, amountToFill))
+        if (amountToFill == 0 || !BloodStorageItem.isItemFillable(resultStack) || !BloodStorageItem.incrementItemBlood(resultStack, amountToFill)) {
+            entity.setStackInHand(hand, original);
             return 0;
+        }
 
         if (consumer != null)
             consumer.accept(resultStack);
-
-        if (stack == resultStack)
-            return amountToFill;
-
-        stack.decrement(1);
 
         if (stack.isEmpty()) {
             entity.setStackInHand(hand, resultStack);
