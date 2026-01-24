@@ -15,6 +15,7 @@
   "mixins": [
     "AbstractBlockStateMixin",
     "BedBlockMixin",
+    "BeehiveBlockMixin",
     "BlockEntityTypeMixin",
     "CakeBlockMixin",
     "HungerManagerMixin",

@@ -123,8 +123,22 @@ public class SLBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
         this.getOrCreateTagBuilder(SLTags.Blocks.NO_MIST_COLLISION)
           .add(
             Blocks.IRON_BARS,
-            Blocks.BAMBOO
+            Blocks.BAMBOO,
+            Blocks.GRINDSTONE,
+            Blocks.SMALL_AMETHYST_BUD,
+            Blocks.MEDIUM_AMETHYST_BUD,
+            Blocks.LARGE_AMETHYST_BUD,
+            Blocks.AMETHYST_CLUSTER,
+            Blocks.CHORUS_FLOWER,
+            Blocks.CHORUS_PLANT,
+            Blocks.SWEET_BERRY_BUSH,
+            Blocks.LANTERN,
+            Blocks.SOUL_LANTERN,
+            Blocks.CAKE
           )
+          .forceAddTag(BlockTags.CANDLES)
+          .forceAddTag(BlockTags.CANDLE_CAKES)
+          .forceAddTag(BlockTags.LEAVES)
           .forceAddTag(BlockTags.DOORS)
           .forceAddTag(BlockTags.TRAPDOORS)
           .forceAddTag(BlockTags.FENCE_GATES)
