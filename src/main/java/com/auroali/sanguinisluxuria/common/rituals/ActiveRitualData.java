@@ -22,8 +22,10 @@ public record ActiveRitualData(Ritual ritual, UUID initiator, UUID target) {
         Ritual.RITUAL_CODEC.encodeStart(NbtOps.INSTANCE, data.ritual())
           .resultOrPartial(SanguinisLuxuria.LOGGER::error)
           .ifPresent(element -> {
-              compound.putUuid(INITIATOR_KEY, data.initiator);
-              compound.putUuid(TARGET_KEY, data.target);
+              if (data.initiator != null)
+                  compound.putUuid(INITIATOR_KEY, data.initiator);
+              if (data.target != null)
+                  compound.putUuid(TARGET_KEY, data.target);
               compound.put(RITUAL_KEY, element);
           });
     }
@@ -34,8 +36,8 @@ public record ActiveRitualData(Ritual ritual, UUID initiator, UUID target) {
         return Ritual.RITUAL_CODEC.parse(NbtOps.INSTANCE, compound.get(RITUAL_KEY))
           .resultOrPartial(SanguinisLuxuria.LOGGER::error)
           .map(ritual -> {
-              UUID initiator = compound.getUuid(INITIATOR_KEY);
-              UUID target = compound.getUuid(TARGET_KEY);
+              UUID initiator = compound.containsUuid(INITIATOR_KEY) ? compound.getUuid(INITIATOR_KEY) : null;
+              UUID target = compound.containsUuid(TARGET_KEY) ? compound.getUuid(TARGET_KEY) : null;
               return new ActiveRitualData(ritual, initiator, target);
           })
           .orElse(null);

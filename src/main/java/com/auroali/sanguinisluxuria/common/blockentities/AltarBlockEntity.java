@@ -1,6 +1,7 @@
 package com.auroali.sanguinisluxuria.common.blockentities;
 
 import com.auroali.sanguinisluxuria.SanguinisLuxuriaClient;
+import com.auroali.sanguinisluxuria.common.advancements.PerformRitualCriterion;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.blocks.BloodSplatterBlock;
 import com.auroali.sanguinisluxuria.common.particles.DelayedParticleEffect;
@@ -10,6 +11,7 @@ import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
 import com.auroali.sanguinisluxuria.common.rituals.RitualUtil;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,6 +28,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Clearable;
@@ -91,6 +94,10 @@ public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlock
 
         Ritual ritual = world.getRecipeManager().getFirstMatch(SLRecipeTypes.ALTAR_RECIPE, craftingInventory, world)
           .map(recipe -> {
+              if (initiator instanceof ServerPlayerEntity serverPlayer) {
+                  Criteria.RECIPE_CRAFTED.trigger(serverPlayer, recipe.getId(), craftingInventory.stacks);
+              }
+
               nearbyPedestals.forEach(pedestal -> {
                   ItemStack consumed = pedestal.getInventory().removeStack(0, 1);
                   ItemStack remainder = consumed.getRecipeRemainder();
@@ -113,7 +120,7 @@ public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlock
         if (ritual != null) {
             this.activeRitual = new ActiveRitualData(
               ritual,
-              initiator == null ? target.getUuid() : initiator.getUuid(),
+              initiator == null ? null : initiator.getUuid(),
               target == null ? initiator.getUuid() : this.targetUUID
             );
             this.ritualProcessingTicks = 0;
@@ -259,27 +266,21 @@ public class AltarBlockEntity extends BlockEntity implements ItemDisplayingBlock
         Ritual ritual = entity.activeRitual.ritual();
         LivingEntity initiator = entity.activeRitual.resolveInitiator(world);
         LivingEntity target = entity.activeRitual.resolveTarget(world);
-        if (initiator == null) {
-            entity.activeRitual = null;
-            entity.ritualProcessingTicks = 0;
-            entity.markDirty();
-            world.setBlockState(pos, state
-              .with(AltarBlock.ACTIVE, false)
-              .with(EntityTargetingBlockEntity.TARGET, entity.targetUUID != null)
-            );
-            return;
-        }
 
-        ritual.onCompleted(
-          RitualParameters
-            .builder()
-            .initiator(initiator)
-            .target(target)
-            .position(pos)
-            .world(world)
-            .inventory(entity.inventory)
-            .build()
-        );
+        RitualParameters parameters = RitualParameters
+          .builder()
+          .initiator(initiator)
+          .target(target)
+          .position(pos)
+          .world(world)
+          .inventory(entity.inventory)
+          .build();
+
+        ritual.onCompleted(parameters);
+
+        if (initiator instanceof ServerPlayerEntity serverPlayer) {
+            SLAdvancementCriterion.PERFORM_RITUAL.trigger(serverPlayer, ritual, parameters);
+        }
 
         entity.activeRitual = null;
         entity.ritualProcessingTicks = 0;
