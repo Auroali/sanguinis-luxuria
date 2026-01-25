@@ -64,6 +64,9 @@ public class BloodItemFluidStorage implements Storage<FluidVariant>, StorageView
         );
 
         BloodStorageItem.decrementItemBlood(stack, bloodToDrain);
+        if (BloodStorageItem.isItemEmpty(stack))
+            stack = BloodStorageItem.createEmptyStackFor(stack);
+        
         if (this.context.exchange(ItemVariant.of(stack), 1, transaction) == 1)
             return BloodConstants.bloodToDroplets(bloodToDrain);
 
