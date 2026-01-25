@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.common.blockentities;
 
 import com.auroali.sanguinisluxuria.SanguinisLuxuriaClient;
-import com.auroali.sanguinisluxuria.common.advancements.PerformRitualCriterion;
 import com.auroali.sanguinisluxuria.common.blocks.AltarBlock;
 import com.auroali.sanguinisluxuria.common.blocks.BloodSplatterBlock;
 import com.auroali.sanguinisluxuria.common.particles.DelayedParticleEffect;

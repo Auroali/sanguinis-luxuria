@@ -1,11 +1,11 @@
 package com.auroali.sanguinisluxuria.datagen.generators;
 
 import com.auroali.sanguinisluxuria.datagen.builders.BloodDrainEffectBuilder;
+import com.auroali.sanguinisluxuria.datagen.util.DatagenConditions;
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
-import net.fabricmc.fabric.impl.datagen.FabricDataGenHelper;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
@@ -43,7 +43,7 @@ public abstract class SanguinisLuxuriaBloodEffectsProvider implements DataProvid
         List<CompletableFuture<?>> futures = new ArrayList<>();
         for (var builderEntry : builders.entrySet()) {
             JsonObject json = builderEntry.getValue().toJson();
-            ConditionJsonProvider.write(json, FabricDataGenHelper.consumeConditions(builderEntry.getValue()));
+            ConditionJsonProvider.write(json, DatagenConditions.consumeConditions(builderEntry.getValue()));
             futures.add(DataProvider.writeToPath(writer, json, this.getOutputPath(builderEntry.getKey())));
         }
         return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
@@ -52,7 +52,7 @@ public abstract class SanguinisLuxuriaBloodEffectsProvider implements DataProvid
     protected BloodEffectExporter withConditions(BloodEffectExporter exporter, ConditionJsonProvider... conditions) {
         Preconditions.checkArgument(conditions.length > 0, "Must add at least one condition.");
         return (builder, id) -> {
-            FabricDataGenHelper.addConditions(builder, conditions);
+            DatagenConditions.addConditions(builder, conditions);
             exporter.offer(builder, id);
         };
     }

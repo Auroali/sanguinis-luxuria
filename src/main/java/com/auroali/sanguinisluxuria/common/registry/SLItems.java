@@ -26,7 +26,8 @@ public class SLItems {
       new Item.Settings().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE).food(DrinkableBloodItem.BLOOD_FOOD_COMPONENT)
     );
     public static final Item TWISTED_BLOOD = new Item(new Item.Settings().maxCount(1));
-    public static final Item VAMPIRE_VILLAGER_SPAWN_EGG = new SpawnEggItem(SLEntities.VAMPIRE_VILLAGER, 0xFF1E1C1B, 0xFFF9f8EF, new Item.Settings());
+    public static final Item VAMPIRE_VILLAGER_SPAWN_EGG = new SpawnEggItem(SLEntities.VAMPIRE_ILLAGER, 0xFF1E1C1B, 0xFFF9f8EF, new Item.Settings());
+    public static final Item VAMPIRE_MERCHANT_SPAWN_EGG = new SpawnEggItem(SLEntities.VAMPIRE_MERCHANT, 0xFF1E1C1B, 0xFF991818, new Item.Settings());
     public static final Item PENDANT_OF_PIERCING = new PendantOfPiercingItem(new Item.Settings().maxCount(1));
     public static final Item BLOOD_PETAL = new Item(new Item.Settings());
     public static final Item SILVER_INGOT = new Item(new Item.Settings());
@@ -75,6 +76,7 @@ public class SLItems {
         Registry.register(Registries.ITEM, SLResources.BLOOD_BOTTLE_ID, BLOOD_BOTTLE);
         Registry.register(Registries.ITEM, SLResources.TWISTED_BLOOD_ID, TWISTED_BLOOD);
         Registry.register(Registries.ITEM, SLResources.VAMPIRE_VILLAGER_SPAWN_EGG, VAMPIRE_VILLAGER_SPAWN_EGG);
+        Registry.register(Registries.ITEM, SLResources.VAMPIRE_MERCHANT_SPAWN_EGG, VAMPIRE_MERCHANT_SPAWN_EGG);
         Registry.register(Registries.ITEM, SLResources.PENDANT_OF_PIERCING, PENDANT_OF_PIERCING);
         Registry.register(Registries.ITEM, SLResources.BLOOD_PETAL_ID, BLOOD_PETAL);
         Registry.register(Registries.ITEM, SLResources.SILVER_INGOT_ID, SILVER_INGOT);

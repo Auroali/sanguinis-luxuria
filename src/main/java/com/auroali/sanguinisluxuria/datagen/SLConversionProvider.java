@@ -1,7 +1,6 @@
 package com.auroali.sanguinisluxuria.datagen;
 
 import com.auroali.sanguinisluxuria.SLResources;
-import com.auroali.sanguinisluxuria.SanguinisLuxuria;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.ConversionContextCondition;
 import com.auroali.sanguinisluxuria.common.conversions.conditions.VampireConversionCondition;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.ConditionalTransformer;
@@ -16,30 +15,28 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.village.VillagerType;
 
-import java.util.function.Consumer;
-
 public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
     public SLConversionProvider(FabricDataOutput output) {
         super(output);
     }
 
     @Override
-    protected void generateConversions(Consumer<ConversionJsonBuilder.Provider> exporter) {
-        ConversionJsonBuilder.create(EntityType.VILLAGER, SLEntities.VAMPIRE_VILLAGER)
+    protected void generateConversions(ConversionExporter exporter) {
+        ConversionJsonBuilder.create(EntityType.VILLAGER, SLEntities.VAMPIRE_ILLAGER)
           .type(SLConversions.SPAWN_TYPE)
           .transformer(CopyConversionTransformer.create("Offers"))
           .transformer(CopyConversionTransformer.create("Xp"))
           .transformer(CopyConversionTransformer.create("VillagerData"))
           .condition(ConversionContextCondition.converting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
 
-        ConversionJsonBuilder.create(SLEntities.VAMPIRE_VILLAGER, EntityType.VILLAGER)
+        ConversionJsonBuilder.create(SLEntities.VAMPIRE_ILLAGER, EntityType.VILLAGER)
           .type(SLConversions.SPAWN_TYPE)
           .transformer(CopyConversionTransformer.create("Offers"))
           .transformer(CopyConversionTransformer.create("Xp"))
           .transformer(CopyConversionTransformer.create("VillagerData"))
           .condition(ConversionContextCondition.deconverting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
 
         ConversionJsonBuilder.create(EntityType.PLAYER, EntityType.PLAYER)
           .type(SLConversions.SET_VAMPIRE_TYPE)
@@ -64,22 +61,22 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
             e -> e.getKey().getValue()
           )
           .condition(ConversionContextCondition.deconverting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
 
         ConversionJsonBuilder.create(EntityType.ZOMBIFIED_PIGLIN, EntityType.PIGLIN)
           .type(SLConversions.SPAWN_TYPE)
           .condition(ConversionContextCondition.deconverting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
 
         ConversionJsonBuilder.create(EntityType.ZOGLIN, EntityType.HOGLIN)
           .type(SLConversions.SPAWN_TYPE)
           .condition(ConversionContextCondition.deconverting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
 
         ConversionJsonBuilder.create(EntityType.VEX, EntityType.ALLAY)
           .type(SLConversions.SPAWN_TYPE)
           .condition(ConversionContextCondition.deconverting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
 
         ConversionJsonBuilder.create(EntityType.ZOMBIE_VILLAGER, EntityType.VILLAGER)
           .type(SLConversions.SPAWN_TYPE)
@@ -87,7 +84,7 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
           .transformer(CopyConversionTransformer.create("Xp"))
           .transformer(CopyConversionTransformer.create("Offers"))
           .condition(ConversionContextCondition.deconverting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
 
         ConversionJsonBuilder.create(EntityType.ZOMBIE_HORSE, EntityType.HORSE)
           .type(SLConversions.SPAWN_TYPE)
@@ -99,6 +96,16 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
           .transformers(CopyConversionTransformer.create("Temper"))
           .transformers(CopyConversionTransformer.create("attributes"))
           .condition(ConversionContextCondition.deconverting())
-          .offerTo(exporter, SanguinisLuxuria.MODID);
+          .offerTo(exporter);
+
+        ConversionJsonBuilder.create(EntityType.WANDERING_TRADER, SLEntities.VAMPIRE_MERCHANT)
+          .type(SLConversions.SPAWN_TYPE)
+          .condition(ConversionContextCondition.converting())
+          .offerTo(exporter);
+
+        ConversionJsonBuilder.create(SLEntities.VAMPIRE_MERCHANT, EntityType.WANDERING_TRADER)
+          .type(SLConversions.SPAWN_TYPE)
+          .condition(ConversionContextCondition.deconverting())
+          .offerTo(exporter);
     }
 }

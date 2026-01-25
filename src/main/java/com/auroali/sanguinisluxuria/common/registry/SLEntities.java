@@ -16,7 +16,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.world.Heightmap;
 
 public class SLEntities {
-    public static final EntityType<VampireIllagerEntity> VAMPIRE_VILLAGER = EntityType.Builder
+    public static final EntityType<VampireIllagerEntity> VAMPIRE_ILLAGER = EntityType.Builder
       .create(VampireIllagerEntity::new, SpawnGroup.MONSTER)
       .maxTrackingRange(10)
       .setDimensions(0.6F, 1.95F)
@@ -29,7 +29,7 @@ public class SLEntities {
 
 
     public static void register() {
-        Registry.register(Registries.ENTITY_TYPE, SLResources.VAMPIRE_ILLAGER, VAMPIRE_VILLAGER);
+        Registry.register(Registries.ENTITY_TYPE, SLResources.VAMPIRE_ILLAGER, VAMPIRE_ILLAGER);
         Registry.register(Registries.ENTITY_TYPE, SLResources.VAMPIRE_MERCHANT, VAMPIRE_MERCHANT);
 
         registerAttributes();
@@ -38,7 +38,7 @@ public class SLEntities {
 
     public static void registerAttributes() {
         FabricDefaultAttributeRegistry
-          .register(VAMPIRE_VILLAGER, VampireIllagerEntity.createHostileAttributes()
+          .register(VAMPIRE_ILLAGER, VampireIllagerEntity.createHostileAttributes()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
             .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7)
             .add(EntityAttributes.GENERIC_ARMOR, 2)
@@ -53,7 +53,7 @@ public class SLEntities {
     }
 
     public static void registerSpawns() {
-        SpawnRestriction.register(VAMPIRE_VILLAGER, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
-        BiomeModifications.addSpawn(b -> b.getBiomeRegistryEntry().isIn(SLTags.Biomes.VAMPIRE_VILLAGER_SPAWN), SpawnGroup.MONSTER, VAMPIRE_VILLAGER, 13, 1, 1);
+        SpawnRestriction.register(VAMPIRE_ILLAGER, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
+        BiomeModifications.addSpawn(b -> b.getBiomeRegistryEntry().isIn(SLTags.Biomes.VAMPIRE_VILLAGER_SPAWN), SpawnGroup.MONSTER, VAMPIRE_ILLAGER, 13, 1, 1);
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "sanguinisluxuria:spawn",
+  "conditions": [
+    {
+      "type": "sanguinisluxuria:context",
+      "value": {
+        "conversion": "deconverting"
+      }
+    }
+  ],
+  "entity": "sanguinisluxuria:vampire_merchant",
+  "target": "minecraft:wandering_trader"
+}

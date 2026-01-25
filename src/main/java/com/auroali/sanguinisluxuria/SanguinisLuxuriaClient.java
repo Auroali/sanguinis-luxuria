@@ -102,7 +102,7 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(SLBlocks.POTTED_GRAFTED_SAPLING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(SLBlocks.SILVER_BARS, RenderLayer.getCutout());
 
-        EntityRendererRegistry.register(SLEntities.VAMPIRE_VILLAGER, VampireIllagerRenderer::new);
+        EntityRendererRegistry.register(SLEntities.VAMPIRE_ILLAGER, VampireIllagerRenderer::new);
         EntityRendererRegistry.register(SLEntities.VAMPIRE_MERCHANT, VampireMerchantRenderer::new);
 
         BlockEntityRendererFactories.register(SLBlockEntities.PEDESTAL, ctx -> new ItemDisplayingBlockEntityRenderer<>(ctx.getItemRenderer()));

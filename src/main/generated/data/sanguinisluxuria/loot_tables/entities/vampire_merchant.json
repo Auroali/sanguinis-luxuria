@@ -11,7 +11,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 1.0,
                 "min": 0.0
               },
               "function": "minecraft:set_count"
@@ -19,13 +19,41 @@
             {
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 1.0,
                 "min": 0.0
               },
               "function": "minecraft:looting_enchant"
             }
           ],
           "name": "sanguinisluxuria:vampire_fang"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "sanguinisluxuria:mask_1"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "sanguinisluxuria:mask_2"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "sanguinisluxuria:mask_3"
+        },
+        {
+          "type": "minecraft:empty",
+          "quality": -1,
+          "weight": 15
         }
       ],
       "rolls": 1.0

@@ -68,6 +68,7 @@ public class SLItemGroups {
               entries.add(SLItems.DECAYED_BUTTON);
               entries.add(SLItems.DECAYED_PRESSURE_PLATE);
               entries.add(SLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
+              entries.add(SLItems.VAMPIRE_MERCHANT_SPAWN_EGG);
               entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), SLStatusEffects.BLESSED_WATER_POTION));
               entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), SLStatusEffects.BLESSED_WATER_POTION_TWO));
               entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), SLStatusEffects.BLOOD_LUST_POTION));
@@ -86,6 +87,7 @@ public class SLItemGroups {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS)
           .register(entries -> {
               entries.add(SLItems.VAMPIRE_VILLAGER_SPAWN_EGG);
+              entries.add(SLItems.VAMPIRE_MERCHANT_SPAWN_EGG);
           });
     }
 }

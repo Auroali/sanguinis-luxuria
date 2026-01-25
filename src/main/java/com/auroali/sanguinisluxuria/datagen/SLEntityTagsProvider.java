@@ -64,7 +64,7 @@ public class SLEntityTagsProvider extends FabricTagProvider.EntityTypeTagProvide
             EntityType.BAT
           )
           .add(
-            SLEntities.VAMPIRE_VILLAGER,
+            SLEntities.VAMPIRE_ILLAGER,
             SLEntities.VAMPIRE_MERCHANT
           )
           .addOptional(new Identifier("ratsmischief", "rat"))
@@ -83,7 +83,7 @@ public class SLEntityTagsProvider extends FabricTagProvider.EntityTypeTagProvide
           )
           .add(
             SLEntities.VAMPIRE_MERCHANT,
-            SLEntities.VAMPIRE_VILLAGER
+            SLEntities.VAMPIRE_ILLAGER
           );
 
         this.getOrCreateTagBuilder(SLTags.Entities.TOXIC_BLOOD)
