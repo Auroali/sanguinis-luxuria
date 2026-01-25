@@ -3,14 +3,8 @@
   "values": [
     "#minecraft:bypasses_invulnerability",
     "#sanguinisluxuria:vampires_weak_to",
-    {
-      "id": "sanguinisluxuria:bite",
-      "required": false
-    },
-    {
-      "id": "sanguinisluxuria:blink_piercing",
-      "required": false
-    },
+    "sanguinisluxuria:bite",
+    "sanguinisluxuria:blink_piercing",
     {
       "id": "spectrum:deadly_poison",
       "required": false

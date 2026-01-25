@@ -46,8 +46,14 @@ public class SLWorldgenProvider extends FabricDynamicRegistryProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
+        this.configuredFeatures(registries, entries);
+        this.placedFeatures(registries, entries);
+    }
+
+    private void configuredFeatures(RegistryWrapper.WrapperLookup registries, Entries entries) {
         // silver ore
-        entries.add(SILVER_ORE_CONFIGURED_FEATURE,
+        entries.add(
+          SILVER_ORE_CONFIGURED_FEATURE,
           new ConfiguredFeature<>(
             Feature.ORE,
             new OreFeatureConfig(
@@ -67,22 +73,9 @@ public class SLWorldgenProvider extends FabricDynamicRegistryProvider {
           )
         );
 
-        entries.add(SLWorldgen.SILVER_ORE,
-          new PlacedFeature(
-            entries.ref(SILVER_ORE_CONFIGURED_FEATURE),
-            List.of(
-              CountPlacementModifier.of(16),
-              HeightRangePlacementModifier.trapezoid(
-                YOffset.aboveBottom(20),
-                YOffset.fixed(40)
-              ),
-              BiomePlacementModifier.of()
-            )
-          )
-        );
-
         // decayed tree
-        entries.add(SLWorldgen.DECAYED_TREE,
+        entries.add(
+          SLWorldgen.DECAYED_TREE,
           new ConfiguredFeature<>(
             Feature.TREE,
             new TreeFeatureConfig.Builder(
@@ -107,6 +100,23 @@ public class SLWorldgenProvider extends FabricDynamicRegistryProvider {
               .dirtProvider(BlockStateProvider.of(Blocks.DIRT.getDefaultState()))
               .decorators(List.of(new DecayedTwigsDecorator(0.23f)))
               .build()
+          )
+        );
+    }
+
+    private void placedFeatures(RegistryWrapper.WrapperLookup registries, Entries entries) {
+        entries.add(
+          SLWorldgen.SILVER_ORE,
+          new PlacedFeature(
+            entries.ref(SILVER_ORE_CONFIGURED_FEATURE),
+            List.of(
+              CountPlacementModifier.of(16),
+              HeightRangePlacementModifier.trapezoid(
+                YOffset.aboveBottom(20),
+                YOffset.fixed(40)
+              ),
+              BiomePlacementModifier.of()
+            )
           )
         );
     }

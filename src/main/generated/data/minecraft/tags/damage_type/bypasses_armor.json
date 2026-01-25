@@ -1,17 +1,8 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "sanguinisluxuria:blood_drain",
-      "required": false
-    },
-    {
-      "id": "sanguinisluxuria:blessed_water",
-      "required": false
-    },
-    {
-      "id": "sanguinisluxuria:bite",
-      "required": false
-    }
+    "sanguinisluxuria:blood_drain",
+    "sanguinisluxuria:blessed_water",
+    "sanguinisluxuria:bite"
   ]
 }
