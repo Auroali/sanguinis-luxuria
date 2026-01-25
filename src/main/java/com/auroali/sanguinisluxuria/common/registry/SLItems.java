@@ -19,11 +19,15 @@ public class SLItems {
     public static final MaskItem MASK_1 = new MaskItem(new Item.Settings().maxCount(1));
     public static final MaskItem MASK_2 = new MaskItem(new Item.Settings().maxCount(1));
     public static final MaskItem MASK_3 = new MaskItem(new Item.Settings().maxCount(1));
-    public static final Item BLOOD_BAG = new DrinkableBloodItem(20, new Item.Settings().maxCount(1).food(DrinkableBloodItem.BLOOD_FOOD_COMPONENT));
+    public static final Item BLOOD_BAG = new DrinkableBloodItem(
+      BloodConstants.bottles(5),
+      BloodConstants.bottles(3),
+      new Item.Settings().maxCount(1).food(DrinkableBloodItem.BLOOD_FOOD_COMPONENT)
+    );
     public static final Item BLOOD_BOTTLE = new EmptyingDrinkableBloodItem(
       BloodConstants.BLOOD_PER_BOTTLE,
       Items.GLASS_BOTTLE,
-      new Item.Settings().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE).food(DrinkableBloodItem.BLOOD_FOOD_COMPONENT)
+      new Item.Settings().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE).food(DrinkableBloodItem.BLOOD_FOOD_COMPONENT)
     );
     public static final Item TWISTED_BLOOD = new Item(new Item.Settings().maxCount(1));
     public static final Item VAMPIRE_VILLAGER_SPAWN_EGG = new SpawnEggItem(SLEntities.VAMPIRE_ILLAGER, 0xFF1E1C1B, 0xFFF9f8EF, new Item.Settings());

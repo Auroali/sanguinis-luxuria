@@ -39,6 +39,7 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
       .build();
 
     private final int maxBlood;
+    private final int bloodPerDrink;
 
     /**
      * Constructs a DrinkableBloodItem
@@ -48,8 +49,21 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
      * @see DrinkableBloodItem#BLOOD_FOOD_COMPONENT
      */
     public DrinkableBloodItem(int maxBlood, Settings settings) {
+        this(maxBlood, BloodConstants.BLOOD_PER_BOTTLE, settings);
+    }
+
+    /**
+     * Constructs a DrinkableBloodItem
+     *
+     * @param maxBlood      the maximum amount of blood this item can hold (by default)
+     * @param bloodPerDrink the amount of blood to drain when an entity drinks this item
+     * @param settings      the item's settings. It's recommended you set the food component to the blood one
+     * @see DrinkableBloodItem#BLOOD_FOOD_COMPONENT
+     */
+    public DrinkableBloodItem(int maxBlood, int bloodPerDrink, Settings settings) {
         super(settings.food(BLOOD_FOOD_COMPONENT));
         this.maxBlood = maxBlood;
+        this.bloodPerDrink = bloodPerDrink;
     }
 
     @Override
@@ -214,6 +228,6 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
      * @return the maximum amount of blood that can be drained in a single drink
      */
     protected int maxBloodPerDrink() {
-        return 8;
+        return this.bloodPerDrink;
     }
 }
