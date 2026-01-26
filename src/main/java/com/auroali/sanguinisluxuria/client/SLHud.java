@@ -23,7 +23,7 @@ import java.util.Map;
 public class SLHud {
     public static void render(DrawContext context, float deltaTick) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player == null)
+        if (client.player == null || client.player != client.cameraEntity)
             return;
         VampireComponent vampire = VampireComponent.KEY.get(client.player);
         if (!vampire.isVampire())
