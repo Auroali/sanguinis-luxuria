@@ -139,12 +139,13 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(SLParticles.ALTAR, AltarParticle.Factory::new);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (VampireHelper.consumesBlood(client.player))
-                this.vampireHungerEffectManager.tick(client.player);
+            if (client.cameraEntity instanceof LivingEntity entity && VampireHelper.consumesBlood(entity))
+                this.vampireHungerEffectManager.tick(entity);
         });
 
         ShaderEffectRenderCallback.EVENT.register(delta -> {
-            if (VampireHelper.consumesBlood(MinecraftClient.getInstance().player))
+            MinecraftClient client = MinecraftClient.getInstance();
+            if (client.cameraEntity instanceof LivingEntity entity && VampireHelper.consumesBlood(entity))
                 this.vampireHungerEffectManager.render(delta);
         });
     }

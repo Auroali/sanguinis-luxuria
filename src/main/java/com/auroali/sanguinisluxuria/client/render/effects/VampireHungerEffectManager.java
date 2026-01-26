@@ -1,11 +1,15 @@
 package com.auroali.sanguinisluxuria.client.render.effects;
 
 import com.auroali.sanguinisluxuria.SLResources;
-import com.auroali.sanguinisluxuria.VampireHelper;
+import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.util.RaycastHelper;
+import com.auroali.sanguinisluxuria.util.VampireHelper;
 import com.auroali.sanguinisluxuria.config.SLClientConfig;
 import ladysnake.satin.api.managed.ManagedShaderEffect;
 import ladysnake.satin.api.managed.ShaderEffectManager;
 import ladysnake.satin.api.managed.uniform.Uniform1f;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.HitResult;
@@ -24,18 +28,18 @@ public class VampireHungerEffectManager {
     private int totalRenderTicks;
     private boolean render;
 
-    public void tick(PlayerEntity entity) {
-        if (!SLClientConfig.INSTANCE.useCustomHungerEffect) {
+    public void tick(LivingEntity entity) {
+        if (!SLClientConfig.INSTANCE.useCustomHungerEffect || !VampireHelper.hasBlood(entity)) {
             this.render = false;
             this.ticks = 0;
             return;
         }
-        HungerManager manager = entity.getHungerManager();
+        BloodComponent blood = BloodComponent.KEY.get(entity);
         this.totalRenderTicks++;
         this.prevTicks = this.ticks;
-        if (manager.getFoodLevel() <= HUNGER_LIMIT) {
+        if (blood.getBlood() <= HUNGER_LIMIT) {
             this.render = true;
-            int maxTicks = this.shouldFadeIn(entity) ? this.getMaxTicksEntity(manager.getFoodLevel()) : this.getMaxTicks(manager.getFoodLevel());
+            int maxTicks = this.shouldFadeIn(entity) ? this.getMaxTicksEntity(blood.getBlood()) : this.getMaxTicks(blood.getBlood());
             if (this.ticks < maxTicks)
                 this.ticks++;
             if (this.ticks > maxTicks)
@@ -65,8 +69,8 @@ public class VampireHungerEffectManager {
         return MAX_TICKS_ENTITY - 2 * hunger;
     }
 
-    public boolean shouldFadeIn(PlayerEntity entity) {
-        HitResult result = VampireHelper.raycastEntity(entity, entity.getRotationVector(), VampireHelper::hasBlood, 8.0d);
+    public boolean shouldFadeIn(LivingEntity entity) {
+        HitResult result = RaycastHelper.raycastEntity(entity, entity.getRotationVector(), VampireHelper::hasBlood, 8.0d);
         return result != null
           && result.getType() == HitResult.Type.ENTITY;
     }
