@@ -159,7 +159,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (BloodComponent.KEY.isProvidedBy(this)) {
             BloodComponent blood = BloodComponent.KEY.get(this);
             if (blood instanceof InitializableBloodComponent init && !init.hasInitialized()) {
-                init.initializeBloodValues();
+                init.initializeBloodValues(false);
             }
         }
     }

@@ -30,12 +30,12 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
     }
 
     @Override
-    public void initializeBloodValues() {
+    public void initializeBloodValues(boolean sync) {
         if (!this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
             this.maxBlood = 0;
             this.currentBlood = 0;
             this.wasBaby = this.holder.isBaby();
-            if (!this.holder.getWorld().isClient)
+            if (sync)
                 BloodComponent.KEY.sync(this.holder);
             return;
         }
@@ -49,10 +49,13 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         this.currentBlood = Math.min(this.currentBlood, this.maxBlood);
         this.wasBaby = this.holder.isBaby();
 
-        // has to be an instanceof check so that create schematics
-        // don't error
-        if (this.holder.getWorld() instanceof ServerWorld)
+        if (sync)
             BloodComponent.KEY.sync(this.holder);
+    }
+
+    @Override
+    public void initializeBloodValues() {
+        this.initializeBloodValues(this.holder.getWorld() instanceof ServerWorld);
     }
 
     @Override

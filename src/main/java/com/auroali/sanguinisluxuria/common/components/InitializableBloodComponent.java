@@ -8,6 +8,14 @@ package com.auroali.sanguinisluxuria.common.components;
 public interface InitializableBloodComponent extends BloodComponent {
     /**
      * Initializes this component's blood values
+     *
+     * @param sync whether to sync to the client
+     */
+    void initializeBloodValues(boolean sync);
+
+    /**
+     * Initializes this component's blood values, and performs
+     * a sync if possible
      */
     void initializeBloodValues();
 
