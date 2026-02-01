@@ -2,6 +2,7 @@ package com.auroali.sanguinisluxuria.common.components;
 
 import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
+import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.auroali.sanguinisluxuria.util.RaycastHelper;
@@ -46,10 +47,12 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
         if (!VampireHelper.isVampire(this.holder) || VampireHelper.isMasked(this.holder) || !VampireHelper.hasBlood(entity) || this.target == entity)
             return;
 
-        this.target = entity;
-        this.ticksDraining = 0;
-        this.targetHasBleeding = entity.hasStatusEffect(SLStatusEffects.BLEEDING);
-        KEY.sync(this.holder);
+        if (BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(this.holder, entity)) {
+            this.target = entity;
+            this.ticksDraining = 0;
+            this.targetHasBleeding = entity.hasStatusEffect(SLStatusEffects.BLEEDING);
+            KEY.sync(this.holder);
+        }
     }
 
     /**

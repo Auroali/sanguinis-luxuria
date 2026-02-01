@@ -11,6 +11,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.components.BloodDrainComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.network.SLClientNetwork;
@@ -200,6 +201,6 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
         HitResult result = client.crosshairTarget;
         LivingEntity target = result != null && result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() instanceof LivingEntity living ? living : null;
 
-        return VampireHelper.hasBlood(target);
+        return VampireHelper.hasBlood(target) && BloodEvents.ALLOW_BLOOD_DRAIN.invoker().allowBloodDrain(client.player, target);
     }
 }
