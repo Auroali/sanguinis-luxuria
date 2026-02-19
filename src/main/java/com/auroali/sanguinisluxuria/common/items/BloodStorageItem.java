@@ -52,8 +52,10 @@ public interface BloodStorageItem {
         NbtCompound bloodTag = stack.getOrCreateSubNbt(BLOOD_KEY);
         bloodTag.putInt(CURRENT_BLOOD_KEY, 0);
         bloodTag.putInt(MAX_BLOOD_KEY, stack.getItem() instanceof BloodStorageItem item ? item.getDefaultMaxBlood() : 0);
+        // upgrade data
         if (stack.hasNbt() && stack.getNbt().contains("StoredBlood", NbtElement.INT_TYPE) && stack.getNbt().getInt("StoredBlood") > 0) {
             bloodTag.putInt(CURRENT_BLOOD_KEY, bloodTag.getInt("StoredBlood"));
+            stack.getNbt().remove("StoredBlood");
         }
         return bloodTag;
     }
@@ -106,9 +108,6 @@ public interface BloodStorageItem {
         if (amount == 0)
             return false;
 
-        if (!stack.hasNbt() || !stack.getNbt().contains(BLOOD_KEY, NbtElement.COMPOUND_TYPE))
-            getOrCreateBloodTag(stack);
-
         int blood = getItemBlood(stack);
         if (blood < amount)
             return false;
@@ -128,7 +127,7 @@ public interface BloodStorageItem {
         if (amount == 0)
             return false;
 
-        if (!stack.hasNbt() || !stack.getNbt().contains(BLOOD_KEY, NbtElement.COMPOUND_TYPE))
+        if (!stack.hasNbt())
             getOrCreateBloodTag(stack);
 
         int blood = getItemBlood(stack);
