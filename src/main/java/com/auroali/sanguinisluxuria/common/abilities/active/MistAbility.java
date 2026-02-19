@@ -5,6 +5,7 @@ import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.registry.SLEntityAttributes;
 import com.google.common.collect.ImmutableMap;
 import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import net.minecraft.entity.LivingEntity;
@@ -40,11 +41,23 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
       -1.d,
       EntityAttributeModifier.Operation.MULTIPLY_TOTAL
     );
-    public static final EntityAttributeModifier ATTACK_DAMANGE_MODIFIER = new EntityAttributeModifier(
+    public static final EntityAttributeModifier ATTACK_DAMAGE_MODIFIER = new EntityAttributeModifier(
       UUID.fromString("2ad8aa87-b38e-4eea-85fc-09bbc8e5d271"),
       "mist.damage",
       -0.25d,
       EntityAttributeModifier.Operation.MULTIPLY_TOTAL
+    );
+    public static final EntityAttributeModifier VULNERABILITY_MODIFIER = new EntityAttributeModifier(
+      UUID.fromString("20aa0f48-ebac-4eb6-adcb-23d7c9933506"),
+      "mist.vulnerability",
+      -0.25d,
+      EntityAttributeModifier.Operation.MULTIPLY_BASE
+    );
+    public static final EntityAttributeModifier SUN_RESISTANCE_MODIFIER = new EntityAttributeModifier(
+      UUID.fromString("b320a81c-0023-4038-a72b-1514d35a9df7"),
+      "mist.sun_resistance",
+      0.15d,
+      EntityAttributeModifier.Operation.MULTIPLY_BASE
     );
 
     private static final Map<EntityAttribute, EntityAttributeModifier> MODIFIERS = ImmutableMap
@@ -53,7 +66,9 @@ public class MistAbility extends VampireAbility implements EntitySyncableVampire
       .put(EntityAttributes.GENERIC_MOVEMENT_SPEED, SPEED_MODIFIER)
       .put(EntityAttributes.GENERIC_ARMOR, ARMOR_TOUGHNESS_MODIFIER)
       .put(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, ARMOR_TOUGHNESS_MODIFIER)
-      .put(EntityAttributes.GENERIC_ATTACK_DAMAGE, ATTACK_DAMANGE_MODIFIER)
+      .put(EntityAttributes.GENERIC_ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER)
+      .put(SLEntityAttributes.VULNERABILITY, VULNERABILITY_MODIFIER)
+      .put(SLEntityAttributes.SUN_RESISTANCE, SUN_RESISTANCE_MODIFIER)
       .build();
 
     @Override
