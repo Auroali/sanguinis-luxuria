@@ -3,6 +3,7 @@ package com.auroali.sanguinisluxuria.common.items;
 import com.auroali.sanguinisluxuria.common.VampireHungerManager;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
+import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.registry.SLBlocks;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
@@ -101,6 +102,10 @@ public class DrinkableBloodItem extends Item implements BloodStorageItem, Entity
             } else {
                 BloodComponent.KEY.get(user)
                   .addBlood(bloodToDrain);
+            }
+
+            if (VampireHelper.isVampire(user)) {
+                VampireComponent.KEY.get(user).setDowned(false);
             }
         } else {
             if (drainedBlood)
