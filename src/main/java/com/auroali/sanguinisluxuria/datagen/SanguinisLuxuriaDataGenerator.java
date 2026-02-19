@@ -11,10 +11,10 @@ public class SanguinisLuxuriaDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(SLLangProvider::new);
         pack.addProvider(SLEntityTagsProvider::new);
-        pack.addProvider(SLItemTagsProvider::new);
         pack.addProvider(SLModelProvider::new);
         pack.addProvider(SLRecipeProvider::new);
-        pack.addProvider(SLBlockTagsProvider::new);
+        SLBlockTagsProvider blockTags = pack.addProvider(SLBlockTagsProvider::new);
+        pack.addProvider((dataOutput, registries) -> new SLItemTagsProvider(dataOutput, registries, blockTags));
         pack.addProvider(SLBiomeTagsProvider::new);
         pack.addProvider(SLVampireAbiltyTagsProvider::new);
         pack.addProvider(SLAdvancementsProvider::new);
