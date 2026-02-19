@@ -25,7 +25,7 @@ public class SLVampireAbilities {
       .builder(UUID.fromString("2975c1bd-f882-4e55-abcf-e1d491cd3b91"))
       .addModifier(SLEntityAttributes.SUN_RESISTANCE, -0.75, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
       .addModifier(SLEntityAttributes.VULNERABILITY, 0.6, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
-      .addModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2, EntityAttributeModifier.Operation.ADDITION)
+      .addModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.5, EntityAttributeModifier.Operation.ADDITION)
       .addModifier(EntityAttributes.GENERIC_ATTACK_SPEED, 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
       .addModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.03, EntityAttributeModifier.Operation.ADDITION)
       .condition(AbilityConditions.lacksAbility(() -> SLVampireAbilities.RESILIENCE))

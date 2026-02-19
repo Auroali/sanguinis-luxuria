@@ -97,19 +97,24 @@ public class SLPatchouliBooks extends PatchouliProvider {
         equipment.entry("blessed_water", "Blessed Water", PotionUtil.setPotion(new ItemStack(Items.POTION), SLStatusEffects.BLESSED_WATER_POTION))
           .page(PatchouliSpotlightPage.create(PotionUtil.setPotion(new ItemStack(Items.POTION), SLStatusEffects.BLESSED_WATER_POTION))
             .text("Blessed Water can be obtained from max level Clerics. When drank, it grants Blood Protection, which damages vampires whenever they feed on you. When thrown, however, it will not only grant Blood Protection to any living things it hits, it will also damage any undead creatures.")
-          )
-          .page(PatchouliTextPage.create("When drank by a vampire afflicted with weakness, blessed water will grant them blood protection. Once blood protection runs out, said vampire will be turned human again.")
-            .advancement(SLResources.id("become_vampire"))
           );
 
         equipment.entry("bottles", "Bottles", Items.GLASS_BOTTLE)
           .page(PatchouliSpotlightPage.create(Items.GLASS_BOTTLE)
-            .text("Bottles are very useful, as they can be used to store blood. Blood can be picked up off the ground with a bottle.")
+            .text("Bottles are very useful, as they can be used to store blood.")
           )
           .page(PatchouliSpotlightPage.create(BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE))
-            .text("Blood Bottles can fortunately be obtained through more means than blood left on the ground. By pressing $(#a51e12)$(l)$(k:key.sanguinisluxuria.bite)$() while holding an empty bottle and not looking at any living thing with blood, it will take some blood from your blood bar and store it in the bottle.")
-            .text("It does seem like blood bottles have a limited capacity, however, only storing 2 units of blood.")
+            .text("By pressing $(#a51e12)$(l)$(k:key.sanguinisluxuria.drain_blood)$() while holding an empty bottle and not looking at any living thing with blood, it will take some blood from your blood bar and store it in the bottle.")
+            .text("While Blood Bottles can stack up to 16, they can only store 2 units of blood each.")
             .advancement(SLResources.id("become_vampire"))
+          )
+          .page(PatchouliTextPage.create()
+            .text("Using a Blood Bottle on a block while crouching will cause it to place blood on the ground.")
+          )
+          .page(PatchouliTextPage.create()
+            .title("Tracking")
+            .text("When filling any blood-storing item, it can be made to track the last drained being by crouching.")
+            .advancement(SLResources.id("unlock/grow_tree_and_become_vampire"))
           );
 
         equipment.entry("helmets", "Helmets", Items.LEATHER_HELMET)
@@ -230,13 +235,21 @@ public class SLPatchouliBooks extends PatchouliProvider {
           .advancement(SLResources.id("unlock/grow_tree_and_become_vampire"))
           .page(PatchouliSpotlightPage.create(SLItems.ALTAR)
             .title("Performing Rituals")
-            .text("Rituals are performed using the Altar. To start a ritual, place ritual's catalyst into the Altar, then place the other required items in pedestals surrounding it.")
+            .text(
+              "Rituals are performed using the Altar. To start a ritual, place ritual's catalyst into the Altar, then place the other required items in pedestals surrounding it.",
+              "Each surrounding pedestal must be connected to the Altar via blood, otherwise it will not be able to access the pedestal's items"
+            )
             .text("The ritual can then be initiated by crouching and interacting with the Altar.")
           )
           .page(PatchouliTextPage.create()
             .title("Targeting Others")
-            .text("Rituals can also be performed on others. To change the ritual's target, crouch and interact with the Altar while holding an item that has been recently filled with the blood of another.")
+            .text("Rituals can also be performed on others. To change the ritual's target, crouch and interact with the Altar while holding a blood-storing item that is tracking another being.")
             .text("You will know this has worked when the small slot on the side of the Altar is filled.")
+          )
+          .page(PatchouliTextPage.create()
+            .title("Redstone")
+            .text("The Altar can be triggered via a redstone signal; although it will only begin a ritual if a target is set. When triggered this way, the target is not cleared post-ritual.")
+            .text("The Altar also outputs a comparator signal equivelant to the progress of the current active ritual.")
           )
           .page(PatchouliTextPage.create("The target can be cleared without performing a ritual by crouching and interacting with an empty Altar"));
 
@@ -251,8 +264,8 @@ public class SLPatchouliBooks extends PatchouliProvider {
         rituals.entry("blood_bag", "Blood Bag", SLItems.BLOOD_BAG)
           .advancement(SLResources.id("drink_twisted_blood"))
           .page(PatchouliSpotlightPage.create(SLItems.BLOOD_BAG)
-            .text("Carrying several bottles just to fully satiate your thirst is very inconvenient. The blood bag is a better solution.")
-            .text("It has the capacity of 10 bottles, yet takes up a single slot in your inventory. They can also be filled just like $(l)$(l:sanguinisluxuria:equipment/bottles)glass bottles$()")
+            .text("While carrying bottles is nice, it gets inconvenient to drink with how little each stores. The Blood Bag fixes that, at the cost of reduced capacity.")
+            .text("It has the capacity of 10 bottles, but fills more blood at once when drank. They can also be filled just like $(l)$(l:sanguinisluxuria:equipment/bottles)glass bottles$()")
           )
           .page(PatchouliRitualPage.create(SLItems.BLOOD_BAG));
 
@@ -317,7 +330,7 @@ public class SLPatchouliBooks extends PatchouliProvider {
           )
           .page(PatchouliRitualPage.create(SLResources.id("rituals/vulnerability")));
 
-        abilities.entry("resilience", "Resilience", Items.LEATHER_HELMET)
+        abilities.entry("resilience", "Vampiric Resilience", Items.LEATHER_HELMET)
           .advancement(SLResources.id("unlock/grow_tree_and_become_vampire"))
           .page(PatchouliTextPage.create()
             .title("Resilience")

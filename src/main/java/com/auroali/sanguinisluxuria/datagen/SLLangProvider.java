@@ -88,7 +88,7 @@ public class SLLangProvider extends FabricLanguageProvider {
         builder.add(SLVampireAbilities.BITE, "Bite");
         builder.add(SLVampireAbilities.MIST, "Mist");
         builder.add(SLVampireAbilities.VULNERABILITY, "Vulnerability");
-        builder.add(SLVampireAbilities.RESILIENCE, "Resilience");
+        builder.add(SLVampireAbilities.RESILIENCE, "Vampiric Resilience");
     }
 
     public static void rituals(GenericTranslationBuilder.RegistryTranslationBuilder<RitualType<?>> builder) {

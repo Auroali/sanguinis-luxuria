@@ -8,13 +8,18 @@
       "type": "patchouli:spotlight",
       "item": "sanguinisluxuria:altar",
       "link_recipe": false,
-      "text": "Rituals are performed using the Altar. To start a ritual, place ritual's catalyst into the Altar, then place the other required items in pedestals surrounding it.$(br2)The ritual can then be initiated by crouching and interacting with the Altar.",
+      "text": "Rituals are performed using the Altar. To start a ritual, place ritual's catalyst into the Altar, then place the other required items in pedestals surrounding it.$(br)Each surrounding pedestal must be connected to the Altar via blood, otherwise it will not be able to access the pedestal's items$(br2)The ritual can then be initiated by crouching and interacting with the Altar.",
       "title": "Performing Rituals"
     },
     {
       "type": "patchouli:text",
-      "text": "Rituals can also be performed on others. To change the ritual's target, crouch and interact with the Altar while holding an item that has been recently filled with the blood of another.$(br2)You will know this has worked when the small slot on the side of the Altar is filled.",
+      "text": "Rituals can also be performed on others. To change the ritual's target, crouch and interact with the Altar while holding a blood-storing item that is tracking another being.$(br2)You will know this has worked when the small slot on the side of the Altar is filled.",
       "title": "Targeting Others"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The Altar can be triggered via a redstone signal; although it will only begin a ritual if a target is set. When triggered this way, the target is not cleared post-ritual.$(br2)The Altar also outputs a comparator signal equivelant to the progress of the current active ritual.",
+      "title": "Redstone"
     },
     {
       "type": "patchouli:text",
