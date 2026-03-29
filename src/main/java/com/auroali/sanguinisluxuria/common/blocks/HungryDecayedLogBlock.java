@@ -25,10 +25,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+import java.util.Collections;
 import java.util.List;
 
 public class HungryDecayedLogBlock extends PillarBlock {
-    public static final IntProperty BLOOD_LEVEL = IntProperty.of("blood", 0, 3);
+    public static final int MAX_LEVEL = 3;
+    public static final IntProperty BLOOD_LEVEL = IntProperty.of("blood", 0, MAX_LEVEL);
 
     public HungryDecayedLogBlock(Settings settings) {
         super(settings);
@@ -88,7 +90,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (state.get(BLOOD_LEVEL) >= 3) {
+        if (state.get(BLOOD_LEVEL) >= MAX_LEVEL) {
             BlockPos lowerPosition = pos.down();
             for (Direction direction : Direction.Type.HORIZONTAL) {
                 BlockState lowerState = world.getBlockState(lowerPosition.offset(direction));
@@ -118,13 +120,9 @@ public class HungryDecayedLogBlock extends PillarBlock {
         Box boundingBox = new Box(pos).expand(5);
 
         List<LivingEntity> entities = world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), boundingBox, VampireHelper::hasBlood);
-        if (entities.isEmpty())
-            return;
+        Collections.shuffle(entities);
 
-        int start = world.getRandom().nextInt(entities.size());
-        int end = start + entities.size();
-        for (int i = start; i < end; i++) {
-            LivingEntity entity = entities.get(i % entities.size());
+        for (LivingEntity entity : entities) {
             BloodComponent component = BloodComponent.KEY.get(entity);
             if (component.getBlood() <= 1 && !entity.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
                 continue;
@@ -157,7 +155,7 @@ public class HungryDecayedLogBlock extends PillarBlock {
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (state.get(BLOOD_LEVEL) < 3 || this != SLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || random.nextInt(7) != 0)
+        if (state.get(BLOOD_LEVEL) < MAX_LEVEL || this != SLBlocks.STRIPPED_HUNGRY_DECAYED_LOG || random.nextInt(7) != 0)
             return;
 
         for (Direction direction : Direction.values()) {
