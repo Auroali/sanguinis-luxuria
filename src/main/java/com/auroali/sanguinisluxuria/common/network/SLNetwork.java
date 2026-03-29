@@ -56,7 +56,7 @@ public class SLNetwork {
             ItemStack stack = player.getStackInHand(packet.hand());
             BloodComponent blood = BloodComponent.KEY.get(player);
             BloodDrainComponent drainer = BloodDrainComponent.KEY.get(player);
-            if (blood.getBlood() == 0)
+            if (blood.isEmpty())
                 return;
 
             int toFill = Math.min(BloodConstants.BLOOD_PER_BOTTLE, blood.getBlood());

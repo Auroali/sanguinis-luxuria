@@ -31,7 +31,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
 
     @Override
     public void initializeBloodValues(boolean sync) {
-        if (!this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
+        if (!this.shouldHaveBlood()) {
             this.maxBlood = 0;
             this.currentBlood = 0;
             this.wasBaby = this.holder.isBaby();
@@ -40,7 +40,16 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
             return;
         }
 
-        boolean needsToSetBlood = this.maxBlood == 0 || this.currentBlood == -1;
+        // todo: clean up. all of this. its kindof a mess due to trying to account for datapack stuff
+        // we need to reset the blood value if:
+        //  the holder was a baby and grew up, or was and adult and grew... down?
+        //  the maximum blood was 0
+        //  the current blood is uninitialized
+        //  the current blood is 0 on an entity that cannot have 0 blood
+        boolean needsToSetBlood = this.maxBlood == 0
+          || this.currentBlood == -1
+          || this.wasBaby != this.holder.isBaby()
+          || (!this.canHaveNoBlood() && this.currentBlood == 0);
         // if an entity isn't in the good blood tag, half the max amount of blood
         this.maxBlood = this.recalculateMaxBlood();
         // set the current blood value if it either is invalid or if this entity previously had no blood
@@ -53,19 +62,6 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
             BloodComponent.KEY.sync(this.holder);
     }
 
-    @Override
-    public void initializeBloodValues() {
-        this.initializeBloodValues(this.holder.getWorld() instanceof ServerWorld);
-    }
-
-    @Override
-    public boolean hasInitialized() {
-        if (this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD)) {
-            return this.maxBlood > 0 && (this.currentBlood > 0 || this.holder.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS));
-        }
-        return this.maxBlood == 0;
-    }
-
     protected int recalculateMaxBlood() {
         if (this.holder.isBaby())
             return 1;
@@ -74,6 +70,40 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         if (!this.holder.getType().isIn(SLTags.Entities.GOOD_BLOOD))
             maxBloodFromHealth = MathHelper.clamp(maxBloodFromHealth / 2.f, 1.f, Float.MAX_VALUE);
         return (int) Math.ceil(maxBloodFromHealth);
+    }
+
+    @Override
+    public void initializeBloodValues() {
+        this.initializeBloodValues(this.holder.getWorld() instanceof ServerWorld);
+    }
+
+    @Override
+    public boolean hasInitialized() {
+        if (this.shouldHaveBlood()) {
+            // if the entity cannot survive with 0 blood and currently has
+            // 0 blood, something has gone wrong and we need to reinit
+            if (this.currentBlood == 0 && !this.canHaveNoBlood())
+                return false;
+
+            return this.maxBlood > 0 && this.wasBaby == this.holder.isBaby();
+        }
+        return this.maxBlood == 0;
+    }
+
+    /**
+     *
+     * @return if the entity this component is attached to can have a blood value of 0
+     */
+    protected boolean canHaveNoBlood() {
+        return VampireHelper.isVampire(this.holder) || this.holder.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS);
+    }
+
+    /**
+     *
+     * @return if the entity this component is attached to should have a blood value calculated
+     */
+    protected boolean shouldHaveBlood() {
+        return this.holder.getType().isIn(SLTags.Entities.HAS_BLOOD);
     }
 
     @Override
@@ -127,8 +157,8 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
     }
 
     protected void killHolderFromBloodloss(LivingEntity drainer) {
-        // vampires can't die from blood loss
-        if (VampireHelper.isVampire(this.holder) || this.holder.getType().isIn(SLTags.Entities.IMMUNE_TO_BLOOD_LOSS))
+        // don't kill an entity that can survive with no blood
+        if (this.canHaveNoBlood())
             return;
 
         if (drainer == null)
@@ -142,7 +172,6 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         // reset to max blood if the entity grows up
         if (this.wasBaby != this.holder.isBaby()) {
             this.initializeBloodValues();
-            this.currentBlood = this.maxBlood;
         }
 
         // don't tick the blood timer logic if unnecessary
