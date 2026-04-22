@@ -4,7 +4,6 @@ import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.enchantments.BloodDrainEnchantment;
 import com.auroali.sanguinisluxuria.common.enchantments.SerratedEnchantment;
 import com.auroali.sanguinisluxuria.common.enchantments.SunProtectionEnchantment;
-import com.auroali.sanguinisluxuria.common.legacy.RegistryOverrides;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -22,6 +21,9 @@ public class SLEnchantments {
         Registry.register(Registries.ENCHANTMENT, SLResources.BLOOD_TRANSFER_COMPONENT_ID, BLOOD_TRANSFER);
         Registry.register(Registries.ENCHANTMENT, SLResources.SERRATED_ID, SERRATED);
 
-        RegistryOverrides.register(Registries.ENCHANTMENT, new Identifier("sanguinisluxuria", "blood_drain"), BLOOD_TRANSFER);
+        Registries.ENCHANTMENT.addAlias(
+          new Identifier("sanguinisluxuria", "blood_drain"),
+          SLResources.BLOOD_TRANSFER_COMPONENT_ID
+        );
     }
 }

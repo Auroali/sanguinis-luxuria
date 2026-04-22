@@ -66,7 +66,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     // Replace modImplementation with modApi if you expose components in your own API
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
@@ -115,6 +115,7 @@ processResources {
     inputs.property "trinkets_version", project.trinkets_version
     inputs.property "yacl_version", project.yacl_version
     inputs.property "patchouli_version", project.patchouli_version
+    inputs.property "fabric_api_version", project.fabric_api_version
 
     filesMatching("fabric.mod.json") {
         expand inputs.properties

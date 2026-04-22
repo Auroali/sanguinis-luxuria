@@ -32,8 +32,7 @@
     "WanderingTraderMixin",
     "compat.connectormod.missing.FabricServerWorldMixin",
     "compat.connectormod.present.ForgeServerWorldMixin",
-    "legacy.EnchantmentHelperMixin",
-    "legacy.SimpleRegistryMixin"
+    "legacy.EnchantmentHelperMixin"
   ],
   "injectors": {
     "defaultRequire": 1
