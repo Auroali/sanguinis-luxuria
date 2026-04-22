@@ -17,8 +17,14 @@ public class SLBlockLootTableProvider extends FabricBlockLootTableProvider {
         this.addDrop(SLBlocks.PEDESTAL);
         this.addDrop(SLBlocks.BLOOD_CAULDRON, Items.CAULDRON);
 
-        this.oreDrops(SLBlocks.SILVER_ORE, SLItems.RAW_SILVER);
-        this.oreDrops(SLBlocks.DEEPSLATE_SILVER_ORE, SLItems.RAW_SILVER);
+        this.addDrop(
+          SLBlocks.SILVER_ORE,
+          this.oreDrops(SLBlocks.SILVER_ORE, SLItems.RAW_SILVER)
+        );
+        this.addDrop(
+          SLBlocks.DEEPSLATE_SILVER_ORE,
+          this.oreDrops(SLBlocks.DEEPSLATE_SILVER_ORE, SLItems.RAW_SILVER)
+        );
 
         this.addDrop(SLBlocks.SILVER_BLOCK);
         this.addDrop(SLBlocks.RAW_SILVER_BLOCK);
