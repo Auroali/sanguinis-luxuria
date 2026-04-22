@@ -156,7 +156,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void sanguinisluxuria$initBloodComponents(EntityType<?> entityType, World world, CallbackInfo ci) {
-        if (BloodComponent.KEY.isProvidedBy(this)) {
+        if (BloodComponent.KEY.isProvidedBy(this) && !world.isClient) {
             BloodComponent blood = BloodComponent.KEY.get(this);
             if (blood instanceof InitializableBloodComponent init && !init.hasInitialized()) {
                 init.initializeBloodValues(false);
