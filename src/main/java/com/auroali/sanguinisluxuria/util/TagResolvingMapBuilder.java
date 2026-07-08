@@ -46,6 +46,10 @@ public class TagResolvingMapBuilder<T, V> {
         return map;
     }
 
+    public void clear() {
+        this.entries.clear();
+    }
+
     @FunctionalInterface
     public interface Merger<V> {
         V merge(V original, V resolved);

@@ -51,10 +51,14 @@ public class SLBloodEffectProvider extends SanguinisLuxuriaBloodEffectsProvider 
     }
 
     private void generateCompat(BloodEffectExporter exporter) {
-        withConditions(exporter, DefaultResourceConditions.allModsLoaded("spectrum"))
+        this.withConditions(exporter, DefaultResourceConditions.allModsLoaded("spectrum"))
           .offer(
             BloodDrainEffectBuilder.builder(new Identifier("spectrum", "kindling"))
               .effect(new BloodDrainIgniteEffect(8, 0.4f))
+          );
+        this.withConditions(exporter, DefaultResourceConditions.allModsLoaded("yttr"))
+          .offer(BloodDrainEffectBuilder.builder(new Identifier("yttr", "deer"))
+            .effect(new BloodDrainStatusEffect(StatusEffects.UNLUCK, 600, 0, 0.9f))
           );
     }
 }

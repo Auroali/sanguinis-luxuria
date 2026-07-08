@@ -16,8 +16,11 @@ loom {
 }
 
 afterEvaluate {
-    loom.runs.configureEach {
-        vmArg "-javaagent:${configurations.compileClasspath.find { it.name.contains("sponge-mixin") }}"
+    loom.runs {
+        client {
+            client()
+            vmArg "-javaagent:${configurations.compileClasspath.find { it.name.contains("sponge-mixin") }}"
+        }
     }
 }
 

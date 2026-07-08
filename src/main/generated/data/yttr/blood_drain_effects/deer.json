@@ -1,0 +1,19 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "yttr"
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "type": "sanguinisluxuria:status_effect",
+      "chance": 0.9,
+      "duration": 600,
+      "effect": "minecraft:unluck"
+    }
+  ],
+  "entity": "yttr:deer"
+}

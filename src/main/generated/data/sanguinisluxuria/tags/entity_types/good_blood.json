@@ -8,7 +8,16 @@
     "minecraft:witch",
     "minecraft:wandering_trader",
     "minecraft:player",
+    "minecraft:illusioner",
     "sanguinisluxuria:vampire_merchant",
-    "sanguinisluxuria:vampire_villager"
+    "sanguinisluxuria:vampire_villager",
+    {
+      "id": "friendsandfoes:iceologer",
+      "required": false
+    },
+    {
+      "id": "guardvillagers:guard",
+      "required": false
+    }
   ]
 }

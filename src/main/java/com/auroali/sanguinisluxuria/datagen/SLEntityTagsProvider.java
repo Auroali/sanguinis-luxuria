@@ -69,7 +69,34 @@ public class SLEntityTagsProvider extends FabricTagProvider.EntityTypeTagProvide
           )
           .addOptional(new Identifier("ratsmischief", "rat"))
           .addOptional(new Identifier("spectrum", "egg_laying_wooly_pig"))
-          .addOptional(new Identifier("spectrum", "kindling"));
+          .addOptional(new Identifier("spectrum", "kindling"))
+          .addOptional(new Identifier("endermanoverhaul", "badlands_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "cave_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "crimson_forest_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "warped_forest_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "dark_oak_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "desert_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "end_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "end_islands_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "flower_fields_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "ice_spikes_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "mushroom_fields_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "nether_wastes_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "coral_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "savanna_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "snowy_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "soulsand_valley_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "swamp_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "windswept_hills_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "pet_enderman"))
+          .addOptional(new Identifier("crittersandcompanions", "ferret"))
+          .addOptional(new Identifier("crittersandcompanions", "otter"))
+          .addOptional(new Identifier("crittersandcompanions", "red_panda"))
+          .addOptional(new Identifier("friendsandfoes", "iceologer"))
+          .addOptional(new Identifier("friendsandfoes", "moobloom"))
+          .addOptional(new Identifier("friendsandfoes", "rascal"))
+          .addOptional(new Identifier("guardvillagers", "guard"))
+          .addOptional(new Identifier("yttr", "deer"));
 
         this.getOrCreateTagBuilder(SLTags.Entities.GOOD_BLOOD)
           .add(
@@ -79,12 +106,15 @@ public class SLEntityTagsProvider extends FabricTagProvider.EntityTypeTagProvide
             EntityType.EVOKER,
             EntityType.WITCH,
             EntityType.WANDERING_TRADER,
-            EntityType.PLAYER
+            EntityType.PLAYER,
+            EntityType.ILLUSIONER
           )
           .add(
             SLEntities.VAMPIRE_MERCHANT,
             SLEntities.VAMPIRE_ILLAGER
-          );
+          )
+          .addOptional(new Identifier("friendsandfoes", "iceologer"))
+          .addOptional(new Identifier("guardvillagers", "guard"));
 
         this.getOrCreateTagBuilder(SLTags.Entities.TOXIC_BLOOD)
           .add(
@@ -98,7 +128,26 @@ public class SLEntityTagsProvider extends FabricTagProvider.EntityTypeTagProvide
           );
 
         this.getOrCreateTagBuilder(SLTags.Entities.TELEPORTS_ON_DRAIN)
-          .add(EntityType.ENDERMAN);
+          .add(EntityType.ENDERMAN)
+          .addOptional(new Identifier("endermanoverhaul", "badlands_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "cave_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "crimson_forest_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "warped_forest_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "dark_oak_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "desert_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "end_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "end_islands_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "flower_fields_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "ice_spikes_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "mushroom_fields_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "nether_wastes_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "coral_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "savanna_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "snowy_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "soulsand_valley_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "swamp_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "windswept_hills_enderman"))
+          .addOptional(new Identifier("endermanoverhaul", "pet_enderman"));
 
         this.getOrCreateTagBuilder(SLTags.Entities.VAMPIRES_ATTEMPT_CONVERT)
           .add(
@@ -110,6 +159,7 @@ public class SLEntityTagsProvider extends FabricTagProvider.EntityTypeTagProvide
           .add(
             EntityType.ALLAY,
             EntityType.VEX
-          );
+          )
+          .addOptional(new Identifier("yttr", "deer"));
     }
 }

@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "minecraft:allay",
-    "minecraft:vex"
+    "minecraft:vex",
+    {
+      "id": "yttr:deer",
+      "required": false
+    }
   ]
 }

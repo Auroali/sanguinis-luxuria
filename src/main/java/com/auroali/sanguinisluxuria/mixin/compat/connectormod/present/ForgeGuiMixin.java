@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Pseudo
 @Mixin(targets = "net.minecraftforge.client.gui.overlay.ForgeGui", remap = false)
 public class ForgeGuiMixin {
+    @SuppressWarnings("UnresolvedMixinReference")
     @WrapOperation(method = "renderFood", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;m_280218_(Lnet/minecraft/resources/ResourceLocation;IIIIII)V", remap = false))
     public void sanguinisluxuria$forgeInjectHungerIcons(DrawContext instance, Identifier texture, int x, int y, int u, int v, int width, int height, Operation<Void> original) {
         if (VampireHelper.consumesBlood(MinecraftClient.getInstance().player)) {
