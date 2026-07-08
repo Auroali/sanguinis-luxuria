@@ -8,13 +8,16 @@ import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.DefaultAttributeRegistry;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.MathHelper;
 
 public class EntityBloodComponent implements InitializableBloodComponent, ServerTickingComponent {
     private final LivingEntity holder;
@@ -27,11 +30,20 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
         this.holder = holder;
         this.maxBlood = -1;
         this.currentBlood = -1;
+        if (!holder.getWorld().isClient)
+            this.initializeBloodValues(false);
     }
 
     @Override
     public void initializeBloodValues(boolean sync) {
-        if (!this.shouldHaveBlood()) {
+        @SuppressWarnings("unchecked")
+        EntityType<? extends LivingEntity> type = (EntityType<? extends LivingEntity>) this.holder.getType();
+        DefaultAttributeContainer container;
+        if (
+          !DefaultAttributeRegistry.hasDefinitionFor(type)
+            || !(container = DefaultAttributeRegistry.get(type)).has(EntityAttributes.GENERIC_MAX_HEALTH)
+            || !this.shouldHaveBlood()
+        ) {
             this.maxBlood = 0;
             this.currentBlood = 0;
             this.wasBaby = this.holder.isBaby();
@@ -40,36 +52,22 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
             return;
         }
 
-        // todo: clean up. all of this. its kindof a mess due to trying to account for datapack stuff
-        // we need to reset the blood value if:
-        //  the holder was a baby and grew up, or was and adult and grew... down?
-        //  the maximum blood was 0
-        //  the current blood is uninitialized
-        //  the current blood is 0 on an entity that cannot have 0 blood
-        boolean needsToSetBlood = this.maxBlood == 0
-          || this.currentBlood == -1
-          || this.wasBaby != this.holder.isBaby()
-          || (!this.canHaveNoBlood() && this.currentBlood == 0);
-        // if an entity isn't in the good blood tag, half the max amount of blood
-        this.maxBlood = this.recalculateMaxBlood();
-        // set the current blood value if it either is invalid or if this entity previously had no blood
-        if (needsToSetBlood)
-            this.currentBlood = this.maxBlood;
-        this.currentBlood = Math.min(this.currentBlood, this.maxBlood);
-        this.wasBaby = this.holder.isBaby();
+        double baseMaxHealth = container.getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH);
+        int blood = type.isIn(SLTags.Entities.GOOD_BLOOD)
+          ? (int) Math.ceil(baseMaxHealth)
+          : Math.max((int) baseMaxHealth / 2, 1);
 
+        if (this.holder.isBaby()) {
+            blood = 1;
+        }
+
+        if (this.wasBaby != this.holder.isBaby() || this.currentBlood == -1) {
+            this.currentBlood = blood;
+        }
+
+        this.maxBlood = blood;
         if (sync)
             BloodComponent.KEY.sync(this.holder);
-    }
-
-    protected int recalculateMaxBlood() {
-        if (this.holder.isBaby())
-            return 1;
-
-        float maxBloodFromHealth = (float) this.holder.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH);
-        if (!this.holder.getType().isIn(SLTags.Entities.GOOD_BLOOD))
-            maxBloodFromHealth = MathHelper.clamp(maxBloodFromHealth / 2.f, 1.f, Float.MAX_VALUE);
-        return (int) Math.ceil(maxBloodFromHealth);
     }
 
     @Override
@@ -79,6 +77,9 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
 
     @Override
     public boolean hasInitialized() {
+        if (this.maxBlood == -1 || this.currentBlood == -1)
+            return false;
+
         if (this.shouldHaveBlood()) {
             // if the entity cannot survive with 0 blood and currently has
             // 0 blood, something has gone wrong and we need to reinit
@@ -109,6 +110,8 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
     @Override
     public void readFromNbt(NbtCompound tag) {
         this.currentBlood = Math.min(tag.getInt("Blood"), this.maxBlood);
+        if (tag.contains("MaxBlood", NbtElement.INT_TYPE))
+            this.maxBlood = tag.getInt("MaxBlood");
         this.bloodGainTimer = tag.getInt("BloodTimer");
         this.wasBaby = tag.getBoolean("Baby");
         if (!this.hasInitialized())
@@ -118,6 +121,7 @@ public class EntityBloodComponent implements InitializableBloodComponent, Server
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putInt("Blood", this.currentBlood);
+        tag.putInt("MaxBlood", this.maxBlood);
         tag.putInt("BloodTimer", this.bloodGainTimer);
         tag.putBoolean("Baby", this.wasBaby);
     }

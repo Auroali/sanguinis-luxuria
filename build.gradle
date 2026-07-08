@@ -12,6 +12,13 @@ base {
 
 loom {
     accessWidenerPath = file('src/main/resources/sanguinisluxuria.accesswidener')
+
+}
+
+afterEvaluate {
+    loom.runs.configureEach {
+        vmArg "-javaagent:${configurations.compileClasspath.find { it.name.contains("sponge-mixin") }}"
+    }
 }
 
 repositories {
@@ -69,11 +76,11 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     // Replace modImplementation with modApi if you expose components in your own API
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+    modApi "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
     // Includes Cardinal Components API as a Jar-in-Jar dependency (optional but recommended)
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
 
-    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}"
+    modApi "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}"
 
     modImplementation("dev.emi:trinkets:${project.trinkets_version}") {
@@ -81,7 +88,7 @@ dependencies {
         exclude module: 'modmenu'
     }
 
-    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}+${project.minecraft_version}-fabric"
+    modApi "dev.isxander:yet-another-config-lib:${project.yacl_version}+${project.minecraft_version}-fabric"
 
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
@@ -94,15 +101,15 @@ dependencies {
         exclude module: 'fabric-loader'
     }
 
-    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}-FABRIC"
+    modApi "vazkii.patchouli:Patchouli:${project.patchouli_version}-FABRIC"
 
-    modImplementation "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
+    modApi "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
     include "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
 
     modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
     modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
 
-    modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_entity_attribute_version}"
+    modApi "com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_entity_attribute_version}"
     include "com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_entity_attribute_version}"
 }
 
