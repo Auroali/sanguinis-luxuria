@@ -18,6 +18,7 @@
     "BeehiveBlockMixin",
     "BlockEntityTypeMixin",
     "CakeBlockMixin",
+    "EntityMixin",
     "HungerManagerMixin",
     "IronGolemEntityMixin",
     "ItemStackMixin",
