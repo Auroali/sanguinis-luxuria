@@ -6,113 +6,121 @@ import com.auroali.sanguinisluxuria.common.rituals.predicate.RitualTypePredicate
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import net.minecraft.loot.condition.LootConditionTypes;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.JsonHelper;
 
 import java.util.Objects;
+import java.util.Optional;
 
-public class RitualPredicate {
-    public static final RitualPredicate ANY = new RitualPredicate(
-      RitualEntityPredicate.ANY,
-      RitualEntityPredicate.ANY,
-      RitualTypePredicate.ANY,
-      RitualFieldsPredicate.ANY
+public record RitualPredicate(
+  Optional<LootContextPredicate> target,
+  Optional<LootContextPredicate> initiator,
+  Optional<RitualTypePredicate> type,
+  Optional<RitualFieldsPredicate> fields
+) {
+    public static final RitualPredicate EMPTY = new RitualPredicate(
+      Optional.empty(),
+      Optional.empty(),
+      Optional.empty(),
+      Optional.empty()
     );
-    private final RitualEntityPredicate initiator;
-    private final RitualEntityPredicate target;
-    private final RitualTypePredicate type;
-    private final RitualFieldsPredicate fields;
-
-    protected RitualPredicate(RitualEntityPredicate target, RitualEntityPredicate initiator, RitualTypePredicate type, RitualFieldsPredicate fields) {
-        this.target = target;
-        this.initiator = initiator;
-        this.type = type;
-        this.fields = fields;
-    }
 
     public boolean test(ServerWorld world, Ritual ritual, RitualParameters parameters) {
-        if (this.initiator.test(world, parameters.pos().toCenterPos(), parameters.initiator()))
-            return false;
-        if (this.target.test(world, parameters.pos().toCenterPos(), parameters.target()))
-            return false;
-        if (this.type.test(ritual.getType()))
-            return false;
-        return this.fields.test(ritual);
+        if (this.initiator.isPresent()) {
+            if (!parameters.hasInitiator())
+                return false;
+            LootContext initiatorContext = new LootContext.Builder(
+              new LootContextParameterSet.Builder(world)
+                .add(LootContextParameters.ORIGIN, parameters.pos().toCenterPos())
+                .add(LootContextParameters.THIS_ENTITY, parameters.initiator())
+                .build(LootContextTypes.ADVANCEMENT_ENTITY)
+            ).build(null);
+            return this.initiator.get().test(initiatorContext);
+        }
+        if (this.target.isPresent()) {
+            if (!parameters.hasTarget())
+                return false;
+            LootContext targetContext = new LootContext.Builder(
+              new LootContextParameterSet.Builder(world)
+                .add(LootContextParameters.ORIGIN, parameters.pos().toCenterPos())
+                .add(LootContextParameters.THIS_ENTITY, parameters.target())
+                .build(LootContextTypes.ADVANCEMENT_ENTITY)
+            ).build(null);
+            return this.target.get().test(targetContext);
+        }
+
+        return this.type.map(predicate -> predicate.test(ritual.getType())).orElse(true)
+          && this.fields.map(predicate -> predicate.test(ritual)).orElse(true);
     }
 
-    public static RitualPredicate fromJson(JsonObject object) {
-        RitualEntityPredicate target = RitualEntityPredicate.ANY;
-        RitualEntityPredicate initator = RitualEntityPredicate.ANY;
-        RitualTypePredicate type = RitualTypePredicate.ANY;
-        RitualFieldsPredicate fields = RitualFieldsPredicate.ANY;
+    public static RitualPredicate fromJson(AdvancementEntityPredicateDeserializer deserializer, JsonObject object) {
+        Optional<LootContextPredicate> target = Optional.empty();
+        Optional<LootContextPredicate> initiator = Optional.empty();
+        Optional<RitualTypePredicate> type = Optional.empty();
+        Optional<RitualFieldsPredicate> fields = Optional.empty();
         if (object.has("target")) {
-            target = RitualEntityPredicate.fromJson(object.get("target"));
+            LootContextPredicate predicate = LootContextPredicate.fromJson(
+              "target",
+              deserializer,
+              object.get("target"),
+              LootContextTypes.ADVANCEMENT_ENTITY
+            );
+            if (predicate == null)
+                throw new JsonParseException("Failed to parse target predicate");
+            target = Optional.of(predicate);
         }
         if (object.has("initiator")) {
-            initator = RitualEntityPredicate.fromJson(object.get("initiator"));
+            LootContextPredicate predicate = LootContextPredicate.fromJson(
+              "initiator",
+              deserializer,
+              object.get("initiator"),
+              LootContextTypes.ADVANCEMENT_ENTITY
+            );
+            if (predicate == null)
+                throw new JsonParseException("Failed to parse initiator predicate");
+            initiator = Optional.of(predicate);
         }
         if (JsonHelper.hasString(object, "type")) {
-            type = RitualTypePredicate.fromJson(object.get("type"));
+            type = Optional.of(RitualTypePredicate.fromJson(object.get("type")));
         }
         if (JsonHelper.hasJsonObject(object, "fields")) {
-            fields = RitualFieldsPredicate.fromJson(object.get("fields"));
+            fields = Optional.of(RitualFieldsPredicate.fromJson(object.get("fields")));
         }
 
         RitualPredicate predicate = new RitualPredicate(
-          target, initator, type, fields
+          target, initiator, type, fields
         );
-        return predicate.equals(ANY) ? ANY : predicate;
+        return predicate.equals(EMPTY) ? EMPTY : predicate;
     }
 
-    public JsonElement toJson() {
-        if (this == ANY)
+    public JsonElement toJson(AdvancementEntityPredicateSerializer serializer) {
+        if (this == EMPTY)
             return JsonNull.INSTANCE;
 
         JsonObject json = new JsonObject();
-        if (this.initiator != null) {
-            json.add("initiator", this.initiator.toJson());
-        }
-        if (this.target != null) {
-            json.add("target", this.target.toJson());
-        }
-        if (this.type != null) {
-            json.add("type", this.type.toJson());
-        }
-        if (this.fields != null) {
-            json.add("fields", this.fields.toJson());
-        }
+        this.initiator.ifPresent(predicate ->
+          json.add("initiator", predicate.toJson(serializer))
+        );
+        this.target.ifPresent(predicate ->
+          json.add("target", predicate.toJson(serializer))
+        );
+        this.type.ifPresent(predicate ->
+          json.add("type", predicate.toJson())
+        );
+        this.fields.ifPresent(predicate ->
+          json.add("fields", predicate.toJson())
+        );
         return json;
-    }
-
-    @Override
-    public int hashCode() {
-        int code = 31;
-        if (this.target != RitualEntityPredicate.ANY)
-            code = this.target.hashCode() + 31 * code;
-        if (this.initiator != RitualEntityPredicate.ANY)
-            code = this.initiator.hashCode() + 31 * code + 3;
-        if (this.type != RitualTypePredicate.ANY)
-            code = this.type.hashCode() + 7 * code + 41;
-        if (this.fields != RitualFieldsPredicate.ANY)
-            code = this.fields.hashCode() + 17 * code;
-
-        return code;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-
-        if (obj instanceof RitualPredicate predicate) {
-            return Objects.equals(this.initiator, predicate.initiator)
-              && Objects.equals(this.target, predicate.target)
-              && Objects.equals(this.type, predicate.type)
-              && Objects.equals(this.fields, predicate.fields);
-        }
-
-        return false;
     }
 
     public static Builder builder() {
@@ -120,32 +128,29 @@ public class RitualPredicate {
     }
 
     public static class Builder {
-        private RitualEntityPredicate initiator;
-        private RitualEntityPredicate target;
+        private LootContextPredicate initiator;
+        private LootContextPredicate target;
         private RitualTypePredicate type;
         private RitualFieldsPredicate fields;
 
         protected Builder() {
-
         }
 
         public Builder initiator(EntityPredicate predicate) {
-            this.initiator = RitualEntityPredicate.create(predicate);
-            return this;
+            return this.initiator(EntityPredicate.asLootContextPredicate(predicate));
         }
 
         public Builder target(EntityPredicate predicate) {
-            this.target = RitualEntityPredicate.create(predicate);
+            return this.target(EntityPredicate.asLootContextPredicate(predicate));
+        }
+
+        public Builder initiator(LootContextPredicate predicate) {
+            this.initiator = predicate;
             return this;
         }
 
-        public Builder initiatorExcluding(EntityPredicate predicate) {
-            this.initiator = RitualEntityPredicate.create(predicate).inverted();
-            return this;
-        }
-
-        public Builder targetExcluding(EntityPredicate predicate) {
-            this.target = RitualEntityPredicate.create(predicate).inverted();
+        public Builder target(LootContextPredicate predicate) {
+            this.target = predicate;
             return this;
         }
 
@@ -161,9 +166,12 @@ public class RitualPredicate {
 
         public RitualPredicate build() {
             RitualPredicate predicate = new RitualPredicate(
-              this.target, this.initiator, this.type, this.fields
+              Optional.ofNullable(this.target),
+              Optional.ofNullable(this.initiator),
+              Optional.ofNullable(this.type),
+              Optional.ofNullable(this.fields)
             );
-            return predicate.equals(ANY) ? ANY : predicate;
+            return predicate.equals(EMPTY) ? EMPTY : predicate;
         }
     }
 

@@ -19,11 +19,16 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.condition.EntityPropertiesLootCondition;
+import net.minecraft.loot.condition.InvertedLootCondition;
+import net.minecraft.loot.condition.LootConditionTypes;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityEffectPredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.text.Text;
 
@@ -148,9 +153,15 @@ public class SLAdvancementsProvider extends FabricAdvancementProvider {
           .parent(unbecomeVampire)
           .criterion("ritual", PerformRitualCriterion.Conditions.create(
             RitualPredicate.builder()
-              .targetExcluding(EntityPredicate.Builder.create()
-                .type(EntityType.PLAYER)
-                .build()
+              .target(LootContextPredicate.create(
+                  EntityPropertiesLootCondition.builder(
+                      LootContext.EntityTarget.THIS,
+                      EntityPredicate.Builder.create()
+                        .type(EntityType.PLAYER)
+                    )
+                    .invert()
+                    .build()
+                )
               )
               .type(RitualTypePredicate.create(SLRitualTypes.CONVERT_ENTITY_RITUAL))
               .fields(RitualFieldsPredicate.builder()

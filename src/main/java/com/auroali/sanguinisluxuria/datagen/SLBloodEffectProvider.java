@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 
 
 public class SLBloodEffectProvider extends SanguinisLuxuriaBloodEffectsProvider {
@@ -54,7 +55,7 @@ public class SLBloodEffectProvider extends SanguinisLuxuriaBloodEffectsProvider 
         this.withConditions(exporter, DefaultResourceConditions.allModsLoaded("spectrum"))
           .offer(
             BloodDrainEffectBuilder.builder(new Identifier("spectrum", "kindling"))
-              .effect(new BloodDrainIgniteEffect(8, 0.4f))
+              .effect(new BloodDrainIgniteEffect(ConstantIntProvider.create(8), 0.4f))
           );
         this.withConditions(exporter, DefaultResourceConditions.allModsLoaded("yttr"))
           .offer(BloodDrainEffectBuilder.builder(new Identifier("yttr", "deer"))

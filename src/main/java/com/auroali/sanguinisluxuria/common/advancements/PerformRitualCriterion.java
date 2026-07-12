@@ -19,7 +19,7 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
     @Override
     protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         return new Conditions(
-          RitualPredicate.fromJson(JsonHelper.getObject(obj, "ritual")),
+          RitualPredicate.fromJson(predicateDeserializer, JsonHelper.getObject(obj, "ritual")),
           playerPredicate
         );
     }
@@ -43,14 +43,14 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
         }
 
         public boolean test(ServerWorld world, Ritual ritual, RitualParameters parameters) {
-            if (this.predicate == RitualPredicate.ANY)
+            if (this.predicate == RitualPredicate.EMPTY)
                 return true;
 
             return this.predicate.test(world, ritual, parameters);
         }
 
         public static Conditions create() {
-            return new Conditions(RitualPredicate.ANY, LootContextPredicate.EMPTY);
+            return new Conditions(RitualPredicate.EMPTY, LootContextPredicate.EMPTY);
         }
 
         public static Conditions create(RitualPredicate predicate) {
@@ -60,7 +60,7 @@ public class PerformRitualCriterion extends AbstractCriterion<PerformRitualCrite
         @Override
         public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
             JsonObject object = super.toJson(predicateSerializer);
-            object.add("ritual", this.predicate.toJson());
+            object.add("ritual", this.predicate.toJson(predicateSerializer));
             return object;
         }
     }

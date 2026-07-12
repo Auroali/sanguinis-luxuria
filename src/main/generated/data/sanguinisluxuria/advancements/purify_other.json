@@ -12,12 +12,18 @@
               "conversion": "deconverting"
             }
           },
-          "target": {
-            "inverted": true,
-            "predicate": {
-              "type": "minecraft:player"
+          "target": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "type": "minecraft:player"
+                }
+              }
             }
-          }
+          ]
         }
       },
       "trigger": "sanguinisluxuria:perform_ritual"
