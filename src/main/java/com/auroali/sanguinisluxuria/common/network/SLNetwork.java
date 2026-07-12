@@ -9,8 +9,8 @@ import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
 import com.auroali.sanguinisluxuria.common.network.packets.ActivateAbilityC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.DrainBloodC2S;
 import com.auroali.sanguinisluxuria.common.network.packets.FillBloodItemC2S;
+import com.auroali.sanguinisluxuria.util.EntityUtil;
 import com.auroali.sanguinisluxuria.util.ItemUtil;
-import com.auroali.sanguinisluxuria.util.RaycastHelper;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
@@ -34,7 +34,7 @@ public class SLNetwork {
             if (!VampireHelper.isVampire(player))
                 return;
             BloodDrainComponent drainer = BloodDrainComponent.KEY.get(player);
-            HitResult result = RaycastHelper.raycastEntity(player, player.getRotationVector(), Entity::isAlive);
+            HitResult result = EntityUtil.raycastEntity(player, player.getRotationVector(), Entity::isAlive);
             if (result.getType() != HitResult.Type.ENTITY)
                 return;
 

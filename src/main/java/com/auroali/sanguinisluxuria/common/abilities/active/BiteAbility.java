@@ -10,7 +10,7 @@ import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
 import com.auroali.sanguinisluxuria.common.registry.SLParticles;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
-import com.auroali.sanguinisluxuria.util.RaycastHelper;
+import com.auroali.sanguinisluxuria.util.EntityUtil;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -26,7 +26,7 @@ public class BiteAbility extends VampireAbility {
         if (entry.isOnCooldown() || VampireHelper.isMasked(entity))
             return;
 
-        HitResult result = RaycastHelper.raycastEntity(entity, entity.getRotationVector(), e -> e instanceof LivingEntity);
+        HitResult result = EntityUtil.raycastEntity(entity, entity.getRotationVector(), e -> e instanceof LivingEntity);
         if (result.getType() != HitResult.Type.ENTITY)
             return;
 

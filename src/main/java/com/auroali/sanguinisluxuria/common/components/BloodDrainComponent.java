@@ -5,7 +5,7 @@ import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
 import com.auroali.sanguinisluxuria.common.events.BloodEvents;
 import com.auroali.sanguinisluxuria.common.registry.SLSounds;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
-import com.auroali.sanguinisluxuria.util.RaycastHelper;
+import com.auroali.sanguinisluxuria.util.EntityUtil;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -105,7 +105,7 @@ public class BloodDrainComponent implements Component, ServerTickingComponent, A
             return;
         }
 
-        HitResult result = RaycastHelper.raycastEntity(
+        HitResult result = EntityUtil.raycastEntity(
           this.holder,
           this.holder.getRotationVector(),
           Entity::isAlive
