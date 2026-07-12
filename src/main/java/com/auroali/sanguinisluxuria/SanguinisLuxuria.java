@@ -6,6 +6,8 @@ import com.auroali.sanguinisluxuria.common.commands.SanguinisLuxuriaCommand;
 import com.auroali.sanguinisluxuria.common.commands.arguments.ConversionArgument;
 import com.auroali.sanguinisluxuria.common.commands.arguments.VampireAbilityArgument;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
+import com.auroali.sanguinisluxuria.common.data.BloodDrainEffectLoader;
+import com.auroali.sanguinisluxuria.common.data.EntityConversionLoader;
 import com.auroali.sanguinisluxuria.common.events.BloodStorageFillEvents;
 import com.auroali.sanguinisluxuria.common.items.BloodStorageItem;
 import com.auroali.sanguinisluxuria.common.items.EntityTrackingItem;
@@ -14,6 +16,7 @@ import com.auroali.sanguinisluxuria.common.network.SLNetwork;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.config.SLConfig;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
+import com.google.gson.Gson;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -22,6 +25,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
@@ -34,6 +38,7 @@ import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.ActionResult;
 import net.minecraft.village.VillagerProfession;
 import org.slf4j.Logger;
@@ -45,6 +50,7 @@ public class SanguinisLuxuria implements ModInitializer {
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final String MODID = "sanguinisluxuria";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    private static final Gson GSON = new Gson();
 
     @SuppressWarnings("UnstableApiUsage")
     @Override
@@ -146,5 +152,10 @@ public class SanguinisLuxuria implements ModInitializer {
         FluidVariantAttributes.register(SLFluids.BLOOD, SLFluids.BLOOD_ATTRIBUTE_HANDLER);
 
         UseBlockCallback.EVENT.register(EntityTrackingItem::setAltarTarget);
+
+        ResourceManagerHelper serverResourceManager = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
+        serverResourceManager.registerReloadListener(new EntityConversionLoader(GSON));
+        serverResourceManager.registerReloadListener(new BloodDrainEffectLoader(GSON));
+        BloodDrainEffectLoader.init();
     }
 }

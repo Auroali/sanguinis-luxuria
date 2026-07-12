@@ -1,8 +1,8 @@
 package com.auroali.sanguinisluxuria.common.rituals.types;
 
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
+import com.auroali.sanguinisluxuria.common.data.EntityConversionLoader;
 import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.SLConversions;
 import com.auroali.sanguinisluxuria.common.registry.SLRitualTypes;
 import com.auroali.sanguinisluxuria.common.rituals.Ritual;
 import com.auroali.sanguinisluxuria.common.rituals.RitualParameters;
@@ -34,7 +34,7 @@ public class ConvertEntityRitual implements Ritual {
             return;
 
         LivingEntity target = parameters.target();
-        if (SLConversions.convertEntity(ConversionContext.from(target, this.conversion))) {
+        if (EntityConversionLoader.convertEntity(ConversionContext.from(target, this.conversion))) {
             parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.CONVERT.trigger(player, this.conversion));
             RitualUtil.spawnSuccessParticles(parameters);
             RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());

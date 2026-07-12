@@ -3,8 +3,8 @@ package com.auroali.sanguinisluxuria.util;
 import com.auroali.sanguinisluxuria.common.components.BloodComponent;
 import com.auroali.sanguinisluxuria.common.components.VampireComponent;
 import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
+import com.auroali.sanguinisluxuria.common.data.EntityConversionLoader;
 import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
-import com.auroali.sanguinisluxuria.common.registry.SLConversions;
 import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
 import com.auroali.sanguinisluxuria.common.registry.SLTags;
 import dev.emi.trinkets.api.TrinketsApi;
@@ -120,7 +120,7 @@ public class VampireHelper {
         if (!entity.hasStatusEffect(SLStatusEffects.BLOOD_LUST) || entity.hasStatusEffect(SLStatusEffects.BLOOD_PROTECTION))
             return false;
 
-        boolean success = SLConversions.convertEntity(new ConversionContext(
+        boolean success = EntityConversionLoader.convertEntity(new ConversionContext(
           entity.getWorld(),
           entity,
           ConversionContext.Conversion.CONVERTING,

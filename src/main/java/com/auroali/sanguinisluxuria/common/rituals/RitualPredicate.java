@@ -1,13 +1,11 @@
 package com.auroali.sanguinisluxuria.common.rituals;
 
-import com.auroali.sanguinisluxuria.common.rituals.predicate.RitualEntityPredicate;
 import com.auroali.sanguinisluxuria.common.rituals.predicate.RitualFieldsPredicate;
 import com.auroali.sanguinisluxuria.common.rituals.predicate.RitualTypePredicate;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.loot.condition.LootConditionTypes;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
@@ -19,7 +17,6 @@ import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.JsonHelper;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public record RitualPredicate(

@@ -6,8 +6,12 @@ import com.auroali.sanguinisluxuria.common.abilities.SyncableVampireAbility;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbilityContainer;
 import com.auroali.sanguinisluxuria.common.abilities.passive.InfectiousAbility;
 import com.auroali.sanguinisluxuria.common.blood.BloodConstants;
+import com.auroali.sanguinisluxuria.common.data.BloodDrainEffectLoader;
 import com.auroali.sanguinisluxuria.common.events.BloodEvents;
-import com.auroali.sanguinisluxuria.common.registry.*;
+import com.auroali.sanguinisluxuria.common.registry.SLAdvancementCriterion;
+import com.auroali.sanguinisluxuria.common.registry.SLDamageSources;
+import com.auroali.sanguinisluxuria.common.registry.SLStatusEffects;
+import com.auroali.sanguinisluxuria.common.registry.SLVampireAbilities;
 import com.auroali.sanguinisluxuria.util.VampireHelper;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -112,7 +116,7 @@ public interface VampireComponent extends Component, AutoSyncedComponent, Server
             );
         }
 
-        SLBloodDrainEffects.applyTo(vampireEntity, target);
+        BloodDrainEffectLoader.getManager().apply(vampireEntity, target);
 
         // allow conversion of entities with weakness
         if (!VampireHelper.isVampire(target) && target.hasStatusEffect(StatusEffects.WEAKNESS)) {

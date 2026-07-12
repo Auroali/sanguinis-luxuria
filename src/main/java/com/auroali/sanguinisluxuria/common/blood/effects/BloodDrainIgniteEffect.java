@@ -4,10 +4,7 @@ import com.auroali.sanguinisluxuria.common.blood.BloodDrainEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.loot.provider.number.LootNumberProvider;
-import net.minecraft.loot.provider.number.LootNumberProviderTypes;
 import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.world.gen.trunk.CherryTrunkPlacer;
 
 public record BloodDrainIgniteEffect(IntProvider time, float chance) implements BloodDrainEffect {
     public static final Codec<BloodDrainIgniteEffect> CODEC = RecordCodecBuilder.create(instance -> instance.group(
