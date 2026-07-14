@@ -13,7 +13,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.List;
 
 public class VillagerDiscountTransformer implements EntityConversionTransformer {
-    public static final Codec<VillagerDiscountTransformer> CODEC = Codec.unit(new VillagerDiscountTransformer());
+    public static final VillagerDiscountTransformer INSTANCE = new VillagerDiscountTransformer();
+    public static final Codec<VillagerDiscountTransformer> CODEC = Codec.unit(INSTANCE);
+
+    private VillagerDiscountTransformer() {
+    }
 
     @Override
     public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut, List<ConversionContext.ConversionCallback> callbacks) {

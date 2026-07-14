@@ -12,7 +12,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.List;
 
 public class TameTransformer implements EntityConversionTransformer {
-    public static final Codec<TameTransformer> CODEC = Codec.unit(new TameTransformer());
+    public static final TameTransformer INSTANCE = new TameTransformer();
+    public static final Codec<TameTransformer> CODEC = Codec.unit(INSTANCE);
+
+    private TameTransformer() {
+    }
 
     @Override
     public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut, List<ConversionContext.ConversionCallback> callbacks) {

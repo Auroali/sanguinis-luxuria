@@ -36,7 +36,7 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
           .transformer(CopyConversionTransformer.create("Offers"))
           .transformer(CopyConversionTransformer.create("Xp"))
           .transformer(CopyConversionTransformer.create("VillagerData"))
-          .transformer(new VillagerDiscountTransformer())
+          .transformer(VillagerDiscountTransformer.INSTANCE)
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 
@@ -62,7 +62,7 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
             ),
             e -> e.getKey().getValue()
           )
-          .transformer(new VillagerDiscountTransformer())
+          .transformer(VillagerDiscountTransformer.INSTANCE)
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 
@@ -86,7 +86,7 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
           .transformer(CopyConversionTransformer.create("VillagerData"))
           .transformer(CopyConversionTransformer.create("Xp"))
           .transformer(CopyConversionTransformer.create("Offers"))
-          .transformer(new VillagerDiscountTransformer())
+          .transformer(VillagerDiscountTransformer.INSTANCE)
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 
