@@ -38,6 +38,9 @@
     {
       "type": "sanguinisluxuria:copy",
       "source": "attributes"
+    },
+    {
+      "type": "sanguinisluxuria:special/tame"
     }
   ]
 }

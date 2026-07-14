@@ -4,7 +4,9 @@ import com.auroali.sanguinisluxuria.common.conversions.ConversionContext;
 import com.auroali.sanguinisluxuria.common.conversions.EntityConversionTransformer;
 import com.mojang.serialization.Codec;
 import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.entity.Tameable;
 import net.minecraft.entity.passive.AbstractHorseEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,14 +24,16 @@ public class TameTransformer implements EntityConversionTransformer {
     public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut, List<ConversionContext.ConversionCallback> callbacks) {
         callbacks.add((convertedEntity, conversionSource) -> {
             if (conversionSource instanceof ServerPlayerEntity player) {
-                if (convertedEntity instanceof TameableEntity tameable) {
+                if (convertedEntity instanceof Tameable tameable) {
                     if (tameable.getOwnerUuid() != null) {
-                        tameable.setOwner(player);
-                        Criteria.TAME_ANIMAL.trigger(player, tameable);
+                        if (convertedEntity instanceof TameableEntity tameableEntity) {
+                            tameableEntity.setOwner(player);
+                        } else if (convertedEntity instanceof AbstractHorseEntity horseEntity) {
+                            horseEntity.bondWithPlayer(player);
+                        }
+                        if (convertedEntity instanceof AnimalEntity animal)
+                            Criteria.TAME_ANIMAL.trigger(player, animal);
                     }
-                } else if (convertedEntity instanceof AbstractHorseEntity horse) {
-                    horse.bondWithPlayer(player);
-                    Criteria.TAME_ANIMAL.trigger(player, horse);
                 }
             }
         });

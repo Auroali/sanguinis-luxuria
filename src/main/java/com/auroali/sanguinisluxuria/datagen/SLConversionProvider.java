@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.conversions.conditions.VampireConvers
 import com.auroali.sanguinisluxuria.common.conversions.transformers.ConditionalTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransformer;
+import com.auroali.sanguinisluxuria.common.conversions.transformers.special.TameTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.special.VillagerDiscountTransformer;
 import com.auroali.sanguinisluxuria.common.registry.SLConversions;
 import com.auroali.sanguinisluxuria.common.registry.SLEntities;
@@ -25,17 +26,21 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
     protected void generateConversions(ConversionExporter exporter) {
         ConversionJsonBuilder.create(EntityType.VILLAGER, SLEntities.VAMPIRE_ILLAGER)
           .type(SLConversions.SPAWN_TYPE)
-          .transformer(CopyConversionTransformer.create("Offers"))
-          .transformer(CopyConversionTransformer.create("Xp"))
-          .transformer(CopyConversionTransformer.create("VillagerData"))
+          .transformers(
+            CopyConversionTransformer.create("Offers"),
+            CopyConversionTransformer.create("Xp"),
+            CopyConversionTransformer.create("VillagerData")
+          )
           .condition(ConversionContextCondition.converting())
           .offerTo(exporter);
 
         ConversionJsonBuilder.create(SLEntities.VAMPIRE_ILLAGER, EntityType.VILLAGER)
           .type(SLConversions.SPAWN_TYPE)
-          .transformer(CopyConversionTransformer.create("Offers"))
-          .transformer(CopyConversionTransformer.create("Xp"))
-          .transformer(CopyConversionTransformer.create("VillagerData"))
+          .transformers(
+            CopyConversionTransformer.create("Offers"),
+            CopyConversionTransformer.create("Xp"),
+            CopyConversionTransformer.create("VillagerData")
+          )
           .transformer(VillagerDiscountTransformer.INSTANCE)
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
@@ -83,22 +88,25 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
 
         ConversionJsonBuilder.create(EntityType.ZOMBIE_VILLAGER, EntityType.VILLAGER)
           .type(SLConversions.SPAWN_TYPE)
-          .transformer(CopyConversionTransformer.create("VillagerData"))
-          .transformer(CopyConversionTransformer.create("Xp"))
-          .transformer(CopyConversionTransformer.create("Offers"))
+          .transformers(
+            CopyConversionTransformer.create("VillagerData"),
+            CopyConversionTransformer.create("Xp"),
+            CopyConversionTransformer.create("Offers")
+          )
           .transformer(VillagerDiscountTransformer.INSTANCE)
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 
         ConversionJsonBuilder.create(EntityType.ZOMBIE_HORSE, EntityType.HORSE)
           .type(SLConversions.SPAWN_TYPE)
-          .transformers(CopyConversionTransformer.create("Owner"))
-          .transformers(CopyConversionTransformer.create("Bred"))
-          .transformers(CopyConversionTransformer.create("EatingHaystack"))
-          .transformers(CopyConversionTransformer.create("SaddleItem"))
-          .transformers(CopyConversionTransformer.create("Tame"))
-          .transformers(CopyConversionTransformer.create("Temper"))
-          .transformers(CopyConversionTransformer.create("attributes"))
+          .transformer(CopyConversionTransformer.create("Owner"))
+          .transformer(CopyConversionTransformer.create("Bred"))
+          .transformer(CopyConversionTransformer.create("EatingHaystack"))
+          .transformer(CopyConversionTransformer.create("SaddleItem"))
+          .transformer(CopyConversionTransformer.create("Tame"))
+          .transformer(CopyConversionTransformer.create("Temper"))
+          .transformer(CopyConversionTransformer.create("attributes"))
+          .transformer(TameTransformer.INSTANCE)
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 

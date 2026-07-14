@@ -1,4 +1,4 @@
-// 1.20.1	2026-07-13T20:39:08.121306204	Sanguinis Luxuria/Tags for minecraft:damage_type
+// 1.20.1	2026-07-13T21:21:20.348688203	Sanguinis Luxuria/Tags for minecraft:damage_type
 d87f0504e9b5ab5b0b751982da7529232cc7162c data/minecraft/tags/damage_type/bypasses_armor.json
 ce94d151447dae9e0a0271506c7dbdf01ec51ca1 data/minecraft/tags/damage_type/bypasses_invulnerability.json
 200f988950763549b3b5c1605e17689851356384 data/minecraft/tags/damage_type/bypasses_resistance.json

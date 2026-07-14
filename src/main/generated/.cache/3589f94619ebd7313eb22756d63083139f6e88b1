@@ -1,7 +1,7 @@
-// 1.20.1	2026-07-13T20:39:08.11819091	Sanguinis Luxuria/Recipes
+// 1.20.1	2026-07-13T21:21:20.345592246	Sanguinis Luxuria/Recipes
 6743f234851f6553c2bd57007383515893b68cae data/sanguinisluxuria/advancements/recipes/decorations/grafted_sapling.json
-c63feffdace2858a7c1f435303035dc403a4816d data/sanguinisluxuria/recipes/altar.json
 6259d5231dfcd88cd6d915e51537135efda354cf data/sanguinisluxuria/advancements/recipes/redstone/decayed_door.json
+c63feffdace2858a7c1f435303035dc403a4816d data/sanguinisluxuria/recipes/altar.json
 0b7ecc594f1edb0f8b6e04d51ee9c357225915d2 data/sanguinisluxuria/recipes/decayed_slab.json
 0ab17d97f71df924dbeac1b1c74c7f5a47b091b2 data/sanguinisluxuria/recipes/decayed_fence_gate.json
 bcac2e5a04dd71d43579d0aab842dba379fbffb5 data/sanguinisluxuria/advancements/recipes/decorations/silver_bars.json
