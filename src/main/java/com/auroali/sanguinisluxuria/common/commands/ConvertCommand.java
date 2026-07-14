@@ -11,26 +11,22 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-import java.util.Collection;
-
 public class ConvertCommand {
     public static LiteralArgumentBuilder<ServerCommandSource> register() {
         return CommandManager.literal("convert")
-          .then(CommandManager.argument("targets", EntityArgumentType.entities())
+          .then(CommandManager.argument("target", EntityArgumentType.entity())
             .then(CommandManager.argument("conversion", ConversionArgument.conversion())
               .executes(ctx -> convert(
-                EntityArgumentType.getEntities(ctx, "targets"),
+                EntityArgumentType.getEntity(ctx, "target"),
                 ConversionArgument.getConversion(ctx, "conversion")
               ))
             )
           );
     }
 
-    public static int convert(Collection<? extends Entity> entities, ConversionContext.Conversion conversion) {
-        for (Entity entity : entities) {
-            if (!EntityConversionLoader.convertEntity(ConversionContext.from(entity, conversion)))
-                throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.failed", entity.getName()));
-        }
+    public static int convert(Entity entity, ConversionContext.Conversion conversion) {
+        if (!EntityConversionLoader.convertEntity(ConversionContext.builder(entity).withConversion(conversion).build()))
+            throw new CommandException(Text.translatable("commands.sanguinisluxuria.convert.failed", entity.getName()));
         return 0;
     }
 }

@@ -12,6 +12,8 @@ import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 
+import java.util.List;
+
 /**
  * Transformer that only runs the provided transformer if some condition succeeds
  */
@@ -30,28 +32,14 @@ public class ConditionalTransformer implements EntityConversionTransformer {
     }
 
     @Override
-    public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut) {
+    public void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut, List<ConversionContext.ConversionCallback> callbacks) {
         if (this.condition.test(context))
-            this.transformer.apply(context, nbtIn, nbtOut);
+            this.transformer.apply(context, nbtIn, nbtOut, callbacks);
     }
 
     @Override
     public Codec<ConditionalTransformer> getCodec() {
         return CODEC;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        return obj instanceof ConditionalTransformer other
-          && other.transformer.equals(this.transformer)
-          && other.condition.equals(this.condition);
-    }
-
-    @Override
-    public int hashCode() {
-        return 31 * this.condition.hashCode() + this.transformer.hashCode();
     }
 
     public static ConditionalTransformer biome(EntityConversionTransformer transformer, RegistryKey<Biome> biome) {

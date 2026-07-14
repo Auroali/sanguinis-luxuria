@@ -120,19 +120,20 @@ public class VampireHelper {
         if (!entity.hasStatusEffect(SLStatusEffects.BLOOD_LUST) || entity.hasStatusEffect(SLStatusEffects.BLOOD_PROTECTION))
             return false;
 
-        boolean success = EntityConversionLoader.convertEntity(new ConversionContext(
-          entity.getWorld(),
-          entity,
-          ConversionContext.Conversion.CONVERTING,
-          convertedEntity -> {
-              if (VampireHelper.isVampire(convertedEntity)) {
-                  VampireComponent.KEY.maybeGet(convertedEntity).ifPresent(vampire -> vampire.setDowned(true));
-                  BloodComponent.KEY.maybeGet(convertedEntity).ifPresent(blood -> blood.setBlood(0));
-              }
-              if (convertedEntity instanceof LivingEntity living) {
-                  living.setHealth(living.getMaxHealth());
-              }
-          }));
+        boolean success = EntityConversionLoader.convertEntity(
+          ConversionContext.builder(entity)
+            .withConversion(ConversionContext.Conversion.CONVERTING)
+            .withCallback((convertedEntity, conversionSource) -> {
+                if (VampireHelper.isVampire(convertedEntity)) {
+                    VampireComponent.KEY.maybeGet(convertedEntity).ifPresent(vampire -> vampire.setDowned(true));
+                    BloodComponent.KEY.maybeGet(convertedEntity).ifPresent(blood -> blood.setBlood(0));
+                }
+                if (convertedEntity instanceof LivingEntity living) {
+                    living.setHealth(living.getMaxHealth());
+                }
+            })
+            .build()
+        );
         if (success && entity instanceof ServerPlayerEntity player) {
             SLAdvancementCriterion.CONVERT.trigger(player, ConversionContext.Conversion.CONVERTING);
         }

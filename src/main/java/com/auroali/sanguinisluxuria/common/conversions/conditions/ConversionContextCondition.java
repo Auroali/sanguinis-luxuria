@@ -6,7 +6,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.dynamic.Codecs;
 
 import java.util.Objects;
@@ -39,8 +38,8 @@ public record ConversionContextCondition(Optional<ConversionContext.Conversion> 
         boolean result = true;
         if (this.conversion.isPresent())
             result = this.conversion.get() == context.conversion();
-        if (this.predicate.isPresent() && context.world() instanceof ServerWorld world)
-            result = result && this.predicate.get().test(world, context.entity().getPos(), context.entity());
+        if (this.predicate.isPresent())
+            result = result && this.predicate.get().test(context.world(), context.entity().getPos(), context.entity());
         return result;
     }
 

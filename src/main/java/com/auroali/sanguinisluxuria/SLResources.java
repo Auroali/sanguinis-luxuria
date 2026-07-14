@@ -166,6 +166,8 @@ public class SLResources {
     public static final Identifier VAMPIRES_ATTEMPT_CONVERT = id("vampires_attempt_convert");
     public static final Identifier BURN_IN_SUN_COMPONENT_ID = id("burn_in_sun");
     public static final Identifier CAN_KILL_VAMPIRES = id("can_kill_vampires");
+    public static final Identifier VILLAGER_DISCOUNT_TRANSFORMER_ID = id("special/villager_cure_discount");
+    public static final Identifier TAME_TRANSFORMER_ID = id("special/tame");
 
     public static Identifier id(String path) {
         return new Identifier(SanguinisLuxuria.MODID, path);

@@ -3,19 +3,21 @@ package com.auroali.sanguinisluxuria.common.conversions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.StringIdentifiable;
-import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Consumer;
-
-public record ConversionContext(World world, Entity entity, Conversion conversion, Consumer<Entity> convertedCallback) {
-    public static ConversionContext from(Entity entity, Conversion conversion) {
-        return new ConversionContext(entity.getWorld(), entity, conversion, null);
-    }
-
-    public void onConverted(Entity entity) {
-        if (this.convertedCallback != null)
-            this.convertedCallback.accept(entity);
+public record ConversionContext(
+  ServerWorld world,
+  Entity entity,
+  Entity source,
+  Conversion conversion,
+  ConversionCallback convertedCallback
+) {
+    public static Builder builder(Entity entity) {
+        if (!(entity.getWorld() instanceof ServerWorld world))
+            throw new IllegalArgumentException("Cannot create a non-server conversion context");
+        return new Builder(world, entity);
     }
 
     public enum Conversion implements StringIdentifiable {
@@ -52,5 +54,43 @@ public record ConversionContext(World world, Entity entity, Conversion conversio
                 default -> throw new JsonParseException("Unknown conversion " + element.getAsString());
             };
         }
+    }
+
+    public static class Builder {
+        private final ServerWorld world;
+        private final Entity entity;
+        private Entity source;
+        private Conversion conversion;
+        private ConversionCallback callback;
+
+        protected Builder(ServerWorld world, Entity entity) {
+            this.world = world;
+            this.entity = entity;
+            this.conversion = Conversion.CONVERTING;
+        }
+
+        public Builder withConversion(Conversion conversion) {
+            this.conversion = conversion;
+            return this;
+        }
+
+        public Builder withSource(Entity entity) {
+            this.source = entity;
+            return this;
+        }
+
+        public Builder withCallback(ConversionCallback callback) {
+            this.callback = callback;
+            return this;
+        }
+
+        public ConversionContext build() {
+            return new ConversionContext(this.world, this.entity, this.source, this.conversion, this.callback);
+        }
+    }
+
+    @FunctionalInterface
+    public interface ConversionCallback {
+        void onConverted(Entity convertedEntity, @Nullable Entity conversionSource);
     }
 }

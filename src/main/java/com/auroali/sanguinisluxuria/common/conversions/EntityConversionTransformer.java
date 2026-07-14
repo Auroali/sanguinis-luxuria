@@ -14,7 +14,7 @@ public interface EntityConversionTransformer {
       .dispatch("type", EntityConversionTransformer::getCodec, Function.identity());
     Codec<List<EntityConversionTransformer>> LIST_CODEC = Codec.list(CODEC);
 
-    void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut);
+    void apply(ConversionContext context, NbtCompound nbtIn, NbtCompound nbtOut, List<ConversionContext.ConversionCallback> callbacks);
 
     Codec<? extends EntityConversionTransformer> getCodec();
 

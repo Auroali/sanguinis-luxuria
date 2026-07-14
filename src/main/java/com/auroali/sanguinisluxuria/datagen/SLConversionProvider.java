@@ -6,6 +6,7 @@ import com.auroali.sanguinisluxuria.common.conversions.conditions.VampireConvers
 import com.auroali.sanguinisluxuria.common.conversions.transformers.ConditionalTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransformer;
+import com.auroali.sanguinisluxuria.common.conversions.transformers.special.VillagerDiscountTransformer;
 import com.auroali.sanguinisluxuria.common.registry.SLConversions;
 import com.auroali.sanguinisluxuria.common.registry.SLEntities;
 import com.auroali.sanguinisluxuria.datagen.builders.ConversionJsonBuilder;
@@ -35,6 +36,7 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
           .transformer(CopyConversionTransformer.create("Offers"))
           .transformer(CopyConversionTransformer.create("Xp"))
           .transformer(CopyConversionTransformer.create("VillagerData"))
+          .transformer(new VillagerDiscountTransformer())
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 
@@ -60,6 +62,7 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
             ),
             e -> e.getKey().getValue()
           )
+          .transformer(new VillagerDiscountTransformer())
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 
@@ -83,6 +86,7 @@ public class SLConversionProvider extends SanguinisLuxuriaConversionsProvider {
           .transformer(CopyConversionTransformer.create("VillagerData"))
           .transformer(CopyConversionTransformer.create("Xp"))
           .transformer(CopyConversionTransformer.create("Offers"))
+          .transformer(new VillagerDiscountTransformer())
           .condition(ConversionContextCondition.deconverting())
           .offerTo(exporter);
 

@@ -11,6 +11,8 @@ import com.auroali.sanguinisluxuria.common.conversions.conditions.VampireConvers
 import com.auroali.sanguinisluxuria.common.conversions.transformers.ConditionalTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.CopyConversionTransformer;
 import com.auroali.sanguinisluxuria.common.conversions.transformers.SetTransformer;
+import com.auroali.sanguinisluxuria.common.conversions.transformers.special.TameTransformer;
+import com.auroali.sanguinisluxuria.common.conversions.transformers.special.VillagerDiscountTransformer;
 import net.minecraft.registry.Registry;
 
 public class SLConversions {
@@ -25,6 +27,8 @@ public class SLConversions {
         Registry.register(SLRegistries.CONVERSION_TRANSFORMERS, SLResources.COPY_TRANSFORMER_ID, CopyConversionTransformer.CODEC);
         Registry.register(SLRegistries.CONVERSION_TRANSFORMERS, SLResources.SET_TRANSFORMER_ID, SetTransformer.CODEC);
         Registry.register(SLRegistries.CONVERSION_TRANSFORMERS, SLResources.CONDITIONAL_TRANSFORMER_ID, ConditionalTransformer.CODEC);
+        Registry.register(SLRegistries.CONVERSION_TRANSFORMERS, SLResources.VILLAGER_DISCOUNT_TRANSFORMER_ID, VillagerDiscountTransformer.CODEC);
+        Registry.register(SLRegistries.CONVERSION_TRANSFORMERS, SLResources.TAME_TRANSFORMER_ID, TameTransformer.CODEC);
         Registry.register(SLRegistries.CONVERSION_CONDITIONS, SLResources.CONVERSION_CONTEXT_CONDITION_ID, ConversionContextCondition.CODEC);
         Registry.register(SLRegistries.CONVERSION_CONDITIONS, SLResources.OR_CONDITION_ID, OrConversionCondition.CODEC);
         Registry.register(SLRegistries.CONVERSION_CONDITIONS, SLResources.AND_CONDITION_ID, AndConversionCondition.CODEC);

@@ -15,18 +15,12 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class ConvertEntityRitual implements Ritual {
+public record ConvertEntityRitual(ConversionContext.Conversion conversion) implements Ritual {
     public static final Codec<ConvertEntityRitual> CODEC = RecordCodecBuilder.create(instance -> instance
       .group(
-        ConversionContext.Conversion.CODEC.fieldOf("conversion").forGetter(ConvertEntityRitual::getConversion)
+        ConversionContext.Conversion.CODEC.fieldOf("conversion").forGetter(ConvertEntityRitual::conversion)
       ).apply(instance, ConvertEntityRitual::new)
     );
-
-    private final ConversionContext.Conversion conversion;
-
-    public ConvertEntityRitual(ConversionContext.Conversion conversion) {
-        this.conversion = conversion;
-    }
 
     @Override
     public void onCompleted(RitualParameters parameters) {
@@ -34,15 +28,17 @@ public class ConvertEntityRitual implements Ritual {
             return;
 
         LivingEntity target = parameters.target();
-        if (EntityConversionLoader.convertEntity(ConversionContext.from(target, this.conversion))) {
+        if (EntityConversionLoader.convertEntity(
+          ConversionContext
+            .builder(target)
+            .withSource(parameters.initiator())
+            .withConversion(this.conversion)
+            .build()
+        )) {
             parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.CONVERT.trigger(player, this.conversion));
             RitualUtil.spawnSuccessParticles(parameters);
             RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());
         }
-    }
-
-    public ConversionContext.Conversion getConversion() {
-        return this.conversion;
     }
 
     @Override

@@ -532,6 +532,9 @@
         "destination": "VillagerData.type",
         "nbt": "\"minecraft:desert\""
       }
+    },
+    {
+      "type": "sanguinisluxuria:special/villager_cure_discount"
     }
   ]
 }

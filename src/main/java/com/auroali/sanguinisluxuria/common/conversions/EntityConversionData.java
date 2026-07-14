@@ -58,11 +58,14 @@ public class EntityConversionData {
         NbtCompound newNbt = new NbtCompound();
         entity.writeNbt(entityNbt);
 
-        this.transformers.forEach(transformer -> transformer.apply(context, entityNbt, newNbt));
+        List<ConversionContext.ConversionCallback> callbacks = new ArrayList<>(2);
+        if (context.convertedCallback() != null)
+            callbacks.add(context.convertedCallback());
+        this.transformers.forEach(transformer -> transformer.apply(context, entityNbt, newNbt, callbacks));
         Entity newEntity = this.type.apply(world, entity, this.target, newNbt);
         if (newEntity == entity) {
             VampireConversionEvents.AFTER_CONVERSION.invoker().afterConversion(context, newEntity);
-            context.onConverted(newEntity);
+            callbacks.forEach(callback -> callback.onConverted(newEntity, context.source()));
             return;
         }
 
@@ -79,7 +82,7 @@ public class EntityConversionData {
         entity.remove(Entity.RemovalReason.DISCARDED);
 
         VampireConversionEvents.AFTER_CONVERSION.invoker().afterConversion(context, newEntity);
-        context.onConverted(newEntity);
+        callbacks.forEach(callback -> callback.onConverted(newEntity, context.source()));
     }
 
     public static EntityConversionData fromJson(JsonObject object, CachedCodec<EntityConversionTransformer> transformerCache, CachedCodec<EntityConversionCondition> conditionCache) {

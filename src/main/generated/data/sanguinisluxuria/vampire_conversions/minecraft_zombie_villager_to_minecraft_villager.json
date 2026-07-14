@@ -22,6 +22,9 @@
     {
       "type": "sanguinisluxuria:copy",
       "source": "Offers"
+    },
+    {
+      "type": "sanguinisluxuria:special/villager_cure_discount"
     }
   ]
 }
