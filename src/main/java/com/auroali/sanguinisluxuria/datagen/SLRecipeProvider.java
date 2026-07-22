@@ -287,26 +287,15 @@ public class SLRecipeProvider extends FabricRecipeProvider {
           .offerTo(exporter, SLResources.id("rituals/purification"));
 
         // effects
-        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.FIRE_RESISTANCE).duration(1900).build())
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.FIRE_RESISTANCE, 1900).build())
           .catalyst(PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
           .input(Items.MAGMA_CREAM)
           .input(Items.MAGMA_CREAM)
           .criterion(hasItem(Items.MAGMA_CREAM), conditionsFromItem(Items.MAGMA_CREAM))
           .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
           .offerTo(exporter, SLResources.id("rituals/lesser_fire_resistance"));
-
-        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.FIRE_RESISTANCE).target(StatusEffectRitual.Target.ALL).duration(3600).build())
-          .catalyst(SLItems.TWISTED_BLOOD)
-          .input(Items.MAGMA_CREAM)
-          .input(Items.NETHER_WART)
-          .input(Items.MAGMA_CREAM)
-          .input(Items.NETHER_WART)
-          .criterion(hasItem(SLItems.TWISTED_BLOOD), conditionsFromItem(SLItems.TWISTED_BLOOD))
-          .criterion(hasItem(Items.MAGMA_CREAM), conditionsFromItem(Items.MAGMA_CREAM))
-          .criterion("became_vampire", ConvertCriterion.Conditions.create(ConversionContext.Conversion.CONVERTING))
-          .offerTo(exporter, SLResources.id("rituals/greater_fire_resistance"));
-
-        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.RESISTANCE).duration(1200).build())
+        
+        RitualRecipeJsonBuilder.create(RecipeCategory.MISC, StatusEffectRitual.builder().addEffect(StatusEffects.RESISTANCE, 1200).build())
           .catalyst(PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER))
           .input(Items.IRON_CHESTPLATE)
           .input(ConventionalItemTags.IRON_INGOTS)

@@ -41,9 +41,13 @@ repositories {
         }
     }
     maven {
-        name = "TerraformersMC"
-        url = "https://maven.terraformersmc.com/"
+        name = "Gnomecraft Maven (Terraformers Mirror)"
+        url = "https://maven.gnomecraft.net/repository/maven-public/"
     }
+//    maven {
+//        name = "TerraformersMC"
+//        url = "https://maven.terraformersmc.com/"
+//    }
     maven {
         name 'Xander Maven'
         url 'https://maven.isxander.dev/releases'
@@ -61,6 +65,18 @@ repositories {
         name = 'Jitpack'
         url = 'https://jitpack.io'
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        // forRepositories(fg.repository) // Uncomment when using ForgeGradle
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    } // for emi
 }
 
 fabricApi {
@@ -109,8 +125,8 @@ dependencies {
     modApi "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
     include "com.github.auroali:ConfigSerializer:${project.config_serializer_version}"
 
-    modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
-    modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
+    modCompileOnly "maven.modrinth:emi:${project.emi_version}+fabric"
+    modLocalRuntime "maven.modrinth:emi:${project.emi_version}+fabric"
 
     modApi "com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_entity_attribute_version}"
     include "com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_entity_attribute_version}"

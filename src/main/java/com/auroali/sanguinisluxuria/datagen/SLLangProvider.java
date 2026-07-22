@@ -4,6 +4,7 @@ import com.auroali.sanguinisluxuria.SLResources;
 import com.auroali.sanguinisluxuria.common.abilities.VampireAbility;
 import com.auroali.sanguinisluxuria.common.registry.*;
 import com.auroali.sanguinisluxuria.common.rituals.RitualType;
+import com.auroali.sanguinisluxuria.common.rituals.types.StatusEffectRitual;
 import com.auroali.sanguinisluxuria.datagen.util.GenericTranslationBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -101,8 +102,12 @@ public class SLLangProvider extends FabricLanguageProvider {
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL, "Ritual of Conversion");
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".converting", "Corruption");
         builder.add(SLRitualTypes.CONVERT_ENTITY_RITUAL.getTranslationKey() + ".deconverting", "Purification");
-        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effects", "Applies the effects to %s for %.0fs");
+        builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effects", "Applies the effects to %s");
         builder.add(SLRitualTypes.STATUS_EFFECT_RITUAL_TYPE.getTranslationKey() + ".effect_entry", "- %s");
+        builder.add(StatusEffectRitual.Target.RADIUS_ALTAR.getTranslationKey(), "Applies to all around the altar");
+        builder.add(StatusEffectRitual.Target.RADIUS_TARGET.getTranslationKey(), "Applies to all around the ritual target");
+        builder.add(StatusEffectRitual.Target.RADIUS_TARGET_EXCLUDING.getTranslationKey(), "Applies to all around the ritual target, excluding the target itself");
+        builder.add(StatusEffectRitual.Target.RITUAL_TARGET.getTranslationKey(), "Applies to the ritual target");
     }
 
     private static void potions(GenericTranslationBuilder.Potions builder) {

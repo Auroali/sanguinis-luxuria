@@ -21,10 +21,9 @@
   ],
   "ritual": {
     "type": "sanguinisluxuria:effect",
-    "amplifier": 1900,
-    "duration": 1900,
-    "effect": [
-      "minecraft:fire_resistance"
-    ]
+    "effects": {
+      "duration": 95,
+      "effect": "minecraft:fire_resistance"
+    }
   }
 }
