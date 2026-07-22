@@ -25,19 +25,25 @@ public record VampireAbilityRitual(VampireAbility ability) implements Ritual {
 
     @Override
     public void onCompleted(RitualParameters parameters) {
-        if (!parameters.hasTarget() || !VampireHelper.isVampire(parameters.target()) || !parameters.targetWithin(32.d))
+        if (!parameters.targetWithin(32.d))
             return;
 
-        VampireComponent vampire = VampireComponent.KEY.get(parameters.target());
-        VampireAbilityContainer abilities = vampire.getAbilityContainer();
-        if (abilities.has(this.ability) || !this.ability.testConditions(parameters.target(), vampire, abilities))
-            // todo: add feedback
-            return;
-        abilities.addAbility(this.ability);
-        parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.UNLOCK_ABILITY.trigger(player, this.ability));
+        parameters.target().ifPresent(target -> {
+            if (!VampireHelper.isVampire(target))
+                return;
 
-        RitualUtil.spawnSuccessParticles(parameters);
-        RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());
+            VampireComponent vampire = VampireComponent.KEY.get(target);
+            VampireAbilityContainer abilities = vampire.getAbilityContainer();
+            if (abilities.has(this.ability) || !this.ability.testConditions(target, vampire, abilities))
+                // todo: add feedback
+                return;
+            abilities.addAbility(this.ability);
+            parameters.ifPlayerTarget(player -> SLAdvancementCriterion.UNLOCK_ABILITY.trigger(player, this.ability));
+
+            RitualUtil.spawnSuccessParticles(parameters);
+            RitualUtil.spawnSuccessParticlesAt(parameters, target.getPos());
+        });
+
     }
 
     @Override

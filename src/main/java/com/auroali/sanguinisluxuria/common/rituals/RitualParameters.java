@@ -6,38 +6,35 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
-public record RitualParameters(World world, BlockPos pos, Inventory inventory, LivingEntity initiator,
-                               LivingEntity target) {
-    public void applyToPlayerInitiator(Consumer<ServerPlayerEntity> consumer) {
-        if (this.initiator instanceof ServerPlayerEntity player)
-            consumer.accept(player);
+public record RitualParameters(World world, BlockPos pos, Inventory inventory, Optional<LivingEntity> initiator,
+                               Optional<LivingEntity> target) {
+    public void ifPlayerInitiatorPresent(Consumer<ServerPlayerEntity> consumer) {
+        this.initiator.ifPresent(entity -> {
+            if (entity instanceof ServerPlayerEntity player)
+                consumer.accept(player);
+        });
     }
 
-    public void applyToPlayerTarget(Consumer<ServerPlayerEntity> consumer) {
-        if (this.target instanceof ServerPlayerEntity player)
-            consumer.accept(player);
+    public void ifPlayerTarget(Consumer<ServerPlayerEntity> consumer) {
+        this.target.ifPresent(entity -> {
+            if (entity instanceof ServerPlayerEntity player)
+                consumer.accept(player);
+        });
     }
 
     public boolean targetWithin(double distance) {
-        return this.hasTarget() && this.target.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
+        return this.target.isPresent() && this.target.get().squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
     }
 
     public boolean initiatorWithin(double distance) {
-        return this.hasInitiator() && this.initiator.squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
+        return this.initiator.isPresent() && this.initiator.get().squaredDistanceTo(this.pos.toCenterPos()) <= distance * distance;
     }
 
-    public boolean hasInitiator() {
-        return this.initiator != null;
-    }
-
-    public boolean hasTarget() {
-        return this.target != null;
-    }
-
-    public boolean hasTargetAndInitiator() {
-        return this.hasInitiator() && this.hasTarget();
+    public boolean isInitiatorAndTargetPresent() {
+        return this.initiator.isPresent() && this.target.isPresent();
     }
 
     public static RitualParametersBuilder builder() {
@@ -80,7 +77,13 @@ public record RitualParameters(World world, BlockPos pos, Inventory inventory, L
         }
 
         public RitualParameters build() {
-            return new RitualParameters(this.world, this.pos, this.inventory, this.initiator, this.target);
+            return new RitualParameters(
+              this.world,
+              this.pos,
+              this.inventory,
+              Optional.ofNullable(this.initiator),
+              Optional.ofNullable(this.target)
+            );
         }
     }
 }

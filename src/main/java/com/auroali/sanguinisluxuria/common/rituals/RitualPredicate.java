@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
@@ -16,6 +17,7 @@ import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.Optional;
 
@@ -33,31 +35,26 @@ public record RitualPredicate(
     );
 
     public boolean test(ServerWorld world, Ritual ritual, RitualParameters parameters) {
-        if (this.initiator.isPresent()) {
-            if (!parameters.hasInitiator())
-                return false;
-            LootContext initiatorContext = new LootContext.Builder(
-              new LootContextParameterSet.Builder(world)
-                .add(LootContextParameters.ORIGIN, parameters.pos().toCenterPos())
-                .add(LootContextParameters.THIS_ENTITY, parameters.initiator())
-                .build(LootContextTypes.ADVANCEMENT_ENTITY)
-            ).build(null);
-            return this.initiator.get().test(initiatorContext);
-        }
-        if (this.target.isPresent()) {
-            if (!parameters.hasTarget())
-                return false;
-            LootContext targetContext = new LootContext.Builder(
-              new LootContextParameterSet.Builder(world)
-                .add(LootContextParameters.ORIGIN, parameters.pos().toCenterPos())
-                .add(LootContextParameters.THIS_ENTITY, parameters.target())
-                .build(LootContextTypes.ADVANCEMENT_ENTITY)
-            ).build(null);
-            return this.target.get().test(targetContext);
-        }
+        return
+          testAgainst(world, parameters.pos(), this.initiator, parameters.initiator())
+            && testAgainst(world, parameters.pos(), this.target, parameters.target())
+            && this.type.map(predicate -> predicate.test(ritual.getType())).orElse(true)
+            && this.fields.map(predicate -> predicate.test(ritual)).orElse(true);
+    }
 
-        return this.type.map(predicate -> predicate.test(ritual.getType())).orElse(true)
-          && this.fields.map(predicate -> predicate.test(ritual)).orElse(true);
+    private static boolean testAgainst(ServerWorld world, BlockPos pos, Optional<LootContextPredicate> predicate, Optional<LivingEntity> target) {
+        return predicate.map(lootContextPredicate ->
+            target.map(entity -> {
+                LootContext ctx = new LootContext.Builder(
+                  new LootContextParameterSet.Builder(world)
+                    .add(LootContextParameters.ORIGIN, pos.toCenterPos())
+                    .add(LootContextParameters.THIS_ENTITY, entity)
+                    .build(LootContextTypes.ADVANCEMENT_ENTITY)
+                ).build(null);
+                return lootContextPredicate.test(ctx);
+            }).orElse(false))
+          .orElse(true);
+
     }
 
     public static RitualPredicate fromJson(AdvancementEntityPredicateDeserializer deserializer, JsonObject object) {

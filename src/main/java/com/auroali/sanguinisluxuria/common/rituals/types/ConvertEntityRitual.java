@@ -24,21 +24,22 @@ public record ConvertEntityRitual(ConversionContext.Conversion conversion) imple
 
     @Override
     public void onCompleted(RitualParameters parameters) {
-        if (!parameters.hasTarget() || !parameters.targetWithin(64))
+        if (!parameters.targetWithin(64))
             return;
 
-        LivingEntity target = parameters.target();
-        if (EntityConversionLoader.convertEntity(
-          ConversionContext
-            .builder(target)
-            .withSource(parameters.initiator())
-            .withConversion(this.conversion)
-            .build()
-        )) {
-            parameters.applyToPlayerTarget(player -> SLAdvancementCriterion.CONVERT.trigger(player, this.conversion));
-            RitualUtil.spawnSuccessParticles(parameters);
-            RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());
-        }
+        parameters.target().ifPresent(target -> {
+            if (EntityConversionLoader.convertEntity(
+              ConversionContext
+                .builder(target)
+                .withSource(parameters.initiator().orElse(null))
+                .withConversion(this.conversion)
+                .build()
+            )) {
+                parameters.ifPlayerTarget(player -> SLAdvancementCriterion.CONVERT.trigger(player, this.conversion));
+                RitualUtil.spawnSuccessParticles(parameters);
+                RitualUtil.spawnSuccessParticlesAt(parameters, target.getPos());
+            }
+        });
     }
 
     @Override

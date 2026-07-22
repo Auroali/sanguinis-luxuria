@@ -40,10 +40,10 @@ public class AbilityRevealRitual extends ItemRitual {
 
     @Override
     protected ItemStack createResultItem(RitualParameters parameters) {
-        if (!parameters.hasTarget() || !VampireHelper.isVampire(parameters.target()))
+        if (parameters.target().isEmpty() || !VampireHelper.isVampire(parameters.target().get()))
             return this.createEmptyBook();
 
-        VampireComponent vampire = VampireComponent.KEY.get(parameters.target());
+        VampireComponent vampire = VampireComponent.KEY.get(parameters.target().get());
 
         ItemStack outputStack = this.createEmptyBook();
 

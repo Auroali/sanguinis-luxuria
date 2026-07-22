@@ -43,7 +43,7 @@ public record EntitySpawningRitual(EntityType<?> type, NbtCompound nbt, boolean 
               entity.setPosition(position);
               parameters.world().spawnEntity(entity);
               if (this.autoTame() && entity instanceof TameableEntity tameable)
-                  parameters.applyToPlayerInitiator(tameable::setOwner);
+                  parameters.ifPlayerInitiatorPresent(tameable::setOwner);
               RitualUtil.spawnSuccessParticles(parameters);
           });
     }

@@ -21,20 +21,25 @@ public class VampireAbilityResetRitual implements Ritual {
 
     @Override
     public void onCompleted(RitualParameters parameters) {
-        if (!parameters.hasTarget() || !VampireHelper.isVampire(parameters.target()) || !parameters.targetWithin(12.d))
+        if (!parameters.targetWithin(12.d))
             return;
 
-        VampireComponent vampire = VampireComponent.KEY.get(parameters.target());
-        VampireAbilityContainer abilities = vampire.getAbilityContainer();
-        for (VampireAbility ability : abilities.abilities()) {
-            ability.onAbilityRemoved(parameters.target(), vampire);
-            abilities.removeAbility(ability);
-            parameters.applyToPlayerTarget(SLAdvancementCriterion.RESET_ABILITIES::trigger);
-        }
+        parameters.target().ifPresent(target -> {
+            if (!VampireHelper.isVampire(target))
+                return;
 
-        VampireComponent.KEY.sync(parameters.target());
-        RitualUtil.spawnSuccessParticles(parameters);
-        RitualUtil.spawnSuccessParticlesAt(parameters, parameters.target().getPos());
+            VampireComponent vampire = VampireComponent.KEY.get(target);
+            VampireAbilityContainer abilities = vampire.getAbilityContainer();
+            for (VampireAbility ability : abilities.abilities()) {
+                ability.onAbilityRemoved(target, vampire);
+                abilities.removeAbility(ability);
+                parameters.ifPlayerTarget(SLAdvancementCriterion.RESET_ABILITIES::trigger);
+            }
+
+            VampireComponent.KEY.sync(target);
+            RitualUtil.spawnSuccessParticles(parameters);
+            RitualUtil.spawnSuccessParticlesAt(parameters, target.getPos());
+        });
     }
 
     @Override

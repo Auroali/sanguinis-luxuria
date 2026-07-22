@@ -20,6 +20,7 @@ import net.minecraft.util.math.Box;
 import java.util.ArrayList;
 import java.util.List;
 
+// todo: rework?
 public record StatusEffectRitual(List<StatusEffect> effects, int duration, int amplifier,
                                  Target target) implements Ritual {
     public static final Codec<StatusEffectRitual> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -36,30 +37,35 @@ public record StatusEffectRitual(List<StatusEffect> effects, int duration, int a
         RitualUtil.spawnSuccessParticles(parameters);
         switch (this.target()) {
             case ALL -> {
-                if (parameters.hasTarget())
-                    this.applyToEntity(parameters, parameters.target());
+                parameters.target().ifPresent(target ->
+                  this.applyToEntity(parameters, target)
+                );
                 this.applyToOthers(parameters);
             }
             case OTHER -> this.applyToOthers(parameters);
             case RITUAL_TARGET -> {
-                if (parameters.hasTarget())
-                    this.applyToEntity(parameters, parameters.target());
+                parameters.target().ifPresent(target ->
+                  this.applyToEntity(parameters, target)
+                );
             }
         }
     }
 
     public void applyToEntity(RitualParameters parameters, LivingEntity entity) {
         this.effects().forEach(effect ->
-          entity.addStatusEffect(new StatusEffectInstance(effect, this.duration(), 0), parameters.initiator())
+          entity.addStatusEffect(new StatusEffectInstance(effect, this.duration(), 0), parameters.initiator().orElse(null))
         );
         RitualUtil.spawnSuccessParticlesAt(parameters, entity.getPos());
     }
 
     public void applyToOthers(RitualParameters parameters) {
-        parameters.world().getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), new Box(parameters.pos()).expand(16.d), entity -> entity != parameters.initiator() && entity.isAlive())
-          .forEach(entity ->
-            this.applyToEntity(parameters, entity)
-          );
+        parameters.world().getEntitiesByType(
+          TypeFilter.instanceOf(LivingEntity.class),
+          new Box(parameters.pos()).expand(16.d),
+          entity -> parameters.initiator().map(initiator -> entity != initiator).orElse(true) && entity.isAlive()
+        ).forEach(entity ->
+          this.applyToEntity(parameters, entity)
+        );
     }
 
     @Override
