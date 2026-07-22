@@ -53,14 +53,14 @@ public class HungerManagerMixin implements VampireHungerManager {
     }
 
     @ModifyConstant(method = "update", constant = @Constant(intValue = 10))
-    public int sanguinisluxuria$modifyHealRate(int constant) {
+    public int sanguinisluxuria$modifySaturationHealRate(int constant) {
         if (VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer) && this.sanguinisluxuria$canFastHeal())
-            return constant / 4;
+            return constant / 2;
         return constant;
     }
 
     @ModifyConstant(method = "update", constant = @Constant(intValue = 80, ordinal = 0))
-    public int sanguinisluxuria$modifySecondHealRate(int constant) {
+    public int sanguinisluxuria$modifyHungerHealRate(int constant) {
         if (VampireHelper.isVampire(this.sanguinisluxuria$hmTrackedPlayer) && this.sanguinisluxuria$canFastHeal())
             return constant / 4;
         return constant;
