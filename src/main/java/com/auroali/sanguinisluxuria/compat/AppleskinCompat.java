@@ -11,7 +11,7 @@ import squeek.appleskin.api.AppleSkinApi;
 import squeek.appleskin.api.event.HUDOverlayEvent;
 
 public class AppleskinCompat implements AppleSkinApi {
-    private static final Identifier ICONS = new Identifier("appleskin", "textures/gui/icons.png");
+    private static final Identifier ICONS = SLResources.id("textures/gui/appleskin_icons.png");
 
     @Override
     public void registerEvents() {
