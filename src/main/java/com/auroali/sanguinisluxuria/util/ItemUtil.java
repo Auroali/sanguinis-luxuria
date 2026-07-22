@@ -41,7 +41,7 @@ public class ItemUtil {
      * @param entity      the entity to get the item from
      * @param initialHand the hand to look in first
      * @return the item stack, or {@link net.minecraft.item.ItemStack#EMPTY} if nothing was found
-     * @see VampireHelper#getItemInHand(LivingEntity, Hand, Predicate)
+     * @see ItemUtil#getItemInHand(LivingEntity, Hand, Predicate)
      */
     public static ItemStack getItemInHand(LivingEntity entity, Hand initialHand) {
         return getItemInHand(entity, initialHand, Predicates.alwaysTrue());

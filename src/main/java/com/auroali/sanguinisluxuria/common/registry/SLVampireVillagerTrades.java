@@ -22,7 +22,6 @@ import java.util.List;
 public class SLVampireVillagerTrades {
     public static final ImmutableMap<Integer, TradeOffers.Factory[]> TRADES = new ImmutableMap.Builder<Integer, TradeOffers.Factory[]>()
       .put(1, new TradeOffers.Factory[]{
-        (entity, random) -> new TradeOffer(new ItemStack(Items.EMERALD, 2), ItemStack.EMPTY, BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE), 4, 4, 1),
         new TradeOffers.SellItemFactory(SLItems.MASK_1, 3, 1, 1, 2),
         new TradeOffers.SellItemFactory(SLItems.MASK_2, 3, 1, 1, 2),
         new TradeOffers.SellItemFactory(SLItems.MASK_3, 3, 1, 1, 2),
@@ -34,7 +33,7 @@ public class SLVampireVillagerTrades {
         new SellPotionFactory(Items.POTION, Potions.FIRE_RESISTANCE, 16, 1, 1, 4),
         new TradeOffers.BuyForOneEmeraldFactory(SLItems.GRAFTED_SAPLING, 1, 1, 4),
         new RefillBloodItemFactory(SLItems.BLOOD_BAG, 4, 1, 4),
-        new NbtAwareSellItemFactory(BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE), 8, 1, 4, 2),
+        new NbtAwareSellItemFactory(BloodStorageItem.createStack(SLItems.BLOOD_BOTTLE), 8, 1, 8, 2),
       })
       .build();
 

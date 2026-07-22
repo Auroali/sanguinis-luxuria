@@ -150,39 +150,42 @@ public class SanguinisLuxuriaClient implements ClientModInitializer {
                 this.handleAbilityKey(container, SLVampireAbilities.TELEPORT, ACTIVATE_BLINK);
                 this.handleAbilityKey(container, SLVampireAbilities.MIST, ACTIVATE_MIST);
             }
-            if (SUCK_BLOOD.isPressed()) {
-                this.handeBloodDrainPress(client);
-            } else if (client.player != null && BloodDrainComponent.KEY.get(client.player).isDraining()) {
+            if (!this.handeBloodDrainPress(client) && client.player != null && BloodDrainComponent.KEY.get(client.player).isDraining()) {
                 ClientPlayNetworking.send(new DrainBloodC2S(false));
             }
         });
     }
 
-    private void handeBloodDrainPress(MinecraftClient client) {
+    private boolean handeBloodDrainPress(MinecraftClient client) {
         // handle draining blood from entities
-        if (isLookingAtValidTarget()) {
+        if (SUCK_BLOOD.isPressed() && isLookingAtValidTarget()) {
             if (client.player != null && !BloodDrainComponent.KEY.get(client.player).isDraining()) {
                 ClientPlayNetworking.send(new DrainBloodC2S(true));
             }
-            return;
+
+            // consume input
+            //noinspection StatementWithEmptyBody
+            while (SUCK_BLOOD.wasPressed()) {
+            }
+            return true;
         }
 
-        // otherwise, handle filling blood storing items
-        if (client.player != null && BloodDrainComponent.KEY.get(client.player).isDraining())
-            ClientPlayNetworking.send(new DrainBloodC2S(false));
+        while (SUCK_BLOOD.wasPressed()) {
+            // otherwise, handle filling blood storing items
+            if (VampireHelper.isVampire(client.player)) {
+                // if the player is holding a fillable item, send the packet as long as the key is held down
+                ItemStack toFill = ItemUtil.getItemInHand(
+                  client.player,
+                  Hand.MAIN_HAND,
+                  stack -> stack.getItem() instanceof BloodStorageItem
+                    || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(client.player, stack)
+                );
 
-        if (VampireHelper.isVampire(client.player)) {
-            // if the player is holding a fillable item, send the packet as long as the key is held down
-            ItemStack toFill = ItemUtil.getItemInHand(
-              client.player,
-              Hand.MAIN_HAND,
-              stack -> stack.getItem() instanceof BloodStorageItem
-                || BloodStorageFillEvents.ALLOW_ITEM.invoker().allowItem(client.player, stack)
-            );
-
-            if (!toFill.isEmpty())
-                ClientPlayNetworking.send(new FillBloodItemC2S(ItemUtil.getHandForStack(client.player, toFill)));
+                if (!toFill.isEmpty())
+                    ClientPlayNetworking.send(new FillBloodItemC2S(ItemUtil.getHandForStack(client.player, toFill)));
+            }
         }
+        return false;
     }
 
     private void handleAbilityKey(VampireAbilityContainer container, VampireAbility ability, KeyBinding keyBinding) {

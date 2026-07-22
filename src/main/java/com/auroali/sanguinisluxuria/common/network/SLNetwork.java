@@ -56,10 +56,12 @@ public class SLNetwork {
             ItemStack stack = player.getStackInHand(packet.hand());
             BloodComponent blood = BloodComponent.KEY.get(player);
             BloodDrainComponent drainer = BloodDrainComponent.KEY.get(player);
-            if (blood.isEmpty())
+            if (blood.isEmpty() && !player.getAbilities().creativeMode)
                 return;
 
-            int toFill = Math.min(BloodConstants.BLOOD_PER_BOTTLE, blood.getBlood());
+            int toFill = player.getAbilities().creativeMode
+              ? BloodConstants.BLOOD_PER_BOTTLE
+              : Math.min(BloodConstants.BLOOD_PER_BOTTLE, blood.getBlood());
             int filled = ItemUtil.fillHeldBloodStorage(player, stack, packet.hand(), toFill, s -> {
                 if (player.isSneaking() && EntityTrackingItem.canTrackEntity(s) && !EntityTrackingItem.hasEntity(stack)) {
                     EntityTrackingItem.setEntity(
@@ -72,8 +74,10 @@ public class SLNetwork {
                 }
             });
 
-            blood.setBlood(blood.getBlood() - filled);
-            player.getHungerManager().setSaturationLevel(BloodConstants.adjustSaturation(player, filled, -BloodConstants.SATURATION_PER_BLOOD_FILLED));
+            if (!player.getAbilities().creativeMode) {
+                blood.setBlood(blood.getBlood() - filled);
+                player.getHungerManager().setSaturationLevel(BloodConstants.adjustSaturation(player, filled, -BloodConstants.SATURATION_PER_BLOOD_FILLED));
+            }
         });
     }
 }
