@@ -16,7 +16,7 @@ public class AppleskinCompat implements AppleSkinApi {
     @Override
     public void registerEvents() {
         HUDOverlayEvent.Saturation.EVENT.addPhaseOrdering(Event.DEFAULT_PHASE, SLResources.AFTER_EVENT_PHASE);
-        HUDOverlayEvent.Saturation.EVENT.register(SLResources.AFTER_EVENT_PHASE, this::cancelEventIfVampire);
+        HUDOverlayEvent.Saturation.EVENT.register(SLResources.AFTER_EVENT_PHASE, this::renderVampireSaturation);
         HUDOverlayEvent.HungerRestored.EVENT.register(this::cancelEventIfVampire);
         HUDOverlayEvent.HealthRestored.EVENT.register(event -> {
             if (!event.itemStack.isIn(SLTags.Items.VAMPIRES_GET_HUNGER_FROM))
@@ -25,7 +25,7 @@ public class AppleskinCompat implements AppleSkinApi {
 
     }
 
-    public void cancelEventIfVampire(HUDOverlayEvent event) {
+    public void renderVampireSaturation(HUDOverlayEvent event) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (VampireHelper.consumesBlood(client.player)) {
             event.isCanceled = true;
@@ -51,6 +51,13 @@ public class AppleskinCompat implements AppleSkinApi {
 
                 event.context.drawTexture(ICONS, x, y, u, v, 9, 9);
             }
+        }
+    }
+
+    public void cancelEventIfVampire(HUDOverlayEvent event) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (VampireHelper.consumesBlood(client.player)) {
+            event.isCanceled = true;
         }
     }
 }
